@@ -43,9 +43,7 @@ View a DukaPress Demo Shop: [DukaPress Demo](http://dukapress.org/demo/ "Your fa
 
 = What does DukaPress mean? =
 
-'Duka' is the Swahili word for shop.  Loosely, DukaPress means "shoppress".  We like to think it means the most complete and 
-
-usable e-commerce solution for wordpress, though.
+'Duka' is the Swahili word for shop.  Loosely, DukaPress means "shoppress".  We like to think it means the most complete and usable e-commerce solution for wordpress, though.
 
 
 == Screenshots ==
