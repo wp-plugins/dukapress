@@ -1,12 +1,12 @@
 === DukaPress ===
 Contributors: parshwa, moshthepitt
-Donate link: http://dukapress.org/
+Donate link: http://dukapress.org/about/
 Tags: shopping cart, web shop, cart, shop, Worldpay, Paypal, Alertpay, paypal, e-commerce, ecommerce, MPESA, ZAP, yuCash, Mobile Payments, 
 
 online duka, duka, online shop
 Requires at least: 2.9.2
 Tested up to: 3.0
-Stable tag: 1.0
+Stable tag: 1.0.1
 
 DukaPress is an open source e-commerce solution built for Wordpress.
 
@@ -15,16 +15,17 @@ DukaPress is an open source e-commerce solution built for Wordpress.
 DukaPress is open source software that can be used to build online shops quickly and easily. DukaPress is built on top of Wordpress, a world class content management system. DukaPress is built to be both simple and elegant yet powerful and scalable.
 
 Main Features:
-You can sell tangible regular products;
-You can sell tangible products with selectable options (size, colour, etc);
-You can sell Digital products;
-Choose between a normal shop mode and a catalogue mode;
-Numerous payment processing options including Paypal, Alertpay and mobile phone payments;
-Printable invoices;
-One-page checkout;
-Elegant discount coupon management;
-A myriad of shipping processing options;
-Printable invoices;
+
+* You can sell tangible regular products;
+* You can sell tangible products with selectable options (size, colour, etc);
+* You can sell Digital products;
+* Choose between a normal shop mode and a catalogue mode;
+* Numerous payment processing options including Paypal, Alertpay and mobile phone payments;
+* Printable invoices;
+* One-page checkout;
+* Elegant discount coupon management;
+* A myriad of shipping processing options;
+* Printable invoices;
 
 View more features: [DukaPress](http://dukapress.org/ "Your favorite e-commerce software")
 
