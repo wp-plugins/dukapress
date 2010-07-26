@@ -53,10 +53,20 @@ View a DukaPress Demo Shop: [DukaPress Demo](http://dukapress.org/demo/ "Your fa
 
 == Changelog ==
 
+= 1.0.1 =
+* Added pagination to Grid View
+* Fixed a bug affecting stock/inventory management- buyers now cannot buy out of stock items
+* A bit of the code is now modularised
+
+
 = 1.0 =
 * Initial Release
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+DukaPress just got better!  We fixed some bugs and added one new feature. Yay!
+
 
 = 1.0 =
 DukaPress is brand new.  As such you won't be upgrading but joining our handsomely awesome family.
