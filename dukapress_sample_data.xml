@@ -15,7 +15,7 @@
 <!-- 6. WordPress will then import each of the posts, comments, and categories -->
 <!--    contained in this file into your blog -->
 
-<!-- generator="WordPress/3.0" created="2010-07-19 09:46"-->
+<!-- generator="WordPress/3.0" created="2010-07-29 19:55"-->
 <rss version="2.0"
 	xmlns:excerpt="http://wordpress.org/export/1.0/excerpt/"
 	xmlns:content="http://purl.org/rss/1.0/modules/content/"
@@ -28,87 +28,19 @@
 	<title>DukaPress Demo</title>
 	<link>http://dukapress.org/demo</link>
 	<description>Just another DukaPress Shop</description>
-	<pubDate>Mon, 19 Jul 2010 08:56:50 +0000</pubDate>
+	<pubDate>Thu, 29 Jul 2010 19:45:37 +0000</pubDate>
 	<generator>http://wordpress.org/?v=3.0</generator>
 	<language>en</language>
 	<wp:wxr_version>1.0</wp:wxr_version>
 	<wp:base_site_url>http://dukapress.org/demo</wp:base_site_url>
 	<wp:base_blog_url>http://dukapress.org/demo</wp:base_blog_url>
 		<wp:category><wp:category_nicename>blog</wp:category_nicename><wp:category_parent></wp:category_parent><wp:cat_name><![CDATA[Blog]]></wp:cat_name></wp:category>
+		<wp:category><wp:category_nicename>digital</wp:category_nicename><wp:category_parent></wp:category_parent><wp:cat_name><![CDATA[Digital]]></wp:cat_name></wp:category>
 		<wp:category><wp:category_nicename>products</wp:category_nicename><wp:category_parent></wp:category_parent><wp:cat_name><![CDATA[Products]]></wp:cat_name></wp:category>
 				<wp:term><wp:term_taxonomy>nav_menu</wp:term_taxonomy><wp:term_slug>main</wp:term_slug><wp:term_parent></wp:term_parent><wp:term_name><![CDATA[Main]]></wp:term_name></wp:term>
 	
 	<generator>http://wordpress.org/?v=3.0</generator>
 
-		<item>
-		<title>Auto Draft</title>
-		<link>http://dukapress.org/demo/?p=15</link>
-		<pubDate>Thu, 01 Jan 1970 00:00:00 +0000</pubDate>
-		<dc:creator><![CDATA[DukaPress]]></dc:creator>
-		
-		<guid isPermaLink="false">http://dukapress.org/demo/?p=15</guid>
-		<description></description>
-		<content:encoded><![CDATA[]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>15</wp:post_id>
-		<wp:post_date>2010-07-19 11:29:29</wp:post_date>
-		<wp:post_date_gmt>0000-00-00 00:00:00</wp:post_date_gmt>
-		<wp:comment_status>open</wp:comment_status>
-		<wp:ping_status>open</wp:ping_status>
-		<wp:post_name></wp:post_name>
-		<wp:status>auto-draft</wp:status>
-		<wp:post_parent>0</wp:post_parent>
-		<wp:menu_order>0</wp:menu_order>
-		<wp:post_type>post</wp:post_type>
-		<wp:post_password></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-							</item>
-		<item>
-		<title>Auto Draft</title>
-		<link>http://dukapress.org/demo/?p=16</link>
-		<pubDate>Thu, 01 Jan 1970 00:00:00 +0000</pubDate>
-		<dc:creator><![CDATA[DukaPress]]></dc:creator>
-		
-		<guid isPermaLink="false">http://dukapress.org/demo/?p=16</guid>
-		<description></description>
-		<content:encoded><![CDATA[]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>16</wp:post_id>
-		<wp:post_date>2010-07-19 11:29:32</wp:post_date>
-		<wp:post_date_gmt>0000-00-00 00:00:00</wp:post_date_gmt>
-		<wp:comment_status>open</wp:comment_status>
-		<wp:ping_status>open</wp:ping_status>
-		<wp:post_name></wp:post_name>
-		<wp:status>auto-draft</wp:status>
-		<wp:post_parent>0</wp:post_parent>
-		<wp:menu_order>0</wp:menu_order>
-		<wp:post_type>post</wp:post_type>
-		<wp:post_password></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-							</item>
-		<item>
-		<title>Auto Draft</title>
-		<link>http://dukapress.org/demo/?p=64</link>
-		<pubDate>Thu, 01 Jan 1970 00:00:00 +0000</pubDate>
-		<dc:creator><![CDATA[DukaPress]]></dc:creator>
-		
-		<guid isPermaLink="false">http://dukapress.org/demo/?p=64</guid>
-		<description></description>
-		<content:encoded><![CDATA[]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>64</wp:post_id>
-		<wp:post_date>2010-07-19 12:21:34</wp:post_date>
-		<wp:post_date_gmt>0000-00-00 00:00:00</wp:post_date_gmt>
-		<wp:comment_status>open</wp:comment_status>
-		<wp:ping_status>open</wp:ping_status>
-		<wp:post_name></wp:post_name>
-		<wp:status>auto-draft</wp:status>
-		<wp:post_parent>0</wp:post_parent>
-		<wp:menu_order>0</wp:menu_order>
-		<wp:post_type>post</wp:post_type>
-		<wp:post_password></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-							</item>
 		<item>
 		<title>About</title>
 		<link>http://dukapress.org/demo/about/</link>
@@ -143,7 +75,7 @@
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>_edit_lock</wp:meta_key>
-		<wp:meta_value><![CDATA[1279531916]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1279573733]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>_edit_last</wp:meta_key>
@@ -233,7 +165,7 @@
 		<wp:is_sticky>0</wp:is_sticky>
 								<wp:postmeta>
 		<wp:meta_key>_edit_lock</wp:meta_key>
-		<wp:meta_value><![CDATA[1279527691]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1279573754]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>_edit_last</wp:meta_key>
@@ -274,7 +206,7 @@
 		<wp:is_sticky>0</wp:is_sticky>
 								<wp:postmeta>
 		<wp:meta_key>_edit_lock</wp:meta_key>
-		<wp:meta_value><![CDATA[1279527708]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1279573887]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>_edit_last</wp:meta_key>
@@ -297,7 +229,7 @@
 
 		<guid isPermaLink="false">http://dukapress.org/demo/?page_id=4</guid>
 		<description></description>
-		<content:encoded><![CDATA[[dpsc_grid_display category=”3” total="12" column="3"]
+		<content:encoded><![CDATA[[dpsc_grid_display category=”3” total="12" column="3" per_page="9"]
 </br>
 <strong><span style="color: #ff0000;">WARNING:  This is just a demo shop and the items displayed here are not for sale.  If you feel generous enough to make an actual payment, no refunds are available.</span></strong>]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
@@ -315,7 +247,7 @@
 		<wp:is_sticky>0</wp:is_sticky>
 								<wp:postmeta>
 		<wp:meta_key>_edit_lock</wp:meta_key>
-		<wp:meta_value><![CDATA[1279529696]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1280433188]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>_edit_last</wp:meta_key>
@@ -522,6 +454,10 @@
 		<wp:meta_key>_wp_attachment_metadata</wp:meta_key>
 		<wp:meta_value><![CDATA[a:6:{s:5:"width";s:3:"940";s:6:"height";s:3:"198";s:14:"hwstring_small";s:23:"height='26' width='128'";s:4:"file";s:26:"2010/07/cropped-Banner.jpg";s:5:"sizes";a:2:{s:9:"thumbnail";a:3:{s:4:"file";s:26:"cropped-Banner-150x150.jpg";s:5:"width";s:3:"150";s:6:"height";s:3:"150";}s:6:"medium";a:3:{s:4:"file";s:25:"cropped-Banner-300x63.jpg";s:5:"width";s:3:"300";s:6:"height";s:2:"63";}}s:10:"image_meta";a:10:{s:8:"aperture";s:1:"0";s:6:"credit";s:0:"";s:6:"camera";s:0:"";s:7:"caption";s:0:"";s:17:"created_timestamp";s:1:"0";s:9:"copyright";s:0:"";s:12:"focal_length";s:1:"0";s:3:"iso";s:1:"0";s:13:"shutter_speed";s:1:"0";s:5:"title";s:0:"";}}]]></wp:meta_value>
 		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>_oembed_ccf7c85bdcd974aa4f7708e961ce7e8a</wp:meta_key>
+		<wp:meta_value><![CDATA[{{unknown}}]]></wp:meta_value>
+		</wp:postmeta>
 							</item>
 		<item>
 		<title>Igbo-Male-Figure</title>
@@ -589,7 +525,7 @@ This figure probably represented a community's founding ancestor or a warrior an
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>_edit_lock</wp:meta_key>
-		<wp:meta_value><![CDATA[1279528557]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1280432738]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>price</wp:meta_key>
@@ -597,7 +533,7 @@ This figure probably represented a community's founding ancestor or a warrior an
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>currently_in_stock</wp:meta_key>
-		<wp:meta_value><![CDATA[197]]></wp:meta_value>
+		<wp:meta_value><![CDATA[200]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>item_weight</wp:meta_key>
@@ -686,7 +622,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tristique eleife
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>currently_in_stock</wp:meta_key>
-		<wp:meta_value><![CDATA[191]]></wp:meta_value>
+		<wp:meta_value><![CDATA[154]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>dropdown_option</wp:meta_key>
@@ -763,7 +699,7 @@ The inhabitants of the mountainous Kabyle region along the Mediterranean coast i
 		<wp:is_sticky>0</wp:is_sticky>
 								<wp:postmeta>
 		<wp:meta_key>_edit_lock</wp:meta_key>
-		<wp:meta_value><![CDATA[1279529465]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1279548193]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>_edit_last</wp:meta_key>
@@ -771,7 +707,7 @@ The inhabitants of the mountainous Kabyle region along the Mediterranean coast i
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>currently_in_stock</wp:meta_key>
-		<wp:meta_value><![CDATA[197]]></wp:meta_value>
+		<wp:meta_value><![CDATA[191]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>dropdown_option</wp:meta_key>
@@ -828,7 +764,7 @@ This pair of armlets may have been part of the regalia of the Olowo of Owo, a Yo
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>currently_in_stock</wp:meta_key>
-		<wp:meta_value><![CDATA[197]]></wp:meta_value>
+		<wp:meta_value><![CDATA[111]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>dropdown_option</wp:meta_key>
@@ -889,7 +825,7 @@ The dynamic sculptural quality of this vessel is enhanced by the sweeping curves
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>currently_in_stock</wp:meta_key>
-		<wp:meta_value><![CDATA[191]]></wp:meta_value>
+		<wp:meta_value><![CDATA[108]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>price</wp:meta_key>
@@ -934,7 +870,7 @@ The inhabitants of the mountainous Kabyle region along the Mediterranean coast i
 		<wp:is_sticky>0</wp:is_sticky>
 								<wp:postmeta>
 		<wp:meta_key>_edit_lock</wp:meta_key>
-		<wp:meta_value><![CDATA[1279529374]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1280432705]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>_edit_last</wp:meta_key>
@@ -942,7 +878,7 @@ The inhabitants of the mountainous Kabyle region along the Mediterranean coast i
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>currently_in_stock</wp:meta_key>
-		<wp:meta_value><![CDATA[197]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1985]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>dropdown_option</wp:meta_key>
@@ -1091,7 +1027,7 @@ Skin-covered masks in Africa are found only in southeastern Nigeria and western 
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>_edit_lock</wp:meta_key>
-		<wp:meta_value><![CDATA[1279529772]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1280432696]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>dropdown_option</wp:meta_key>
@@ -1099,7 +1035,7 @@ Skin-covered masks in Africa are found only in southeastern Nigeria and western 
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>currently_in_stock</wp:meta_key>
-		<wp:meta_value><![CDATA[197]]></wp:meta_value>
+		<wp:meta_value><![CDATA[200]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>item_weight</wp:meta_key>
@@ -1148,7 +1084,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tristique eleife
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>_edit_lock</wp:meta_key>
-		<wp:meta_value><![CDATA[1279529761]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1280432623]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>dropdown_option</wp:meta_key>
@@ -1156,7 +1092,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tristique eleife
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>currently_in_stock</wp:meta_key>
-		<wp:meta_value><![CDATA[147]]></wp:meta_value>
+		<wp:meta_value><![CDATA[2000]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>price</wp:meta_key>
@@ -1201,7 +1137,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tristique eleife
 		<wp:is_sticky>0</wp:is_sticky>
 								<wp:postmeta>
 		<wp:meta_key>_edit_lock</wp:meta_key>
-		<wp:meta_value><![CDATA[1279529812]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1280432612]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>_edit_last</wp:meta_key>
@@ -1213,7 +1149,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tristique eleife
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>currently_in_stock</wp:meta_key>
-		<wp:meta_value><![CDATA[197]]></wp:meta_value>
+		<wp:meta_value><![CDATA[200]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>item_weight</wp:meta_key>
@@ -1456,9 +1392,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tristique eleife
 <ol>
 	<li><a href="http://www.flickr.com/photos/babasteve/4777534713/">Header Image</a> - by <a href="http://www.flickr.com/photos/babasteve/">babasteve</a></li>
 
-	<li>Softie Earings - by Janette Wambere</li>
+<li>Pea Earings - by <a href="http://timamu.com">Janette Wambere</a></li>
+	<li>Softie Earings - by <a href="http://timamu.com">Janette Wambere</a></li>
 
-	<li>Sunshine Earings - by Janette Wambere</li>
+	<li>Sunshine Earings - by <a href="http://timamu.com">Janette Wambere</a></li>
 
 	<li><a href="http://www.flickr.com/photos/nostri-imago/2922766609/">Goatman Mask</a> - by <a href="http://www.flickr.com/photos/nostri-imago/">Cliff1066</a></li>
 
@@ -1496,7 +1433,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tristique eleife
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>_edit_lock</wp:meta_key>
-		<wp:meta_value><![CDATA[1279531096]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1280433335]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>_wp_page_template</wp:meta_key>
@@ -1580,6 +1517,280 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tristique eleife
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>_menu_item_url</wp:meta_key>
+		<wp:meta_value><![CDATA[]]></wp:meta_value>
+		</wp:postmeta>
+							</item>
+		<item>
+		<title>favicon</title>
+		<link>http://dukapress.org/demo/?attachment_id=67</link>
+		<pubDate>Mon, 19 Jul 2010 11:07:48 +0000</pubDate>
+		<dc:creator><![CDATA[DukaPress]]></dc:creator>
+		
+		<guid isPermaLink="false">http://dukapress.org/demo/wp-content/uploads/2010/07/favicon.png</guid>
+		<description></description>
+		<content:encoded><![CDATA[]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>67</wp:post_id>
+		<wp:post_date>2010-07-19 14:07:48</wp:post_date>
+		<wp:post_date_gmt>2010-07-19 11:07:48</wp:post_date_gmt>
+		<wp:comment_status>open</wp:comment_status>
+		<wp:ping_status>open</wp:ping_status>
+		<wp:post_name>favicon</wp:post_name>
+		<wp:status>inherit</wp:status>
+		<wp:post_parent>0</wp:post_parent>
+		<wp:menu_order>0</wp:menu_order>
+		<wp:post_type>attachment</wp:post_type>
+		<wp:post_password></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+				<wp:attachment_url>http://dukapress.org/demo/wp-content/uploads/2010/07/favicon.png</wp:attachment_url>
+								<wp:postmeta>
+		<wp:meta_key>_wp_attached_file</wp:meta_key>
+		<wp:meta_value><![CDATA[2010/07/favicon.png]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>_wp_attachment_metadata</wp:meta_key>
+		<wp:meta_value><![CDATA[a:5:{s:5:"width";s:2:"16";s:6:"height";s:2:"16";s:14:"hwstring_small";s:22:"height='16' width='16'";s:4:"file";s:19:"2010/07/favicon.png";s:10:"image_meta";a:10:{s:8:"aperture";s:1:"0";s:6:"credit";s:0:"";s:6:"camera";s:0:"";s:7:"caption";s:0:"";s:17:"created_timestamp";s:1:"0";s:9:"copyright";s:0:"";s:12:"focal_length";s:1:"0";s:3:"iso";s:1:"0";s:13:"shutter_speed";s:1:"0";s:5:"title";s:0:"";}}]]></wp:meta_value>
+		</wp:postmeta>
+							</item>
+		<item>
+		<title>favicon-contact-info</title>
+		<link>http://dukapress.org/demo/2010/07/digital-product/favicon-contact-info/</link>
+		<pubDate>Wed, 28 Jul 2010 17:04:19 +0000</pubDate>
+		<dc:creator><![CDATA[DukaPress]]></dc:creator>
+		
+		<guid isPermaLink="false">http://dukapress.org/demo/wp-content/uploads/2010/07/favicon-contact-info.png</guid>
+		<description></description>
+		<content:encoded><![CDATA[]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>72</wp:post_id>
+		<wp:post_date>2010-07-28 20:04:19</wp:post_date>
+		<wp:post_date_gmt>2010-07-28 17:04:19</wp:post_date_gmt>
+		<wp:comment_status>open</wp:comment_status>
+		<wp:ping_status>open</wp:ping_status>
+		<wp:post_name>favicon-contact-info</wp:post_name>
+		<wp:status>inherit</wp:status>
+		<wp:post_parent>71</wp:post_parent>
+		<wp:menu_order>0</wp:menu_order>
+		<wp:post_type>attachment</wp:post_type>
+		<wp:post_password></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+				<wp:attachment_url>http://dukapress.org/demo/wp-content/uploads/2010/07/favicon-contact-info.png</wp:attachment_url>
+								<wp:postmeta>
+		<wp:meta_key>_wp_attached_file</wp:meta_key>
+		<wp:meta_value><![CDATA[2010/07/favicon-contact-info.png]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>_wp_attachment_metadata</wp:meta_key>
+		<wp:meta_value><![CDATA[a:5:{s:5:"width";s:3:"110";s:6:"height";s:3:"110";s:14:"hwstring_small";s:22:"height='96' width='96'";s:4:"file";s:32:"2010/07/favicon-contact-info.png";s:10:"image_meta";a:10:{s:8:"aperture";s:1:"0";s:6:"credit";s:0:"";s:6:"camera";s:0:"";s:7:"caption";s:0:"";s:17:"created_timestamp";s:1:"0";s:9:"copyright";s:0:"";s:12:"focal_length";s:1:"0";s:3:"iso";s:1:"0";s:13:"shutter_speed";s:1:"0";s:5:"title";s:0:"";}}]]></wp:meta_value>
+		</wp:postmeta>
+							</item>
+		<item>
+		<title>Slide1</title>
+		<link>http://dukapress.org/demo/2010/07/digital-product/slide1/</link>
+		<pubDate>Wed, 28 Jul 2010 17:04:47 +0000</pubDate>
+		<dc:creator><![CDATA[DukaPress]]></dc:creator>
+		
+		<guid isPermaLink="false">http://dukapress.org/demo/wp-content/uploads/2010/07/Slide1.gif</guid>
+		<description></description>
+		<content:encoded><![CDATA[]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>73</wp:post_id>
+		<wp:post_date>2010-07-28 20:04:47</wp:post_date>
+		<wp:post_date_gmt>2010-07-28 17:04:47</wp:post_date_gmt>
+		<wp:comment_status>open</wp:comment_status>
+		<wp:ping_status>open</wp:ping_status>
+		<wp:post_name>slide1</wp:post_name>
+		<wp:status>inherit</wp:status>
+		<wp:post_parent>71</wp:post_parent>
+		<wp:menu_order>0</wp:menu_order>
+		<wp:post_type>attachment</wp:post_type>
+		<wp:post_password></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+				<wp:attachment_url>http://dukapress.org/demo/wp-content/uploads/2010/07/Slide1.gif</wp:attachment_url>
+								<wp:postmeta>
+		<wp:meta_key>_wp_attached_file</wp:meta_key>
+		<wp:meta_value><![CDATA[2010/07/Slide1.gif]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>_wp_attachment_metadata</wp:meta_key>
+		<wp:meta_value><![CDATA[a:6:{s:5:"width";s:3:"490";s:6:"height";s:3:"340";s:14:"hwstring_small";s:23:"height='88' width='128'";s:4:"file";s:18:"2010/07/Slide1.gif";s:5:"sizes";a:3:{s:9:"thumbnail";a:3:{s:4:"file";s:18:"Slide1-150x150.gif";s:5:"width";s:3:"150";s:6:"height";s:3:"150";}s:6:"medium";a:3:{s:4:"file";s:18:"Slide1-300x208.gif";s:5:"width";s:3:"300";s:6:"height";s:3:"208";}s:14:"post-thumbnail";a:3:{s:4:"file";s:18:"Slide1-490x198.gif";s:5:"width";s:3:"490";s:6:"height";s:3:"198";}}s:10:"image_meta";a:10:{s:8:"aperture";s:1:"0";s:6:"credit";s:0:"";s:6:"camera";s:0:"";s:7:"caption";s:0:"";s:17:"created_timestamp";s:1:"0";s:9:"copyright";s:0:"";s:12:"focal_length";s:1:"0";s:3:"iso";s:1:"0";s:13:"shutter_speed";s:1:"0";s:5:"title";s:0:"";}}]]></wp:meta_value>
+		</wp:postmeta>
+							</item>
+		<item>
+		<title>Digital Product</title>
+		<link>http://dukapress.org/demo/2010/07/digital-product/</link>
+		<pubDate>Wed, 28 Jul 2010 17:23:38 +0000</pubDate>
+		<dc:creator><![CDATA[DukaPress]]></dc:creator>
+		
+		<category><![CDATA[Digital]]></category>
+
+		<category domain="category" nicename="digital"><![CDATA[Digital]]></category>
+
+		<guid isPermaLink="false">http://dukapress.org/demo/?p=71</guid>
+		<description></description>
+		<content:encoded><![CDATA[[dpsc_display_product]
+
+DukaPress is an open source and free to use e-commerce platform. With DukaPress you can quickly and easily set up a fully featured online shop which can be used to sell digital or physical goods to customers all over the world.]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>71</wp:post_id>
+		<wp:post_date>2010-07-28 20:23:38</wp:post_date>
+		<wp:post_date_gmt>2010-07-28 17:23:38</wp:post_date_gmt>
+		<wp:comment_status>open</wp:comment_status>
+		<wp:ping_status>open</wp:ping_status>
+		<wp:post_name>digital-product</wp:post_name>
+		<wp:status>publish</wp:status>
+		<wp:post_parent>0</wp:post_parent>
+		<wp:menu_order>0</wp:menu_order>
+		<wp:post_type>post</wp:post_type>
+		<wp:post_password></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+								<wp:postmeta>
+		<wp:meta_key>_edit_last</wp:meta_key>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>_edit_lock</wp:meta_key>
+		<wp:meta_value><![CDATA[1280337820]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>price</wp:meta_key>
+		<wp:meta_value><![CDATA[9]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>digital_file</wp:meta_key>
+		<wp:meta_value><![CDATA[dukapress.zip]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>_wp_old_slug</wp:meta_key>
+		<wp:meta_value><![CDATA[]]></wp:meta_value>
+		</wp:postmeta>
+							</item>
+		<item>
+		<title>Peas</title>
+		<link>http://dukapress.org/demo/2010/07/pea-earings/attachment/0714101632/</link>
+		<pubDate>Thu, 29 Jul 2010 19:37:59 +0000</pubDate>
+		<dc:creator><![CDATA[DukaPress]]></dc:creator>
+		
+		<guid isPermaLink="false">http://dukapress.org/demo/wp-content/uploads/2010/07/0714101632.jpg</guid>
+		<description></description>
+		<content:encoded><![CDATA[]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>76</wp:post_id>
+		<wp:post_date>2010-07-29 22:37:59</wp:post_date>
+		<wp:post_date_gmt>2010-07-29 19:37:59</wp:post_date_gmt>
+		<wp:comment_status>open</wp:comment_status>
+		<wp:ping_status>open</wp:ping_status>
+		<wp:post_name>0714101632</wp:post_name>
+		<wp:status>inherit</wp:status>
+		<wp:post_parent>75</wp:post_parent>
+		<wp:menu_order>0</wp:menu_order>
+		<wp:post_type>attachment</wp:post_type>
+		<wp:post_password></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+				<wp:attachment_url>http://dukapress.org/demo/wp-content/uploads/2010/07/0714101632.jpg</wp:attachment_url>
+								<wp:postmeta>
+		<wp:meta_key>_wp_attached_file</wp:meta_key>
+		<wp:meta_value><![CDATA[2010/07/0714101632.jpg]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>_wp_attachment_metadata</wp:meta_key>
+		<wp:meta_value><![CDATA[a:6:{s:5:"width";s:3:"960";s:6:"height";s:4:"1280";s:14:"hwstring_small";s:22:"height='96' width='72'";s:4:"file";s:22:"2010/07/0714101632.jpg";s:5:"sizes";a:4:{s:9:"thumbnail";a:3:{s:4:"file";s:22:"0714101632-150x150.jpg";s:5:"width";s:3:"150";s:6:"height";s:3:"150";}s:6:"medium";a:3:{s:4:"file";s:22:"0714101632-225x300.jpg";s:5:"width";s:3:"225";s:6:"height";s:3:"300";}s:5:"large";a:3:{s:4:"file";s:23:"0714101632-768x1024.jpg";s:5:"width";s:3:"768";s:6:"height";s:4:"1024";}s:14:"post-thumbnail";a:3:{s:4:"file";s:22:"0714101632-940x198.jpg";s:5:"width";s:3:"940";s:6:"height";s:3:"198";}}s:10:"image_meta";a:10:{s:8:"aperture";s:1:"0";s:6:"credit";s:0:"";s:6:"camera";s:22:"SETi SIM120B 1.3MP YUV";s:7:"caption";s:0:"";s:17:"created_timestamp";s:10:"1279139342";s:9:"copyright";s:0:"";s:12:"focal_length";s:1:"0";s:3:"iso";s:1:"0";s:13:"shutter_speed";s:1:"0";s:5:"title";s:0:"";}}]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>_wp_attachment_image_alt</wp:meta_key>
+		<wp:meta_value><![CDATA[Peas - DukaPress Demo]]></wp:meta_value>
+		</wp:postmeta>
+							</item>
+		<item>
+		<title>Peas</title>
+		<link>http://dukapress.org/demo/2010/07/pea-earings/attachment/0714101631/</link>
+		<pubDate>Thu, 29 Jul 2010 19:38:27 +0000</pubDate>
+		<dc:creator><![CDATA[DukaPress]]></dc:creator>
+		
+		<guid isPermaLink="false">http://dukapress.org/demo/wp-content/uploads/2010/07/0714101631.jpg</guid>
+		<description></description>
+		<content:encoded><![CDATA[]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>77</wp:post_id>
+		<wp:post_date>2010-07-29 22:38:27</wp:post_date>
+		<wp:post_date_gmt>2010-07-29 19:38:27</wp:post_date_gmt>
+		<wp:comment_status>open</wp:comment_status>
+		<wp:ping_status>open</wp:ping_status>
+		<wp:post_name>0714101631</wp:post_name>
+		<wp:status>inherit</wp:status>
+		<wp:post_parent>75</wp:post_parent>
+		<wp:menu_order>0</wp:menu_order>
+		<wp:post_type>attachment</wp:post_type>
+		<wp:post_password></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+				<wp:attachment_url>http://dukapress.org/demo/wp-content/uploads/2010/07/0714101631.jpg</wp:attachment_url>
+								<wp:postmeta>
+		<wp:meta_key>_wp_attached_file</wp:meta_key>
+		<wp:meta_value><![CDATA[2010/07/0714101631.jpg]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>_wp_attachment_metadata</wp:meta_key>
+		<wp:meta_value><![CDATA[a:6:{s:5:"width";s:3:"960";s:6:"height";s:4:"1280";s:14:"hwstring_small";s:22:"height='96' width='72'";s:4:"file";s:22:"2010/07/0714101631.jpg";s:5:"sizes";a:4:{s:9:"thumbnail";a:3:{s:4:"file";s:22:"0714101631-150x150.jpg";s:5:"width";s:3:"150";s:6:"height";s:3:"150";}s:6:"medium";a:3:{s:4:"file";s:22:"0714101631-225x300.jpg";s:5:"width";s:3:"225";s:6:"height";s:3:"300";}s:5:"large";a:3:{s:4:"file";s:23:"0714101631-768x1024.jpg";s:5:"width";s:3:"768";s:6:"height";s:4:"1024";}s:14:"post-thumbnail";a:3:{s:4:"file";s:22:"0714101631-940x198.jpg";s:5:"width";s:3:"940";s:6:"height";s:3:"198";}}s:10:"image_meta";a:10:{s:8:"aperture";s:1:"0";s:6:"credit";s:0:"";s:6:"camera";s:22:"SETi SIM120B 1.3MP YUV";s:7:"caption";s:0:"";s:17:"created_timestamp";s:10:"1279139342";s:9:"copyright";s:0:"";s:12:"focal_length";s:1:"0";s:3:"iso";s:1:"0";s:13:"shutter_speed";s:1:"0";s:5:"title";s:0:"";}}]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>_wp_attachment_image_alt</wp:meta_key>
+		<wp:meta_value><![CDATA[Peas - DukaPress Demo]]></wp:meta_value>
+		</wp:postmeta>
+							</item>
+		<item>
+		<title>Pea Earings</title>
+		<link>http://dukapress.org/demo/2010/07/pea-earings/</link>
+		<pubDate>Thu, 29 Jul 2010 19:41:02 +0000</pubDate>
+		<dc:creator><![CDATA[DukaPress]]></dc:creator>
+		
+		<category><![CDATA[Products]]></category>
+
+		<category domain="category" nicename="products"><![CDATA[Products]]></category>
+
+		<guid isPermaLink="false">http://dukapress.org/demo/?p=75</guid>
+		<description></description>
+		<content:encoded><![CDATA[[dpsc_display_product]
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tristique eleifend consectetur. Proin molestie ultricies vehicula. Suspendisse tempus pellentesque mi in commodo. Curabitur bibendum urna non ipsum accumsan iaculis. Nulla porttitor consectetur orci, vitae ullamcorper metus sodales ac. Nulla eleifend sapien non felis vulputate elementum in vel nunc. Lorem ipsum dolor sit amet, consectetur adipiscing elit.]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>75</wp:post_id>
+		<wp:post_date>2010-07-29 22:41:02</wp:post_date>
+		<wp:post_date_gmt>2010-07-29 19:41:02</wp:post_date_gmt>
+		<wp:comment_status>closed</wp:comment_status>
+		<wp:ping_status>closed</wp:ping_status>
+		<wp:post_name>pea-earings</wp:post_name>
+		<wp:status>publish</wp:status>
+		<wp:post_parent>0</wp:post_parent>
+		<wp:menu_order>0</wp:menu_order>
+		<wp:post_type>post</wp:post_type>
+		<wp:post_password></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+								<wp:postmeta>
+		<wp:meta_key>_edit_lock</wp:meta_key>
+		<wp:meta_value><![CDATA[1280432463]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>_edit_last</wp:meta_key>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>currently_in_stock</wp:meta_key>
+		<wp:meta_value><![CDATA[199]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>dropdown_option</wp:meta_key>
+		<wp:meta_value><![CDATA[Size|Small|Medium;10.00|Large;18.00]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>item_weight</wp:meta_key>
+		<wp:meta_value><![CDATA[50]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>price</wp:meta_key>
+		<wp:meta_value><![CDATA[25]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>_wp_old_slug</wp:meta_key>
 		<wp:meta_value><![CDATA[]]></wp:meta_value>
 		</wp:postmeta>
 							</item>
