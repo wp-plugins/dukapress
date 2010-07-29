@@ -19,6 +19,8 @@
 
 .dpsc_grid_product p, .dpsc_grid_product .product_form input  {margin: 0px!important;}
 
+span.was {text-decoration: line-through;}
+
 table.shoppingcart {
 border-color:#CCCCCC;
 border-style:solid;
