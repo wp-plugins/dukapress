@@ -46,6 +46,14 @@ View a DukaPress Demo Shop: [DukaPress Demo](http://dukapress.org/demo/ "Your fa
 
 'Duka' is the Swahili word for shop.  Loosely, DukaPress means "shoppress".  We like to think it means the most complete and usable e-commerce solution for wordpress, though.
 
+= Why isn't the Grid Display working? =
+
+You currently HAVE to have at least one custom field per prodct in order for those products to show up in the grid display properly.
+
+= Why isn't the "Inquiry"/"Catalogue mode" working properly? =
+
+Right now, it works very similarly to the regular shop mode - i.e. when people click on the "Inquire" button, it adds the product(s) to the shopping cart.  When the site vistors go to checkout, they will then be presented with a form which they fill to inquire about products in the cart.  You therefore HAVE to have your shopping cart widget displaying somewhere for the "Inquire" button to work.
+
 
 == Screenshots ==
 
