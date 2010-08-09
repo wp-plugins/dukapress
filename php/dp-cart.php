@@ -651,7 +651,7 @@ function dpsc_on_payment_save($dpsc_total = FALSE, $dpsc_shipping_value = FALSE,
                 Postal Code: ' . $szip . '<br/>
                 Country: ' . $scountry . '<br/><br/>
 
-                --
+                --<br/><br/>
                 Warm regards,<br/><br/>' . $dp_shopping_cart_settings['shop_name'];
     $to = get_option('admin_email');
     dpsc_pnj_send_mail($to, $to, 'DukaPress Order Notification', $subject, $message);
