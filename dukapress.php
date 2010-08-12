@@ -100,7 +100,7 @@ else {
         default:
             break;
     }
-    $tim_url = DP_PLUGIN_URL . '/lib/rt-timthumb.php?src=';
+    $tim_url = DP_PLUGIN_URL . '/lib/timthumb.php?src=';
     $tim_end = '&w=310&h=383&zc=1';
     wp_enqueue_script('dpsc_js_file', DP_PLUGIN_URL . '/js/dukapress.js', array('jquery'));
     wp_localize_script( 'dpsc_js_file', 'dpsc_js', array( 'tim_url' => $tim_url, 'tim_end' => $tim_end ) );
@@ -1233,13 +1233,13 @@ function dp_pnj_mz_effect($attachment_images, $product_id) {
         if ($count === 0) {
             $main_image = $image->guid;
         }
-        $output .= '<li><a class="dpsc_thumb_tab" href="' . $image->guid . '"><img src="' . DP_PLUGIN_URL . '/lib/rt-timthumb.php?src=' . $image->guid . '&w=50&h=63&zc=1" ></a></li>';
+        $output .= '<li><a class="dpsc_thumb_tab" href="' . $image->guid . '"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $image->guid . '&w=50&h=63&zc=1" ></a></li>';
         $count++;
     }
     $output .= '</ul>';
     $output .= '</div>';
     $output .= '<div class="dpsc_main_image">';
-    $output .= '<a href="' . $main_image . '" class="MagicZoom" id="zoom1" rel="show-title: false; zoom-fade: true; zoom-position: inner; thumb-change: mouseover"><img src="' . DP_PLUGIN_URL . '/lib/rt-timthumb.php?src=' . $main_image . '&w=310&h=383&zc=1" ></a>';
+    $output .= '<a href="' . $main_image . '" class="MagicZoom" id="zoom1" rel="show-title: false; zoom-fade: true; zoom-position: inner; thumb-change: mouseover"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $main_image . '&w=310&h=383&zc=1" ></a>';
     $output .= '</div>';
     $output .= '</div>';
     return $output;
@@ -1254,13 +1254,13 @@ function dp_pnj_mzp_effect($attachment_images, $product_id) {
         if ($count === 0) {
             $main_image = $image->guid;
         }
-        $output .= '<li><a class="dpsc_thumb_tab" href="' . $image->guid . '"><img src="' . DP_PLUGIN_URL . '/lib/rt-timthumb.php?src=' . $image->guid . '&w=50&h=63&zc=1" ></a></li>';
+        $output .= '<li><a class="dpsc_thumb_tab" href="' . $image->guid . '"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $image->guid . '&w=50&h=63&zc=1" ></a></li>';
         $count++;
     }
     $output .= '</ul>';
     $output .= '</div>';
     $output .= '<div class="dpsc_main_image">';
-    $output .= '<a href="' . $main_image . '" class="MagicZoom MagicThumb" id="zoom1" rel="show-title: false; zoom-fade: true; zoom-position: inner; thumb-change: mouseover"><img src="' . DP_PLUGIN_URL . '/lib/rt-timthumb.php?src=' . $main_image . '&w=310&h=383&zc=1" ></a>';
+    $output .= '<a href="' . $main_image . '" class="MagicZoom MagicThumb" id="zoom1" rel="show-title: false; zoom-fade: true; zoom-position: inner; thumb-change: mouseover"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $main_image . '&w=310&h=383&zc=1" ></a>';
     $output .= '</div>';
     $output .= '</div>';
     return $output;
@@ -1275,13 +1275,13 @@ function dp_pnj_lightbox_effect($attachment_images, $product_id) {
         if ($count === 0) {
             $main_image = $image->guid;
         }
-        $output .= '<li><a class="dpsc_thumb_tab fancybox" id="' . $product_id . '" rel="imgGroup" href="' . $image->guid . '"><img src="' . DP_PLUGIN_URL . '/lib/rt-timthumb.php?src=' . $image->guid . '&w=50&h=63&zc=1" ></a></li>';
+        $output .= '<li><a class="dpsc_thumb_tab fancybox" id="' . $product_id . '" rel="imgGroup" href="' . $image->guid . '"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $image->guid . '&w=50&h=63&zc=1" ></a></li>';
         $count++;
     }
     $output .= '</ul>';
     $output .= '</div>';
     $output .= '<div class="dpsc_main_image main_' . $product_id . '">';
-    $output .= '<a href="' . $main_image . '" class="fancybox theProdMedia theProdMedia_alt"  rel="imgGroup"><img src="' . DP_PLUGIN_URL . '/lib/rt-timthumb.php?src=' . $main_image . '&w=310&h=383&zc=1" ></a>';
+    $output .= '<a href="' . $main_image . '" class="fancybox theProdMedia theProdMedia_alt"  rel="imgGroup"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $main_image . '&w=310&h=383&zc=1" ></a>';
     $output .= '</div>';
     $output .= '</div>';
     return $output;
@@ -1296,13 +1296,13 @@ function dp_pnj_no_effect($attachment_images, $product_id) {
         if ($count === 0) {
             $main_image = $image->guid;
         }
-        $output .= '<li><a class="dpsc_thumb_tab" href="' . $image->guid . '"><img src="' . DP_PLUGIN_URL . '/lib/rt-timthumb.php?src=' . $image->guid . '&w=50&h=63&zc=1" ></a></li>';
+        $output .= '<li><a class="dpsc_thumb_tab" href="' . $image->guid . '"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $image->guid . '&w=50&h=63&zc=1" ></a></li>';
         $count++;
     }
     $output .= '</ul>';
     $output .= '</div>';
     $output .= '<div class="dpsc_main_image">';
-    $output .= '<img src="' . DP_PLUGIN_URL . '/lib/rt-timthumb.php?src=' . $main_image . '&w=310&h=383&zc=1" >';
+    $output .= '<img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $main_image . '&w=310&h=383&zc=1" >';
     $output .= '</div>';
     $output .= '</div>';
     return $output;
@@ -4036,7 +4036,7 @@ function dpsc_pnj_grid_display($atts, $content=null) {
                 $prod_permalink = get_permalink($product->ID);
                 $content .= '<div class="dpsc_grid_product">';
                 $content .= '<div class="dpsc_grid_product_image">';
-                $content .= '<a href="' . $prod_permalink . '" title="' .$product->post_title . '"><img src="' . DP_PLUGIN_URL . '/lib/rt-timthumb.php?src=' . $main_image . '&w=160&h=120&zc=1" ></a>';
+                $content .= '<a href="' . $prod_permalink . '" title="' .$product->post_title . '"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $main_image . '&w=160&h=120&zc=1" ></a>';
                 $content .= '</div>';
                 $content .= '<div class="dpsc_grid_product_detail">';
                 $content .= '<p class="title"><a href="' . $prod_permalink . '" title="' .$product->post_title . '">' . $product->post_title . '</a></p>';
