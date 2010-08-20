@@ -66,6 +66,7 @@ Right now, it works very similarly to the regular shop mode - i.e. when people c
 * Added support for custom post types
 * Added GUI to product management so that one does not have to use custom fields
 * Fixed a bug whereby one could not update the number of itens in the cart on the checkout page
+* Fixed some wordings on the emails that DukaPress sends out
 
 = 1.0.1 =
 * Added pagination to Grid View
