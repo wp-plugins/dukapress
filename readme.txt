@@ -5,8 +5,8 @@ Tags: shopping cart, web shop, cart, shop, Worldpay, Paypal, Alertpay, paypal, e
 
 online duka, duka, online shop
 Requires at least: 2.9.2
-Tested up to: 3.0
-Stable tag: 1.0.1
+Tested up to: 3.0.1
+Stable tag: 1.2.0
 
 DukaPress is an open source e-commerce solution built for Wordpress.
 
@@ -26,6 +26,7 @@ Main Features:
 * Elegant discount coupon management;
 * A myriad of shipping processing options;
 * Printable invoices;
+* Custom GUI (Graphical User Interface) for product management;
 
 View more features: [DukaPress](http://dukapress.org/ "Your favorite e-commerce software")
 
@@ -61,16 +62,23 @@ Right now, it works very similarly to the regular shop mode - i.e. when people c
 
 == Changelog ==
 
+= 1.2.0 =
+* Added support for custom post types
+* Added GUI to product management so that one does not have to use custom fields
+* Fixed a bug whereby one could not update the number of itens in the cart on the checkout page
+
 = 1.0.1 =
 * Added pagination to Grid View
 * Fixed a bug affecting stock/inventory management- buyers now cannot buy out of stock items
 * A bit of the code is now modularised
 
-
 = 1.0 =
 * Initial Release
 
 == Upgrade Notice ==
+
+= 1.2.0 =
+If you did not love us before today, then you simply must have a look at our offerings!  Intorducing a custom product management GUI and support for custom fields. 
 
 = 1.0.1 =
 DukaPress just got better!  We fixed some bugs and added one new feature. Yay!
