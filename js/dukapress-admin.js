@@ -35,4 +35,76 @@ jQuery(document).ready(function () {
             }
         });
     });
+
+    jQuery('#dp_addVariation').click(function(){
+        jQuery(dp_addVariation);
+        jQuery('input[name=varitaionnumber]').val(current);
+
+    });
+
+    jQuery('#dp_deletestring a').click(function(){
+        var postid=jQuery("#post_ID").val();
+        var currentId = jQuery(this).attr('id');
+        var mix="#delete"+currentId;
+        var substring=jQuery(mix).val();
+
+         jQuery.ajax({
+            type: "POST",
+            url: ajaxurl,
+            data:'action=delete_variationdata&name='+substring+'&postid='+postid,
+            success:function(msg)
+            {
+                jQuery("#result").html(msg);
+            }
+        });
+
+
+  });
+
+    jQuery('#dp_save').click(function(){
+        var i;
+        var actionstring='';
+
+        var counter=jQuery("#varitaionnumber").val();
+        var postid=jQuery("#post_ID").val();
+        var oname=jQuery('#optionname').val();
+         actionstring+='optionname='+oname+'&counter='+counter;
+        for(i=1;i<=counter;i++)
+        {
+            var vname='';
+            var vprice='';
+            vname=jQuery('#vname'+i).val();
+            vprice=jQuery('#vprice'+i).val();
+            actionstring+=('&vname'+i+'='+vname+'&vprice'+i+'='+vprice);
+        }
+
+        //alert(actionstring);
+        jQuery.ajax({
+            type: "POST",
+            url: ajaxurl,
+            data:'action=save_variationdata&'+actionstring+'&postid='+postid,
+            success:function(msg)
+            {
+                jQuery('#dp_var_fields').html('');
+                jQuery('#optionname').val('');
+                jQuery('#vname1').val('');
+                jQuery('#vprice1').val('');
+                jQuery("#result").html(msg);
+            }
+        });
+
+    });
 });
+
+var current = 1;
+
+function dp_addVariation() {
+    current++;
+    var strToAdd = '<p><label for="vname'+current+'">Variation Name</label><input id="vname'+current+'" name="vname'+current+'" size="15" />';
+
+    strToAdd += '<p><label for="vprice'+current+'">Variation price</label>\n\
+    <input id="vprice'+current+'" name="vprice'+current+'" size="15" /></p>';
+    jQuery('#dp_var_fields').append(strToAdd);
+    return current;
+
+}

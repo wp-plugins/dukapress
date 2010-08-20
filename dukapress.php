@@ -2,7 +2,7 @@
 /*
 Plugin Name: DukaPress Shopping Cart
 Description: DukaPress Shopping Cart
-Version: 1.0.1
+Version: 1.2.0
 Author: Parshwa Nemi Jain and Nickel Pro
 Author URI: http://dukapress.org/
 Plugin URI: http://dukapress.org/
@@ -16,8 +16,8 @@ require_once('php/dp-payment.php');
 session_start();
 define('DP_PLUGIN_URL', WP_PLUGIN_URL.'/'.dirname(plugin_basename(__FILE__)));
 define('DP_PLUGIN_DIR', WP_PLUGIN_DIR.'/'.dirname(plugin_basename(__FILE__)));
-define( 'DP_DOWNLOAD_FILES_DIR', WP_CONTENT_DIR. '/uploads/dpsc_download_files/' );
-define( 'DP_DOWNLOAD_FILES_DIR_TEMP', WP_CONTENT_DIR. '/uploads/dpsc_temp_download_files/' );
+define('DP_DOWNLOAD_FILES_DIR', WP_CONTENT_DIR. '/uploads/dpsc_download_files/' );
+define('DP_DOWNLOAD_FILES_DIR_TEMP', WP_CONTENT_DIR. '/uploads/dpsc_temp_download_files/' );
 
 /**
  * This function shows Transaction Widget on Dashboard
@@ -65,7 +65,7 @@ function dp_dashboard_transactions() {
  */
 add_action('admin_menu', 'dp_pnj_create_admin_menu');
 function dp_pnj_create_admin_menu() {
-    add_object_page('DukaPress', 'DukaPress', 'manage_options', 'dukapress-shopping-cart-order-log', '');
+    add_object_page('DukaPress', 'DukaPress', 'manage_options', 'dukapress-shopping-cart-order-log', '', DP_PLUGIN_URL . '/images/dp_icon.png');
     add_submenu_page('dukapress-shopping-cart-order-log', 'DukaPress Order Log', 'Order Log', 'manage_options', 'dukapress-shopping-cart-order-log', 'dukapress_shopping_cart_order_log');
     add_submenu_page('dukapress-shopping-cart-order-log', 'DukaPress Settings', 'Settings', 'manage_options', 'dukapress-shopping-cart-settings', 'dukapress_shopping_cart_setting');
 }
@@ -102,14 +102,15 @@ else {
 
         case 'no_effect':
             break;
-        
+
         default:
             break;
     }
     $tim_url = DP_PLUGIN_URL . '/lib/timthumb.php?src=';
     $tim_end = '&w=310&h=383&zc=1';
+    $dpsc_site_url = get_bloginfo('url');
     wp_enqueue_script('dpsc_js_file', DP_PLUGIN_URL . '/js/dukapress.js', array('jquery'));
-    wp_localize_script( 'dpsc_js_file', 'dpsc_js', array( 'tim_url' => $tim_url, 'tim_end' => $tim_end ) );
+    wp_localize_script( 'dpsc_js_file', 'dpsc_js', array( 'tim_url' => $tim_url, 'tim_end' => $tim_end, 'dpsc_url' => $dpsc_site_url) );
     wp_enqueue_script('dpsc_livequery',DP_PLUGIN_URL.'/js/jquery.livequery.js',array('jquery'));
 }
 
@@ -247,8 +248,8 @@ function dukapress_shopping_cart_order_log() {
                 }
                 $to = $result->billing_email;
                 $from = get_option('admin_email');
-                dpsc_pnj_send_mail($to, $from, $dp_shopping_cart_settings['shop_name'], $subject, $message);
-                dpsc_pnj_send_mail($from, $to, $dp_shopping_cart_settings['shop_name'], $subject, $subject);
+                dpsc_pnj_send_mail($to, $from, 'DukaPress Payment Notification', $subject, $message);
+                dpsc_pnj_send_mail($from, $to, 'DukaPress Payment Notification', $subject, $subject);
             }
             ?>
 <h3>Transaction Details for Invoice No. <?php echo $result->invoice;?></h3>
@@ -735,7 +736,7 @@ function dukapress_shopping_cart_setting() {
                     </tr>
                 </table>
         </div>
-        
+
     </div>
 
     <div id="po" class="tabdiv dukapress-settings">
@@ -904,7 +905,7 @@ function dukapress_shopping_cart_setting() {
         </div>
 
     </div>
-    
+
     <div id="discount" class="tabdiv">
         <table class="form-table">
             <tr>
@@ -1112,7 +1113,7 @@ function dpsc_pnj_update_download_table($temp_name, $file_name) {
  *
  */
 function dpsc_pnj_send_mail($to, $from, $name, $subject, $msg, $attachment = FALSE) {
-    global $wpdb;    
+    global $wpdb;
     $headers  = 'MIME-Version: 1.0' . "\r\n";
     $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
     $headers .= 'From: ' . $name . ' <' . $from . '>' . "\r\n";
@@ -1157,7 +1158,7 @@ function make_pdf($invoice, $dpsc_discount_value, $tax, $dpsc_shipping_value, $d
                 $this->SetFont('Arial', 'B', 12);
 
                 //$url  = get_option('siteurl');
-                $path = DP_PLUGIN_URL . '/pdf/pdf-logo-1.jpg';
+                $path = DP_PLUGIN_URL . '/images/pdf-logo-1.jpg';
                 $this->Image($path);
                 $this->SetXY(90, 7);
                 $this->MultiCell(0, 7, "$biz", 0, 'L');
@@ -1465,6 +1466,12 @@ function dpsc_install() {
     if (!is_dir(DP_DOWNLOAD_FILES_DIR_TEMP)) {
         mkdir(DP_DOWNLOAD_FILES_DIR_TEMP);
         chmod(DP_DOWNLOAD_FILES_DIR_TEMP, 0777);
+    }
+    if(is_dir(DP_PLUGIN_DIR.'/cache')) {
+        chmod(DP_PLUGIN_DIR.'/cache', 0777);
+    }
+    if(is_dir(DP_PLUGIN_DIR.'/pdf')) {
+        chmod(DP_PLUGIN_DIR.'/pdf', 0777);
     }
     $date = date('M-d-Y', strtotime("+1 days"));
     $next_time_stamp = strtotime($date) + 18000;

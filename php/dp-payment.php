@@ -64,6 +64,7 @@ function dpsc_payment_option() {
     }
     $output = str_replace(Array("\n","\r") , Array("\\n","\\r"),addslashes($output));
     echo "jQuery('div#dpsc_hidden_payment_form').html('$output');";
+    dpsc_pnj_calculate_cart_price(TRUE);
     $products = $_SESSION['dpsc_products'];
     foreach ($products as $key => $item) {
         unset($products[$key]);

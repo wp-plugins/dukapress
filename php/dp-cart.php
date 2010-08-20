@@ -20,7 +20,7 @@ function dpsc_add_to_cart() {
     $product_variation_names = '';
     $product_variation_prices = 0.00;
     $product_quantity = isset($_POST['quantity']) ? intval($_POST['quantity']) : 1 ;
-    $product_max_quantity = isset($_POST['max_quantity']) ? $_POST['max_quantity'] : FALSE;
+    $product_max_quantity = isset($_POST['max_quantity']) ? intval($_POST['max_quantity']) : FALSE;
     if ($product_max_quantity) {
         if ($product_quantity > $product_max_quantity) {
             $product_quantity = $product_max_quantity;
@@ -146,8 +146,10 @@ function dpsc_update_quantity() {
         $dpsc_products = $_SESSION['dpsc_products'];
         foreach ($dpsc_products as $key => $item) {
             if ($item['item_number'] === $product_id && $item['var'] === $product_variation_name) {
-                if ($product_quantity > intval($item['max'])) {
+                if (is_numeric($item['max'])) {
+                    if ($product_quantity > $item['max']) {
                     $product_quantity = $item['max'];
+                }
                 }
                 $item['quantity'] = $product_quantity;
                 unset($dpsc_products[$key]);
@@ -311,6 +313,20 @@ function dpsc_print_checkout_table_html($dpsc_discount_value = 0) {
             $content .= $dpsc_product_price_at_end.$dpsc_shipping_total_at_end.$dpsc_tax_total_at_end.$dpsc_discount_total_at_end.$dpsc_total_price_at_the_end;
             $content .= '</table>';
         }
+        if ($_REQUEST['ajax'] === 'true') {
+            $content .= '<script type="text/javascript">jQuery("span.dpsc_delete_discount_code").click(function(){
+                            jQuery("form.product_update").livequery(function(){
+                                    jQuery(this).submit(function() {
+                                        form_values = "ajax=true&";
+                                        form_values += jQuery(this).serialize();
+                                        jQuery.post( "index.php", form_values, function(returned_data) {
+                                            eval(returned_data);
+                                        });
+                                        return false;
+                                    });
+                                });
+                            });</script>';
+    }
     }
     return $content;
 }
@@ -651,7 +667,7 @@ function dpsc_on_payment_save($dpsc_total = FALSE, $dpsc_shipping_value = FALSE,
                 Postal Code: ' . $szip . '<br/>
                 Country: ' . $scountry . '<br/><br/>
 
-                --<br/><br/>
+                --
                 Warm regards,<br/><br/>' . $dp_shopping_cart_settings['shop_name'];
     $to = get_option('admin_email');
     dpsc_pnj_send_mail($to, $to, 'DukaPress Order Notification', $subject, $message);
@@ -663,7 +679,7 @@ function dpsc_on_payment_save($dpsc_total = FALSE, $dpsc_shipping_value = FALSE,
  * This function returns total price, total weight, product information and count
  *
  */
-function dpsc_pnj_calculate_cart_price() {
+function dpsc_pnj_calculate_cart_price($on_payment = FALSE) {
     $dpsc_products = $_SESSION['dpsc_products'];
     if (is_array($dpsc_products) && count($dpsc_products) > 0) {
         $dpsc_total = 0.00;
@@ -684,6 +700,7 @@ function dpsc_pnj_calculate_cart_price() {
             $product['weight'] = $dpsc_product['item_weight'];
             $products[] = $product;
             $in_stock = get_post_meta(intval($dpsc_product['item_number']),'currently_in_stock', true);
+            if ($on_payment) {
             if ($in_stock && intval($in_stock) > 0) {
                 $in_stock = $in_stock - $dpsc_product['quantity'];
                 update_post_meta(intval($dpsc_product['item_number']), 'currently_in_stock', $in_stock);
@@ -699,6 +716,7 @@ function dpsc_pnj_calculate_cart_price() {
                                 -DukaPress Automatic Warning Mail Service';
                     dpsc_pnj_send_mail($to, $from, 'Low Inventory Warning', 'Low Inventory Warning', $message);
                 }
+            }
             }
             if (get_post_meta(intval($dpsc_product['item_number']),'digital_file', true) === '') {
                 $count += $dpsc_product['quantity'];

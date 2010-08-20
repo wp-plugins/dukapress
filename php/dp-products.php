@@ -298,12 +298,13 @@ function dpsc_pnj_grid_display($atts, $content=null) {
             'category' => '1',
             'total' => '12',
             'column' => '3',
-            'per_page' => ''
+            'per_page' => '',
+            'type' => 'post'
             ), $atts));
 
     if (!empty($per_page)) {
         $pagenum = isset($_GET['dpage']) ? $_GET['dpage'] : 1;
-        $count = $total;
+        $count = count(get_posts('numberposts=' . $$total . '&post_type=' . $type . '&meta_key=price&category=' . $category));
         $page_links = paginate_links( array(
             'base' => add_query_arg( 'dpage', '%#%' ),
             'format' => '',
@@ -321,7 +322,7 @@ function dpsc_pnj_grid_display($atts, $content=null) {
         $offset = '';
         $page_links = '';
     }
-    $products = get_posts('numberposts=' . $per_page . '&category=' . $category . $offset);
+    $products = get_posts('numberposts=' . $per_page . '&post_type=' . $type . '&meta_key=price&category=' . $category . $offset);
     if (is_array($products) && count($products) > 0) {
         $content .= '<div class="dpsc_grid_display">';
         $count = 1;
@@ -363,5 +364,287 @@ function dpsc_pnj_grid_display($atts, $content=null) {
     return $content;
 }
 
+/**
+ * Add Meta Box for ease
+ *
+ */
+add_action('submitpost_box', 'dp_add_meta_box');
+add_action('submitpage_box', 'dp_add_meta_box');
 
+function dp_add_meta_box() {
+    add_meta_box('dp_gui_box', 'DukaPress Product options', 'dp_rm_content_visibility_meta_box', 'post', 'side', 'high');
+    add_meta_box('dp_gui_box', 'DukaPress Product options', 'dp_rm_content_visibility_meta_box', 'page', 'side', 'high');
+    add_meta_box('dp_gui_box', 'DukaPress Product options', 'dp_rm_content_visibility_meta_box', 'duka', 'side', 'high');
+}
+
+function dp_rm_content_visibility_meta_box() {
+    $post_id = $_GET['post'];
+    $content_price = get_post_meta($post_id, 'price', true);
+    $new_price = get_post_meta($post_id, 'new_price', true);
+    $content_stock = get_post_meta($post_id, 'currently_in_stock', true);
+    $content_weight = get_post_meta($post_id, 'item_weight', true);
+    $content_file = get_post_meta($post_id, 'digital_file', true);
+    ?>
+    <table>
+        <tr><td><label for="price"><b>Price:</b></label></td><td><input id="price" type="text" name="price" value="<?php echo $content_price; ?>" /></td></tr>
+        <tr><td><label for="new_price"><b>New Price:</b></label></td><td><input id="new_price" type="text" name="new_price" value="<?php echo $new_price; ?>" /></td></tr>
+        <tr><td><label for="currently_in_stock"><b>Currently In Stock:</b></label></td><td><input id="currently_in_stock" type="text" name="currently_in_stock" value="<?php echo $content_stock; ?>" /></td></tr>
+        <tr><td><label for="item_weight"><b>Item Weight:</b></label></td><td><input id="item_weight" type="text" name="item_weight" value="<?php echo $content_weight; ?>" /> (in grams)</td></tr>
+        <tr><td><label for="digital_file"><b>Digital File:</b></label></td><td><input id="digital_file" type="text" name="digital_file" value="<?php echo $content_file; ?>" /></td></tr>
+    </table>
+
+    <b>Dropdown Options</b>
+     <div id="result">
+        <?php echo dp_get_dropdown_option_to_display($post_id); ?>
+     </div>
+
+    <div id="mainField" style="clear:both;">
+        <p>
+            <label for="optionname">Option Name</label>
+            <input id="optionname" name="optionname" size="15" />
+        </p>
+        <p>
+            <label for="vname1">Variation Name</label>
+            <input id="vname1" name="vname1" size="15" />
+        </p>
+        <p>
+            <label for="vprice1">Variation Price</label>
+            <input id="vprice1" name="vprice1" size="15" />
+        </p>
+        <div id="dp_var_fields"></div>
+    </div>
+    <p>
+        <input type="button" id="dp_addVariation" value="+"/>
+        <input type="hidden" name="varitaionnumber" id="varitaionnumber" value="1" />
+        <input type="button" id="dp_save" value="save"/>
+    </p>
+
+    <?php
+}
+
+/**
+ * This function displays the varitions.
+ *
+ */
+function dp_get_dropdown_option_to_display($post_id) {
+    $content_opname = get_post_meta($post_id, 'dropdown_option', true);
+    $show_state_result = '';
+
+    if ($content_opname) {
+
+        $optionnames = explode("||", $content_opname);
+
+        foreach ($optionnames as $optionname) {
+            $j++;
+            $optionname1 = explode("|", $optionname);
+            $show_state_result.=' <div style="border:1px solid;clear:both;width:250px;word-wrap: break-word">';
+            $show_state_result.= '<p><b>' . ($optionname1[0]) . '</b></p>';
+            for ($i = 1; $optionname1[$i]; $i++) {
+                $show_state_result.='<div style="float:left;width:200px;clear:both">';
+                $optionname2 = explode(";", $optionname1[$i]);
+                foreach ($optionname2 as $value) {
+                    $show_state_result.= '<div style="width:90px;float:left">' . $value . '</div>';
+                }
+                $show_state_result.='</div>';
+            }
+
+            $show_state_result.='
+                    <div id="dp_deletestring"><a href="#" id="' . $j . '">Delete</a>
+                        <input id="delete' . $j . '" name="delete' . $j . '" type="hidden" value="' . $optionname . '" />
+                      </div>
+                    <div style="clear:both"></div></div>';
+        }
+    }
+    return $show_state_result;
+}
+
+/**
+ * This function saves the meta box details.
+ *
+ */
+add_action('save_post', 'dp_save_meta_box');
+
+function dp_save_meta_box($post_id) {
+// verify if this is an auto save routine.
+    $content_counter = 1;
+    //$content_opname='';
+    $varition_type = '';
+
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
+        return $post_id;
+
+    // Check permissions
+    if ('page' == $_POST['post_type']) {
+        if (!current_user_can('edit_page', $post_id))
+            return $post_id;
+    }else {
+        if (!current_user_can('edit_post', $post_id))
+            return $post_id;
+    }
+
+    // for price
+    if (NULL == $_POST['price']) {
+        //do nothing
+    } else {
+        $content_price = $_POST['price'];
+
+        update_post_meta($post_id, 'price', $content_price);
+    }
+
+    // for new price
+     if (NULL == $_POST['new_price']) {
+        //do nothing
+    } else {
+        $content_price = $_POST['new_price'];
+
+        update_post_meta($post_id, 'new_price', $content_price);
+    }
+
+    // for stocks
+    if (NULL == $_POST['currently_in_stock']) {
+        //do nothing
+    } else {
+        $content_stock = $_POST['currently_in_stock'];
+        update_post_meta($post_id, 'currently_in_stock', $content_stock);
+    }
+
+    // for weights
+    if (NULL == $_POST['item_weight']) {
+        //do nothing
+    } else {
+        $content_weight = $_POST['item_weight'];
+        update_post_meta($post_id, 'item_weight', $content_weight);
+    }
+
+    //for file
+    if (NULL == $_POST['digital_file']) {
+        //do nothing
+    } else {
+        $content_file = $_POST['digital_file'];
+        update_post_meta($post_id, 'digital_file', $content_file);
+    }
+
+    // for option name
+    if (NULL == $_POST['varitaionnumber']) {
+        //do nothing
+    } else {
+        $content_counter = $_POST['varitaionnumber'];
+        update_post_meta($post_id, '_Content_Counter', $content_counter);
+    }
+}
+
+/**
+ * This function saves variations.
+ *
+ */
+add_action('wp_ajax_save_variationdata', 'dp_rm_varition_save_data');
+
+function dp_rm_varition_save_data() {
+
+    if ($_POST && $_POST['action'] == "save_variationdata") {
+        $counter = $_POST['counter'];
+        $postid = $_POST['postid'];
+        $prev_option = get_post_meta($postid, 'dropdown_option', true);
+
+// making || in each option name
+
+        if ($prev_option) {
+            $prev_option_new = $prev_option;
+            $varition_type .= $prev_option_new . '||';
+        }
+
+// check for the validation that, option name should not be null
+        if($_POST['optionname'])
+        {
+            $varition_type.=$_POST['optionname'] . '|';
+            for ($i = 1; $i <= $counter; $i++)
+            {
+                   if($_POST['vname' . $i])
+                       {
+                          if($_POST['vprice' . $i]==null)
+                              {
+                                 $varition_type.=$_POST['vname' . $i] . ';' . '0' . '|';
+                              }
+                              else
+                              {
+                               $varition_type.=$_POST['vname' . $i] . ';' . $_POST['vprice' . $i] . '|';
+                              }
+
+                        }
+            }
+            $varition_type = substr($varition_type, 0, ($len - 1));
+            update_post_meta($postid, 'dropdown_option', $varition_type);
+        }
+        else
+        {
+            echo "Enter the variation data";
+        }
+        $prev_option = get_post_meta($postid, 'dropdown_option'); ?>
+        <div style="clear:both;width:250px;word-wrap: break-word">
+            <!--for showing the data -->
+              <?php echo dp_get_dropdown_option_to_display($postid); ?>
+        </div>
+        <?php  die();
+        }
+}
+
+/**
+ * This function deletes variations.
+ *
+ */
+add_action('wp_ajax_delete_variationdata', 'dp_rm_varition_delete_data');
+function dp_rm_varition_delete_data() {
+     if($_POST && $_POST['action'] == "delete_variationdata")
+     {
+        $postid = $_POST['postid'];
+        $substr=  $_POST['name'];
+       // echo $substr;
+
+        $delete_prev_option = get_post_meta($postid, 'dropdown_option', true);
+        $result_string=str_replace($substr,'',$delete_prev_option);
+        $result_string=str_replace("||||","||",$result_string);
+        if($result_string=="||")
+        {
+            $result_string='';
+        }
+        update_post_meta($postid, 'dropdown_option', $result_string);
+        echo dp_get_dropdown_option_to_display($postid);
+       //var_dump($result_string);
+     }
+     die();
+}
+
+add_action( 'init', 'dp_create_post_type' );
+
+function dp_create_post_type() {
+    register_post_type('duka', array(
+	'labels' => array(
+            'name' => __( 'Products' ),
+            'singular_name' => __( 'Product' ),
+            'add_new' => __( 'Add New Product' ),
+            'add_new_item' => __( 'Add New Product' ),
+            'edit' => __( 'Edit' ),
+            'edit_item' => __( 'Edit Product' ),
+            'new_item' => __( 'New Product' ),
+            'view' => __( 'View Product' ),
+            'view_item' => __( 'View Product' ),
+            'search_items' => __( 'Search Products' ),
+            'not_found' => __( 'No products found' ),
+            'not_found_in_trash' => __( 'No products found in Trash' )
+        ),
+        'description' => __('Products for use with DukaPress'),
+	'public' => true,
+	'show_ui' => true,
+	'capability_type' => 'post',
+        'taxonomies' => array( 'category', 'post_tag'),
+        'menu_position' => 30,
+        'publicly_queryable' => true,
+        'exclude_from_search' => false,
+        'query_var' => true,
+	'hierarchical' => false,
+        'menu_icon' => DP_PLUGIN_URL . '/images/dp_icon.png',
+	'rewrite' => array('slug' => 'products', 'with_front' => false),
+	'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments', 'custom-fields', 'posts', 'revisions', 'trackbacks' )
+    ));
+}
 ?>
