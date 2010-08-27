@@ -56,6 +56,14 @@ You currently HAVE to have at least one custom field per prodct in order for tho
 Right now, it works very similarly to the regular shop mode - i.e. when people click on the "Inquire" button, it adds the product(s) to the shopping cart.  When the site vistors go to checkout, they will then be presented with a form which they fill to inquire about products in the cart.  You therefore HAVE to have your shopping cart widget displaying somewhere for the "Inquire" button to work.
 
 
+= Why is nothing happening when I press "Add to cart"?  Why is the AJAX not working? =
+
+The cart should be inside DIV with class="dpsc-shopping-cart".
+
+Just put the cart code inside DIV tags to look like: 
+<div class="dpsc-shopping-cart">cart code</div>
+
+
 == Screenshots ==
 
 [View Screenshots](http://www.flickr.com/photos/moshthepitt/sets/72157624534741496/ "DukaPress screenshots")
