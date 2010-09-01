@@ -1,7 +1,7 @@
 === DukaPress ===
 Contributors: parshwa, moshthepitt
 Donate link: http://dukapress.org/about/
-Tags: shopping cart, web shop, cart, shop, Worldpay, Paypal, Alertpay, paypal, e-commerce, ecommerce, MPESA, ZAP, yuCash, Mobile Payments, 
+Tags: shopping cart, web shop, cart, shop, Worldpay, Paypal, Alertpay, paypal, e-commerce, ecommerce, MPESA, ZAP, yuCash, Mobile Payments,
 
 online duka, duka, online shop
 Requires at least: 2.9.2
@@ -38,7 +38,7 @@ View a DukaPress Demo Shop: [DukaPress Demo](http://dukapress.org/demo/ "Your fa
 
 1. Upload the DukaPress folder to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
-1. After this, visit the [DukaPress documentation](http://dukapress.org/docs/ "DukaPress documentation") 
+1. After this, visit the [DukaPress documentation](http://dukapress.org/docs/ "DukaPress documentation")
 
 
 == Frequently Asked Questions ==
@@ -54,6 +54,14 @@ You currently HAVE to have at least one custom field per prodct in order for tho
 = Why isn't the "Inquiry"/"Catalogue mode" working properly? =
 
 Right now, it works very similarly to the regular shop mode - i.e. when people click on the "Inquire" button, it adds the product(s) to the shopping cart.  When the site vistors go to checkout, they will then be presented with a form which they fill to inquire about products in the cart.  You therefore HAVE to have your shopping cart widget displaying somewhere for the "Inquire" button to work.
+
+
+= Why is nothing happening when I press "Add to cart"?  Why is the AJAX not working? =
+
+The cart should be inside DIV with class="dpsc-shopping-cart".
+
+Just put the cart code inside DIV tags to look like:
+<div class="dpsc-shopping-cart">cart code</div>
 
 
 == Screenshots ==
@@ -79,7 +87,7 @@ Right now, it works very similarly to the regular shop mode - i.e. when people c
 == Upgrade Notice ==
 
 = 1.2.0 =
-If you did not love us before today, then you simply must have a look at our offerings!  Intorducing a custom product management GUI and support for custom fields. 
+If you did not love us before today, then you simply must have a look at our offerings!  Intorducing a custom product management GUI and support for custom fields.
 
 = 1.0.1 =
 DukaPress just got better!  We fixed some bugs and added one new feature. Yay!
