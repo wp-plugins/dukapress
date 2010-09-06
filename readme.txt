@@ -6,7 +6,7 @@ Tags: shopping cart, web shop, cart, shop, Worldpay, Paypal, Alertpay, paypal, e
 online duka, duka, online shop
 Requires at least: 2.9.2
 Tested up to: 3.0.1
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 
 DukaPress is an open source e-commerce solution built for Wordpress.
 
@@ -70,6 +70,11 @@ Just put the cart code inside DIV tags to look like:
 
 == Changelog ==
 
+= 1.2.1 =
+* Made the currency symbol viewable on grid view and single product pages
+* Crushed a lot of annoying little bugs
+
+
 = 1.2.0 =
 * Added support for custom post types
 * Added GUI to product management so that one does not have to use custom fields
@@ -86,12 +91,14 @@ Just put the cart code inside DIV tags to look like:
 
 == Upgrade Notice ==
 
+= 1.2.1 =
+Just a nice little bug fix release!
+
 = 1.2.0 =
 If you did not love us before today, then you simply must have a look at our offerings!  Intorducing a custom product management GUI and support for custom fields.
 
 = 1.0.1 =
 DukaPress just got better!  We fixed some bugs and added one new feature. Yay!
-
 
 = 1.0 =
 DukaPress is brand new.  As such you won't be upgrading but joining our handsomely awesome family.
