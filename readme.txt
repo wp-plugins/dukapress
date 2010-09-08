@@ -61,7 +61,7 @@ Right now, it works very similarly to the regular shop mode - i.e. when people c
 The cart should be inside DIV with class="dpsc-shopping-cart".
 
 Just put the cart code inside DIV tags to look like:
-<div class="dpsc-shopping-cart">cart code</div>
+div class="dpsc-shopping-cart">cart code</div
 
 
 == Screenshots ==
