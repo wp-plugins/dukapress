@@ -19,11 +19,11 @@ function dpsc_get_product_details($product_id) {
         if($dp_shopping_cart_settings['dp_shop_mode'] != 'inquiry') {
             if (is_numeric($all_custom_fields['new_price'][0])) {
                 $product_price = $all_custom_fields['new_price'][0];
-                $custom_fields_output['price'] = '<p class="dpsc_price">Price: <span class="was">' . $all_custom_fields['price'][0] . '</span>&nbsp;<span class="is">' . $all_custom_fields['new_price'][0] . '</span></p>';
+                $custom_fields_output['price'] = '<p class="dpsc_price">Price: ' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span class="was">' . $all_custom_fields['price'][0] . '</span>&nbsp;<span class="is">' . $all_custom_fields['new_price'][0] . '</span></p>';
             }
             else {
                 $product_price = $all_custom_fields['price'][0];
-                $custom_fields_output['price'] = '<p class="dpsc_price">Price: <span class="is">' . $all_custom_fields['price'][0] . '</span></p>';
+                $custom_fields_output['price'] = '<p class="dpsc_price">Price: ' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span class="is">' . $all_custom_fields['price'][0] . '</span></p>';
             }
         }
         $item_weight = '';
@@ -115,7 +115,7 @@ function dpsc_get_product_details($product_id) {
             </script><input type="hidden" id="dpsc_new_product_price_hidden" name="dpsc_price_updated" value="' . $product_price . '" />' . $custom_fields_output['end'] . '<script language="javascript" type="text/javascript">
                                                     getFinalPrice();
                                                 </script>';
-                $custom_fields_output['final_price'] = '<p class="dpsc_price">Price: <span id="dpsc_new_product_price">' . $product_price . '</span></p>';
+                $custom_fields_output['final_price'] = '<p class="dpsc_price">Price: ' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span id="dpsc_new_product_price">' . $product_price . '</span></p>';
             }
         }
 
@@ -304,7 +304,7 @@ function dpsc_pnj_grid_display($atts, $content=null) {
 
     if (!empty($per_page)) {
         $pagenum = isset($_GET['dpage']) ? $_GET['dpage'] : 1;
-        $count = count(get_posts('numberposts=' . $$total . '&post_type=' . $type . '&meta_key=price&category=' . $category));
+        $count = count(get_posts('numberposts=' . $total . '&post_type=' . $type . '&meta_key=price&category=' . $category));
         $page_links = paginate_links( array(
             'base' => add_query_arg( 'dpage', '%#%' ),
             'format' => '',
