@@ -5,7 +5,7 @@ Tags: shopping cart, web shop, cart, shop, Worldpay, Paypal, Alertpay, paypal, e
 
 Requires at least: 2.9.2
 Tested up to: 3.0.1
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 
 DukaPress is an open source e-commerce solution built for Wordpress.
 
@@ -47,6 +47,13 @@ View a DukaPress Demo Shop: [DukaPress Demo](http://dukapress.org/demo/ "Your fa
 
 'Duka' is the Swahili word for shop.  Loosely, DukaPress means "shoppress".  We like to think it means the most complete and usable e-commerce solution for wordpress, though.
 
+= Why doesn't DukaPress work for me?  It seems to work for everyone else =
+
+No.  Nothing is wrong with you. :)
+
+We test DukaPress on a large number of different server set-ups and envrionments and we are satisfied that it does work in these environments.  However, the number of different environments 'out there' is infinite and we cannot possibly test on every single environment.  If everythign that you try fails to work, perharps you should move your site to one of the more common web hosts?  [Look here for hosts that we know work with DukaPress.](http://dukapress.org/download/)
+
+
 = Why isn't the Grid Display working? =
 
 You currently HAVE to have at least one custom field per prodct in order for those products to show up in the grid display properly.
@@ -69,6 +76,9 @@ div class="dpsc-shopping-cart">cart code</div
 [View Screenshots](http://www.flickr.com/photos/moshthepitt/sets/72157624534741496/ "DukaPress screenshots")
 
 == Changelog ==
+
+= 1.3.1 =
+* A quick bug fix release to fix a JQuery bug in 1.3.0
 
 = 1.3.0 =
 * Crushed even more annoying little bugs
@@ -100,6 +110,9 @@ div class="dpsc-shopping-cart">cart code</div
 * Initial Release
 
 == Upgrade Notice ==
+
+= 1.3.1 =
+A quick bug fix release to fix a JQuery bug in 1.3.0
 
 = 1.3.0 =
 Moving along swiftly on our quest to be the best WordPress e-commerce tool.  This version not only fixes pesky bugs, it adds a ton of new features and improvements!
