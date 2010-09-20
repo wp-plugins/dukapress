@@ -47,6 +47,13 @@ View a DukaPress Demo Shop: [DukaPress Demo](http://dukapress.org/demo/ "Your fa
 
 'Duka' is the Swahili word for shop.  Loosely, DukaPress means "shoppress".  We like to think it means the most complete and usable e-commerce solution for wordpress, though.
 
+= Why doesn't DukaPress work for me?  It seems to work for everyone else =
+
+No.  Nothing is wrong with you. :)
+
+We test DukaPress on a large number of different server set-ups and envrionments and we are satisfied that it does work in these environments.  However, the number of different environments 'out there' is infinite and we cannot possibly test on every single environment.  If everythign that you try fails to work, perharps you should move your site to one of the more common web hosts?  [Look here for hosts that we know work with DukaPress.](http://dukapress.org/download/)
+
+
 = Why isn't the Grid Display working? =
 
 You currently HAVE to have at least one custom field per prodct in order for those products to show up in the grid display properly.
