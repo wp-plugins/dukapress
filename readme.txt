@@ -1,12 +1,11 @@
 === DukaPress ===
 Contributors: parshwa, moshthepitt
 Donate link: http://dukapress.org/about/
-Tags: shopping cart, web shop, cart, shop, Worldpay, Paypal, Alertpay, paypal, e-commerce, ecommerce, MPESA, ZAP, yuCash, Mobile Payments,
+Tags: shopping cart, web shop, cart, shop, Worldpay, Paypal, Alertpay, paypal, e-commerce, ecommerce, MPESA, ZAP, yuCash, Mobile Payments,online duka, duka, online shop, JQZoom, Multiple Currencies
 
-online duka, duka, online shop
 Requires at least: 2.9.2
 Tested up to: 3.0.1
-Stable tag: 1.2.1
+Stable tag: 1.3.0
 
 DukaPress is an open source e-commerce solution built for Wordpress.
 
@@ -20,7 +19,8 @@ Main Features:
 * You can sell tangible products with selectable options (size, colour, etc);
 * You can sell Digital products;
 * Choose between a normal shop mode and a catalogue mode;
-* Numerous payment processing options including Paypal, Alertpay and mobile phone payments;
+* Numerous payment processing options including Paypal, Alertpay and Mobile Phone payments;
+* Ability to work with multiple currencies
 * Printable invoices;
 * One-page checkout;
 * Elegant discount coupon management;
@@ -70,6 +70,16 @@ div class="dpsc-shopping-cart">cart code</div
 
 == Changelog ==
 
+= 1.3.0 =
+* Crushed even more annoying little bugs
+* Improved DukaPress UI
+* Made it possible to define the sizes of images displayed by DukaPress
+* Improved the mobile payment processor to be able to handle any system in the world
+* Enabled DukaPress to work with multiple currencies
+* Added JQZoom suuport
+* Added a simple way to notify customers that something was added to the cart
+
+
 = 1.2.1 =
 * Made the currency symbol viewable on grid view and single product pages
 * Crushed a lot of annoying little bugs
@@ -91,11 +101,14 @@ div class="dpsc-shopping-cart">cart code</div
 
 == Upgrade Notice ==
 
+= 1.3.0 =
+Moving along swiftly on our quest to be the best WordPress e-commerce tool.  This version not only fixes pesky bugs, it adds a ton of new features and improvements!
+
 = 1.2.1 =
 Just a nice little bug fix release!
 
 = 1.2.0 =
-If you did not love us before today, then you simply must have a look at our offerings!  Intorducing a custom product management GUI and support for custom fields.
+If you did not love us before today, then you simply must have a look at our offerings!  Intorducing a custom product management GUI and support for custom post types.
 
 = 1.0.1 =
 DukaPress just got better!  We fixed some bugs and added one new feature. Yay!
