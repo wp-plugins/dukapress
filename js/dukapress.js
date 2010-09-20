@@ -1,6 +1,6 @@
 jQuery(document).ready(function () {
     jQuery("form[ID^=dpsc_product_form_]").submit(function() {
-        // we cannot submit a file through AJAX, so this needs to return true to submit the form normally if a file formfield is present
+        jQuery('div.dpsc_update_icon', jQuery(this)).css('display', 'inline');
         file_upload_elements = jQuery.makeArray(jQuery("input[type=file]", jQuery(this)));
         if(file_upload_elements.length > 0) {
             return true;
@@ -14,7 +14,7 @@ jQuery(document).ready(function () {
     });
 
     jQuery("form.dpsc_empty_cart span.emptycart a").livequery(function(){
-        jQuery(this).click(function() {
+        jQuery(this).live('click', function() {
             parent_form = jQuery(this).parents("form.dpsc_empty_cart");
             form_values = "ajax=true&";
             form_values += jQuery(parent_form).serialize();
@@ -37,7 +37,7 @@ jQuery(document).ready(function () {
     });
 
     var validateCode = jQuery('#dpsc_check_discount_code');
-    jQuery("#dpsc_validate_discount_code").click(function(){
+    jQuery("#dpsc_validate_discount_code").live('click', function(){
         var dpsc_code = jQuery("#dpsc_discount_code").val();
         validateCode.removeClass('dpsc_discount_code_invalid').css('display', 'block').html('Checking...');
         var dpsc_discount_code = "ajax=true&";
@@ -48,7 +48,7 @@ jQuery(document).ready(function () {
         return false;
     });
 
-    jQuery('#dpsc_make_payment').click(function(){
+    jQuery('#dpsc_make_payment').live('click', function(){
         jQuery('#dpsc_po_error').css('display', 'none');
         var check = jQuery('input[name=dpsc_po]').is(':checked');
         var check_hidden = jQuery('#dpsc_po_hidden').length;
@@ -72,15 +72,16 @@ jQuery(document).ready(function () {
         }
         var dpsc_b_fname = jQuery('#b_firstname').val();
         var dpsc_b_lname = jQuery('#b_lastname').val();
-        var dpsc_b_country = jQuery('#b_country').val();
+        var dpsc_b_country = jQuery('#b_country option:selected').text();
         var dpsc_b_address = jQuery('#b_address').val();
         var dpsc_b_city = jQuery('#b_city').val();
         var dpsc_b_state = jQuery('#b_state').val();
         var dpsc_b_zipcode = jQuery('#b_zipcode').val();
         var dpsc_b_email = jQuery('#b_email').val();
+        var dpsc_b_phone = jQuery('#b_phone').val();
         var dpsc_s_fname = jQuery('#s_firstname').val();
         var dpsc_s_lname = jQuery('#s_lastname').val();
-        var dpsc_s_country = jQuery('#s_country').val();
+        var dpsc_s_country = jQuery('#s_country option:selected').text();
         var dpsc_s_address = jQuery('#s_address').val();
         var dpsc_s_city = jQuery('#s_city').val();
         var dpsc_s_state = jQuery('#s_state').val();
@@ -92,13 +93,13 @@ jQuery(document).ready(function () {
         else {
             var diff_ship = 'false';
         }
-        var dpsc_payment = "ajax=true&dpsc_ajax_action=dpsc_payment_option&payment_selected=" + payment_option + payment_discount_string + '&b_fname=' + dpsc_b_fname + '&b_lname=' + dpsc_b_lname + '&b_country=' + dpsc_b_country + '&b_address=' + dpsc_b_address + '&b_city=' + dpsc_b_city + '&b_state=' + dpsc_b_state + '&b_zip=' + dpsc_b_zipcode + '&b_email=' + dpsc_b_email + '&ship_present=' + diff_ship + '&s_fname=' + dpsc_s_fname + '&s_lname=' + dpsc_s_lname + '&s_country=' + dpsc_s_country + '&s_address=' + dpsc_s_address + '&s_city=' + dpsc_s_city + '&s_state=' + dpsc_s_state + '&s_zip=' + dpsc_s_zipcode;
+        var dpsc_payment = "ajax=true&dpsc_ajax_action=dpsc_payment_option&payment_selected=" + payment_option + payment_discount_string + '&b_fname=' + dpsc_b_fname + '&b_lname=' + dpsc_b_lname + '&b_country=' + dpsc_b_country + '&b_address=' + dpsc_b_address + '&b_city=' + dpsc_b_city + '&b_state=' + dpsc_b_state + '&b_zip=' + dpsc_b_zipcode + '&b_email=' + dpsc_b_email + '&ship_present=' + diff_ship + '&s_fname=' + dpsc_s_fname + '&s_lname=' + dpsc_s_lname + '&s_country=' + dpsc_s_country + '&s_address=' + dpsc_s_address + '&s_city=' + dpsc_s_city + '&s_state=' + dpsc_s_state + '&s_zip=' + dpsc_s_zipcode + '&b_phone=' + dpsc_b_phone;
         jQuery.post(dpsc_js.dpsc_url+'/index.php', dpsc_payment, function(data) {
             eval(data);
         });
     });
 
-    jQuery('#dpsc_contact_different_ship_address').click(function(){
+    jQuery('#dpsc_contact_different_ship_address').live('click', function(){
        var shipping_check =  jQuery('input[name=dpsc_contact_different_ship_address]').is(':checked');
        if (shipping_check) {
            jQuery('#dpsc_shipping_details').css('display', 'block');
@@ -123,4 +124,16 @@ jQuery(document).ready(function () {
                 jQuery('.main_' + prod_id).children().attr('src', new_src);
             }
     });
+
+    if (jQuery().jqzoom) {
+        var jqzoom_option = {
+            zoomWidth: 350,
+            zoomHeight: 350,
+            xOffset: 20,
+            title: false,
+            lens:false,
+            hideEffect:'fadeout'
+        }
+        jQuery('.dp_jqzoom').jqzoom(jqzoom_option);
+    }
 });

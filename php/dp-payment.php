@@ -98,6 +98,12 @@ function dpsc_paypal_payment($dpsc_total = FALSE, $dpsc_shipping_value = FALSE, 
         else {
             $return_path .= '?id='.$invoice;
         }
+
+        $conversion_rate = 1;
+        if ($dp_shopping_cart_settings['paypal_currency'] != $dp_shopping_cart_settings['dp_shop_currency']) {
+            $curr = new CURRENCYCONVERTER();
+            $conversion_rate = $curr->convert(1, $dp_shopping_cart_settings['paypal_currency'], $dp_shopping_cart_settings['dp_shop_currency']);
+        }
         $output = '<form name="dpsc_paypal_form" id="dpsc_payment_form" action="'.$dpsc_form_action.'" method="post">';
         $output .= '<input type="hidden" name="return" value="' . $return_path . '"/>
                      <input type="hidden" name="cmd" value="_ext-enter" />
@@ -107,7 +113,7 @@ function dpsc_paypal_payment($dpsc_total = FALSE, $dpsc_shipping_value = FALSE, 
                      <input type="hidden" name="cancel_return" value="' . $return_path . '&status=cancel"/>
                      <input type="hidden" name="rm" value="2" />
                      <input type="hidden" name="upload" value="1" />
-                     <input type="hidden" name="currency_code" value="' . $dp_shopping_cart_settings['dp_shop_currency'] . '"/>
+                     <input type="hidden" name="currency_code" value="' . $dp_shopping_cart_settings['paypal_currency'] . '"/>
                      <input type="hidden" name="no_note" value="1" />
                      <input type="hidden" name="invoice" value="' . $invoice . '">';
         $dpsc_count_product = 1;
@@ -125,7 +131,7 @@ function dpsc_paypal_payment($dpsc_total = FALSE, $dpsc_shipping_value = FALSE, 
                                      <input type="hidden" name="os0_' . $dpsc_count_product . '" value="' . $dpsc_var . '"  />';
             }
             $output .= '<input type="hidden" name="item_name_' . $dpsc_count_product . '" value="' . $dpsc_product['name'] . $dpsc_var . '"/>
-                             <input type="hidden" name="amount_' . $dpsc_count_product . '" value="' . $dpsc_product['price'] . '"/>
+                             <input type="hidden" name="amount_' . $dpsc_count_product . '" value="' . number_format($conversion_rate*$dpsc_product['price'],2) . '"/>
                              <input type="hidden" name="quantity_'.$dpsc_count_product.'" value="' . $dpsc_product['quantity'] . '"/>
                              <input type="hidden" name="item_number_' . $dpsc_count_product . '" value="' . $dpsc_product['item_number'] . '"/>
                              <input type="hidden" name="tax_rate_'.$dpsc_count_product.'" value="' . $tax_rate . '"/>'
@@ -136,7 +142,7 @@ function dpsc_paypal_payment($dpsc_total = FALSE, $dpsc_shipping_value = FALSE, 
             $dpsc_count_product++;
         }
         if ($dpsc_shipping_value > 0) {
-            $dpsc_shipping_total = $dpsc_shipping_value;
+            $dpsc_shipping_total = $conversion_rate*$dpsc_shipping_value;
         }
         $output .= '<input type="hidden" name="handling_cart" value="' . number_format($dpsc_shipping_total,2) . '"/></form>';
     }
@@ -172,9 +178,23 @@ function dpsc_authorize_payment($dpsc_total = FALSE, $dpsc_shipping_value = FALS
             $total_shipping = $dpsc_shipping_value;
         }
 
-        $dpsc_total = number_format($dpsc_total+$total_tax+$total_shipping-$total_discount,2);
+        $conversion_rate = 1;
+        if ($dp_shopping_cart_settings['dp_shop_currency'] != 'USD') {
+            $curr = new CURRENCYCONVERTER();
+            $conversion_rate = $curr->convert(1, 'USD', $dp_shopping_cart_settings['dp_shop_currency']);
+        }
+        $total_amount = ($dpsc_total+$total_tax+$total_shipping-$total_discount)*$conversion_rate;
+        $dpsc_total = number_format($total_amount,2);
         $sequence = rand(1, 1000);
         $timeStamp = time();
+        $return_path = $dp_shopping_cart_settings['thank_you'];
+        $check_return_path = explode('?', $return_path);
+        if (count($check_return_path) > 1) {
+            $return_path .= '&id='.$invoice;
+        }
+        else {
+            $return_path .= '?id='.$invoice;
+        }
         if( phpversion() >= '5.1.2' ) {
             $fingerprint = hash_hmac("md5", $dp_shopping_cart_settings['authorize_api'] . "^" . $sequence . "^" . $timeStamp . "^" . $dpsc_total . "^", $dp_shopping_cart_settings['authorize_transaction_key']);
         }
@@ -196,7 +216,10 @@ function dpsc_authorize_payment($dpsc_total = FALSE, $dpsc_shipping_value = FALS
         $output .= '<input type="hidden" name="x_test_request" value="' . $dp_shopping_cart_settings['authorize_test_request'] . '" />';
         $output .= '<input type="hidden" name="x_show_form" value="PAYMENT_FORM" />';
         $output .= '<input type="hidden" name="x_relay_response" value="TRUE" />';
-        $output .= '<input type="hidden" name="x_relay_url" value="' . $ipn_path . '" />';
+//        $output .= '<input type="hidden" name="x_relay_url" value="' . $ipn_path . '" />';
+        $output .= '<input type="hidden" name="x_receipt_link_method" value="LINK" />';
+        $output .= '<input type="hidden" name="x_receipt_link_text" value="Back to Shop" />';
+        $output .= '<input type="hidden" name="x_receipt_link_URL" value="' . $return_path . '" />';
 
         $output .= '<input type="hidden" name="x_first_name" value="' . $bfname . '" />';
         $output .= '<input type="hidden" name="x_last_name" value="' . $blname . '" />';
@@ -250,7 +273,14 @@ function dpsc_worldpay_payment($dpsc_total = FALSE, $dpsc_shipping_value = FALSE
             $return_path .= '?id='.$invoice;
         }
 
-        $dpsc_total = number_format($dpsc_total+$total_tax+$total_shipping-$total_discount,2);
+        $conversion_rate = 1;
+        if ($dp_shopping_cart_settings['worldpay_currency'] != $dp_shopping_cart_settings['dp_shop_currency']) {
+            $curr = new CURRENCYCONVERTER();
+            $conversion_rate = $curr->convert(1, $dp_shopping_cart_settings['worldpay_currency'], $dp_shopping_cart_settings['dp_shop_currency']);
+        }
+
+        $total_amount = ($dpsc_total+$total_tax+$total_shipping-$total_discount)*$conversion_rate;
+        $dpsc_total = number_format($total_amount,2);
         $lang = (strlen(WPLANG) > 0 ? substr(WPLANG,0,2) : 'en');
         $output = '<form name="dpsc_worldpay_form" id="dpsc_payment_form" action="' . $dpsc_form_action . '" method="post">
                         <input type="hidden" name="instId" value="' . $dp_shopping_cart_settings['worldpay_id'] . '" />
@@ -308,15 +338,20 @@ function dpsc_alertpay_payment($dpsc_total = FALSE, $dpsc_shipping_value = FALSE
         else {
             $return_path .= '?id='.$invoice;
         }
+        $conversion_rate = 1;
+        if ($dp_shopping_cart_settings['alertpay_currency'] != $dp_shopping_cart_settings['dp_shop_currency']) {
+            $curr = new CURRENCYCONVERTER();
+            $conversion_rate = $curr->convert(1, $dp_shopping_cart_settings['alertpay_currency'], $dp_shopping_cart_settings['dp_shop_currency']);
+        }
         $output ='<form name="dpsc_alertpay_form" id="dpsc_payment_form"  method="post" action="https://www.alertpay.com/PayProcess.aspx" >
                         <input type="hidden" name="ap_merchant" value="' . $dp_shopping_cart_settings['alertpay_id'] . '" />
                         <input type="hidden" name="ap_purchasetype" value="item-goods" />
                         <input type="hidden" name="ap_currency" value="' . $dp_shopping_cart_settings['dp_shop_currency'] . '" />
                         <input type="hidden" name="ap_itemname" value="' . $invoice . '" />
-                        <input type="hidden" name="ap_amount" value="' . $dpsc_total . '" />
-                        <input type="hidden" name="ap_shippingcharges" value="' . $total_shipping . '" />
-                        <input type="hidden" name="ap_taxamount" value="' . $total_tax . '" />
-                        <input type="hidden" name="ap_discountamount" value="' . $total_discount . '" />
+                        <input type="hidden" name="ap_amount" value="' . number_format($conversion_rate*$dpsc_total,2) . '" />
+                        <input type="hidden" name="ap_shippingcharges" value="' . number_format($conversion_rate*$total_shipping,2) . '" />
+                        <input type="hidden" name="ap_taxamount" value="' . number_format($conversion_rate*$total_tax,2) . '" />
+                        <input type="hidden" name="ap_discountamount" value="' . number_format($conversion_rate*$total_discount,2) . '" />
                         <input type="hidden" name="ap_returnurl" value="' . $return_path . '" />
                         <input type="hidden" name="ap_cancelurl" value="' . $return_path . '&status=cancel"/>
                         <input type="hidden" name="ap_fname" value="' . $bfname . '" />

@@ -83,7 +83,7 @@ function dpsc_add_to_cart() {
     $_SESSION['dpsc_products'] = $dpsc_products;
     if ($_REQUEST['ajax'] == 'true') {
         ob_start();
-        echo dpsc_print_cart_html();
+        echo dpsc_print_cart_html(FALSE, $product_name);
         $output = ob_get_contents();
         ob_end_clean();
         $output = str_replace(Array("\n","\r") , Array("\\n","\\r"),addslashes($output));
@@ -95,7 +95,7 @@ function dpsc_add_to_cart() {
         echo "jQuery('div.dpsc-mini-shopping-cart').html('$output1');";
         echo "jQuery('div.dpsc-checkout_url-widget').html('$output2');";
         echo "jQuery('form[id=product_form_".$product_id."]').addClass('product_in_cart');";
-        echo "jQuery('span#dpsc_in_cart_".$product_id."').html('In Cart.');";
+        echo "jQuery('div#dpsc_update_icon_" . $product_id ."').css('display', 'none');";
         exit();
     }
     return;
@@ -305,16 +305,40 @@ function dpsc_print_checkout_table_html($dpsc_discount_value = 0) {
 
             list($dpsc_total, $dpsc_shipping_weight, $products, $number_of_items_in_cart) = dpsc_pnj_calculate_cart_price();
             $dpsc_shipping_value = dpsc_pnj_calculate_shipping_price($dpsc_shipping_weight, $dpsc_total, $number_of_items_in_cart);
+            $dp_shipping_price_html = '<span id="shipping_total_price">0.00</span> ';
+            $dp_shipping_calculate_html = '';
+            if (is_numeric($dpsc_shipping_value)) {
+                $dp_shipping_price = $dpsc_shipping_value;
+                $dp_shipping_price_html = '<span id="shipping_total_price">' . number_format($dp_shipping_price,2) . '</span> ';
+            }
+            else {
+                $dp_shipping_price = 0;
+                switch ($dpsc_shipping_value) {
+                    case 'fedex':
+                        if ($dpsc_shipping_weight > 0) {
+                            $dp_shipping_calculate_html = dp_fedex_get_country_dropdown();
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+            }
             $dpsc_shipping_total_at_end = '';
-            $dpsc_shipping_total_at_end = '<tr id="dpsc-checkout-shipping-price"><th>Shipping:</th><td>+' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span id="shipping_total_price">' . number_format($dpsc_shipping_value,2).'</span> '.'</td></tr>';
+            $dpsc_shipping_total_at_end = '<tr id="dpsc-checkout-shipping-price"><th>Shipping:</th><td>+' . $dp_shopping_cart_settings['dp_currency_symbol'] . $dp_shipping_price_html . '</td></tr>';
             $dpsc_product_price_at_end = '<tr id="dpsc-checkout-your-price"><th>Price:</th><td>' . $dp_shopping_cart_settings['dp_currency_symbol'] . number_format($dpsc_total,2) . '</td></tr>';
-            $dpsc_total_price_at_the_end = '<tr id="dpsc-checkout-total-price"><th>Total:</th><td><strong>' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span id="total_dpsc_price">' . number_format($dpsc_total+$dpsc_shipping_value+$dpsc_total_tax-$dpsc_total_discount,2) . '</span></strong></td></tr>';
+            $dpsc_total_price_at_the_end = '<tr id="dpsc-checkout-total-price"><th>Total:</th><td><strong>' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span id="total_dpsc_price">' . number_format($dpsc_total+$dp_shipping_price+$dpsc_total_tax-$dpsc_total_discount,2) . '</span></strong></td></tr>';
             $content .= '<input type="hidden" name="dpsc_total_hidden_value" value="' . $dpsc_total . '" />';
+            if (!is_numeric($dpsc_shipping_value)) {
+                $total_for_shipping = $dpsc_total+$dpsc_total_tax-$dpsc_total_discount;
+                $content .= '<input type="hidden" name="dpsc_total_hidden_value_for_shipping" value="' . $total_for_shipping . '" />';
+            }
             $content .= $dpsc_product_price_at_end.$dpsc_shipping_total_at_end.$dpsc_tax_total_at_end.$dpsc_discount_total_at_end.$dpsc_total_price_at_the_end;
             $content .= '</table>';
+            $content .= $dp_shipping_calculate_html;
         }
         if ($_REQUEST['ajax'] === 'true') {
-            $content .= '<script type="text/javascript">jQuery("span.dpsc_delete_discount_code").click(function(){
+            $content .= '<script type="text/javascript">
                             jQuery("form.product_update").livequery(function(){
                                     jQuery(this).submit(function() {
                                         form_values = "ajax=true&";
@@ -324,8 +348,7 @@ function dpsc_print_checkout_table_html($dpsc_discount_value = 0) {
                                         });
                                         return false;
                                     });
-                                });
-                            });</script>';
+                                });</script>';
     }
     }
     return $content;
@@ -530,7 +553,13 @@ function dpsc_print_checkout_payment_form() {
             }
         }
     }
-    $output .= ' <input type="submit" id="dpsc_make_payment" value="Make Payment" />';
+    list($dpsc_total, $dpsc_shipping_weight, $products, $number_of_items_in_cart) = dpsc_pnj_calculate_cart_price();
+    $dpsc_shipping_value = dpsc_pnj_calculate_shipping_price($dpsc_shipping_weight, $dpsc_total, $number_of_items_in_cart);
+    $disabled_button = '';
+    if (!is_numeric($dpsc_shipping_value)) {
+        $disabled_button = 'disabled="disabled"';
+    }
+    $output .= ' <input type="submit" ' . $disabled_button . ' id="dpsc_make_payment" value="Make Payment" />';
     $output .= '</div>';
     $output .= '<div id="dpsc_hidden_payment_form" style="display: none"></div>';
     return $output;
@@ -550,24 +579,50 @@ function dpsc_on_payment_save($dpsc_total = FALSE, $dpsc_shipping_value = FALSE,
     $bstate = $_POST['b_state'];
     $bzip = $_POST['b_zip'];
     $bemail = $_POST['b_email'];
-    if ($_POST['ship_present'] === 'true') {
+    $phone = $_POST['b_phone'];
+    if ($_POST['s_fname'] != '') {
         $sfname = $_POST['s_fname'];
-        $slname = $_POST['s_lname'];
-        $scountry = $_POST['s_country'];
-        $saddress = $_POST['s_address'];
-        $scity = $_POST['s_city'];
-        $sstate = $_POST['s_state'];
-        $szip = $_POST['s_zip'];
     }
     else {
         $sfname = $bfname;
+    }
+    if ($_POST['s_lname'] != '') {
+        $slname = $_POST['s_lname'];
+    }
+    else {
         $slname = $blname;
+    }
+    if ($_POST['s_country'] != '') {
+        $scountry = $_POST['s_country'];
+    }
+    else {
         $scountry = $bcountry;
+    }
+    if ($_POST['s_address'] != '') {
+        $saddress = $_POST['s_address'];
+    }
+    else {
         $saddress = $baddress;
+    }
+    if ($_POST['s_city'] != '') {
+        $scity = $_POST['s_city'];
+    }
+    else {
         $scity = $bcity;
+    }
+    if ($_POST['s_state'] != '') {
+        $sstate = $_POST['s_state'];
+    }
+    else {
         $sstate = $bstate;
+    }
+    if ($_POST['s_zip'] != '') {
+        $szip = $_POST['s_zip'];
+    }
+    else {
         $szip = $bzip;
     }
+
     $products = serialize($products);
     $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
     $tax = $dp_shopping_cart_settings['tax'];
@@ -620,10 +675,10 @@ function dpsc_on_payment_save($dpsc_total = FALSE, $dpsc_shipping_value = FALSE,
     }
     $table_name = $wpdb->prefix . "dpsc_transactions";
     $query = "INSERT INTO {$table_name} (`invoice`, `date`, `order_time`, `billing_first_name`, `billing_last_name`, `billing_country`,
-    `billing_address`, `billing_city`, `billing_state`, `billing_zipcode`, `billing_email`, `shipping_first_name`, `shipping_last_name`,
+    `billing_address`, `billing_city`, `billing_state`, `billing_zipcode`, `billing_email`, `phone`, `shipping_first_name`, `shipping_last_name`,
     `shipping_country`, `shipping_address`, `shipping_city`, `shipping_state`, `shipping_zipcode`, `products`, `payment_option`, `discount`,
     `tax`, `shipping`, `total`, `payment_status`) VALUES ('{$invoice}', NOW(), {$order_time}, '{$bfname}', '{$blname}', '{$bcountry}', '{$baddress}',
-    '{$bcity}', '{$bstate}', '{$bzip}', '{$bemail}', '{$sfname}', '{$slname}', '{$scountry}', '{$saddress}', '{$scity}', '{$sstate}', '{$szip}',
+    '{$bcity}', '{$bstate}', '{$bzip}', '{$bemail}', '{$phone}', '{$sfname}', '{$slname}', '{$scountry}', '{$saddress}', '{$scity}', '{$sstate}', '{$szip}',
     '{$products}', '{$payment_option}', {$dpsc_discount_value}, {$tax}, {$dpsc_shipping_value}, {$dpsc_total}, 'Pending')";
     $wpdb->query($query);
     if (isset($_SESSION['dpsc_discount'])) {
@@ -657,7 +712,8 @@ function dpsc_on_payment_save($dpsc_total = FALSE, $dpsc_shipping_value = FALSE,
                 Province/State: ' . $bstate . '<br/>
                 Postal Code: ' . $bzip . '<br/>
                 Country: ' . $bcountry . '<br/>
-                Email: ' . $bemail . '<br/><br/>
+                Email: ' . $bemail . '<br/>
+                Phone: ' . $phone . '<br/><br/>
 
                 SHIPPING ADDRESS<br/>
                 Name: ' . $sfname . ' ' . $slname . '<br/>
@@ -671,7 +727,7 @@ function dpsc_on_payment_save($dpsc_total = FALSE, $dpsc_shipping_value = FALSE,
                 Warm regards,<br/><br/>' . $dp_shopping_cart_settings['shop_name'];
     $to = get_option('admin_email');
     dpsc_pnj_send_mail($to, $to, 'DukaPress Order Notification', $subject, $message);
-    make_pdf($invoice, $dpsc_discount_value, $tax, $dpsc_shipping_value, $dpsc_total, $bfname, $blname, $bcity, $baddress, $bstate, $bzip, $bcountry);
+    make_pdf($invoice, $dpsc_discount_value, $tax, $dpsc_shipping_value, $dpsc_total, $bfname, $blname, $bcity, $baddress, $bstate, $bzip, $bcountry, $phone);
     return array($invoice, $bfname, $blname, $bcity, $baddress, $bstate, $bzip, $bcountry, $bemail);
 }
 
@@ -803,6 +859,10 @@ function dpsc_pnj_calculate_shipping_price($shipping_weight = FALSE, $sub_total_
         case 'per_item':
             $per_item_rate = $dp_shopping_cart_settings['dp_shipping_per_item_rate'];
             $shipping_price = $per_item_rate*$number_of_items_in_cart;
+            break;
+
+        case 'fedex':
+            $shipping_price = 'fedex';
             break;
 
         default:
@@ -1081,6 +1141,8 @@ function dpsc_pnj_show_contact_information() {
                 </select><br />';
     $output .= '<label for="b_email">Email</label>
                 <input type="text" id="b_email" name="b_email" value="" /><br />';
+    $output .= '<label for="b_phone">Phone Number</label>
+                <input type="text" id="b_phone" name="b_phone" value="" /><br />';
     $output .= '</div>';
     $output .= '<div id="dpsc_shipping_details" style="display: none">';
     $output .= '<h4>Shipping Address</h4>';
@@ -1487,28 +1549,27 @@ function dpsc_pnj_thank_you_page() {
                                  <p>When we have received your payment in our account, we will begin to Process your Order.</p>';
                     break;
 
-				case 'Mobile Payment':
-                    $output .= '<h4>Please send <span id="dpsc_payment_amount">' . $dp_shopping_cart_settings['dp_currency_symbol'] . $amount . '</span> to any of the following numbers:</h4>
-                                <table>
+                    case 'Mobile Payment':
+                        $output .= '<h4>Please send <span id="dpsc_payment_amount">' . $dp_shopping_cart_settings['dp_currency_symbol'] . $amount . '</span> to any of the following numbers:</h4>
+                                    <table>';
 
-                                    <tr>
-                                        <td>MPESA:</td><td>' . $dp_shopping_cart_settings['safaricom_number'] . '</td>
-                                    </tr>
-                                    <tr>
-                                        <td>YU Cash:</td><td>' . $dp_shopping_cart_settings['yu_number'] . '</td>
-                                    </tr>
-                                    <tr>
-                                        <td>ZAP:</td><td>' . $dp_shopping_cart_settings['zain_number'] . '</td>
-                                    </tr>
+                        if(is_array($dp_shopping_cart_settings['mobile_names'])) {
+                            $count_mp = count($dp_shopping_cart_settings['mobile_names']);
+                            for($mp_i = 0; $mp_i < $count_mp; $mp_i++) {
+                                $output .= '<tr>
+                                                <td>' . $dp_shopping_cart_settings['mobile_names'][$mp_i] . ' :</td><td>' . $dp_shopping_cart_settings['mobile_number'][$mp_i] . '</td>
+                                            </tr>';
+                            }
+                        }
 
-                                 </table>
-                                 <p>Please also send your invoice number to us by SMS using the phone that you used to send the money. When we have received your payment in any of our accounts, we shall begin to Process your Order.</p>';
+                        $output .= '</table>
+                                     <p>Please also send your invoice number to us by SMS using the phone that you used to send the money. When we have received your payment in any of our accounts, we shall begin to Process your Order.</p>';
                     break;
 
-                default:
-                    $output .= '<h4>Thank you for making the payment of <span id="dpsc_payment_amount">' . $dp_shopping_cart_settings['dp_currency_symbol'] . $amount . '</span> using ' . $result->payment_option . '.</h4>
-                                <p>We will process your order soon.</p>';
-                    break;
+                    default:
+                        $output .= '<h4>Thank you for making the payment of <span id="dpsc_payment_amount">' . $dp_shopping_cart_settings['dp_currency_symbol'] . $amount . '</span> using ' . $result->payment_option . '.</h4>
+                                    <p>We will process your order soon.</p>';
+                        break;
             }
             $output .= '<p><a href="' . DP_PLUGIN_URL .'/pdf/invoice_' . $invoice . '.pdf">Click here to download your Invoice.</a></p>';
             $message = 'Hi ' . $bfname . ' ' . $blname . ',<br/>

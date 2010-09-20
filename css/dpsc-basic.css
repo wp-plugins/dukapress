@@ -13,7 +13,7 @@
 
 .dpsc_content_container {float: right;}
 
-.dpsc_grid_product {padding: 5px; margin: 0px 10px 10px 0px; float: left; text-align: center; width: 170px; border: 1px solid;}
+.dpsc_grid_product {padding: 10px; margin: 0px 10px 10px 0px; float: left; text-align: center; width: 180px; border: 1px solid;}
 
 .dpsc_grid_product .product_form {text-align: center !important;}
 

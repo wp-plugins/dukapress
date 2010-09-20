@@ -1,5 +1,10 @@
 jQuery(document).ready(function () {
-    jQuery('#dp_discount_submit').click(function(){
+    if (jQuery('#dp_settings').length) {
+        jQuery('#dp_settings').accordion({active: false, autoHeight: false, collapsible: true});
+        jQuery('#po').accordion({active: false, autoHeight: false, collapsible: true});
+        jQuery('#product-management').accordion({active: false, autoHeight: false, collapsible: true});
+    }
+    jQuery('#dp_discount_submit').live('click', function(){
         var dpsc_discount_code = jQuery("#discount_code").val();
         var dpsc_discount_amount = jQuery("#discount_amount").val();
         var check_one_time = jQuery('input[name=discount_one_time]').is(':checked');
@@ -24,7 +29,7 @@ jQuery(document).ready(function () {
         return false;
     });
 
-    jQuery('span.dpsc_delete_discount_code').click(function(){
+    jQuery('span.dpsc_delete_discount_code').live('click', function(){
         var dpsc_delete_discount_code_id = jQuery(this).attr("id");
         jQuery.ajax({
             type: "POST",
@@ -36,13 +41,13 @@ jQuery(document).ready(function () {
         });
     });
 
-    jQuery('#dp_addVariation').click(function(){
+    jQuery('#dp_addVariation').live('click', function(){
         jQuery(dp_addVariation);
         jQuery('input[name=varitaionnumber]').val(current);
 
     });
 
-    jQuery('#dp_deletestring a').click(function(){
+    jQuery('#dp_deletestring a').live('click', function(){
         var postid=jQuery("#post_ID").val();
         var currentId = jQuery(this).attr('id');
         var mix="#delete"+currentId;
@@ -61,7 +66,7 @@ jQuery(document).ready(function () {
 
   });
 
-    jQuery('#dp_save').click(function(){
+    jQuery('#dp_save').live('click', function(){
         var i;
         var actionstring='';
 
@@ -94,6 +99,9 @@ jQuery(document).ready(function () {
         });
 
     });
+
+    dp_init();
+
 });
 
 var current = 1;
@@ -107,4 +115,25 @@ function dp_addVariation() {
     jQuery('#dp_var_fields').append(strToAdd);
     return current;
 
+}
+
+function dp_init(){
+    jQuery('.mobile_payment tr td').find('.remove_row').css('display', 'inline');
+    jQuery('.mobile_payment tr td').find('.add_row').css('display', 'none');
+    jQuery('.mobile_payment tr td:last').find('.add_row').css('display', 'inline');
+    jQuery(".mobile_payment tr:first-child td:last").find('.remove_row').css('display', 'none');
+}
+function dp_m_rem(clickety){
+	jQuery(clickety).parent().parent().remove();
+	dp_init();
+	return false;
+}
+function dp_m_add(clickety){
+	jQuery('.row_block:last').after(
+                jQuery('.row_block:last').clone()
+        );
+	jQuery('.row_block:last input').attr('value', '');
+
+	dp_init();
+	return false;
 }

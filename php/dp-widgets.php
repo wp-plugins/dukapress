@@ -164,7 +164,7 @@ function dpsc_cart_full() {
  * This function returns the HTML for cart
  *
  */
-function dpsc_print_cart_html($mini=FALSE) {
+function dpsc_print_cart_html($mini=FALSE, $product_name = FALSE) {
     $dpsc_output = '';
     $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
     $dpsc_total_products = 0;
@@ -181,6 +181,9 @@ function dpsc_print_cart_html($mini=FALSE) {
            }
            else {
                $price_head = '';
+           }
+           if ($product_name) {
+               $dpsc_output .= '<div class="dpsc_update_notification">You have added <strong>' . $product_name . '</strong> to the cart.</div>';
            }
             $dpsc_output .= '<table class="shoppingcart">
                 <tr><th id="product">Product</th>

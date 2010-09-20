@@ -32,7 +32,7 @@ function dpsc_get_product_details($product_id) {
         }
 
         $custom_fields_output['end'] = $item_weight . '
-                                        <input type="hidden" name="action" value="dpsc_add_to_cart"/>
+                                        <input type="hidden" name="action" value="dpsc_add_to_cart"/><div class="dpsc_update_icon" id="dpsc_update_icon_' . $product_id . '" style="display:none;"><img src="' . DP_PLUGIN_URL . '/images/update.gif"></div>
                                         <input type="hidden" name="product_id" value="' . $product_id . '"/>
                                         <input type="hidden" name="product" value="' . get_the_title($product_id) . '"/>
                                         <input id="dpsc_actual_price" type="hidden" name="price" value="'.$product_price.'"/>
@@ -115,7 +115,7 @@ function dpsc_get_product_details($product_id) {
             </script><input type="hidden" id="dpsc_new_product_price_hidden" name="dpsc_price_updated" value="' . $product_price . '" />' . $custom_fields_output['end'] . '<script language="javascript" type="text/javascript">
                                                     getFinalPrice();
                                                 </script>';
-                $custom_fields_output['final_price'] = '<p class="dpsc_price">Price: ' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span id="dpsc_new_product_price">' . $product_price . '</span></p>';
+                $custom_fields_output['final_price'] = '<p class="dpsc_price">Price: <span id="dpsc_new_product_price">' . $product_price . '</span></p>';
             }
         }
 
@@ -125,20 +125,27 @@ function dpsc_get_product_details($product_id) {
             $image_content = '';
             switch ($image_effect) {
                 case 'mz_effect':
-                        $image_content = dp_pnj_mz_effect($attachment_images, $product_id);
-                break;
+                    $image_content = dp_pnj_mz_effect($attachment_images, $product_id);
+                    break;
 
                 case 'mzp_effect':
-                        $image_content = dp_pnj_mzp_effect($attachment_images, $product_id);
-                break;
+                    $image_content = dp_pnj_mzp_effect($attachment_images, $product_id);
+                    break;
 
                 case 'lightbox':
-                        $image_content = dp_pnj_lightbox_effect($attachment_images, $product_id);
-                break;
+                    $image_content = dp_pnj_lightbox_effect($attachment_images, $product_id);
+                    break;
 
                 case 'no_effect':
-                        $image_content = dp_pnj_no_effect($attachment_images, $product_id);
-                break;
+                    $image_content = dp_pnj_no_effect($attachment_images, $product_id);
+                    break;
+
+                case 'jqzoom_effect':
+                    $image_content = dp_pnj_jqzoom_effect($attachment_images, $product_id);
+                    break;
+
+                default:
+                    break;
             }
             $custom_fields_output['image_output'] = $image_content;
         }
@@ -176,6 +183,7 @@ function dpsc_get_product_details($product_id) {
  *
  */
 function dp_pnj_mz_effect($attachment_images, $product_id) {
+    $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
     $output = '<div class="dpsc_image_section">';
     $output .= '<div class="dpsc_image_tab">';
     $output .= '<ul class="dpsc_tabs">';
@@ -184,19 +192,20 @@ function dp_pnj_mz_effect($attachment_images, $product_id) {
         if ($count === 0) {
             $main_image = $image->guid;
         }
-        $output .= '<li><a class="dpsc_thumb_tab" href="' . $image->guid . '"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $image->guid . '&w=50&h=63&zc=1" ></a></li>';
+        $output .= '<li><a class="dpsc_thumb_tab" href="' . $image->guid . '"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $image->guid . '&w=' . $dp_shopping_cart_settings['t_w'] . '&h=' . $dp_shopping_cart_settings['t_h'] . '&zc=1" ></a></li>';
         $count++;
     }
     $output .= '</ul>';
     $output .= '</div>';
     $output .= '<div class="dpsc_main_image">';
-    $output .= '<a href="' . $main_image . '" class="MagicZoom" id="zoom1" rel="show-title: false; zoom-fade: true; zoom-position: inner; thumb-change: mouseover"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $main_image . '&w=310&h=383&zc=1" ></a>';
+    $output .= '<a href="' . $main_image . '" class="MagicZoom" id="zoom1" rel="show-title: false; zoom-fade: true; zoom-position: inner; thumb-change: mouseover"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $main_image . '&w=' . $dp_shopping_cart_settings['m_w'] . '&h=' . $dp_shopping_cart_settings['m_h'] . '&zc=1" ></a>';
     $output .= '</div>';
     $output .= '</div>';
     return $output;
 }
 
-function dp_pnj_mzp_effect($attachment_images, $product_id) {
+function dp_pnj_jqzoom_effect($attachment_images, $product_id) {
+    $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
     $output = '<div class="dpsc_image_section">';
     $output .= '<div class="dpsc_image_tab">';
     $output .= '<ul class="dpsc_tabs">';
@@ -205,19 +214,20 @@ function dp_pnj_mzp_effect($attachment_images, $product_id) {
         if ($count === 0) {
             $main_image = $image->guid;
         }
-        $output .= '<li><a class="dpsc_thumb_tab" href="' . $image->guid . '"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $image->guid . '&w=50&h=63&zc=1" ></a></li>';
+        $output .= '<li><a class="dpsc_thumb_tab" href="' . $image->guid . '"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $image->guid . '&w=' . $dp_shopping_cart_settings['t_w'] . '&h=' . $dp_shopping_cart_settings['t_h'] . '&zc=1" ></a></li>';
         $count++;
     }
     $output .= '</ul>';
     $output .= '</div>';
     $output .= '<div class="dpsc_main_image">';
-    $output .= '<a href="' . $main_image . '" class="MagicZoom MagicThumb" id="zoom1" rel="show-title: false; zoom-fade: true; zoom-position: inner; thumb-change: mouseover"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $main_image . '&w=310&h=383&zc=1" ></a>';
+    $output .= '<a href="' . $main_image . '" title="image" class="dp_jqzoom" ><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $main_image . '&w=' . $dp_shopping_cart_settings['m_w'] . '&h=' . $dp_shopping_cart_settings['m_h'] . '&zc=1" ></a>';
     $output .= '</div>';
     $output .= '</div>';
     return $output;
 }
 
 function dp_pnj_lightbox_effect($attachment_images, $product_id) {
+    $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
     $output = '<div class="dpsc_image_section">';
     $output .= '<div class="dpsc_image_tab">';
     $output .= '<ul class="dpsc_tabs">';
@@ -226,19 +236,20 @@ function dp_pnj_lightbox_effect($attachment_images, $product_id) {
         if ($count === 0) {
             $main_image = $image->guid;
         }
-        $output .= '<li><a class="dpsc_thumb_tab fancybox" id="' . $product_id . '" rel="imgGroup" href="' . $image->guid . '"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $image->guid . '&w=50&h=63&zc=1" ></a></li>';
+        $output .= '<li><a class="dpsc_thumb_tab fancybox" id="' . $product_id . '" rel="imgGroup" href="' . $image->guid . '"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $image->guid . '&w=' . $dp_shopping_cart_settings['t_w'] . '&h=' . $dp_shopping_cart_settings['t_h'] . '&zc=1" ></a></li>';
         $count++;
     }
     $output .= '</ul>';
     $output .= '</div>';
     $output .= '<div class="dpsc_main_image main_' . $product_id . '">';
-    $output .= '<a href="' . $main_image . '" class="fancybox theProdMedia theProdMedia_alt"  rel="imgGroup"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $main_image . '&w=310&h=383&zc=1" ></a>';
+    $output .= '<a href="' . $main_image . '" class="fancybox theProdMedia theProdMedia_alt"  rel="imgGroup"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $main_image . '&w=' . $dp_shopping_cart_settings['m_w'] . '&h=' . $dp_shopping_cart_settings['m_h'] . '&zc=1" ></a>';
     $output .= '</div>';
     $output .= '</div>';
     return $output;
 }
 
 function dp_pnj_no_effect($attachment_images, $product_id) {
+    $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
     $output = '<div class="dpsc_image_section">';
     $output .= '<div class="dpsc_image_tab">';
     $output .= '<ul class="dpsc_tabs">';
@@ -247,13 +258,13 @@ function dp_pnj_no_effect($attachment_images, $product_id) {
         if ($count === 0) {
             $main_image = $image->guid;
         }
-        $output .= '<li><a class="dpsc_thumb_tab" href="' . $image->guid . '"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $image->guid . '&w=50&h=63&zc=1" ></a></li>';
+        $output .= '<li><a class="dpsc_thumb_tab" href="' . $image->guid . '"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $image->guid . '&w=' . $dp_shopping_cart_settings['t_w'] . '&h=' . $dp_shopping_cart_settings['t_h'] . '&zc=1" ></a></li>';
         $count++;
     }
     $output .= '</ul>';
     $output .= '</div>';
     $output .= '<div class="dpsc_main_image">';
-    $output .= '<img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $main_image . '&w=310&h=383&zc=1" >';
+    $output .= '<img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $main_image . '&w=' . $dp_shopping_cart_settings['m_w'] . '&h=' . $dp_shopping_cart_settings['m_h'] . '&zc=1" >';
     $output .= '</div>';
     $output .= '</div>';
     return $output;
@@ -264,7 +275,7 @@ function dp_pnj_no_effect($attachment_images, $product_id) {
  *
  */
 add_shortcode('dpsc_display_product', 'dpsc_pnj_display_product_name');
-function dpsc_pnj_display_product_name($content = null) {
+function dpsc_pnj_display_product_name($atts, $content = null) {
     $product_id = get_the_ID();
     $output = dpsc_get_product_details($product_id);
     $content .= '<div class="dpsc_product_main_container">';
@@ -294,6 +305,7 @@ function dpsc_pnj_display_product_name($content = null) {
  */
 add_shortcode('dpsc_grid_display', 'dpsc_pnj_grid_display');
 function dpsc_pnj_grid_display($atts, $content=null) {
+    $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
     extract(shortcode_atts( array(
             'category' => '1',
             'total' => '12',
@@ -339,7 +351,9 @@ function dpsc_pnj_grid_display($atts, $content=null) {
                 $prod_permalink = get_permalink($product->ID);
                 $content .= '<div class="dpsc_grid_product">';
                 $content .= '<div class="dpsc_grid_product_image">';
-                $content .= '<a href="' . $prod_permalink . '" title="' .$product->post_title . '"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $main_image . '&w=160&h=120&zc=1" ></a>';
+                if ($main_image != '') {
+                    $content .= '<a href="' . $prod_permalink . '" title="' .$product->post_title . '"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $main_image . '&w=' . $dp_shopping_cart_settings['g_w'] . '&h=' . $dp_shopping_cart_settings['g_h'] . '&zc=1" ></a>';
+                }
                 $content .= '</div>';
                 $content .= '<div class="dpsc_grid_product_detail">';
                 $content .= '<p class="title"><a href="' . $prod_permalink . '" title="' .$product->post_title . '">' . $product->post_title . '</a></p>';
@@ -609,7 +623,6 @@ function dp_rm_varition_delete_data() {
         }
         update_post_meta($postid, 'dropdown_option', $result_string);
         echo dp_get_dropdown_option_to_display($postid);
-       //var_dump($result_string);
      }
      die();
 }
