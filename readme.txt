@@ -5,7 +5,7 @@ Tags: shopping cart, web shop, cart, shop, Worldpay, Paypal, Alertpay, paypal, e
 
 Requires at least: 2.9.2
 Tested up to: 3.0.1
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 
 DukaPress is an open source e-commerce solution built for Wordpress.
 
@@ -51,7 +51,7 @@ View a DukaPress Demo Shop: [DukaPress Demo](http://dukapress.org/demo/ "Your fa
 
 No.  Nothing is wrong with you. :)
 
-We test DukaPress on a large number of different server set-ups and envrionments and we are satisfied that it does work in these environments.  However, the number of different environments 'out there' is infinite and we cannot possibly test on every single environment.  If everythign that you try fails to work, perharps you should move your site to one of the more common web hosts?  [Look here for hosts that we know work with DukaPress.](http://dukapress.org/download/)
+We test DukaPress on a large number of different server set-ups and envrionments and we are satisfied that it does work in these environments.  However, the number of different environments 'out there' is infinite and we cannot possibly test on every single environment.  If everything that you try fails to work, perharps you should move your site to one of the more common web hosts?  [Look here for hosts that we know work with DukaPress.](http://dukapress.org/download/)
 
 
 = Why isn't the Grid Display working? =
@@ -76,6 +76,9 @@ div class="dpsc-shopping-cart">cart code</div
 [View Screenshots](http://www.flickr.com/photos/moshthepitt/sets/72157624534741496/ "DukaPress screenshots")
 
 == Changelog ==
+
+= 1.3.2 =
+* A quick bug fix release. This fix removes the hard coded image dimensions in the dukapress.js file.
 
 = 1.3.1 =
 * A quick bug fix release to fix a JQuery bug in 1.3.0
@@ -110,6 +113,9 @@ div class="dpsc-shopping-cart">cart code</div
 * Initial Release
 
 == Upgrade Notice ==
+
+= 1.3.2 =
+Some bugs crushed.  Aren't you glad we're takign care of you?  Keep 'em bugs away, I say.
 
 = 1.3.1 =
 A quick bug fix release to fix a JQuery bug in 1.3.0
