@@ -192,12 +192,12 @@ function dp_pnj_mz_effect($attachment_images, $product_id) {
         if ($count === 0) {
             $main_image = $image->guid;
         }
-        $output .= '<li><a class="dpsc_thumb_tab" href="' . $image->guid . '"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $image->guid . '&w=' . $dp_shopping_cart_settings['t_w'] . '&h=' . $dp_shopping_cart_settings['t_h'] . '&zc=1" ></a></li>';
+        $output .= '<li><a class="dpsc_thumb_tab" id="' . $product_id . '" href="' . $image->guid . '"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $image->guid . '&w=' . $dp_shopping_cart_settings['t_w'] . '&h=' . $dp_shopping_cart_settings['t_h'] . '&zc=1" ></a></li>';
         $count++;
     }
     $output .= '</ul>';
     $output .= '</div>';
-    $output .= '<div class="dpsc_main_image">';
+    $output .= '<div class="dpsc_main_image main_' . $product_id . '">';
     $output .= '<a href="' . $main_image . '" class="MagicZoom" id="zoom1" rel="show-title: false; zoom-fade: true; zoom-position: inner; thumb-change: mouseover"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $main_image . '&w=' . $dp_shopping_cart_settings['m_w'] . '&h=' . $dp_shopping_cart_settings['m_h'] . '&zc=1" ></a>';
     $output .= '</div>';
     $output .= '</div>';
@@ -214,12 +214,12 @@ function dp_pnj_jqzoom_effect($attachment_images, $product_id) {
         if ($count === 0) {
             $main_image = $image->guid;
         }
-        $output .= '<li><a class="dpsc_thumb_tab" href="' . $image->guid . '"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $image->guid . '&w=' . $dp_shopping_cart_settings['t_w'] . '&h=' . $dp_shopping_cart_settings['t_h'] . '&zc=1" ></a></li>';
+        $output .= '<li><a class="dpsc_thumb_tab" id="' . $product_id . '" href="' . $image->guid . '"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $image->guid . '&w=' . $dp_shopping_cart_settings['t_w'] . '&h=' . $dp_shopping_cart_settings['t_h'] . '&zc=1" ></a></li>';
         $count++;
     }
     $output .= '</ul>';
     $output .= '</div>';
-    $output .= '<div class="dpsc_main_image">';
+    $output .= '<div class="dpsc_main_image main_' . $product_id . '">';
     $output .= '<a href="' . $main_image . '" title="image" class="dp_jqzoom" ><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $main_image . '&w=' . $dp_shopping_cart_settings['m_w'] . '&h=' . $dp_shopping_cart_settings['m_h'] . '&zc=1" ></a>';
     $output .= '</div>';
     $output .= '</div>';
@@ -258,12 +258,12 @@ function dp_pnj_no_effect($attachment_images, $product_id) {
         if ($count === 0) {
             $main_image = $image->guid;
         }
-        $output .= '<li><a class="dpsc_thumb_tab" href="' . $image->guid . '"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $image->guid . '&w=' . $dp_shopping_cart_settings['t_w'] . '&h=' . $dp_shopping_cart_settings['t_h'] . '&zc=1" ></a></li>';
+        $output .= '<li><a class="dpsc_thumb_tab" id="' . $product_id . '" href="' . $image->guid . '"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $image->guid . '&w=' . $dp_shopping_cart_settings['t_w'] . '&h=' . $dp_shopping_cart_settings['t_h'] . '&zc=1" ></a></li>';
         $count++;
     }
     $output .= '</ul>';
     $output .= '</div>';
-    $output .= '<div class="dpsc_main_image">';
+    $output .= '<div class="dpsc_main_image main_' . $product_id . '">';
     $output .= '<img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $main_image . '&w=' . $dp_shopping_cart_settings['m_w'] . '&h=' . $dp_shopping_cart_settings['m_h'] . '&zc=1" >';
     $output .= '</div>';
     $output .= '</div>';

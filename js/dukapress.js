@@ -114,14 +114,14 @@ jQuery(document).ready(function () {
             jQuery(this).addClass('current').parent().siblings().children().removeClass('current');
             var prod_id = jQuery(this).attr('id');
             var href = jQuery(this).attr('href');
-            var new_src = dpsc_js.tim_url + href + '&w=310&h=383&zc=1';
+            var new_src = dpsc_js.tim_url + href + '&w=' + dpsc_js.width + '&h=' + dpsc_js.height + '&zc=1';
             var check_no_effect = jQuery('.dpsc_main_image a').length;
             if (check_no_effect > 0) {
                 jQuery('.main_' + prod_id + ' a').attr('href', href).children().attr('src', new_src);
                 jQuery('.MagicZoomBigImageCont img').attr('src', href);
             }
             else {
-                jQuery('.main_' + prod_id).children().attr('src', new_src);
+                jQuery('.main_' + prod_id + ' img').attr('src', new_src);
             }
     });
 
