@@ -259,8 +259,8 @@ function dukapress_shopping_cart_order_log() {
                 }
                 $to = $result->billing_email;
                 $from = get_option('admin_email');
-                dpsc_pnj_send_mail($to, $from, 'DukaPress Payment Notification', $subject, $message);
-                dpsc_pnj_send_mail($from, $to, 'DukaPress Payment Notification', $subject, $subject);
+                dpsc_pnj_send_mail($to, $from, $dp_shopping_cart_settings['shop_name'], $subject, $message);
+                dpsc_pnj_send_mail($from, $to, $dp_shopping_cart_settings['shop_name'], $subject, $subject);
             }
             ?>
 <h3>Transaction Details for Invoice No. <?php echo $result->invoice;?></h3>

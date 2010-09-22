@@ -477,8 +477,8 @@ function dpsc_paypal_ipn() {
                 $subject = 'Payment Received For Invoice No: ' . $invoice;
                 $to = $result->billing_email;
                 $from = get_option('admin_email');
-                dpsc_pnj_send_mail($to, $from, 'DukaPress Payment Notification', $subject, $message);
-                dpsc_pnj_send_mail($from, $to, 'DukaPress Payment Notification', $subject, $subject);
+                dpsc_pnj_send_mail($to, $from, $dp_shopping_cart_settings['shop_name'], $subject, $message);
+                dpsc_pnj_send_mail($from, $to, $dp_shopping_cart_settings['shop_name'], $subject, $subject);
             }
         }
     }
@@ -554,8 +554,8 @@ function dpsc_auth_ipn() {
         $subject = 'Payment Received For Invoice No: ' . $invoice;
         $to = $result->billing_email;
         $from = get_option('admin_email');
-        dpsc_pnj_send_mail($to, $from, 'DukaPress Payment Notification', $subject, $message);
-        dpsc_pnj_send_mail($from, $to, 'DukaPress Payment Notification', $subject, $subject);
+        dpsc_pnj_send_mail($to, $from, $dp_shopping_cart_settings['shop_name'], $subject, $message);
+        dpsc_pnj_send_mail($from, $to, $dp_shopping_cart_settings['shop_name'], $subject, $subject);
     }
     $return_path = $dp_shopping_cart_settings['thank_you'];
     $check_return_path = explode('?', $return_path);
