@@ -38,6 +38,7 @@ View a DukaPress Demo Shop: [DukaPress Demo](http://dukapress.org/demo/ "Your fa
 
 1. Upload the DukaPress folder to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
+1. Make sure your web host allows scripts like timthum.php to run on your site.  If they don't, your DukaPress images will be broken.
 1. After this, visit the [DukaPress documentation](http://dukapress.org/docs/ "DukaPress documentation")
 
 
