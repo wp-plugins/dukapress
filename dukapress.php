@@ -2,7 +2,7 @@
 /*
 Plugin Name: DukaPress Shopping Cart
 Description: DukaPress Shopping Cart
-Version: 1.3.2
+Version: 1.3.2.1
 Author: Parshwa Nemi Jain and Nickel Pro
 Author URI: http://dukapress.org/
 Plugin URI: http://dukapress.org/
@@ -84,7 +84,7 @@ if (is_admin()) {
         wp_enqueue_script('dp_jquery_ui_js', DP_PLUGIN_URL . '/js/jquery-ui-1.8.4.custom.min.js', array('jquery'));
     }
     wp_enqueue_style('dp_acc_style', DP_PLUGIN_URL . '/css/style.css');
-    wp_enqueue_script('dpsc_admin_js', DP_PLUGIN_URL . '/js/dukapress-admin.js', array('dp_jquery_ui_js'));
+    wp_enqueue_script('dpsc_admin_js', DP_PLUGIN_URL . '/js/dukapress-admin.js', array('jquery'));
 }
 else {
     wp_enqueue_style('dpsc_basic_css', DP_PLUGIN_URL.'/css/dpsc-basic.css');
