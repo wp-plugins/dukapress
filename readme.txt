@@ -5,7 +5,7 @@ Tags: shopping cart, web shop, cart, shop, Worldpay, Paypal, Alertpay, paypal, e
 
 Requires at least: 2.9.2
 Tested up to: 3.0.1
-Stable tag: 1.3.2
+Stable tag: 1.3.2.1
 
 DukaPress is an open source e-commerce solution built for Wordpress.
 
