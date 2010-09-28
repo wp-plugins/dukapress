@@ -78,6 +78,9 @@ div class="dpsc-shopping-cart">cart code</div
 
 == Changelog ==
 
+= 1.3.2.1 =
+* A quick bug fix release for a bug that affected the WordPress post edit screen.
+
 = 1.3.2 =
 * A quick bug fix release. This fix removes the hard coded image dimensions in the dukapress.js file.
 
@@ -114,6 +117,9 @@ div class="dpsc-shopping-cart">cart code</div
 * Initial Release
 
 == Upgrade Notice ==
+
+= 1.3.2.1 =
+Nothin' to see here, bug crushing.
 
 = 1.3.2 =
 Some bugs crushed.  Aren't you glad we're takign care of you?  Keep 'em bugs away, I say.
