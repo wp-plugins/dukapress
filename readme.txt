@@ -48,6 +48,18 @@ View a DukaPress Demo Shop: [DukaPress Demo](http://dukapress.org/demo/ "Your fa
 
 'Duka' is the Swahili word for shop.  Loosely, DukaPress means "shoppress".  We like to think it means the most complete and usable e-commerce solution for wordpress, though.
 
+= What don't the images work? =
+
+Please read this first: [We live in a bad world](http://dukapress.org/blog/2010/09/23/we-live-in-a-bad-world/ "Why images don't work").
+
+Unfortunately, for security reasons, web hosts sometimes disable timthumb from working.  This is the script that handles images in DukaPress.  To fix this, kindly ask your webhost to allow timthumb to work.  All the good webhosts will do this for you in two minutes!
+
+[Look here for hosts that we know work with DukaPress.](http://dukapress.org/download/)
+
+= Why is the make payment button not working? =
+
+Nine out of ten times, this is because there is a javascript error somewhere on your site.  The first place to look is your theme - try and run DukaPress using the default WordPress theme to confirm if it is your theme that is failing you.
+
 = Why doesn't DukaPress work for me?  It seems to work for everyone else =
 
 No.  Nothing is wrong with you. :)
