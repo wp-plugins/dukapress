@@ -34,6 +34,8 @@ DukaPress Documentation: [DukaPress Documentation](http://dukapress.org/docs/ "Y
 
 View a DukaPress Demo Shop: [DukaPress Demo](http://dukapress.org/demo/ "Your favorite e-commerce software")
 
+Due to public demand, you can get an absolutely free DukaPress hosted (just sign up and start selling in five minutes, no fuss) shop here: [Our Duka](http://ourduka.com/ "Get a free online shop")
+
 == Installation ==
 
 1. Upload the DukaPress folder to the `/wp-content/plugins/` directory
