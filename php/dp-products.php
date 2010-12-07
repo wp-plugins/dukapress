@@ -19,11 +19,11 @@ function dpsc_get_product_details($product_id) {
         if($dp_shopping_cart_settings['dp_shop_mode'] != 'inquiry') {
             if (is_numeric($all_custom_fields['new_price'][0])) {
                 $product_price = $all_custom_fields['new_price'][0];
-                $custom_fields_output['price'] = '<p class="dpsc_price">Price: ' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span class="was">' . $all_custom_fields['price'][0] . '</span>&nbsp;<span class="is">' . $all_custom_fields['new_price'][0] . '</span></p>';
+                $custom_fields_output['price'] = '<p class="dpsc_price">' . __('Price:',"dp-lang") . ' ' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span class="was">' . $all_custom_fields['price'][0] . '</span>&nbsp;<span class="is">' . $all_custom_fields['new_price'][0] . '</span></p>';
             }
             else {
                 $product_price = $all_custom_fields['price'][0];
-                $custom_fields_output['price'] = '<p class="dpsc_price">Price: ' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span class="is">' . $all_custom_fields['price'][0] . '</span></p>';
+                $custom_fields_output['price'] = '<p class="dpsc_price">' . __('Price:',"dp-lang") . ' ' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span class="is">' . $all_custom_fields['price'][0] . '</span></p>';
             }
         }
         $item_weight = '';
@@ -35,7 +35,7 @@ function dpsc_get_product_details($product_id) {
                                         <input type="hidden" name="action" value="dpsc_add_to_cart"/><div class="dpsc_update_icon" id="dpsc_update_icon_' . $product_id . '" style="display:none;"><img src="' . DP_PLUGIN_URL . '/images/update.gif"></div>
                                         <input type="hidden" name="product_id" value="' . $product_id . '"/>
                                         <input type="hidden" name="product" value="' . get_the_title($product_id) . '"/>
-                                        <input id="dpsc_actual_price" type="hidden" name="price" value="'.$product_price.'"/>
+                                        <input id="dpsc_actual_price_' . $product_id . '" type="hidden" name="price" value="'.$product_price.'"/>
                                     </form>';
 
         if (isset ($all_custom_fields['dropdown_option'][0])) {
@@ -45,9 +45,9 @@ function dpsc_get_product_details($product_id) {
             foreach ($get_vars as $get_var) {
                 $pro_vars = explode('|', $get_var);
                 $vari_name = $pro_vars[0];
-                $dropdown_content .= '<div id="dpsc_variation_'.$div_var_id.'" class="dpsc_variation"><span class="dpsc_variation" for="var">Select '.$vari_name.' </span>';
+                $dropdown_content .= '<div id="dpsc_variation_'.$div_var_id.'" class="dpsc_variation"><span class="dpsc_variation" for="var">' . __('Select') . ' '.__($vari_name).' </span>';
                 $pro_vars = array_slice($pro_vars, 1);
-                $dropdown_content .= '<select id="dpsc_variation_'.$div_var_id.'_dpscVariant" name="var[]" onchange="getFinalPrice();">';
+                $dropdown_content .= '<select id="dpsc_variation_'.$div_var_id.'_dpscVariant" name="var[]" onchange="getFinalPrice_' . $product_id . '();">';
                 foreach ($pro_vars as $pro_var) {
                     $get_var = explode(';',$pro_var);
                     $var_price_text = '';
@@ -70,7 +70,7 @@ function dpsc_get_product_details($product_id) {
                 var flag=0; //whether ie or ff
                 if(navigator.appName=="Microsoft Internet Explorer"){initialCost=SalePriceLabel1.value;flag=1;}
                 //change value in variant and get final price
-                function getFinalPrice(){
+                function getFinalPrice_' . $product_id . '(){
                     try{
                         var drpdown;
                         var drpdownID;
@@ -78,9 +78,9 @@ function dpsc_get_product_details($product_id) {
                         var selText;
                         var costDiff;
                         //--
-                        var SalePriceLabel1=document.getElementById("dpsc_actual_price");
+                        var SalePriceLabel1=document.getElementById("dpsc_actual_price_' . $product_id . '");
                         var initialCost=SalePriceLabel1.value;
-                        var SalePriceLabel=document.getElementById("dpsc_new_product_price");
+                        var SalePriceLabel=document.getElementById("dpsc_new_product_price_' . $product_id . '");
                         var SalePrice=initialCost;//works diffent for IE and FF
                         //var promoOff=parseFloat(document.getElementById("ctl00_ctl00_Body_PageContent_uxPromoPerc").value);
                         //stores sale price; which is to be updated
@@ -113,9 +113,9 @@ function dpsc_get_product_details($product_id) {
                         document.dpsc_product_form_' . $product_id . '.dpsc_price_updated.value=SalePrice;
                     }catch(ex){}}
             </script><input type="hidden" id="dpsc_new_product_price_hidden" name="dpsc_price_updated" value="' . $product_price . '" />' . $custom_fields_output['end'] . '<script language="javascript" type="text/javascript">
-                                                    getFinalPrice();
+                                                    getFinalPrice_' . $product_id . '();
                                                 </script>';
-                $custom_fields_output['final_price'] = '<p class="dpsc_price">Price: <span id="dpsc_new_product_price">' . $product_price . '</span></p>';
+                $custom_fields_output['final_price'] = '<p class="dpsc_price">Price: ' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span id="dpsc_new_product_price_' . $product_id . '">' . $product_price . '</span></p>';
             }
         }
 
@@ -155,18 +155,18 @@ function dpsc_get_product_details($product_id) {
         if($dp_shopping_cart_settings['dp_shop_inventory_active'] === 'yes' && isset($all_custom_fields['currently_in_stock'][0])) {
             if($dp_shopping_cart_settings['dp_shop_inventory_stocks'] === 'yes' && $all_custom_fields['currently_in_stock'][0] > 0) {
                 $custom_fields_output['end'] = '<input type="hidden" name="max_quantity" value="' . $all_custom_fields['currently_in_stock'][0] . '"/>' . $custom_fields_output['end'];
-                $in_stock = '<span class="dpsc_in_stock">Currently in Stock</span>';
+                $in_stock = '<span class="dpsc_in_stock">' . __('Currently in Stock',"dp-lang") . '</span>';
             }
             elseif ($dp_shopping_cart_settings['dp_shop_inventory_soldout'] === 'yes' && $all_custom_fields['currently_in_stock'][0] < 1) {
-                $in_stock = '<span class="dpsc_in_stock_sold_out">Out of Stock</span>';
+                $in_stock = '<span class="dpsc_in_stock_sold_out">' . __('Out of Stock',"dp-lang") . '</span>';
                 $available_in_stock = FALSE;
             }
         }
         $custom_fields_output['in_stock'] = $in_stock;
 
-        $value_atc = 'Add to Cart';
+        $value_atc = __('Add to Cart',"dp-lang");
         if($dp_shopping_cart_settings['dp_shop_mode'] === 'inquiry') {
-            $value_atc = 'Inquire';
+            $value_atc = __('Inquire',"dp-lang");
         }
         $disabled_add_to_cart = '';
         if (!$available_in_stock) {
@@ -311,7 +311,8 @@ function dpsc_pnj_grid_display($atts, $content=null) {
             'total' => '12',
             'column' => '3',
             'per_page' => '',
-            'type' => 'post'
+            'type' => 'post',
+            'order' => 'DESC'
             ), $atts));
 
     if (!empty($per_page)) {
@@ -334,7 +335,13 @@ function dpsc_pnj_grid_display($atts, $content=null) {
         $offset = '';
         $page_links = '';
     }
-    $products = get_posts('numberposts=' . $per_page . '&post_type=' . $type . '&meta_key=price&category=' . $category . $offset);
+    if ($order != 'rand') {
+        $order_string = 'orderby=ID&order=' . $order . '&';
+    }
+    else {
+        $order_string = 'orderby=rand&';
+    }
+    $products = get_posts($order_string . 'numberposts=' . $per_page . '&post_type=' . $type . '&meta_key=price&category=' . $category . $offset);
     if (is_array($products) && count($products) > 0) {
         $content .= '<div class="dpsc_grid_display">';
         $count = 1;
@@ -356,7 +363,7 @@ function dpsc_pnj_grid_display($atts, $content=null) {
                 }
                 $content .= '</div>';
                 $content .= '<div class="dpsc_grid_product_detail">';
-                $content .= '<p class="title"><a href="' . $prod_permalink . '" title="' .$product->post_title . '">' . $product->post_title . '</a></p>';
+                $content .= '<p class="title"><a href="' . $prod_permalink . '" title="' .$product->post_title . '">' . __($product->post_title) . '</a></p>';
                 $content .= '<p class="price">' . $output['price'] . '</p>';
                 $content .= $output['start'];
                 $content .= $output['add_to_cart'];
@@ -400,29 +407,29 @@ function dp_rm_content_visibility_meta_box() {
     $content_file = get_post_meta($post_id, 'digital_file', true);
     ?>
     <table>
-        <tr><td><label for="price"><b>Price:</b></label></td><td><input id="price" type="text" name="price" value="<?php echo $content_price; ?>" /></td></tr>
-        <tr><td><label for="new_price"><b>New Price:</b></label></td><td><input id="new_price" type="text" name="new_price" value="<?php echo $new_price; ?>" /></td></tr>
-        <tr><td><label for="currently_in_stock"><b>Currently In Stock:</b></label></td><td><input id="currently_in_stock" type="text" name="currently_in_stock" value="<?php echo $content_stock; ?>" /></td></tr>
-        <tr><td><label for="item_weight"><b>Item Weight:</b></label></td><td><input id="item_weight" type="text" name="item_weight" value="<?php echo $content_weight; ?>" /> (in grams)</td></tr>
-        <tr><td><label for="digital_file"><b>Digital File:</b></label></td><td><input id="digital_file" type="text" name="digital_file" value="<?php echo $content_file; ?>" /></td></tr>
+        <tr><td><label for="price"><b><?php _e('Price:',"dp-lang"); ?></b></label></td><td><input id="price" type="text" name="price" value="<?php echo $content_price; ?>" /></td></tr>
+        <tr><td><label for="new_price"><b><?php _e('New Price:',"dp-lang");?></b></label></td><td><input id="new_price" type="text" name="new_price" value="<?php echo $new_price; ?>" /></td></tr>
+        <tr><td><label for="currently_in_stock"><b><?php _e('Currently In Stock:',"dp-lang");?></b></label></td><td><input id="currently_in_stock" type="text" name="currently_in_stock" value="<?php echo $content_stock; ?>" /></td></tr>
+        <tr><td><label for="item_weight"><b><?php _e('Item Weight:',"dp-lang");?></b></label></td><td><input id="item_weight" type="text" name="item_weight" value="<?php echo $content_weight; ?>" /> (in grams)</td></tr>
+        <tr><td><label for="digital_file"><b><?php _e('Digital File:',"dp-lang");?></b></label></td><td><input id="digital_file" type="text" name="digital_file" value="<?php echo $content_file; ?>" /></td></tr>
     </table>
 
-    <b>Dropdown Options</b>
+    <b><?php _e('Dropdown Options',"dp-lang");?></b>
      <div id="result">
         <?php echo dp_get_dropdown_option_to_display($post_id); ?>
      </div>
 
     <div id="mainField" style="clear:both;">
         <p>
-            <label for="optionname">Option Name</label>
+            <label for="optionname"><?php _e('Option Name',"dp-lang");?></label>
             <input id="optionname" name="optionname" size="15" />
         </p>
         <p>
-            <label for="vname1">Variation Name</label>
+            <label for="vname1"><?php _e('Variation Name',"dp-lang");?></label>
             <input id="vname1" name="vname1" size="15" />
         </p>
         <p>
-            <label for="vprice1">Variation Price</label>
+            <label for="vprice1"><?php _e('Variation Price',"dp-lang");?></label>
             <input id="vprice1" name="vprice1" size="15" />
         </p>
         <div id="dp_var_fields"></div>
@@ -430,7 +437,7 @@ function dp_rm_content_visibility_meta_box() {
     <p>
         <input type="button" id="dp_addVariation" value="+"/>
         <input type="hidden" name="varitaionnumber" id="varitaionnumber" value="1" />
-        <input type="button" id="dp_save" value="save"/>
+        <input type="button" id="dp_save" value="Save"/>
     </p>
 
     <?php
@@ -621,7 +628,12 @@ function dp_rm_varition_delete_data() {
         {
             $result_string='';
         }
-        update_post_meta($postid, 'dropdown_option', $result_string);
+        if ($result_string === '') {
+            delete_post_meta($postid, 'dropdown_option');
+        }
+        else {
+            update_post_meta($postid, 'dropdown_option', $result_string);
+        }
         echo dp_get_dropdown_option_to_display($postid);
      }
      die();
@@ -632,20 +644,20 @@ add_action( 'init', 'dp_create_post_type' );
 function dp_create_post_type() {
     register_post_type('duka', array(
 	'labels' => array(
-            'name' => __( 'Products' ),
-            'singular_name' => __( 'Product' ),
-            'add_new' => __( 'Add New Product' ),
-            'add_new_item' => __( 'Add New Product' ),
-            'edit' => __( 'Edit' ),
-            'edit_item' => __( 'Edit Product' ),
-            'new_item' => __( 'New Product' ),
-            'view' => __( 'View Product' ),
-            'view_item' => __( 'View Product' ),
-            'search_items' => __( 'Search Products' ),
-            'not_found' => __( 'No products found' ),
-            'not_found_in_trash' => __( 'No products found in Trash' )
+            'name' => __( 'Products',"dp-lang" ),
+            'singular_name' => __( 'Product',"dp-lang" ),
+            'add_new' => __( 'Add New Product',"dp-lang" ),
+            'add_new_item' => __( 'Add New Product',"dp-lang" ),
+            'edit' => __( 'Edit' ,"dp-lang"),
+            'edit_item' => __( 'Edit Product',"dp-lang" ),
+            'new_item' => __( 'New Product' ,"dp-lang"),
+            'view' => __( 'View Product',"dp-lang" ),
+            'view_item' => __( 'View Product' ,"dp-lang"),
+            'search_items' => __( 'Search Products' ,"dp-lang"),
+            'not_found' => __( 'No products found' ,"dp-lang"),
+            'not_found_in_trash' => __( 'No products found in Trash',"dp-lang" )
         ),
-        'description' => __('Products for use with DukaPress'),
+        'description' => __('Products for use with DukaPress',"dp-lang"),
 	'public' => true,
 	'show_ui' => true,
 	'capability_type' => 'post',

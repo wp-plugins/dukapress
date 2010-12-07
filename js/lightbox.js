@@ -1,7 +1,7 @@
-jQuery(function ($) {
-
-/*fancybox*/
-	jQuery('.dpsc_image_section .fancybox').fancybox();
-
-
+jQuery(function ($) {
+
+/*fancybox*/
+	jQuery('.dpsc_image_section .fancybox').fancybox();
+
+
 });

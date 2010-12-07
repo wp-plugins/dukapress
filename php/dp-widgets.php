@@ -11,20 +11,20 @@
 add_action('widgets_init', create_function('', 'return register_widget("dpsc_detailed_shopping_cart_widget");'));
 class dpsc_detailed_shopping_cart_widget extends WP_Widget {
     function dpsc_detailed_shopping_cart_widget() {
-        $widget_ops = array('description' => 'Displays DukaPress Shopping Cart');
+        $widget_ops = array('description' => __('Displays DukaPress Shopping Cart',"dp-lang"));
         $control_ops = array('width' => 100, 'height' => 300);
-        parent::WP_Widget(false,$name='DukaPress Shopping Cart',$widget_ops,$control_ops);
+        parent::WP_Widget(false,$name= __('DukaPress Shopping Cart',"dp-lang"),$widget_ops,$control_ops);
     }
 
     function form($instance) {
-        $instance = wp_parse_args( (array) $instance, array(  'title' => '', 'Your DukaPress Shopping Cart' => '') );
+        $instance = wp_parse_args( (array) $instance, array(  'title' => '') );
         $title = esc_attr( $instance['title'] );
         ?>
 <p>
-    <label for="<?php echo $this->get_field_id('title'); ?>">Title:</label>
+    <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:',"dp-lang");?></label>
     <input type="text" value="<?php echo $title; ?>" name="<?php echo $this->get_field_name('title'); ?>" id="<?php echo $this->get_field_id('title'); ?>" class="widefat" />
 </p>
-<p>To change settings, <a href="<?php bloginfo('url')?>/wp-admin/admin.php?page=dukapress-shopping-cart-settings">click here</a>.</p>
+<p><?php _e('To change settings',"dp-lang")?>, <a href="<?php bloginfo('url')?>/wp-admin/admin.php?page=dukapress-shopping-cart-settings"><?php _e('click here',"dp-lang");?></a>.</p>
         <?php
     }
 
@@ -36,12 +36,12 @@ class dpsc_detailed_shopping_cart_widget extends WP_Widget {
 
     function widget($args, $instance) {
         extract($args);
-        $title = empty( $instance['title'] ) ? 'DukaPress Shopping Cart' : $instance['title'];
+        $title = empty( $instance['title'] ) ? __('DukaPress Shopping Cart',"dp-lang") : __($instance['title'],"dp-lang");
         echo $before_widget;
         echo $before_title.$title.$after_title;
         ?>
 <div class="dpsc-shopping-cart" id="dpsc-shopping-cart">
-            <?php echo dpsc_print_cart_html();?>
+            <?php _e(dpsc_print_cart_html(),"dp-lang");?>
 </div>
         <?php
         echo $after_widget;
@@ -49,26 +49,26 @@ class dpsc_detailed_shopping_cart_widget extends WP_Widget {
 }
 
 /**
- * Widget to display Go to Checkout Widget
+ * Widget to display Go to Checkout Widget 
  *
  */
 add_action('widgets_init', create_function('', 'return register_widget("dpsc_show_checkout_link_widget");'));
 class dpsc_show_checkout_link_widget extends WP_Widget {
     function dpsc_show_checkout_link_widget() {
-        $widget_ops = array('description' => 'Displays DukaPress Checkout Link');
+        $widget_ops = array('description' => __('Displays DukaPress Checkout Link',"dp-lang"));
         $control_ops = array('width' => 100, 'height' => 300);
-        parent::WP_Widget(false,$name='DukaPress Checkout',$widget_ops,$control_ops);
+        parent::WP_Widget(false,$name=__('DukaPress Checkout',"dp-lang"),$widget_ops,$control_ops);
     }
 
     function form($instance) {
-        $instance = wp_parse_args( (array) $instance, array(  'title' => '', 'DukaPress Checkout' => '') );
+        $instance = wp_parse_args( (array) $instance, array(  'title' => '') );
         $title = esc_attr( $instance['title'] );
         ?>
 <p>
-    <label for="<?php echo $this->get_field_id('title'); ?>">Title:</label>
+    <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:',"dp-lang");?></label>
     <input type="text" value="<?php echo $title; ?>" name="<?php echo $this->get_field_name('title'); ?>" id="<?php echo $this->get_field_id('title'); ?>" class="widefat" />
 </p>
-<p>To change checkout url, <a href="<?php bloginfo('url')?>/wp-admin/admin.php?page=dukapress-shopping-cart-settings">click here</a>.</p>
+<p><?php _e('To change checkout url',"dp-lang");?>, <a href="<?php bloginfo('url')?>/wp-admin/admin.php?page=dukapress-shopping-cart-settings"><?php _e('click here',"dp-lang");?></a>.</p>
         <?php
     }
 
@@ -80,13 +80,13 @@ class dpsc_show_checkout_link_widget extends WP_Widget {
 
     function widget($args, $instance) {
         extract($args);
-        $title = empty( $instance['title'] ) ? 'DukaPress Checkout' : $instance['title'];
+        $title = empty( $instance['title'] ) ? __('DukaPress Checkout',"dp-lang") : __($instance['title'],"dp-lang");
         echo $before_widget;
         echo $before_title.$title.$after_title;
         $dpsc_output = dpsc_go_to_checkout_link();
         ?>
 <div class="dpsc-checkout_url-widget" id="dpsc-checkout_url-widget">
-            <?php echo $dpsc_output;?>
+            <?php _e($dpsc_output,"dp-lang");?>
 </div>
         <?php
         echo $after_widget;
@@ -101,9 +101,9 @@ add_action('widgets_init', create_function('', 'return register_widget("dpsc_min
 
 class dpsc_mini_shopping_cart_widget extends WP_Widget {
     function dpsc_mini_shopping_cart_widget() {
-        $widget_ops = array('description' => 'Displays Mini DukaPress Shopping Cart');
+        $widget_ops = array('description' => __('Displays Mini DukaPress Shopping Cart',"dp-lang"));
         $control_ops = array('width' => 100, 'height' => 300);
-        parent::WP_Widget(false,$name='Mini DukaPress Shopping Cart',$widget_ops,$control_ops);
+        parent::WP_Widget(false,$name=__('Mini DukaPress Shopping Cart',"dp-lang"),$widget_ops,$control_ops);
     }
 
     function form($instance) {
@@ -135,11 +135,11 @@ class dpsc_mini_shopping_cart_widget extends WP_Widget {
 function dpsc_go_to_checkout_link() {
     $dpsc_output = '';
     if (!dpsc_cart_full()) {
-        $dpsc_output .= 'Your cart is empty.';
+        $dpsc_output .= __('Your cart is empty.',"dp-lang");
     }
     else {
         $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
-        $dpsc_output = '<a href="' . $dp_shopping_cart_settings['checkout'] . '">Go to Checkout</a>';
+        $dpsc_output = '<a href="' . $dp_shopping_cart_settings['checkout'] . '">' . __('Go to Checkout',"dp-lang") . '</a>';
     }
     return $dpsc_output;
 }
@@ -169,7 +169,7 @@ function dpsc_print_cart_html($mini=FALSE, $product_name = FALSE) {
     $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
     $dpsc_total_products = 0;
     if (!dpsc_cart_full()) {
-        $dpsc_output .= 'Your cart is empty.';
+        $dpsc_output .= __('Your cart is empty.',"dp-lang");
     }
     else {
         $dpsc_total = 0.00;
@@ -177,17 +177,17 @@ function dpsc_print_cart_html($mini=FALSE, $product_name = FALSE) {
         $dpsc_total_discount = 0.00;
         if (is_array($dpsc_products_in_cart)) {
            if($dp_shopping_cart_settings['dp_shop_mode'] != 'inquiry') {
-               $price_head = '<th id="price">Price</th>';
+               $price_head = '<th id="price">' . __('Price',"dp-lang") . '</th>';
            }
            else {
                $price_head = '';
            }
            if ($product_name) {
-               $dpsc_output .= '<div class="dpsc_update_notification">You have added <strong>' . $product_name . '</strong> to the cart.</div>';
+               $dpsc_output .= '<div class="dpsc_update_notification">' . __('You have added',"dp-lang") . ' <strong>' . $product_name . '</strong> ' . __('to the cart',"dp-lang") . '.</div>';
            }
             $dpsc_output .= '<table class="shoppingcart">
-                <tr><th id="product">Product</th>
-                <th id="dpsc-cart-quantity">Qty</th>
+                <tr><th id="product">' . __('Product',"dp-lang") . '</th>
+                <th id="dpsc-cart-quantity">' . __('Qty',"dp-lang") . '</th>
                 ' . $price_head . '</tr>';
             foreach ($dpsc_products_in_cart as $dpsc_product_in_cart) {
                 $dpsc_discount_on_this_product = 0.00;
@@ -206,12 +206,12 @@ function dpsc_print_cart_html($mini=FALSE, $product_name = FALSE) {
             }
             $dpsc_output .= '</table>';
             if($dp_shopping_cart_settings['dp_shop_mode'] != 'inquiry') {
-                $dpsc_output .= '<strong>Total:' . $dp_shopping_cart_settings['dp_currency_symbol'] . ' ' . number_format($dpsc_total,2) . '</strong>';
+                $dpsc_output .= '<strong>' . __('Total:',"dp-lang") . $dp_shopping_cart_settings['dp_currency_symbol'] . ' ' . number_format($dpsc_total,2) . '</strong>';
             }
             $dpsc_output .= '<form action="" method="post" class="dpsc_empty_cart">
                 <input type="hidden" name="dpsc_ajax_action" value="empty_cart" />
                 <span class="emptycart">
-			<a href="'.htmlentities(add_query_arg("dpsc_ajax_action", "empty_cart", remove_query_arg("ajax")), ENT_QUOTES).'">Empty your cart</a>
+			<a href="'.htmlentities(add_query_arg("dpsc_ajax_action", "empty_cart", remove_query_arg("ajax")), ENT_QUOTES).'">' . __('Empty your cart',"dp-lang") . '</a>
                 </span>
                 </form>';
             $dpsc_output .= "<span class='gocheckout'>" . dpsc_go_to_checkout_link() . "</span>";
@@ -222,12 +222,135 @@ function dpsc_print_cart_html($mini=FALSE, $product_name = FALSE) {
         if($dp_shopping_cart_settings['dp_shop_mode'] != 'inquiry') {
             $dpsc_at_mini_price = $dp_shopping_cart_settings['dp_currency_symbol'].number_format($dpsc_total,2);
         }
-        return '<a href="' . $dp_shopping_cart_settings["checkout"] . '">'. $dpsc_total_products . ' Products ' . $dpsc_at_mini_price . '</a>';
+        return '<a href="' . $dp_shopping_cart_settings["checkout"] . '">'. $dpsc_total_products . ' ' . __('Products',"dp-lang") . ' ' . $dpsc_at_mini_price . '</a>';
     }
     else {
         return $dpsc_output;
     }
 }
 
+
+/**
+ * Widget to display Go to Checkout Widget
+ *
+ */
+add_action('widgets_init', create_function('', 'return register_widget("dpsc_show_product_widget");'));
+class dpsc_show_product_widget extends WP_Widget {
+    function dpsc_show_product_widget() {
+        $widget_ops = array('description' => __('Product Display',"dp-lang"));
+//        $control_ops = array('width' => 100, 'height' => 300);
+        parent::WP_Widget(false,$name=__('DukaPress Product Display',"dp-lang"),$widget_ops);
+    }
+
+    function form($instance) {
+        $instance = wp_parse_args( (array) $instance, array(  'title' => '', 'number' => '', 'type' => '', 'thumbnail' => '', 'atc' => '', 'post_category' => '') );
+        $title = esc_attr( $instance['title'] );
+        $number = esc_attr( $instance['number'] );
+        $type = esc_attr( $instance['type'] );
+        $thumbnail = esc_attr( $instance['thumbnail'] );
+        $width = esc_attr( $instance['width'] );
+        $height = esc_attr( $instance['height'] );
+        $atc = esc_attr( $instance['atc'] );
+        $category = esc_attr($instance['category']);
+        ?>
+        <p>
+            <label for="<?php echo $this->get_field_id('title'); ?>">Title:</label>
+            <input type="text" value="<?php echo $title; ?>" name="<?php echo $this->get_field_name('title'); ?>" id="<?php echo $this->get_field_id('title'); ?>" class="widefat" />
+        </p>
+        <p>
+            <label for="<?php echo $this->get_field_id('number'); ?>">Number of products to display:</label>
+            <input type="text" value="<?php echo $number; ?>" name="<?php echo $this->get_field_name('number'); ?>" id="<?php echo $this->get_field_id('number'); ?>" class="widefat" />
+        </p>
+        <p>
+            <label for="<?php echo $this->get_field_id('category'); ?>">Category ID (<small>comma separated. e.g. <i>1,2,3</i></small>):</label>
+            <input type="text" value="<?php echo $category; ?>" name="<?php echo $this->get_field_name('category'); ?>" id="<?php echo $this->get_field_id('category'); ?>" class="widefat" />
+        </p>
+        <p>
+            <label>Post Type:</label>
+            <select name="<?php echo $this->get_field_name('type'); ?>">
+                <option value="post" <?php if ($type === 'post') { echo 'selected="selected"';}?>>Normal Post</option>
+                <option value="duka" <?php if ($type === 'duka') { echo 'selected="selected"';}?>>DukaPress Product Post Type</option>
+            </select>
+        </p>
+        <p>
+            <label>Show Thumbnail:</label>
+            <select name="<?php echo $this->get_field_name('thumbnail'); ?>">
+                <option value="yes" <?php if ($thumbnail === 'yes') { echo 'selected="selected"';}?>>Yes</option>
+                <option value="no" <?php if ($thumbnail === 'no') { echo 'selected="selected"';}?>>No</option>
+            </select>
+        </p>
+        <p>
+            <label for="<?php echo $this->get_field_id('width'); ?>">Thumbnail Width:</label>
+            <input type="text" value="<?php echo $width; ?>" name="<?php echo $this->get_field_name('width'); ?>" id="<?php echo $this->get_field_id('width'); ?>" class="widefat" />
+        </p>
+        <p>
+            <label for="<?php echo $this->get_field_id('height'); ?>">Thumbnail Height:</label>
+            <input type="text" value="<?php echo $height; ?>" name="<?php echo $this->get_field_name('height'); ?>" id="<?php echo $this->get_field_id('height'); ?>" class="widefat" />
+        </p>
+        <p>
+            <label>Show Add to Cart:</label>
+            <select name="<?php echo $this->get_field_name('atc'); ?>">
+                <option value="yes" <?php if ($atc === 'yes') { echo 'selected="selected"';}?>>Yes</option>
+                <option value="no" <?php if ($atc === 'no') { echo 'selected="selected"';}?>>No</option>
+            </select>
+        </p>
+        <?php
+    }
+
+    function update($new_instance, $old_instance) {
+        $instance = $old_instance;
+        $instance['title'] = strip_tags( $new_instance['title'] );
+        $instance['number'] = strip_tags( $new_instance['number'] );
+        $instance['type'] = strip_tags( $new_instance['type'] );
+        $instance['thumbnail'] = strip_tags( $new_instance['thumbnail'] );
+        $instance['width'] = strip_tags( $new_instance['width'] );
+        $instance['height'] = strip_tags( $new_instance['height'] );
+        $instance['atc'] = strip_tags( $new_instance['atc'] );
+        $instance['category'] = strip_tags( $new_instance['category'] );
+        return $instance;
+    }
+
+    function widget($args, $instance) {
+        extract($args);
+        $title = empty( $instance['title'] ) ? 'DukaPress Checkout' : $instance['title'];
+        echo $before_widget;
+        echo $before_title.$title.$after_title;
+        $widget_html = '';
+        $widget_products = get_posts('numberposts=' . $instance['number'] . '&post_type=' . $instance['type'] . '&meta_key=price&category=' . $instance['category']);
+        if (is_array($widget_products)) {
+            $widget_html .= '<div class="dp_products_widget">';
+            foreach ($widget_products as $product) {
+                $output = dpsc_get_product_details($product->ID);
+                $widget_html .= '<div class="dp_widget_product">';
+                $prod_permalink = get_permalink($product->ID);
+                if ($instance['thumbnail'] === 'yes') {
+                    $attachment_images =&get_children('post_type=attachment&post_status=inherit&post_mime_type=image&post_parent=' . $product->ID);
+                    $main_image = '';
+                    foreach ($attachment_images as $image) {
+                        $main_image = $image->guid;
+                        break;
+                    }
+                    if ($main_image != '') {
+                        $widget_html .= '<div class="dp_widget_product_image">';
+                        $widget_html .= '<a href="' . $prod_permalink . '" title="' .$product->post_title . '"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $main_image . '&w=' . $instance['width'] . '&h=' . $instance['height'] . '&zc=1" ></a>';
+                        $widget_html .= '</div>';
+                    }
+                }
+                $widget_html .= '<div class="dp_widget_product_detail">';
+                $widget_html .= '<p class="title"><a href="' . $prod_permalink . '" title="' .$product->post_title . '">' . $product->post_title . '</a></p>';
+                if ($instance['atc'] === 'yes') {
+                    $widget_html .= $output['start'];
+                    $widget_html .= $output['add_to_cart'];
+                    $widget_html .= $output['end'];
+                }
+                $widget_html .= '</div>';
+                $widget_html .= '</div>';
+            }
+            $widget_html .= '</div>';
+        }
+        echo $widget_html;
+        echo $after_widget;
+    }
+}
 
 ?>

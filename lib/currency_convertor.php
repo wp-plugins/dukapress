@@ -1,13 +1,13 @@
 <?php
 
-Class CURRENCYCONVERTER {
+Class DP_CURRENCYCONVERTER {
 
     var $_amt = 1;
     var $_to = "";
     var $_from = "";
     var $_error = "";
 
-    function CURRENCYCONVERTER($amt=1, $to="", $from="") {
+    function DP_CURRENCYCONVERTER($amt=1, $to="", $from="") {
         $this->_amt = $amt;
         $this->_to = $to;
         $this->_from = $from;

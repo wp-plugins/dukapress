@@ -2,13 +2,13 @@
 /*
 Plugin Name: DukaPress Shopping Cart
 Description: DukaPress Shopping Cart
-Version: 1.3.2.1
+Version: 2.0
 Author: Parshwa Nemi Jain and Nickel Pro
 Author URI: http://dukapress.org/
 Plugin URI: http://dukapress.org/
 */
 
-$dp_version = 1.22;
+$dp_version = 2.0;
 
 require_once('php/dp-products.php');
 require_once('php/dp-cart.php');
@@ -21,6 +21,8 @@ define('DP_PLUGIN_URL', WP_PLUGIN_URL.'/'.dirname(plugin_basename(__FILE__)));
 define('DP_PLUGIN_DIR', WP_PLUGIN_DIR.'/'.dirname(plugin_basename(__FILE__)));
 define('DP_DOWNLOAD_FILES_DIR', WP_CONTENT_DIR. '/uploads/dpsc_download_files/' );
 define('DP_DOWNLOAD_FILES_DIR_TEMP', WP_CONTENT_DIR. '/uploads/dpsc_temp_download_files/' );
+
+$dpsc_country_code_name = array("AF" => "AFGHANISTAN", "AL" => "ALBANIA", "DZ" => "ALGERIA", "AS" => "AMERICAN SAMOA", "AD" => "ANDORRA", "AO" => "ANGOLA", "AI" => "ANGUILLA", "AQ" => "ANTARCTICA", "AG" => "ANTIGUA AND BARBUDA", "AR" => "ARGENTINA", "AM" => "ARMENIA", "AW" => "ARUBA", "AU" => "AUSTRALIA", "AT" => "AUSTRIA", "AZ" => "AZERBAIJAN", "BS" => "BAHAMAS", "BH" => "BAHRAIN", "BD" => "BANGLADESH", "BB" => "BARBADOS", "BY" => "BELARUS", "BE" => "BELGIUM", "BZ" => "BELIZE", "BJ" => "BENIN", "BM" => "BERMUDA", "BT" => "BHUTAN", "BO" => "BOLIVIA", "BA" => "BOSNIA AND HERZEGOVINA", "BW" => "BOTSWANA", "BV" => "BOUVET ISLAND", "BR" => "BRAZIL", "IO" => "BRITISH INDIAN OCEAN TERRITORY", "BN" => "BRUNEI DARUSSALAM", "BG" => "BULGARIA", "BF" => "BURKINA FASO", "BI" => "BURUNDI", "KH" => "CAMBODIA", "CM" => "CAMEROON", "CA" => "CANADA", "CV" => "CAPE VERDE", "KY" => "CAYMAN ISLANDS", "CF" => "CENTRAL AFRICAN REPUBLIC", "TD" => "CHAD", "CL" => "CHILE", "CN" => "CHINA", "CX" => "CHRISTMAS ISLAND", "CC" => "COCOS (KEELING) ISLANDS", "CO" => "COLOMBIA", "KM" => "COMOROS", "CG" => "CONGO", "CD" => "CONGO, THE DEMOCRATIC REPUBLIC OF THE", "CK" => "COOK ISLANDS", "CR" => "COSTA RICA", "CI" => "COTE D?IVOIRE", "HR" => "CROATIA", "CU" => "CUBA", "CY" => "CYPRUS", "CZ" => "CZECH REPUBLIC", "DK" => "DENMARK", "DJ" => "DJIBOUTI", "DM" => "DOMINICA", "DO" => "DOMINICAN REPUBLIC", "EC" => "ECUADOR", "EG" => "EGYPT", "SV" => "EL SALVADOR", "GQ" => "EQUATORIAL GUINEA", "ER" => "ERITREA", "EE" => "ESTONIA", "ET" => "ETHIOPIA", "FK" => "FALKLAND ISLANDS (MALVINAS)", "FO" => "FAROE ISLANDS", "FJ" => "FIJI", "FI" => "FINLAND", "FR" => "FRANCE", "GF" => "FRENCH GUIANA", "PF" => "FRENCH POLYNESIA", "TF" => "FRENCH SOUTHERN TERRITORIES", "GA" => "GABON", "GM" => "GAMBIA", "GE" => "GEORGIA", "DE" => "GERMANY", "GH" => "GHANA", "GI" => "GIBRALTAR", "GR" => "GREECE", "GL" => "GREENLAND", "GD" => "GRENADA", "GP" => "GUADELOUPE", "GU" => "GUAM", "GT" => "GUATEMALA", "GG" => "GUERNSEY", "GN" => "GUINEA", "GW" => "GUINEA-BISSAU", "GY" => "GUYANA", "HT" => "HAITI", "HM" => "HEARD ISLAND AND MCDONALD ISLANDS", "VA" => "HOLY SEE (VATICAN CITY STATE)", "HN" => "HONDURAS", "HK" => "HONG KONG", "HU" => "HUNGARY", "IS" => "ICELAND", "IN" => "INDIA", "ID" => "INDONESIA", "IR" => "IRAN, ISLAMIC REPUBLIC OF", "IQ" => "IRAQ", "IE" => "IRELAND", "IM" => "ISLE OF MAN", "IL" => "ISRAEL", "IT" => "ITALY", "JM" => "JAMAICA", "JP" => "JAPAN", "JE" => "JERSEY", "JO" => "JORDAN", "KZ" => "KAZAKHSTAN", "KE" => "KENYA", "KI" => "KIRIBATI", "KP" => "KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF", "KR" => "KOREA, REPUBLIC OF", "KW" => "KUWAIT", "KG" => "KYRGYZSTAN", "LA" => "LAO PEOPLE'S DEMOCRATIC REPUBLIC", "LV" => "LATVIA", "LB" => "LEBANON", "LS" => "LESOTHO", "LR" => "LIBERIA", "LY" => "LIBYAN ARAB JAMAHIRIYA", "LI" => "LIECHTENSTEIN", "LT" => "LITHUANIA", "LU" => "LUXEMBOURG", "MO" => "MACAO", "MK" => "MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF", "MG" => "MADAGASCAR", "MW" => "MALAWI", "MY" => "MALAYSIA", "MV" => "MALDIVES", "ML" => "MALI", "MT" => "MALTA", "MH" => "MARSHALL ISLANDS", "MQ" => "MARTINIQUE", "MR" => "MAURITANIA", "MU" => "MAURITIUS", "YT" => "MAYOTTE", "MX" => "MEXICO", "FM" => "MICRONESIA, FEDERATED STATES OF", "MD" => "MOLDOVA, REPUBLIC OF", "MC" => "MONACO", "MN" => "MONGOLIA", "MS" => "MONTSERRAT", "MA" => "MOROCCO", "MZ" => "MOZAMBIQUE", "MM" => "MYANMAR", "NA" => "NAMIBIA", "NR" => "NAURU", "NP" => "NEPAL", "NL" => "NETHERLANDS", "AN" => "NETHERLANDS ANTILLES", "NC" => "NEW CALEDONIA", "NZ" => "NEW ZEALAND", "NI" => "NICARAGUA", "NE" => "NIGER", "NG" => "NIGERIA", "NU" => "NIUE", "NF" => "NORFOLK ISLAND", "MP" => "NORTHERN MARIANA ISLANDS", "NO" => "NORWAY", "OM" => "OMAN", "PK" => "PAKISTAN", "PW" => "PALAU", "PS" => "PALESTINIAN TERRITORY, OCCUPIED", "PA" => "PANAMA", "PG" => "PAPUA NEW GUINEA", "PY" => "PARAGUAY", "PE" => "PERU", "PH" => "PHILIPPINES", "PN" => "PITCAIRN", "PL" => "POLAND", "PT" => "PORTUGAL", "PR" => "PUERTO RICO", "QA" => "QATAR", "RE" => "REUNION", "RO" => "ROMANIA", "RU" => "RUSSIAN FEDERATION", "RW" => "RWANDA", "SH" => "SAINT HELENA", "KN" => "SAINT KITTS AND NEVIS", "LC" => "SAINT LUCIA", "PM" => "SAINT PIERRE AND MIQUELON", "VC" => "SAINT VINCENT AND THE GRENADINES", "WS" => "SAMOA", "SM" => "SAN MARINO", "ST" => "SAO TOME AND PRINCIPE", "SA" => "SAUDI ARABIA", "SN" => "SENEGAL", "CS" => "SERBIA AND MONTENEGRO", "SC" => "SEYCHELLES", "SL" => "SIERRA LEONE", "SG" => "SINGAPORE", "SK" => "SLOVAKIA", "SI" => "SLOVENIA", "SB" => "SOLOMON ISLANDS", "SO" => "SOMALIA", "ZA" => "SOUTH AFRICA", "GS" => "SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS", "ES" => "SPAIN", "LK" => "SRI LANKA", "SD" => "SUDAN", "SR" => "SURINAME", "SJ" => "SVALBARD AND JAN MAYEN", "SZ" => "SWAZILAND", "SE" => "SWEDEN", "CH" => "SWITZERLAND", "SY" => "SYRIAN ARAB REPUBLIC", "TW" => "TAIWAN, PROVINCE OF CHINA", "TJ" => "TAJIKISTAN", "TZ" => "TANZANIA, UNITED REPUBLIC OF", "TH" => "THAILAND", "TL" => "TIMOR-LESTE  ", "TG" => "TOGO", "TK" => "TOKELAU", "TO" => "TONGA", "TT" => "TRINIDAD AND TOBAGO", "TN" => "TUNISIA", "TR" => "TURKEY", "TM" => "TURKMENISTAN", "TC" => "TURKS AND CAICOS ISLANDS", "TV" => "TUVALU", "UG" => "UGANDA", "UA" => "UKRAINE", "AE" => "UNITED ARAB EMIRATES", "GB" => "UNITED KINGDOM", "UM" => "UNITED STATES MINOR OUTLYING ISLANDS", "US" => "UNITED STATES OF AMERICA", "UY" => "URUGUAY", "UZ" => "UZBEKISTAN", "VU" => "VANUATU", "VE" => "VENEZUELA", "VN" => "VIET NAM", "VG" => "VIRGIN ISLANDS, BRITISH", "VI" => "VIRGIN ISLANDS, U.S.", "WF" => "WALLIS AND FUTUNA", "EH" => "WESTERN SAHARA", "YE" => "YEMEN", "ZM" => "ZAMBIA", "ZW" => "ZIMBABWE");
 
 /**
  * This function shows Transaction Widget on Dashboard
@@ -59,7 +61,8 @@ function dp_dashboard_transactions() {
         $all_total += $amount;
         $count++;
     }
-    echo 'Total ' . $count . ' orders sold with total amount of ' .$dp_shopping_cart_settings['dp_currency_symbol'] . number_format($all_total,2);
+    printf(__("Total %d orders sold with total amount of %s %d"),$count,$dp_shopping_cart_settings['dp_currency_symbol'],number_format($all_total,2));
+//    echo 'Total ' . $count . ' orders sold with total amount of ' .$dp_shopping_cart_settings['dp_currency_symbol'] . number_format($all_total,2);
 }
 
 /**
@@ -83,10 +86,12 @@ if (is_admin()) {
     if ($_REQUEST['page'] === 'dukapress-shopping-cart-settings') {
         wp_enqueue_script('dp_jquery_ui_js', DP_PLUGIN_URL . '/js/jquery-ui-1.8.4.custom.min.js', array('jquery'));
     }
-    wp_enqueue_style('dp_acc_style', DP_PLUGIN_URL . '/css/style.css');
+    wp_enqueue_style('dp_acc_style', DP_PLUGIN_URL . '/css/jquery-ui-1.8.5.custom.css');
     wp_enqueue_script('dpsc_admin_js', DP_PLUGIN_URL . '/js/dukapress-admin.js', array('jquery'));
 }
 else {
+    wp_enqueue_script('dp_jquery_ui_js', DP_PLUGIN_URL . '/js/jquery-ui-1.8.4.custom.min.js', array('jquery'));
+    wp_enqueue_style('dp_acc_style', DP_PLUGIN_URL . '/css/jquery-ui-1.8.5.custom.css');
     wp_enqueue_style('dpsc_basic_css', DP_PLUGIN_URL.'/css/dpsc-basic.css');
     $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
     $image_effect = $dp_shopping_cart_settings['image_effect'];
@@ -131,12 +136,45 @@ else {
  */
 function dukapress_shopping_cart_order_log() {
     global $wpdb;
-    echo '<h2>DukaPress Shop Order Log</h2>';
+    echo '<h2>'.__("DukaPress Shop Order Log","dp-lang").'</h2>';
+//    echo '<h2>DukaPress Shop Order Log</h2>';
     $table_name = $wpdb->prefix . "dpsc_transactions";
     if (!isset($_GET['id'])) {
-        $query = "SELECT * FROM {$table_name} ORDER BY `id` DESC";
-        $results = $wpdb->get_results($query);
+        $sql = "SELECT * FROM {$table_name} ORDER BY `id` DESC";
+//        $get_by_page = $get_by_page ? $get_by_page : 1;
+        $pagenum = isset($_GET['paged']) ? $_GET['paged'] : 1;
+        $per_page = 15;
+        $action_count = count($wpdb->get_results($sql));
+        $total = ceil($action_count / $per_page);
+        $action_offset = ($pagenum-1) * $per_page;
+        $page_links = paginate_links( array(
+                'base' => add_query_arg( 'paged', '%#%' ),
+                'format' => '',
+                'prev_text' => __('&laquo;'),
+                'next_text' => __('&raquo;'),
+                'total' => ceil($action_count / $per_page),
+                'current' => $pagenum
+        ));
+        $sql .= " LIMIT {$action_offset}, {$per_page}";
+        $results = $wpdb->get_results($sql);
         if (is_array($results) && count($results) > 0) {
+            if ($page_links) {
+                ?>
+                <div class="tablenav">
+                    <div class="tablenav-pages">
+                        <?php
+                        $page_links_text = sprintf( '<span class="displaying-num">' . __( 'Displaying %s&#8211;%s of %s' ) . '</span>%s',
+                                                            number_format_i18n( ( $pagenum - 1 ) * $per_page + 1 ),
+                                                            number_format_i18n( min( $pagenum * $per_page, $action_count ) ),
+                                                            number_format_i18n( $action_count ),
+                                                            $page_links
+                                                            );
+                        echo $page_links_text;
+                        ?>
+                    </div>
+                </div>
+                <?php
+            }
             ?>
             <table class="widefat post fixed">
                 <thead>
@@ -152,14 +190,18 @@ function dukapress_shopping_cart_order_log() {
                 </thead>
                 <tbody>
                 <?php
-                $count = 1;
+                $count = (($pagenum-1)*$per_page)+1;
                 foreach ($results as $result) {
                     ?>
                     <tr>
-                        <td><?php echo $count;?></td>
-                        <td><a href="?page=dukapress-shopping-cart-order-log&id=<?php echo $result->id; ?>"><?php echo $result->invoice;?></a></td>
-                        <td><?php echo $result->billing_first_name . ' ' . $result->billing_last_name;?></td>
-                        <td><?php echo $result->date;?></td>
+                        <td><?php printf(__("%d"),$count);?></td>
+                        <!--<td><?php// echo $count;?></td> -->
+                        <td><a href="?page=dukapress-shopping-cart-order-log&id=<?php printf(__("%d"),$result->id); ?>"><?php echo $result->invoice;?></a></td>
+                        <!--<td><a href="?page=dukapress-shopping-cart-order-log&id=<?php// echo $result->id; ?>"><?php// echo $result->invoice;?></a></td> -->
+                        <td><?php printf(__("%s %s"),$result->billing_first_name, $result->billing_last_name);?></td>
+                        <td><?php printf(__("%s"),$result->date);?></td>
+                        <!--<td><?php// echo $result->billing_first_name . ' ' . $result->billing_last_name;?></td>
+                        <td><?php// echo $result->date;?></td>-->
                         <td><?php
                         $total = $result->total;
                         $shipping = $result->shipping;
@@ -178,10 +220,13 @@ function dukapress_shopping_cart_order_log() {
                             $total_tax = 0;
                         }
                         $amount = number_format($total+$shipping+$total_tax-$total_discount,2);
-                                echo $amount;
+                                printf(__("%d"), $amount);
+//                                echo $amount;
                         ?></td>
-                        <td><?php echo $result->payment_option;?></td>
+                        <td><?php printf(__("%s"),$result->payment_option);?></td>
                         <td id="dpsc_order_status_<?php echo $result->id; ?>"><input type="submit" value="<?php echo $result->payment_status;?>" onclick="dpsc_pnj_change_status('<?php echo $result->payment_status; ?>', <?php echo $result->id; ?>)" /></td>
+                        <!--<td><?php// echo $result->payment_option;?></td>
+                        <td id="dpsc_order_status_<?php// echo $result->id; ?>"><input type="submit" value="<?php echo $result->payment_status;?>" onclick="dpsc_pnj_change_status('<?php// echo $result->payment_status; ?>', <?php// echo $result->id; ?>)" /></td>-->
                     </tr>
                     <?php
                     $count++;
@@ -189,6 +234,25 @@ function dukapress_shopping_cart_order_log() {
                 ?>
                 </tbody>
             </table>
+<?php
+if ($page_links) {
+    ?>
+    <div class="tablenav">
+        <div class="tablenav-pages">
+            <?php
+            $page_links_text = sprintf( '<span class="displaying-num">' . __( 'Displaying %s&#8211;%s of %s' ) . '</span>%s',
+                                                number_format_i18n( ( $pagenum - 1 ) * $per_page + 1 ),
+                                                number_format_i18n( min( $pagenum * $per_page, $action_count ) ),
+                                                number_format_i18n( $action_count ),
+                                                $page_links
+                                                );
+            echo $page_links_text;
+            ?>
+        </div>
+    </div>
+    <?php
+}
+?>
     <script type="text/javascript">
     function dpsc_pnj_change_status(current_status, order_id) {
         jQuery.ajax({
@@ -204,7 +268,8 @@ function dukapress_shopping_cart_order_log() {
             <?php
         }
         else {
-            echo 'No records found!';
+            _e("No records found !","dp-lang");
+//            echo 'No records found!';
         }
     }
     else {
@@ -263,9 +328,10 @@ function dukapress_shopping_cart_order_log() {
                 dpsc_pnj_send_mail($from, $to, $dp_shopping_cart_settings['shop_name'], $subject, $subject);
             }
             ?>
-<h3>Transaction Details for Invoice No. <?php echo $result->invoice;?></h3>
-<p>Mode of Payment: <?php echo $result->payment_option;?></p>
-<p>Payment Status: <?php echo $result->payment_status;?></p>
+<h3><?php printf(__("Transaction Details for Invoice No. ") . $result->invoice);?></h3>
+<!--<h3>Transaction Details for Invoice No. <?php echo $result->invoice;?></h3>-->
+<p>Mode of Payment: <?php printf(__("%s"),$result->payment_option);?></p>
+<p>Payment Status: <?php printf(__("%s"),$result->payment_status);?></p>
             <table class="widefat post fixed">
                 <thead>
                     <tr>
@@ -284,9 +350,9 @@ $products = unserialize($products);
 foreach ($products as $product) {
     ?>
     <tr>
-        <td><?php echo $count;?></td>
-        <td><?php echo $product['name'];?></td>
-        <td><?php echo $product['price'];?></td>
+        <td><?php printf(__("%d"),$count);?></td>
+        <td><?php printf(__("%s"),$product['name']);?></td>
+        <td><?php printf(__("%d"),$product['price']);?></td>
         <td><?php echo $product['quantity'];?></td>
         <td><?php echo $product['price']*$product['quantity'];?></td>
     </tr>
@@ -317,23 +383,23 @@ $amount = number_format($total+$shipping+$total_tax-$total_discount,2);
 ?>
 <table>
     <tr>
-        <td>Sub-Total: </td><td><?php echo number_format($total,2);?></td>
+        <td><?php _e("Sub-Total:","dp-lang");?> </td><td><?php echo number_format($total,2);?></td>
     </tr>
     <tr>
-        <td>Shipping: </td><td>+<?php echo number_format($shipping,2);?></td>
+        <td><?php _e("Shipping:","dp-lang");?> </td><td>+<?php echo number_format($shipping,2);?></td>
     </tr>
     <tr>
-        <td>Discount: </td><td>-<?php echo number_format($total_discount,2);?></td>
+        <td><?php _e("Discount:","dp-lang");?> </td><td>-<?php echo number_format($total_discount,2);?></td>
     </tr>
     <tr>
-        <td>Tax: </td><td>+<?php echo number_format($total_tax,2);?></td>
+        <td><?php _e("Tax:","dp-lang"); ?> </td><td>+<?php echo number_format($total_tax,2);?></td>
     </tr>
     <tr>
-        <td>Total: </td><td>+<?php echo $amount;?></td>
+        <td><?php _e("Total:","dp-lang");?> </td><td>+<?php echo $amount;?></td>
     </tr>
 </table>
-<p><a href="<?php echo DP_PLUGIN_URL .'/pdf/invoice_' . $result->invoice . '.pdf';?>">Click here to download your Invoice.</a></p>
-<p><a href="?page=dukapress-shopping-cart-order-log&id=<?php echo $result->id; ?>&status=send">Send Payment Notification.</a></p>
+<p><a href="<?php echo DP_PLUGIN_URL .'/pdf/invoice_' . $result->invoice . '.pdf';?>"><?php _e("Click here to download your Invoice.","dp-lang");?></a></p>
+<p><a href="?page=dukapress-shopping-cart-order-log&id=<?php echo $result->id; ?>&status=send"><?php _e("Send Payment Notification.","dp-lang")?></a></p>
             <?php
         }
     }
@@ -372,6 +438,7 @@ function dpsc_change_order_status() {
  *
  */
 function dukapress_shopping_cart_setting() {
+    global $dpsc_country_code_name;
     echo '<h2>DukaPress Shop Settings</h2>';
     if (isset($_POST['dp_submit'])) {
         $dp_mobile_name = $_POST['mobile_payment_name'];
@@ -425,6 +492,7 @@ function dukapress_shopping_cart_setting() {
         $pp_c_code = $_POST['dp_paypal_currency'];
         $ap_c_code = $_POST['dp_alertpay_currency'];
         $wp_c_code = $_POST['dp_worldpay_currency'];
+        $dp_shop_user_registration = $_POST['dp_shop_user_registration'];
         $dp_main_image_width = !empty($_POST['dp_main_image_width']) ? $_POST['dp_main_image_width'] : '310';
         $dp_main_image_height = !empty($_POST['dp_main_image_height']) ? $_POST['dp_main_image_height'] : '383';
         $dp_thumb_image_width = !empty($_POST['dp_thumb_image_width']) ? $_POST['dp_thumb_image_width'] : '50';
@@ -436,6 +504,7 @@ function dukapress_shopping_cart_setting() {
         if (!is_array($dp_shopping_cart_settings)) {
             $dp_shopping_cart_settings = array();
         }
+        $dp_shopping_cart_settings['dp_shop_user_registration'] = $dp_shop_user_registration;
         $dp_shopping_cart_settings['mobile_names'] = $dp_mobile_name;
         $dp_shopping_cart_settings['mobile_number'] = $dp_mobile_number;
         $dp_shopping_cart_settings['g_h'] = $dp_thumb_grid_height;
@@ -494,7 +563,9 @@ function dukapress_shopping_cart_setting() {
         $dp_shopping_cart_settings['dp_shop_inventory_warning'] = $dp_shop_inventory_warning;
         update_option('dp_shopping_cart_settings', $dp_shopping_cart_settings);
         update_option('dp_dl_link_expiration_time', $dp_shop_dl_duration);
-        echo '<h4>Settings Saved</h4>';
+        ?>
+        <h4><?php _e('Settings Saved',"dp-lang");?></h4>
+        <?php
     }
     $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
     if (!is_array($dp_shopping_cart_settings['dp_po'])) {
@@ -512,42 +583,42 @@ function dukapress_shopping_cart_setting() {
 <form action="" method="post" enctype="multipart/form-data">
 <div id="dp_settings" class="dukapress-settings">
 
-        <h3><a href="#">Basic Shop Settings</a></h3>
+        <h3><a href="#"><?php _e("Basic Shop Settings","dp-lang");?></a></h3>
         <div>
             <div id="basic" class="tabdiv">
                 <table class="form-table">
                     <tr>
-                        <th scope="row">Name of Shop</th>
+                        <th scope="row"><?php _e("Name of Shop","dp-lang")?></th>
                         <td>
                             <input type="text" value="<?php if(isset($dp_shopping_cart_settings['shop_name'])) {echo $dp_shopping_cart_settings['shop_name'];}?>" name="shop_name">
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">Address</th>
+                        <th scope="row"><?php _e("Address","dp-lang")?></th>
                         <td>
                             <input type="text" value="<?php if(isset($dp_shopping_cart_settings['shop_address'])) {echo $dp_shopping_cart_settings['shop_address'];}?>" name="shop_address">
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">State / Province</th>
+                        <th scope="row"><?php _e("State / Province","dp-lang");?></th>
                         <td>
                             <input type="text" value="<?php if(isset($dp_shopping_cart_settings['shop_state'])) {echo $dp_shopping_cart_settings['shop_state'];}?>" name="shop_state">
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">Postal Code</th>
+                        <th scope="row"><?php _e("Postal Code","dp-lang");?></th>
                         <td>
                             <input type="text" value="<?php if(isset($dp_shopping_cart_settings['shop_zip'])) {echo $dp_shopping_cart_settings['shop_zip'];}?>" name="shop_zip">
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">City / Town</th>
+                        <th scope="row"><?php _e("City / Town","dp-lang");?></th>
                         <td>
                             <input type="text" value="<?php if(isset($dp_shopping_cart_settings['shop_city'])) {echo $dp_shopping_cart_settings['shop_city'];}?>" name="shop_city">
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">Shop Mode</th>
+                        <th scope="row"><?php _e("Shop Mode","dp-lang");?></th>
                         <td>
                             <select name="dp_shop_mode">
                                 <option value="regular" <?php if($dp_shopping_cart_settings['dp_shop_mode'] === 'regular') {echo 'selected';}?>>Regular Shop Mode</option>
@@ -556,20 +627,23 @@ function dukapress_shopping_cart_setting() {
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">Country of your shop</th>
+                        <th scope="row"><?php _e("Country of your shop","dp-lang");?></th>
                         <td>
                             <select name="dp_shop_country" style="width: 240px;">
                                 <?php
-                                    if (isset($dp_shopping_cart_settings['dp_shop_country'])) {
-                                        echo '<option value="'.$dp_shopping_cart_settings['dp_shop_country'].'">'.$dp_shopping_cart_settings['dp_shop_country'].'</option>';
+                                foreach ($dpsc_country_code_name as $country_code => $country_name) {
+                                    $cont_selected = '';
+                                    if ($dp_shopping_cart_settings['dp_shop_country'] === $country_code) {
+                                        $cont_selected = 'selected="selected"';
                                     }
+                                    echo '<option value="' . $country_code . '" ' . $cont_selected . '>' . $country_name . '</option>';
+                                }
                                 ?>
-                                <option value="AF">AFGHANISTAN</option><option value="AL">ALBANIA</option><option value="DZ">ALGERIA</option><option value="AS">AMERICAN SAMOA</option><option value="AD">ANDORRA</option><option value="AO">ANGOLA</option><option value="AI">ANGUILLA</option><option value="AQ">ANTARCTICA</option><option value="AG">ANTIGUA AND BARBUDA</option><option value="AR">ARGENTINA</option><option value="AM">ARMENIA</option><option value="AW">ARUBA</option><option value="AU">AUSTRALIA</option><option value="AT">AUSTRIA</option><option value="AZ">AZERBAIJAN</option><option value="BS">BAHAMAS</option><option value="BH">BAHRAIN</option><option value="BD">BANGLADESH</option><option value="BB">BARBADOS</option><option value="BY">BELARUS</option><option value="BE">BELGIUM</option><option value="BZ">BELIZE</option><option value="BJ">BENIN</option><option value="BM">BERMUDA</option><option value="BT">BHUTAN</option><option value="BO">BOLIVIA</option><option value="BA">BOSNIA AND HERZEGOVINA</option><option value="BW">BOTSWANA</option><option value="BV">BOUVET ISLAND</option><option value="BR">BRAZIL</option><option value="IO">BRITISH INDIAN OCEAN TERRITORY</option><option value="BN">BRUNEI DARUSSALAM</option><option value="BG">BULGARIA</option><option value="BF">BURKINA FASO</option><option value="BI">BURUNDI</option><option value="KH">CAMBODIA</option><option value="CM">CAMEROON</option><option value="CA">CANADA</option><option value="CV">CAPE VERDE</option><option value="KY">CAYMAN ISLANDS</option><option value="CF">CENTRAL AFRICAN REPUBLIC</option><option value="TD">CHAD</option><option value="CL">CHILE</option><option value="CN">CHINA</option><option value="CX">CHRISTMAS ISLAND</option><option value="CC">COCOS (KEELING) ISLANDS</option><option value="CO">COLOMBIA</option><option value="KM">COMOROS</option><option value="CG">CONGO</option><option value="CD">CONGO, THE DEMOCRATIC REPUBLIC OF THE</option><option value="CK">COOK ISLANDS</option><option value="CR">COSTA RICA</option><option value="CI">COTE D?IVOIRE</option><option value="HR">CROATIA</option><option value="CU">CUBA</option><option value="CY">CYPRUS</option><option value="CZ">CZECH REPUBLIC</option><option value="DK">DENMARK</option><option value="DJ">DJIBOUTI</option><option value="DM">DOMINICA</option><option value="DO">DOMINICAN REPUBLIC</option><option value="EC">ECUADOR</option><option value="EG">EGYPT</option><option value="SV">EL SALVADOR</option><option value="GQ">EQUATORIAL GUINEA</option><option value="ER">ERITREA</option><option value="EE">ESTONIA</option><option value="ET">ETHIOPIA</option><option value="FK">FALKLAND ISLANDS (MALVINAS)</option><option value="FO">FAROE ISLANDS</option><option value="FJ">FIJI</option><option value="FI">FINLAND</option><option value="FR">FRANCE</option><option value="GF">FRENCH GUIANA</option><option value="PF">FRENCH POLYNESIA</option><option value="TF">FRENCH SOUTHERN TERRITORIES</option><option value="GA">GABON</option><option value="GM">GAMBIA</option><option value="GE">GEORGIA</option><option value="DE">GERMANY</option><option value="GH">GHANA</option><option value="GI">GIBRALTAR</option><option value="GR">GREECE</option><option value="GL">GREENLAND</option><option value="GD">GRENADA</option><option value="GP">GUADELOUPE</option><option value="GU">GUAM</option><option value="GT">GUATEMALA</option><option value="GG">GUERNSEY</option><option value="GN">GUINEA</option><option value="GW">GUINEA-BISSAU</option><option value="GY">GUYANA</option><option value="HT">HAITI</option><option value="HM">HEARD ISLAND AND MCDONALD ISLANDS</option><option value="VA">HOLY SEE (VATICAN CITY STATE)</option><option value="HN">HONDURAS</option><option value="HK">HONG KONG</option><option value="HU">HUNGARY</option><option value="IS">ICELAND</option><option value="IN">INDIA</option><option value="ID">INDONESIA</option><option value="IR">IRAN, ISLAMIC REPUBLIC OF</option><option value="IQ">IRAQ</option><option value="IE">IRELAND</option><option value="IM">ISLE OF MAN</option><option value="IL">ISRAEL</option><option value="IT">ITALY</option><option value="JM">JAMAICA</option><option value="JP">JAPAN</option><option value="JE">JERSEY</option><option value="JO">JORDAN</option><option value="KZ">KAZAKHSTAN</option><option value="KE">KENYA</option><option value="KI">KIRIBATI</option><option value="KP">KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF</option><option value="KR">KOREA, REPUBLIC OF</option><option value="KW">KUWAIT</option><option value="KG">KYRGYZSTAN</option><option value="LA">LAO PEOPLE'S DEMOCRATIC REPUBLIC</option><option value="LV">LATVIA</option><option value="LB">LEBANON</option><option value="LS">LESOTHO</option><option value="LR">LIBERIA</option><option value="LY">LIBYAN ARAB JAMAHIRIYA</option><option value="LI">LIECHTENSTEIN</option><option value="LT">LITHUANIA</option><option value="LU">LUXEMBOURG</option><option value="MO">MACAO</option><option value="MK">MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF</option><option value="MG">MADAGASCAR</option><option value="MW">MALAWI</option><option value="MY">MALAYSIA</option><option value="MV">MALDIVES</option><option value="ML">MALI</option><option value="MT">MALTA</option><option value="MH">MARSHALL ISLANDS</option><option value="MQ">MARTINIQUE</option><option value="MR">MAURITANIA</option><option value="MU">MAURITIUS</option><option value="YT">MAYOTTE</option><option value="MX">MEXICO</option><option value="FM">MICRONESIA, FEDERATED STATES OF</option><option value="MD">MOLDOVA, REPUBLIC OF</option><option value="MC">MONACO</option><option value="MN">MONGOLIA</option><option value="MS">MONTSERRAT</option><option value="MA">MOROCCO</option><option value="MZ">MOZAMBIQUE</option><option value="MM">MYANMAR</option><option value="NA">NAMIBIA</option><option value="NR">NAURU</option><option value="NP">NEPAL</option><option value="NL">NETHERLANDS</option><option value="AN">NETHERLANDS ANTILLES</option><option value="NC">NEW CALEDONIA</option><option value="NZ">NEW ZEALAND</option><option value="NI">NICARAGUA</option><option value="NE">NIGER</option><option value="NG">NIGERIA</option><option value="NU">NIUE</option><option value="NF">NORFOLK ISLAND</option><option value="MP">NORTHERN MARIANA ISLANDS</option><option value="NO">NORWAY</option><option value="OM">OMAN</option><option value="PK">PAKISTAN</option><option value="PW">PALAU</option><option value="PS">PALESTINIAN TERRITORY, OCCUPIED</option><option value="PA">PANAMA</option><option value="PG">PAPUA NEW GUINEA</option><option value="PY">PARAGUAY</option><option value="PE">PERU</option><option value="PH">PHILIPPINES</option><option value="PN">PITCAIRN</option><option value="PL">POLAND</option><option value="PT">PORTUGAL</option><option value="PR">PUERTO RICO</option><option value="QA">QATAR</option><option value="RE">REUNION</option><option value="RO">ROMANIA</option><option value="RU">RUSSIAN FEDERATION</option><option value="RW">RWANDA</option><option value="SH">SAINT HELENA</option><option value="KN">SAINT KITTS AND NEVIS</option><option value="LC">SAINT LUCIA</option><option value="PM">SAINT PIERRE AND MIQUELON</option><option value="VC">SAINT VINCENT AND THE GRENADINES</option><option value="WS">SAMOA</option><option value="SM">SAN MARINO</option><option value="ST">SAO TOME AND PRINCIPE</option><option value="SA">SAUDI ARABIA</option><option value="SN">SENEGAL</option><option value="CS">SERBIA AND MONTENEGRO</option><option value="SC">SEYCHELLES</option><option value="SL">SIERRA LEONE</option><option value="SG">SINGAPORE</option><option value="SK">SLOVAKIA</option><option value="SI">SLOVENIA</option><option value="SB">SOLOMON ISLANDS</option><option value="SO">SOMALIA</option><option value="ZA">SOUTH AFRICA</option><option value="GS">SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS</option><option value="ES">SPAIN</option><option value="LK">SRI LANKA</option><option value="SD">SUDAN</option><option value="SR">SURINAME</option><option value="SJ">SVALBARD AND JAN MAYEN</option><option value="SZ">SWAZILAND</option><option value="SE">SWEDEN</option><option value="CH">SWITZERLAND</option><option value="SY">SYRIAN ARAB REPUBLIC</option><option value="TW">TAIWAN, PROVINCE OF CHINA</option><option value="TJ">TAJIKISTAN</option><option value="TZ">TANZANIA, UNITED REPUBLIC OF</option><option value="TH">THAILAND</option><option value="TL">TIMOR-LESTE  </option><option value="TG">TOGO</option><option value="TK">TOKELAU</option><option value="TO">TONGA</option><option value="TT">TRINIDAD AND TOBAGO</option><option value="TN">TUNISIA</option><option value="TR">TURKEY</option><option value="TM">TURKMENISTAN</option><option value="TC">TURKS AND CAICOS ISLANDS</option><option value="TV">TUVALU</option><option value="UG">UGANDA</option><option value="UA">UKRAINE</option><option value="AE">UNITED ARAB EMIRATES</option><option value="GB">UNITED KINGDOM</option><option value="UM">UNITED STATES MINOR OUTLYING ISLANDS</option><option value="US">UNITED STATES OF AMERICA</option><option value="UY">URUGUAY</option><option value="UZ">UZBEKISTAN</option><option value="VU">VANUATU</option><option value="VE">VENEZUELA</option><option value="VN">VIET NAM</option><option value="VG">VIRGIN ISLANDS, BRITISH</option><option value="VI">VIRGIN ISLANDS, U.S.</option><option value="WF">WALLIS AND FUTUNA</option><option value="EH">WESTERN SAHARA</option><option value="YE">YEMEN</option><option value="ZM">ZAMBIA</option><option value="ZW">ZIMBABWE</option>
                             </select>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">Currency</th>
+                        <th scope="row"><?php _e("Currency","dp-lang");?></th>
                         <td>
                             <select name="dp_shop_currency">
                                 <?php
@@ -591,7 +665,13 @@ function dukapress_shopping_cart_setting() {
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">Product Page Image Effect</th>
+                        <th scope="row"><?php _e("Enable User Registration:","dp-lang");?></th>
+                        <td>
+                            <input type="checkbox" value="checked" name="dp_shop_user_registration" <?php echo $dp_shopping_cart_settings['dp_shop_user_registration']; ?>/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?php _e("Product Page Image Effect","dp-lang"); ?></th>
                         <td>
                             <select name="image_effect">
                                 <option value="mz_effect" <?php if($dp_shopping_cart_settings['image_effect'] === 'mz_effect') {echo 'selected';}?>>Magic Zoom</option>
@@ -603,7 +683,7 @@ function dukapress_shopping_cart_setting() {
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">Main Product Image Size</th>
+                        <th scope="row"><?php _e("Main Product Image Size","dp-lang");?></th>
                         <td>
                             <table class="form-table">
                                 <tr>
@@ -616,7 +696,7 @@ function dukapress_shopping_cart_setting() {
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">Product Thumbnail Size</th>
+                        <th scope="row"><?php _e("Product Thumbnail Size","dp-lang");?></th>
                         <td>
                             <table class="form-table">
                                 <tr>
@@ -629,7 +709,7 @@ function dukapress_shopping_cart_setting() {
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">Grid Product Thumbnail Size</th>
+                        <th scope="row"><?php _e("Grid Product Thumbnail Size","dp-lang");?></th>
                         <td>
                             <table class="form-table">
                                 <tr>
@@ -642,31 +722,31 @@ function dukapress_shopping_cart_setting() {
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">Currency Symbol</th>
+                        <th scope="row"><?php _e("Currency Symbol","dp-lang")?></th>
                         <td>
                             <input type="text" value="<?php if(isset($dp_shopping_cart_settings['dp_currency_symbol'])) {echo $dp_shopping_cart_settings['dp_currency_symbol'];}?>" name="dp_currency_symbol">
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">Checkout Page URL</th>
+                        <th scope="row"><?php _e("Checkout Page URL","dp-lang")?></th>
                         <td>
                             <input size="50" type="text" value="<?php if(isset($dp_shopping_cart_settings['checkout'])) {echo $dp_shopping_cart_settings['checkout'];}?>" name="dp_checkout_url">
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">Thank You Page URL</th>
+                        <th scope="row"><?php _e("Thank You Page URL","dp-lang");?></th>
                         <td>
                             <input size="50" type="text" value="<?php if(isset($dp_shopping_cart_settings['thank_you'])) {echo $dp_shopping_cart_settings['thank_you'];}?>" name="dp_thank_you_url">
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">Tax</th>
+                        <th scope="row"><?php _e("Tax","dp-lang");?></th>
                         <td>
                             <input type="text" value="<?php if(isset($dp_shopping_cart_settings['tax'])) {echo $dp_shopping_cart_settings['tax'];}?>" name="dp_tax">%
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">Payment Options</th>
+                        <th scope="row"><?php _e("Payment Options","dp-lang");?></th>
                         <td>
                             <input type="checkbox" name="dp_po[]" value="paypal" <?php if (in_array('paypal', $dp_shopping_cart_settings['dp_po'])) {echo "checked";} ?>/> PayPal <br />
                             <input type="checkbox" name="dp_po[]" value="authorize" <?php if (in_array('authorize', $dp_shopping_cart_settings['dp_po'])) {echo "checked";} ?>/> Authorize.net <br />
@@ -682,51 +762,51 @@ function dukapress_shopping_cart_setting() {
             </div>
         </div>
 
-        <h3><a href="#">Product Management</a></h3>
+        <h3><a href="#"><?php _e("Product Management","dp-lang");?></a></h3>
         <div>
             <div id="product-management" class="tabdiv dukapress-settings">
-                    <h3><a href="#">Inventory Settings</a></h3>
+                    <h3><a href="#"><?php _e("Inventory Settings","dp-lang");?></a></h3>
                     <div>
                         <div id="inventory" class="tabdiv">
                             <table class="form-table">
                                     <tr>
-                                        <th scope="row">Active</th>
+                                        <th scope="row"><?php _e("Active","dp-lang");?></th>
                                         <td>
                                             <select name="dp_shop_inventory_active">
-                                                <option value="no" <?php if($dp_shopping_cart_settings['dp_shop_inventory_active'] === 'no') {echo 'selected';}?>>No</option>
-                                                <option value="yes" <?php if($dp_shopping_cart_settings['dp_shop_inventory_active'] === 'yes') {echo 'selected';}?>>Yes</option>
+                                                <option value="no" <?php if($dp_shopping_cart_settings['dp_shop_inventory_active'] === 'no') {echo 'selected';}?>><?php _e("No","dp-lang");?></option>
+                                                <option value="yes" <?php if($dp_shopping_cart_settings['dp_shop_inventory_active'] === 'yes') {echo 'selected';}?>><?php _e("Yes","dp-lang");?></option>
                                             </select>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th scope="row">Display Stocks Amounts</th>
+                                        <th scope="row"><?php _e("Display Stocks Amounts","dp-lang");?></th>
                                         <td>
                                             <select name="dp_shop_inventory_stocks">
-                                                <option value="no" <?php if($dp_shopping_cart_settings['dp_shop_inventory_stocks'] === 'no') {echo 'selected';}?>>No</option>
-                                                <option value="yes" <?php if($dp_shopping_cart_settings['dp_shop_inventory_stocks'] === 'yes') {echo 'selected';}?>>Yes</option>
+                                                <option value="no" <?php if($dp_shopping_cart_settings['dp_shop_inventory_stocks'] === 'no') {echo 'selected';}?>><?php _e("No","dp-lang");?></option>
+                                                <option value="yes" <?php if($dp_shopping_cart_settings['dp_shop_inventory_stocks'] === 'yes') {echo 'selected';}?>><?php _e("Yes","dp-lang");?></option>
                                             </select>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th scope="row">Sold Out Notice</th>
+                                        <th scope="row"><?php _e("Sold Out Notice","dp-lang");?></th>
                                         <td>
                                             <select name="dp_shop_inventory_soldout">
-                                                <option value="no" <?php if($dp_shopping_cart_settings['dp_shop_inventory_soldout'] === 'no') {echo 'selected';}?>>No</option>
-                                                <option value="yes" <?php if($dp_shopping_cart_settings['dp_shop_inventory_soldout'] === 'yes') {echo 'selected';}?>>Yes</option>
+                                                <option value="no" <?php if($dp_shopping_cart_settings['dp_shop_inventory_soldout'] === 'no') {echo 'selected';}?>><?php _e("No","dp-lang");?></option>
+                                                <option value="yes" <?php if($dp_shopping_cart_settings['dp_shop_inventory_soldout'] === 'yes') {echo 'selected';}?>><?php _e("Yes","dp-lang");?></option>
                                             </select>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th scope="row">Warning Threshold</th>
+                                        <th scope="row"><?php _e("Warning Threshold","dp-lang");?></th>
                                         <td>
                                             <select name="dp_shop_inventory_warning">
-                                                <option value="no" <?php if($dp_shopping_cart_settings['dp_shop_inventory_warning'] === 'no') {echo 'selected';}?>>No</option>
-                                                <option value="yes" <?php if($dp_shopping_cart_settings['dp_shop_inventory_warning'] === 'yes') {echo 'selected';}?>>Yes</option>
+                                                <option value="no" <?php if($dp_shopping_cart_settings['dp_shop_inventory_warning'] === 'no') {echo 'selected';}?>><?php _e("No","dp-lang");?></option>
+                                                <option value="yes" <?php if($dp_shopping_cart_settings['dp_shop_inventory_warning'] === 'yes') {echo 'selected';}?>><?php _e("Yes","dp-lang");?></option>
                                             </select>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th scope="row">Inventory warning email</th>
+                                        <th scope="row"><?php _e("Inventory warning email","dp-lang");?></th>
                                         <td>
                                             <input type="text" value="<?php if (isset($dp_shopping_cart_settings['dp_shop_inventory_email'])) {echo $dp_shopping_cart_settings['dp_shop_inventory_email'];}?>" name="dp_shop_inventory_email"/>
                                         </td>
@@ -734,54 +814,54 @@ function dukapress_shopping_cart_setting() {
                                 </table>
                         </div>
                     </div>
-                    <h3><a href="#">Shipping Options</a></h3>
+                    <h3><a href="#"><?php _e("Shipping Options","dp-lang");?></a></h3>
                     <div>
                         <div id="shipping" class="tabdiv">
                             <table class="form-table">
                                 <tr>
-                                    <th scope="row">Shipping calculation method</th>
+                                    <th scope="row"><?php _e("Shipping calculation method","dp-lang");?></th>
                                     <td>
                                         <select name="dp_shipping_calc_method">
-                                            <option value="free" <?php if ($dp_shopping_cart_settings['dp_shipping_calc_method'] === "free") {echo 'selected="selected"';}?>>Free</option>
-                                            <option value="flat" <?php if ($dp_shopping_cart_settings['dp_shipping_calc_method'] === "flat") {echo 'selected="selected"';}?>>Flat</option>
-                                            <option value="flat_limit" <?php if ($dp_shopping_cart_settings['dp_shipping_calc_method'] === "flat_limit") {echo 'selected="selected"';}?>>Flat Limit</option>
-                                            <option value="weight_flat" <?php if ($dp_shopping_cart_settings['dp_shipping_calc_method'] === "weight_flat") {echo 'selected="selected"';}?>>Weight Flat</option>
-                                            <option value="weight_class" <?php if ($dp_shopping_cart_settings['dp_shipping_calc_method'] === "weight_class") {echo 'selected="selected"';}?>>Weight Class</option>
-                                            <option value="per_item" <?php if ($dp_shopping_cart_settings['dp_shipping_calc_method'] === "per_item") {echo 'selected="selected"';}?>>Per Item</option>
+                                            <option value="free" <?php if ($dp_shopping_cart_settings['dp_shipping_calc_method'] === "free") {echo 'selected="selected"';}?>><?php _e("Free","dp-lang");?></option>
+                                            <option value="flat" <?php if ($dp_shopping_cart_settings['dp_shipping_calc_method'] === "flat") {echo 'selected="selected"';}?>><?php _e("Flat","dp-lang");?></option>
+                                            <option value="flat_limit" <?php if ($dp_shopping_cart_settings['dp_shipping_calc_method'] === "flat_limit") {echo 'selected="selected"';}?>><?php _e("Flat Limit","dp-lang");?></option>
+                                            <option value="weight_flat" <?php if ($dp_shopping_cart_settings['dp_shipping_calc_method'] === "weight_flat") {echo 'selected="selected"';}?>><?php _e("Weight Flat","dp-lang");?></option>
+                                            <option value="weight_class" <?php if ($dp_shopping_cart_settings['dp_shipping_calc_method'] === "weight_class") {echo 'selected="selected"';}?>><?php _e("Weight Class","dp-lang");?></option>
+                                            <option value="per_item" <?php if ($dp_shopping_cart_settings['dp_shipping_calc_method'] === "per_item") {echo 'selected="selected"';}?>><?php _e("Per Item","dp-lang");?></option>
                                             <?php do_action('dp_shipping_dropdown_option');?>
                                         </select>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Flat Rate</th>
+                                    <th scope="row"><?php _e("Flat Rate","dp-lang");?></th>
                                     <td>
                                         <input name="dp_shipping_flat_rate" value="<?php if(isset($dp_shopping_cart_settings['dp_shipping_flat_rate'])) {echo $dp_shopping_cart_settings['dp_shipping_flat_rate'];}?>"/>
                                     </td>
 
                                 </tr>
                                 <tr>
-                                    <th scope="row">Flat Limit Rate</th>
+                                    <th scope="row"><?php _e("Flat Limit Rate","dp-lang");?></th>
                                     <td>
                                         <input name="dp_shipping_flat_limit_rate" value="<?php if(isset($dp_shopping_cart_settings['dp_shipping_flat_limit_rate'])) {echo $dp_shopping_cart_settings['dp_shipping_flat_limit_rate'];}?>"/>
                                     </td>
 
                                 </tr>
                                 <tr>
-                                    <th scope="row">Weight Flat Rate</th>
+                                    <th scope="row"><?php _e("Weight Flat Rate","dp-lang");?></th>
                                     <td>
                                         <input name="dp_shipping_weight_flat_rate" value="<?php if(isset($dp_shopping_cart_settings['dp_shipping_weight_flat_rate'])) {echo $dp_shopping_cart_settings['dp_shipping_weight_flat_rate'];}?>"/>
                                     </td>
 
                                 </tr>
                                 <tr>
-                                    <th scope="row">Weight Class Rate</th>
+                                    <th scope="row"><?php _e("Weight Class Rate","dp-lang");?></th>
                                     <td>
                                         <input name="dp_shipping_weight_class_rate" value="<?php if(isset($dp_shopping_cart_settings['dp_shipping_weight_class_rate'])) {echo $dp_shopping_cart_settings['dp_shipping_weight_class_rate'];}?>"/>
                                     </td>
 
                                 </tr>
                                 <tr>
-                                    <th scope="row">Per Item Rate</th>
+                                    <th scope="row"><?php _e("Per Item Rate","dp-lang");?></th>
                                     <td>
                                         <input name="dp_shipping_per_item_rate" value="<?php if(isset($dp_shopping_cart_settings['dp_shipping_per_item_rate'])) {echo $dp_shopping_cart_settings['dp_shipping_per_item_rate'];}?>"/>
                                     </td>
@@ -791,12 +871,12 @@ function dukapress_shopping_cart_setting() {
                             </table>
                         </div>
                     </div>
-                    <h3><a href="#">Digital Products</a></h3>
+                    <h3><a href="#"><?php _e("Digital Products","dp-lang");?></a></h3>
                     <div>
                         <div id="digital" class="tabdiv">
                             <table class="form-table">
                                     <tr>
-                                        <th scope="row">Download Links Duration:</th>
+                                        <th scope="row"><?php _e("Download Links Duration:","dp-lang");?></th>
                                         <td>
                                             <input type="text" name="dp_shop_dl_duration" value="<?php echo $dp_digital_time;?>"/>
                                         </td>
@@ -806,40 +886,39 @@ function dukapress_shopping_cart_setting() {
                     </div>
             </div>
         </div>
-        <h3><a href="#">Payment Options</a></h3>
+        <h3><a href="#"><?php _e("Payment Options","dp-lang")?></a></h3>
         <div>
             <div id="po" class="tabdiv dukapress-settings">
-                    <h3><a href="#">PayPal</a></h3>
+                    <h3><a href="#"><?php _e("PayPal","dp-lang");?></a></h3>
                     <div>
                         <div id="paypal" class="tabdiv">
                             <table class="form-table">
                                     <tr>
-                                        <th scope="row">Use PayPal Sandbox:</th>
+                                        <th scope="row"><?php _e("Use PayPal Sandbox:","dp-lang");?></th>
                                         <td>
                                             <input type="checkbox" value="checked" name="dp_shop_paypal_use_sandbox" <?php echo $dp_shopping_cart_settings['dp_shop_paypal_use_sandbox']; ?>/>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th scope="row">PayPal ID</th>
+                                        <th scope="row"><?php _e("PayPal ID","dp-lang");?></th>
                                         <td>
-                                            <input name="dp_shop_paypal_id" value="<?php if(isset($dp_shopping_cart_settings['dp_shop_paypal_id'])) {echo $dp_shopping_cart_settings['dp_shop_paypal_id'];}?>"/>
+                                            <input size="50" type="text" name="dp_shop_paypal_id" value="<?php if(isset($dp_shopping_cart_settings['dp_shop_paypal_id'])) {echo $dp_shopping_cart_settings['dp_shop_paypal_id'];}?>"/>
                                         </td>
 
                                     </tr>
                                     <?php
                                     $paypal_currency_code = $dp_shopping_cart_settings['paypal_currency'];
-                                    if(!$dp_shopping_cart_settings['dp_shop_currency']) {
-                                        if ($paypal_currency_code === "" && in_array($dp_shopping_cart_settings['dp_shop_currency'], $paypal_supported_currency)) {
+                                    if($dp_shopping_cart_settings['dp_shop_currency']) {
+                                        if (in_array($dp_shopping_cart_settings['dp_shop_currency'], $paypal_supported_currency)) {
                                             ?>
                                             <input type="hidden" name="dp_paypal_currency" value="<?php echo $dp_shopping_cart_settings['dp_shop_currency']; ?>" />
                                             <?php
                                             $paypal_currency_code = $dp_shopping_cart_settings['dp_shop_currency'];
                                         }
-                                    }
-                                    if ($paypal_currency_code != $dp_shopping_cart_settings['dp_shop_currency']) {
+                                        else {
                                         ?>
-                                        <tr><td colspan="2">Your Shops' Currency Code is not compatible with PayPal. Please choose a Currency Code from the below list. Payments will be converted to the selected Currency Code, when Payments are sent to PayPal.</td></tr>
-                                        <tr><th scope="row">PayPal Currency Code</th>
+                                            <tr><td colspan="2">Your Shops' Currency Code is not compatible with PayPal. Please choose a Currency Code from the below list. Payments will be converted to the selected Currency Code, when Payments are sent to PayPal.</td></tr>
+                                            <tr><th scope="row">PayPal Currency Code</th>
                                             <td>
                                                 <select name="dp_paypal_currency">
                                                     <?php
@@ -855,30 +934,32 @@ function dukapress_shopping_cart_setting() {
                                                     ?>
                                                 </select>
                                             </td>
+                                            </tr>
                                         <?php
+                                    }
                                     }
                                     ?>
                                 </table>
                         </div>
                     </div>
-                    <h3><a href="#">Authorize.net</a></h3>
+                    <h3><a href="#"><?php _e("Authorize.net");?></a></h3>
                     <div>
                         <div id="authorize" class="tabdiv">
                             <table class="form-table">
                                 <tr>
-                                    <th scope="row">API Login</th>
+                                    <th scope="row"><?php _e("API Login","dp-lang");?></th>
                                     <td>
-                                        <input type="text" value="<?php if(isset($dp_shopping_cart_settings['authorize_api'])) {echo $dp_shopping_cart_settings['authorize_api'];}?>" name="authorize_api">
+                                        <input size="50" type="text" value="<?php if(isset($dp_shopping_cart_settings['authorize_api'])) {echo $dp_shopping_cart_settings['authorize_api'];}?>" name="authorize_api">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Transaction Key</th>
+                                    <th scope="row"><?php _e("Transaction Key","dp-lang");?></th>
                                     <td>
-                                        <input type="text" value="<?php if(isset($dp_shopping_cart_settings['authorize_transaction_key'])) {echo $dp_shopping_cart_settings['authorize_transaction_key'];}?>" name="authorize_transaction_key">
+                                        <input size="50" type="text" value="<?php if(isset($dp_shopping_cart_settings['authorize_transaction_key'])) {echo $dp_shopping_cart_settings['authorize_transaction_key'];}?>" name="authorize_transaction_key">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">URL</th>
+                                    <th scope="row"><?php _e("URL","dp-lang");?></th>
                                     <td>
                                         <select name="authorize_url">
                                             <option value="live" <?php if($dp_shopping_cart_settings['authorize_url'] === "live") { echo 'selected="selected"';}?>>https://secure.authorize.net/gateway/transact.dll</option>
@@ -887,7 +968,7 @@ function dukapress_shopping_cart_setting() {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Test-Request</th>
+                                    <th scope="row"><?php _e("Test-Request","dp-lang");?></th>
                                     <td>
                                         <select name="authorize_test_request">
                                             <option value="live" <?php if($dp_shopping_cart_settings['authorize_test_request'] === "live") { echo 'selected="selected"';}?>>False</option>
@@ -898,18 +979,18 @@ function dukapress_shopping_cart_setting() {
                             </table>
                         </div>
                     </div>
-                    <h3><a href="#">WorldPay</a></h3>
+                    <h3><a href="#"><?php _e("WorldPay","dp-lang");?></a></h3>
                     <div>
                         <div id="worldpay" class="tabdiv">
                             <table class="form-table">
                                 <tr>
-                                    <th scope="row">Installation-ID</th>
+                                    <th scope="row"><?php _e("Installation-ID","dp-lang");?></th>
                                     <td>
-                                        <input type="text" value="<?php if(isset($dp_shopping_cart_settings['worldpay_id'])) {echo $dp_shopping_cart_settings['worldpay_id'];}?>" name="worldpay_id">
+                                        <input size="50" type="text" value="<?php if(isset($dp_shopping_cart_settings['worldpay_id'])) {echo $dp_shopping_cart_settings['worldpay_id'];}?>" name="worldpay_id">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Testmode</th>
+                                    <th scope="row"><?php _e("Testmode","dp-lang");?></th>
                                     <td>
                                         <select name="worldpay_testmode">
                                             <option value="live" <?php if($dp_shopping_cart_settings['worldpay_testmode'] === "live") { echo 'selected="selected"';}?>>False</option>
@@ -919,18 +1000,17 @@ function dukapress_shopping_cart_setting() {
                                 </tr>
                                 <?php
                                     $worldpay_currency_code = $dp_shopping_cart_settings['worldpay_currency'];
-                                    if(!$dp_shopping_cart_settings['dp_shop_currency']) {
-                                        if ($worldpay_currency_code === "" && in_array($dp_shopping_cart_settings['dp_shop_currency'], $worldpay_supported_currency)) {
+                                    if($dp_shopping_cart_settings['dp_shop_currency']) {
+                                        if (in_array($dp_shopping_cart_settings['dp_shop_currency'], $worldpay_supported_currency)) {
                                             ?>
                                             <input type="hidden" name="dp_worldpay_currency" value="<?php echo $dp_shopping_cart_settings['dp_shop_currency']; ?>" />
                                             <?php
                                             $worldpay_currency_code = $dp_shopping_cart_settings['dp_shop_currency'];
                                         }
-                                    }
-                                    if ($worldpay_currency_code != $dp_shopping_cart_settings['dp_shop_currency']) {
+                                        else {
                                         ?>
-                                        <tr><td colspan="2">Your Shops' Currency Code is not compatible with WorldPay. Please choose a Currency Code from the below list. Payments will be converted to the selected Currency Code, when Payments are sent to WorldPay.</td></tr>
-                                        <tr><th scope="row">WorldPay Currency Code</th>
+                                        <tr><td colspan="2"><?php _e("Your Shops' Currency Code is not compatible with WorldPay. Please choose a Currency Code from the below list. Payments will be converted to the selected Currency Code, when Payments are sent to WorldPay.","dp-lang");?></td></tr>
+                                        <tr><th scope="row"><?php _e("WorldPay Currency Code","dp-lang");?></th>
                                             <td>
                                                 <select name="dp_worldpay_currency">
                                                     <?php
@@ -947,35 +1027,35 @@ function dukapress_shopping_cart_setting() {
                                                 </select>
                                             </td>
                                         <?php
+                                        }
                                     }
                                     ?>
                             </table>
                         </div>
                     </div>
-                    <h3><a href="#">AlertPay</a></h3>
+                    <h3><a href="#"><?php _e("AlertPay");?></a></h3>
                     <div>
                         <div id="alertpay" class="tabdiv">
                             <table class="form-table">
                                 <tr>
-                                    <th scope="row">AlertPay ID</th>
+                                    <th scope="row"><?php _e("AlertPay ID","dp-lang");?></th>
                                     <td>
-                                        <input type="text" value="<?php if(isset($dp_shopping_cart_settings['alertpay_id'])) {echo $dp_shopping_cart_settings['alertpay_id'];}?>" name="alertpay_id">
+                                        <input size="50" type="text" value="<?php if(isset($dp_shopping_cart_settings['alertpay_id'])) {echo $dp_shopping_cart_settings['alertpay_id'];}?>" name="alertpay_id">
                                     </td>
                                 </tr>
                                 <?php
                                     $alertpay_currency_code = $dp_shopping_cart_settings['alertpay_currency'];
-                                    if(!$dp_shopping_cart_settings['dp_shop_currency']) {
-                                        if ($alertpay_currency_code === "" && in_array($dp_shopping_cart_settings['dp_shop_currency'], $alertpay_supported_currency)) {
+                                    if($dp_shopping_cart_settings['dp_shop_currency']) {
+                                        if (in_array($dp_shopping_cart_settings['dp_shop_currency'], $alertpay_supported_currency)) {
                                             ?>
                                             <input type="hidden" name="dp_alertpay_currency" value="<?php echo $dp_shopping_cart_settings['dp_shop_currency']; ?>" />
                                             <?php
                                             $alertpay_currency_code = $dp_shopping_cart_settings['dp_shop_currency'];
                                         }
-                                    }
-                                    if ($alertpay_currency_code != $dp_shopping_cart_settings['dp_shop_currency']) {
+                                        else {
                                         ?>
-                                        <tr><td colspan="2">Your Shops' Currency Code is not compatible with AlertPay. Please choose a Currency Code from the below list. Payments will be converted to the selected Currency Code, when Payments are sent to AlertPay.</td></tr>
-                                        <tr><th scope="row">AlertPay Currency Code</th>
+                                        <tr><td colspan="2"><?php _e("Your Shops' Currency Code is not compatible with AlertPay. Please choose a Currency Code from the below list. Payments will be converted to the selected Currency Code, when Payments are sent to AlertPay.","dp-lang");?></td></tr>
+                                        <tr><th scope="row"><?php _e("AlertPay Currency Code","dp-lang");?></th>
                                             <td>
                                                 <select name="dp_alertpay_currency">
                                                     <?php
@@ -992,18 +1072,19 @@ function dukapress_shopping_cart_setting() {
                                                 </select>
                                             </td>
                                         <?php
+                                        }
                                     }
                                     ?>
                             </table>
                         </div>
                     </div>
-                    <h3><a href="#">Mobile</a></h3>
+                    <h3><a href="#"><?php _e("Mobile","dp-lang");?></a></h3>
                     <div>
                         <div id="mobile" class="tabdiv">
                             <table class="form-table">
                                 <thead>
                                     <tr>
-                                        <th>Name</th><th>Number</th>
+                                        <th><?php _e("Name","dp-lang");?></th><th><?php _e("Number","dp-lang");?></th>
                                     </tr>
                                 </thead>
                                 <tbody class="mobile_payment">
@@ -1042,64 +1123,64 @@ function dukapress_shopping_cart_setting() {
                             </table>
                         </div>
                     </div>
-                    <h3><a href="#">Bank Details</a></h3>
+                    <h3><a href="#"><?php _e("Bank Details","dp-lang");?></a></h3>
                     <div>
                         <div id="bank" class="tabdiv">
                             <table class="form-table">
                                 <tr>
-                                    <th scope="row">Name of Bank</th>
+                                    <th scope="row"><?php _e("Name of Bank","dp-lang")?></th>
                                     <td>
-                                        <input type="text" value="<?php if(isset($dp_shopping_cart_settings['bank_name'])) {echo $dp_shopping_cart_settings['bank_name'];}?>" name="bank_name">
+                                        <input size="50" type="text" value="<?php if(isset($dp_shopping_cart_settings['bank_name'])) {echo $dp_shopping_cart_settings['bank_name'];}?>" name="bank_name">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Routing Number</th>
+                                    <th scope="row"><?php _e("Routing Number","dp-lang");?></th>
                                     <td>
-                                        <input type="text" value="<?php if(isset($dp_shopping_cart_settings['bank_routing'])) {echo $dp_shopping_cart_settings['bank_routing'];}?>" name="bank_routing">
+                                        <input size="50" type="text" value="<?php if(isset($dp_shopping_cart_settings['bank_routing'])) {echo $dp_shopping_cart_settings['bank_routing'];}?>" name="bank_routing">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Account Number</th>
+                                    <th scope="row"><?php _e("Account Number","dp-lang");?></th>
                                     <td>
-                                        <input type="text" value="<?php if(isset($dp_shopping_cart_settings['bank_account'])) {echo $dp_shopping_cart_settings['bank_account'];}?>" name="bank_account">
+                                        <input size="50" type="text" value="<?php if(isset($dp_shopping_cart_settings['bank_account'])) {echo $dp_shopping_cart_settings['bank_account'];}?>" name="bank_account">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Bank Account Owner</th>
+                                    <th scope="row"><?php _e("Bank Account Owner","dp-lang");?></th>
                                     <td>
-                                        <input type="text" value="<?php if(isset($dp_shopping_cart_settings['bank_account_owner'])) {echo $dp_shopping_cart_settings['bank_account_owner'];}?>" name="bank_account_owner">
+                                        <input size="50" type="text" value="<?php if(isset($dp_shopping_cart_settings['bank_account_owner'])) {echo $dp_shopping_cart_settings['bank_account_owner'];}?>" name="bank_account_owner">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">IBAN</th>
+                                    <th scope="row"><?php _e("IBAN","dp-lang");?></th>
                                     <td>
-                                        <input type="text" value="<?php if(isset($dp_shopping_cart_settings['bank_IBAN'])) {echo $dp_shopping_cart_settings['bank_IBAN'];}?>" name="bank_IBAN">
+                                        <input size="50" type="text" value="<?php if(isset($dp_shopping_cart_settings['bank_IBAN'])) {echo $dp_shopping_cart_settings['bank_IBAN'];}?>" name="bank_IBAN">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">BIC/SWIFT</th>
+                                    <th scope="row"><?php _e("BIC/SWIFT","dp-lang");?></th>
                                     <td>
-                                        <input type="text" value="<?php if(isset($dp_shopping_cart_settings['bank_bic'])) {echo $dp_shopping_cart_settings['bank_bic'];}?>" name="bank_bic">
+                                        <input size="50" type="text" value="<?php if(isset($dp_shopping_cart_settings['bank_bic'])) {echo $dp_shopping_cart_settings['bank_bic'];}?>" name="bank_bic">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">BIC/SWIFT</th>
+                                    <th scope="row"><?php _e("BIC/SWIFT","dp-lang");?></th>
                                     <td>
-                                        <input type="text" value="<?php if(isset($dp_shopping_cart_settings['bank_bic'])) {echo $dp_shopping_cart_settings['bank_bic'];}?>" name="bank_bic">
+                                        <input size="50" type="text" value="<?php if(isset($dp_shopping_cart_settings['bank_bic'])) {echo $dp_shopping_cart_settings['bank_bic'];}?>" name="bank_bic">
                                     </td>
                                 </tr>
                             </table>
                         </div>
                     </div>
-
+                
             </div>
         </div>
-        <h3><a href="#">Discount Management</a></h3>
+        <h3><a href="#"><?php _e("Discount Management","dp-lang");?></a></h3>
         <div>
             <div id="discount" class="tabdiv">
                 <table class="form-table">
                     <tr>
-                        <th scope="row">Enable Discount</th>
+                        <th scope="row"><?php _e("Enable Discount","dp-lang");?></th>
                         <td>
                             <input type="checkbox" value="true" name="discount_enable" <?php if ($dp_shopping_cart_settings['discount_enable'] === 'true') { echo 'checked';}?> />
                         </td>
@@ -1108,19 +1189,19 @@ function dukapress_shopping_cart_setting() {
                 <div id="discount_code_confirmation"></div>
                 <table class="form-table">
                     <tr>
-                        <th scope="row">Enter Discount Code</th>
+                        <th scope="row"><?php _e("Enter Discount Code","dp-lang");?></th>
                         <td>
                             <input type="text" value="" name="discount_code" id="discount_code" />
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">Discount</th>
+                        <th scope="row"><?php _e("Discount","dp-lang");?></th>
                         <td>
                             <input type="text" value="" name="discount_amount" id="discount_amount" />%
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">One Time Discount</th>
+                        <th scope="row"><?php _e("One Time Discount","dp-lang");?></th>
                         <td>
                             <input type="checkbox" value="true" name="discount_one_time" id="discount_one_time" />
                         </td>
@@ -1133,7 +1214,8 @@ function dukapress_shopping_cart_setting() {
                     </tr>
                 </table>
                 <div id="discount_code_layout">
-                    <?php echo dpsc_get_discount_code_table();?>
+                    <?php _e(dpsc_get_discount_code_table(),"dp-lang");?>
+                    <?php// echo dpsc_get_discount_code_table();?>
                 </div>
             </div>
         </div>
@@ -1222,7 +1304,8 @@ function dpsc_save_discount_code() {
     }
     if ($_REQUEST['ajax'] == 'true') {
         ob_start();
-        echo dpsc_get_discount_code_table();
+        _e(dpsc_get_discount_code_table(),"dp-lang");
+//        echo dpsc_get_discount_code_table();
         $output .= ob_get_contents();
         ob_end_clean();
         die($output);
@@ -1251,7 +1334,7 @@ function dpsc_delete_discount_code() {
     update_option('dpsc_discount_codes', $dpsc_discount_codes_new);
     if ($_REQUEST['ajax'] == 'true') {
         ob_start();
-        echo dpsc_get_discount_code_table();
+        _e(dpsc_get_discount_code_table(),"dp-lang");
         $output .= ob_get_contents();
         ob_end_clean();
         die($output);
@@ -1310,10 +1393,10 @@ function dpsc_pnj_send_mail($to, $from, $name, $subject, $msg, $attachment = FAL
     $headers .= 'From: ' . $name . ' <' . $from . '>' . "\r\n";
     if ($attachment) {
         $mail_attachment = array(DP_PLUGIN_DIR. '/pdf/invoice_' . $attachment . '.pdf');
-        wp_mail($to, $subject, $msg, $headers,$mail_attachment);
+        @wp_mail($to, $subject, $msg, $headers,$mail_attachment);
     }
     else {
-        wp_mail($to, $subject, $msg, $headers);
+        @wp_mail($to, $subject, $msg, $headers);
     }
 }
 
@@ -1322,7 +1405,8 @@ function dpsc_pnj_send_mail($to, $from, $name, $subject, $msg, $attachment = FAL
  *
  */
 function make_pdf($invoice, $dpsc_discount_value, $tax, $dpsc_shipping_value, $dpsc_total, $bfname, $blname, $bcity, $baddress, $bstate, $bzip, $bcountry, $phone, $option='bill', $test=0) {
-
+    global $dpsc_country_code_name;
+    $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
     define('FPDF_FONTPATH', 'font/');
     require_once('lib/fpdf16/fpdf.php');
 
@@ -1349,7 +1433,7 @@ function make_pdf($invoice, $dpsc_discount_value, $tax, $dpsc_shipping_value, $d
                 $this->SetFont('Arial', 'B', 12);
 
                 //$url  = get_option('siteurl');
-                $path = DP_PLUGIN_URL . '/images/pdf-logo-1.jpg';
+                $path = DP_PLUGIN_DIR . '/images/pdf-logo-1.jpg';
                 $this->Image($path);
                 $this->SetXY(90, 7);
                 $this->MultiCell(0, 7, "$biz", 0, 'L');
@@ -1394,14 +1478,14 @@ function make_pdf($invoice, $dpsc_discount_value, $tax, $dpsc_shipping_value, $d
         $pdf->SetFont('Arial', '', 10);
         // data for address
         $order = array();
-        $order[f_name] = $bfname;
-        $order[l_name] = $blname;
+        $order[f_name] = $bfname . ' ' . $blname;
+//        $order[l_name] = $blname;
         $order[street] = $baddress;
         $order[town] = $bcity;
         $order[state] = $bstate;
         $order[zip] = $bzip;
 
-        $order[country] = $bcountry;
+        $order[country] = $dpsc_country_code_name[$bcountry];
 
         address_format($order, 'pdf_cust_address', $pdf);
 
@@ -1458,8 +1542,8 @@ function make_pdf($invoice, $dpsc_discount_value, $tax, $dpsc_shipping_value, $d
             $pdf->Cell($w1, $h2, $count, 'LR', 0); // Art-no
             $pdf->Cell($w2, $h2, $dpsc_product['name'] . $dpsc_var, 'LR', 0); // Art-name
             $pdf->Cell($w3, $h2, $dpsc_product['quantity'], 'LR', 0); // Amount
-            $pdf->Cell($w4, $h2, $dis_price, 'LR', 0); // U - Price
-            $pdf->Cell($w5, $h2, $dis_price_total, 'LR', 1); // Total price
+            $pdf->Cell($w4, $h2, pdf_encode($dp_shopping_cart_settings['dp_currency_symbol'] . $dis_price), 'LR', 0); // U - Price
+            $pdf->Cell($w5, $h2, pdf_encode($dp_shopping_cart_settings['dp_currency_symbol'] . $dis_price_total), 'LR', 1); // Total price
             //}
             // ending line of article row
             $pdf->Cell($w1, 1, "", 'LBR', 0); // Art-no
@@ -1498,23 +1582,23 @@ function make_pdf($invoice, $dpsc_discount_value, $tax, $dpsc_shipping_value, $d
         }
         $shipping = $dpsc_shipping_value;
         $amount = number_format($total + $shipping + $total_tax - $total_discount, 2);
-        $netsum_str = 'Subtotal:' . ' ' . number_format($total,2) . ' ' . $dp_shopping_cart_settings['dp_shop_currency'];
+        $netsum_str = 'Subtotal:' . ' ' . $dp_shopping_cart_settings['dp_currency_symbol'] . number_format($total,2) . ' ' . $dp_shopping_cart_settings['dp_shop_currency'];
         $pdf->Cell(0, 6, pdf_encode($netsum_str), 0, 1, 'R');
 
         // discount
-        $disf_str = pdf_encode('- Discount:') . ' ' . number_format($total_discount,2) . ' ' . $dp_shopping_cart_settings['dp_shop_currency'];
-        $pdf->Cell(0, 6, "$disf_str", 0, 1, 'R');
+        $disf_str = pdf_encode('- Discount:') . ' ' . $dp_shopping_cart_settings['dp_currency_symbol'] . number_format($total_discount,2) . ' ' . $dp_shopping_cart_settings['dp_shop_currency'];
+        $pdf->Cell(0, 6, pdf_encode($disf_str), 0, 1, 'R');
         // discount
-        $taxf_str = pdf_encode('+ Tax:') . ' ' . number_format($total_tax,2) . ' ' . $dp_shopping_cart_settings['dp_shop_currency'];
-        $pdf->Cell(0, 6, "$taxf_str", 0, 1, 'R');
+        $taxf_str = pdf_encode('+ Tax:') . ' ' . $dp_shopping_cart_settings['dp_currency_symbol'] . number_format($total_tax,2) . ' ' . $dp_shopping_cart_settings['dp_shop_currency'];
+        $pdf->Cell(0, 6, pdf_encode($taxf_str), 0, 1, 'R');
         // shipping fee
-        $shipf_str = pdf_encode('+ Shipping fee:') . ' ' . number_format($shipping,2) . ' ' . $dp_shopping_cart_settings['dp_shop_currency'];
-        $pdf->Cell(0, 6, "$shipf_str", 0, 1, 'R');
+        $shipf_str = pdf_encode('+ Shipping fee:') . ' ' . $dp_shopping_cart_settings['dp_currency_symbol'] . number_format($shipping,2) . ' ' . $dp_shopping_cart_settings['dp_shop_currency'];
+        $pdf->Cell(0, 6, pdf_encode($shipf_str), 0, 1, 'R');
 
 
         $pdf->SetFont('Arial', 'B', 9);
-        $totf_str = pdf_encode('Total:') . ' ' . $amount . ' ' . $dp_shopping_cart_settings['dp_shop_currency'];
-        $pdf->Cell(00, 6, $totf_str, 0, 1, 'R');
+        $totf_str = pdf_encode('Total:') . ' ' . $dp_shopping_cart_settings['dp_currency_symbol'] . $amount . ' ' . $dp_shopping_cart_settings['dp_shop_currency'];
+        $pdf->Cell(00, 6, pdf_encode($totf_str), 0, 1, 'R');
     } else {
 
     }
@@ -1542,7 +1626,7 @@ return $data;
 function address_format($ad, $option='html', $pdf=0) {
 
 $address = NULL;
-$name = $ad[f_name] . ' ' . $ad[l_name];
+$name = $ad[f_name];
 if (strpos($address, 'NAME') !== false) {
 $address = str_replace("NAME", strtoupper($name), $address);
 }
@@ -1737,6 +1821,27 @@ function dp_delete_files_daily() {
 register_deactivation_hook(__FILE__, 'dp_deactivate_delete_files');
 function dp_deactivate_delete_files() {
     wp_clear_scheduled_hook('dp_delete_files_daily');
+}
+
+function dp_system_load_textdomain() {
+	$locale = apply_filters( 'wordpress_locale', get_locale() );
+	$mofile = DP_PLUGIN_DIR . "/languages/dukapress-$locale.mo";
+
+	if ( file_exists( $mofile ) )
+		load_textdomain( 'dp-lang', $mofile );
+}
+add_action ( 'plugins_loaded', 'dp_system_load_textdomain', 7 );
+
+add_action('wp_dashboard_setup', 'dukapress_dashboard_widget' );
+function dukapress_dashboard_widget() {
+    global $wp_meta_boxes;
+    wp_add_dashboard_widget('dukapress_dashboard_widget', __('DukaPress News'), 'dukapress_rss_dashboard_widget');
+}
+
+function dukapress_rss_dashboard_widget() {
+    echo '<div class="rss-widget">';
+    wp_widget_rss_output('http://dukapress.org/feed/', array('show_author' => 0, 'show_date' => 0, 'items' => 5, 'show_summary' => 0));
+    echo "</div>";
 }
 
 ?>

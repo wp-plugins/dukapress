@@ -48,7 +48,6 @@ jQuery(document).ready(function () {
         jQuery('#dp_addVariation').live('click', function(){
             jQuery(dp_addVariation);
             jQuery('input[name=varitaionnumber]').val(current);
-
         });
 
         jQuery('#dp_deletestring a').live('click', function(){
@@ -99,13 +98,14 @@ jQuery(document).ready(function () {
                     jQuery('#vname1').val('');
                     jQuery('#vprice1').val('');
                     jQuery("#result").html(msg);
+                    current = 1;
+                    jQuery('input[name=varitaionnumber]').val(current);
                 }
             });
 
         });
 
     }
-    
 });
 
 var current = 1;

@@ -3,9 +3,9 @@ Contributors: parshwa, moshthepitt
 Donate link: http://dukapress.org/about/
 Tags: shopping cart, web shop, cart, shop, Worldpay, Paypal, Alertpay, paypal, e-commerce, ecommerce, MPESA, ZAP, yuCash, Mobile Payments,online duka, duka, online shop, JQZoom, Multiple Currencies
 
-Requires at least: 2.9.2
-Tested up to: 3.0.1
-Stable tag: 1.3.2.1
+Requires at least: 3.0
+Tested up to: 3.1
+Stable tag: 2.0
 
 DukaPress is an open source e-commerce solution built for Wordpress.
 
@@ -25,14 +25,21 @@ Main Features:
 * One-page checkout;
 * Elegant discount coupon management;
 * A myriad of shipping processing options;
-* Printable invoices;
+* Simple user management and customer order logs;
 * Custom GUI (Graphical User Interface) for product management;
+* Easy to translate into your own language
 
 View more features: [DukaPress](http://dukapress.org/ "Your favorite e-commerce software")
 
 DukaPress Documentation: [DukaPress Documentation](http://dukapress.org/docs/ "Your favorite e-commerce software documentation")
 
 View a DukaPress Demo Shop: [DukaPress Demo](http://dukapress.org/demo/ "Your favorite e-commerce software")
+
+Premium Addons:
+
+1. [Simple Product SlideShow](http://dukapress.com/products/simple-slideshow/ "Simple Product SlideShow")
+1. [Shipping Pro](http://dukapress.com/products/shipping-pro/ "Shipping Pro - location-based shipping")
+
 
 Due to public demand, you can get an absolutely free DukaPress hosted (just sign up and start selling in five minutes, no fuss) shop here: [Our Duka](http://ourduka.com/ "Get a free online shop")
 
@@ -92,6 +99,17 @@ div class="dpsc-shopping-cart">cart code</div
 
 == Changelog ==
 
+= 2.0 =
+* Crushed a lot of puny (and not so puny) bugs
+* Added internationalization support
+* Added new product display widgets
+* Added customer managament
+* Improved Grid display widget
+* Added checkout field validation
+* created customer order logs area
+* Improved PDF invoice
+* Paginated admin order log
+
 = 1.3.2.1 =
 * A quick bug fix release for a bug that affected the WordPress post edit screen.
 
@@ -110,11 +128,9 @@ div class="dpsc-shopping-cart">cart code</div
 * Added JQZoom suuport
 * Added a simple way to notify customers that something was added to the cart
 
-
 = 1.2.1 =
 * Made the currency symbol viewable on grid view and single product pages
 * Crushed a lot of annoying little bugs
-
 
 = 1.2.0 =
 * Added support for custom post types
@@ -131,6 +147,9 @@ div class="dpsc-shopping-cart">cart code</div
 * Initial Release
 
 == Upgrade Notice ==
+
+= 2.0 =
+Our most major release to date, featuring tons of bugfixes and many new features.
 
 = 1.3.2.1 =
 Nothin' to see here, bug crushing.
