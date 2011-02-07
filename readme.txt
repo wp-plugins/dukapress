@@ -78,15 +78,17 @@ No.  Nothing is wrong with you. :)
 
 We test DukaPress on a large number of different server set-ups and envrionments and we are satisfied that it does work in these environments.  However, the number of different environments 'out there' is infinite and we cannot possibly test on every single environment.  If everything that you try fails to work, perharps you should move your site to one of the more common web hosts?  [Look here for hosts that we know work with DukaPress.](http://dukapress.org/download/)
 
-
 = Why isn't the Grid Display working? =
 
 You currently HAVE to have at least one custom field per prodct in order for those products to show up in the grid display properly.
 
+= Why am I getting multiple/many emails when an order is placed? =
+
+If you are getting many emails with the subject “Receipt of Order No: xxxxx“, then it may be because you have PayPal IPN settings turned on. Please turn them off.
+
 = Why isn't the "Inquiry"/"Catalogue mode" working properly? =
 
 Right now, it works very similarly to the regular shop mode - i.e. when people click on the "Inquire" button, it adds the product(s) to the shopping cart.  When the site vistors go to checkout, they will then be presented with a form which they fill to inquire about products in the cart.  You therefore HAVE to have your shopping cart widget displaying somewhere for the "Inquire" button to work.
-
 
 = Why is nothing happening when I press "Add to cart"?  Why is the AJAX not working? =
 
