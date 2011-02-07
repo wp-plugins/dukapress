@@ -44,6 +44,21 @@ jQuery(document).ready(function () {
         dp_init();
     }
 
+    jQuery('.dp_pagination').live('click', function() {
+        var customer_id = jQuery(this).attr('rel');
+        jQuery('#dp_action_search_pagi_'+customer_id).css('display', 'inline');
+        var page_id = jQuery(this).attr('id');
+        jQuery.ajax({
+            type: "POST",
+            url: ajaxurl,
+            data: 'action=dp_change_invoices_pagination&page='+page_id+'&customer_id='+customer_id,
+            success: function(msg){
+                jQuery('#dp_'+customer_id).html(msg);
+                jQuery('#dp_action_search_pagi_'+customer_id).css('display', 'none');
+            }
+        });
+    });
+
     if (jQuery('#dp_addVariation').length) {
         jQuery('#dp_addVariation').live('click', function(){
             jQuery(dp_addVariation);
@@ -104,8 +119,24 @@ jQuery(document).ready(function () {
             });
 
         });
-
     }
+    jQuery('.deletethis').live('click',function(){
+        var action = confirm("Do You really want to perform this action ?");
+        if(action != 0){
+        jQuery(this).addClass('iwasdeleted');
+        jQuery(this).parent('p').parent('td').parent('tr').css('backgroundColor','#D65C5E');
+        jQuery(this).parent('p').parent('td').parent('tr').css('background-color','#D65C5E');
+        var invoice = jQuery(this).attr('rel');
+             var pp_delete_data = {action:'dp_delete_transaction',
+                 'invoice':invoice
+             };
+             jQuery.post(ajaxurl, pp_delete_data, function(response){
+                if(response == 'true'){
+                    jQuery('.iwasdeleted').parent('p').parent('td').parent('tr').slideUp().remove();
+                }
+            });
+        }
+    });
 });
 
 var current = 1;

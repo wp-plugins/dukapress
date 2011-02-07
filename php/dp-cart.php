@@ -227,7 +227,7 @@ function dpsc_print_checkout_html() {
         }
     }
     else {
-        $output .= __("There are no product in your cart.",'dp-lang');
+        $output .= __("There are no products in your cart.",'dp-lang');
     }
     return $output;
 }
@@ -738,8 +738,10 @@ function dpsc_on_payment_save($dpsc_total = FALSE, $dpsc_shipping_value = FALSE,
                 --
                 Warm regards,<br/><br/>' . $dp_shopping_cart_settings['shop_name'];
     $to = get_option('admin_email');
-    dpsc_pnj_send_mail($to, $to, 'DukaPress Order Notification', $subject, $message);
-    make_pdf($invoice, $dpsc_discount_value, $tax, $dpsc_shipping_value, $dpsc_total, $bfname, $blname, $bcity, $baddress, $bstate, $bzip, $bcountry, $phone);
+    dpsc_pnj_send_mail($to, $to, $dp_shopping_cart_settings['shop_name'], $subject, $message);
+    if ($dp_shopping_cart_settings['dp_shop_pdf_generation'] === 'checked') {
+        make_pdf($invoice, $dpsc_discount_value, $tax, $dpsc_shipping_value, $dpsc_total, $bfname, $blname, $bcity, $baddress, $bstate, $bzip, $bcountry, $phone);
+    }
     if ($dp_shopping_cart_settings['dp_shop_user_registration'] === 'checked') {
         require_once( ABSPATH . WPINC . '/registration.php');
         global $user_ID;
@@ -1196,7 +1198,9 @@ function dpsc_pnj_thank_you_page() {
                                     <p>' . __('We will process your order soon.',"dp-lang") . '</p>';
                         break;
             }
-            $output .= '<p><a href="' . DP_PLUGIN_URL .'/pdf/invoice_' . $invoice . '.pdf">Click here to download your Invoice.</a></p>';
+            if ($dp_shopping_cart_settings['dp_shop_pdf_generation'] === 'checked') {
+                $output .= '<p><a href="' . DP_PLUGIN_URL .'/pdf/invoice_' . $invoice . '.pdf">Click here to download your Invoice.</a></p>';
+            }
             $message = 'Hi ' . $bfname . ' ' . $blname . ',<br/>
                         We have received your Order No.: ' . $invoice . '.<br/>
                         We will start processing your Order the moment we get payment.
@@ -1310,8 +1314,10 @@ function dp_current_user_order_log($content = NULL) {
                                     <tr>
                                         <td>Total: </td><td>+' . $amount . '</td>
                                     </tr>
-                                </table>
-                                <p><a href="' . DP_PLUGIN_URL . '/pdf/invoice_' . $order->invoice . '.pdf">Click here to download your Invoice.</a></p>';
+                                </table>';
+                    if ($dp_shopping_cart_settings['dp_shop_pdf_generation'] === 'checked') {
+                        $output .= '<p><a href="' . DP_PLUGIN_URL . '/pdf/invoice_' . $order->invoice . '.pdf">Click here to download your Invoice.</a></p>';
+                    }
                     ///////////////////////
                     $output .= '</div>';
                 }

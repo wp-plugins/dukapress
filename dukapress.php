@@ -2,13 +2,13 @@
 /*
 Plugin Name: DukaPress Shopping Cart
 Description: DukaPress Shopping Cart
-Version: 2.0
+Version: 2.1
 Author: Parshwa Nemi Jain and Nickel Pro
 Author URI: http://dukapress.org/
 Plugin URI: http://dukapress.org/
 */
 
-$dp_version = 2.0;
+$dp_version = 2.1;
 
 require_once('php/dp-products.php');
 require_once('php/dp-cart.php');
@@ -22,6 +22,7 @@ define('DP_PLUGIN_DIR', WP_PLUGIN_DIR.'/'.dirname(plugin_basename(__FILE__)));
 define('DP_DOWNLOAD_FILES_DIR', WP_CONTENT_DIR. '/uploads/dpsc_download_files/' );
 define('DP_DOWNLOAD_FILES_DIR_TEMP', WP_CONTENT_DIR. '/uploads/dpsc_temp_download_files/' );
 
+$dpsc_user_invoice_number = 'dp_user_invoice_number';
 $dpsc_country_code_name = array("AF" => "AFGHANISTAN", "AL" => "ALBANIA", "DZ" => "ALGERIA", "AS" => "AMERICAN SAMOA", "AD" => "ANDORRA", "AO" => "ANGOLA", "AI" => "ANGUILLA", "AQ" => "ANTARCTICA", "AG" => "ANTIGUA AND BARBUDA", "AR" => "ARGENTINA", "AM" => "ARMENIA", "AW" => "ARUBA", "AU" => "AUSTRALIA", "AT" => "AUSTRIA", "AZ" => "AZERBAIJAN", "BS" => "BAHAMAS", "BH" => "BAHRAIN", "BD" => "BANGLADESH", "BB" => "BARBADOS", "BY" => "BELARUS", "BE" => "BELGIUM", "BZ" => "BELIZE", "BJ" => "BENIN", "BM" => "BERMUDA", "BT" => "BHUTAN", "BO" => "BOLIVIA", "BA" => "BOSNIA AND HERZEGOVINA", "BW" => "BOTSWANA", "BV" => "BOUVET ISLAND", "BR" => "BRAZIL", "IO" => "BRITISH INDIAN OCEAN TERRITORY", "BN" => "BRUNEI DARUSSALAM", "BG" => "BULGARIA", "BF" => "BURKINA FASO", "BI" => "BURUNDI", "KH" => "CAMBODIA", "CM" => "CAMEROON", "CA" => "CANADA", "CV" => "CAPE VERDE", "KY" => "CAYMAN ISLANDS", "CF" => "CENTRAL AFRICAN REPUBLIC", "TD" => "CHAD", "CL" => "CHILE", "CN" => "CHINA", "CX" => "CHRISTMAS ISLAND", "CC" => "COCOS (KEELING) ISLANDS", "CO" => "COLOMBIA", "KM" => "COMOROS", "CG" => "CONGO", "CD" => "CONGO, THE DEMOCRATIC REPUBLIC OF THE", "CK" => "COOK ISLANDS", "CR" => "COSTA RICA", "CI" => "COTE D?IVOIRE", "HR" => "CROATIA", "CU" => "CUBA", "CY" => "CYPRUS", "CZ" => "CZECH REPUBLIC", "DK" => "DENMARK", "DJ" => "DJIBOUTI", "DM" => "DOMINICA", "DO" => "DOMINICAN REPUBLIC", "EC" => "ECUADOR", "EG" => "EGYPT", "SV" => "EL SALVADOR", "GQ" => "EQUATORIAL GUINEA", "ER" => "ERITREA", "EE" => "ESTONIA", "ET" => "ETHIOPIA", "FK" => "FALKLAND ISLANDS (MALVINAS)", "FO" => "FAROE ISLANDS", "FJ" => "FIJI", "FI" => "FINLAND", "FR" => "FRANCE", "GF" => "FRENCH GUIANA", "PF" => "FRENCH POLYNESIA", "TF" => "FRENCH SOUTHERN TERRITORIES", "GA" => "GABON", "GM" => "GAMBIA", "GE" => "GEORGIA", "DE" => "GERMANY", "GH" => "GHANA", "GI" => "GIBRALTAR", "GR" => "GREECE", "GL" => "GREENLAND", "GD" => "GRENADA", "GP" => "GUADELOUPE", "GU" => "GUAM", "GT" => "GUATEMALA", "GG" => "GUERNSEY", "GN" => "GUINEA", "GW" => "GUINEA-BISSAU", "GY" => "GUYANA", "HT" => "HAITI", "HM" => "HEARD ISLAND AND MCDONALD ISLANDS", "VA" => "HOLY SEE (VATICAN CITY STATE)", "HN" => "HONDURAS", "HK" => "HONG KONG", "HU" => "HUNGARY", "IS" => "ICELAND", "IN" => "INDIA", "ID" => "INDONESIA", "IR" => "IRAN, ISLAMIC REPUBLIC OF", "IQ" => "IRAQ", "IE" => "IRELAND", "IM" => "ISLE OF MAN", "IL" => "ISRAEL", "IT" => "ITALY", "JM" => "JAMAICA", "JP" => "JAPAN", "JE" => "JERSEY", "JO" => "JORDAN", "KZ" => "KAZAKHSTAN", "KE" => "KENYA", "KI" => "KIRIBATI", "KP" => "KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF", "KR" => "KOREA, REPUBLIC OF", "KW" => "KUWAIT", "KG" => "KYRGYZSTAN", "LA" => "LAO PEOPLE'S DEMOCRATIC REPUBLIC", "LV" => "LATVIA", "LB" => "LEBANON", "LS" => "LESOTHO", "LR" => "LIBERIA", "LY" => "LIBYAN ARAB JAMAHIRIYA", "LI" => "LIECHTENSTEIN", "LT" => "LITHUANIA", "LU" => "LUXEMBOURG", "MO" => "MACAO", "MK" => "MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF", "MG" => "MADAGASCAR", "MW" => "MALAWI", "MY" => "MALAYSIA", "MV" => "MALDIVES", "ML" => "MALI", "MT" => "MALTA", "MH" => "MARSHALL ISLANDS", "MQ" => "MARTINIQUE", "MR" => "MAURITANIA", "MU" => "MAURITIUS", "YT" => "MAYOTTE", "MX" => "MEXICO", "FM" => "MICRONESIA, FEDERATED STATES OF", "MD" => "MOLDOVA, REPUBLIC OF", "MC" => "MONACO", "MN" => "MONGOLIA", "MS" => "MONTSERRAT", "MA" => "MOROCCO", "MZ" => "MOZAMBIQUE", "MM" => "MYANMAR", "NA" => "NAMIBIA", "NR" => "NAURU", "NP" => "NEPAL", "NL" => "NETHERLANDS", "AN" => "NETHERLANDS ANTILLES", "NC" => "NEW CALEDONIA", "NZ" => "NEW ZEALAND", "NI" => "NICARAGUA", "NE" => "NIGER", "NG" => "NIGERIA", "NU" => "NIUE", "NF" => "NORFOLK ISLAND", "MP" => "NORTHERN MARIANA ISLANDS", "NO" => "NORWAY", "OM" => "OMAN", "PK" => "PAKISTAN", "PW" => "PALAU", "PS" => "PALESTINIAN TERRITORY, OCCUPIED", "PA" => "PANAMA", "PG" => "PAPUA NEW GUINEA", "PY" => "PARAGUAY", "PE" => "PERU", "PH" => "PHILIPPINES", "PN" => "PITCAIRN", "PL" => "POLAND", "PT" => "PORTUGAL", "PR" => "PUERTO RICO", "QA" => "QATAR", "RE" => "REUNION", "RO" => "ROMANIA", "RU" => "RUSSIAN FEDERATION", "RW" => "RWANDA", "SH" => "SAINT HELENA", "KN" => "SAINT KITTS AND NEVIS", "LC" => "SAINT LUCIA", "PM" => "SAINT PIERRE AND MIQUELON", "VC" => "SAINT VINCENT AND THE GRENADINES", "WS" => "SAMOA", "SM" => "SAN MARINO", "ST" => "SAO TOME AND PRINCIPE", "SA" => "SAUDI ARABIA", "SN" => "SENEGAL", "CS" => "SERBIA AND MONTENEGRO", "SC" => "SEYCHELLES", "SL" => "SIERRA LEONE", "SG" => "SINGAPORE", "SK" => "SLOVAKIA", "SI" => "SLOVENIA", "SB" => "SOLOMON ISLANDS", "SO" => "SOMALIA", "ZA" => "SOUTH AFRICA", "GS" => "SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS", "ES" => "SPAIN", "LK" => "SRI LANKA", "SD" => "SUDAN", "SR" => "SURINAME", "SJ" => "SVALBARD AND JAN MAYEN", "SZ" => "SWAZILAND", "SE" => "SWEDEN", "CH" => "SWITZERLAND", "SY" => "SYRIAN ARAB REPUBLIC", "TW" => "TAIWAN, PROVINCE OF CHINA", "TJ" => "TAJIKISTAN", "TZ" => "TANZANIA, UNITED REPUBLIC OF", "TH" => "THAILAND", "TL" => "TIMOR-LESTE  ", "TG" => "TOGO", "TK" => "TOKELAU", "TO" => "TONGA", "TT" => "TRINIDAD AND TOBAGO", "TN" => "TUNISIA", "TR" => "TURKEY", "TM" => "TURKMENISTAN", "TC" => "TURKS AND CAICOS ISLANDS", "TV" => "TUVALU", "UG" => "UGANDA", "UA" => "UKRAINE", "AE" => "UNITED ARAB EMIRATES", "GB" => "UNITED KINGDOM", "UM" => "UNITED STATES MINOR OUTLYING ISLANDS", "US" => "UNITED STATES OF AMERICA", "UY" => "URUGUAY", "UZ" => "UZBEKISTAN", "VU" => "VANUATU", "VE" => "VENEZUELA", "VN" => "VIET NAM", "VG" => "VIRGIN ISLANDS, BRITISH", "VI" => "VIRGIN ISLANDS, U.S.", "WF" => "WALLIS AND FUTUNA", "EH" => "WESTERN SAHARA", "YE" => "YEMEN", "ZM" => "ZAMBIA", "ZW" => "ZIMBABWE");
 
 /**
@@ -71,11 +72,151 @@ function dp_dashboard_transactions() {
  */
 add_action('admin_menu', 'dp_pnj_create_admin_menu');
 function dp_pnj_create_admin_menu() {
+    $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
     add_object_page('DukaPress', 'DukaPress', 'manage_options', 'dukapress-shopping-cart-order-log', '', DP_PLUGIN_URL . '/images/dp_icon.png');
     add_submenu_page('dukapress-shopping-cart-order-log', 'DukaPress Order Log', 'Order Log', 'manage_options', 'dukapress-shopping-cart-order-log', 'dukapress_shopping_cart_order_log');
+    if ($dp_shopping_cart_settings['dp_shop_user_registration'] === 'checked') {
+        add_submenu_page('dukapress-shopping-cart-order-log', 'DukaPress Customer Log', 'Customer Log', 'manage_options', 'dukapress-shopping-cart-customer-log', 'dukapress_shopping_cart_customer_log');
+    }
     add_submenu_page('dukapress-shopping-cart-order-log', 'DukaPress Settings', 'Settings', 'manage_options', 'dukapress-shopping-cart-settings', 'dukapress_shopping_cart_setting');
 }
 
+function dukapress_shopping_cart_customer_log() {
+    global $dpsc_user_invoice_number, $wpdb;
+    $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
+    ?>
+    <div class="wrap">
+        <h2>DukaPress Customer Log</h2>
+        <?php
+        if ($dp_shopping_cart_settings['dp_shop_user_registration'] === 'checked') {
+            $sql = "SELECT `user_id` FROM {$wpdb->usermeta} WHERE `meta_key`='{$dpsc_user_invoice_number}'";
+            $pagenum = isset($_GET['paged']) ? $_GET['paged'] : 1;
+            $per_page = 20;
+            $action_count = count($wpdb->get_results($sql));
+            $total = ceil($action_count / $per_page);
+            $action_offset = ($pagenum-1) * $per_page;
+            $page_links = paginate_links( array(
+                    'base' => add_query_arg( 'paged', '%#%' ),
+                    'format' => '',
+                    'prev_text' => __('&laquo;'),
+                    'next_text' => __('&raquo;'),
+                    'total' => ceil($action_count / $per_page),
+                    'current' => $pagenum
+            ));
+            $sql .= " LIMIT {$action_offset}, {$per_page}";
+            $customer_ids = $wpdb->get_col($sql);
+            if (!empty($customer_ids)) {
+                if ($page_links) {
+                    ?>
+                    <div class="tablenav">
+                        <div class="tablenav-pages">
+                            <?php
+                            $page_links_text = sprintf( '<span class="displaying-num">' . __( 'Displaying %s&#8211;%s of %s' ) . '</span>%s',
+                                                                number_format_i18n( ( $pagenum - 1 ) * $per_page + 1 ),
+                                                                number_format_i18n( min( $pagenum * $per_page, $action_count ) ),
+                                                                number_format_i18n( $action_count ),
+                                                                $page_links
+                                                                );
+                            echo $page_links_text;
+                            ?>
+                        </div>
+                    </div>
+                    <?php
+                }
+                echo '<div id="dp_settings" class="dukapress-settings">';
+                foreach ($customer_ids as $customer_id) {
+                    echo '<h3><a href="#">' . get_user_meta( intval($customer_id), 'first_name', TRUE ) . ' ' . get_user_meta( intval($customer_id), 'last_name', TRUE ) . '</a></h3>
+                            <div>';
+                    echo '<div id="dp_' . $customer_id . '">' . dp_get_invoices_for_customer($customer_id) . '</div>';
+                    echo '</div>';
+                }
+                echo '</div>';
+                if ($page_links) {
+                    ?>
+                    <div class="tablenav">
+                        <div class="tablenav-pages">
+                            <?php
+                            $page_links_text = sprintf( '<span class="displaying-num">' . __( 'Displaying %s&#8211;%s of %s' ) . '</span>%s',
+                                                                number_format_i18n( ( $pagenum - 1 ) * $per_page + 1 ),
+                                                                number_format_i18n( min( $pagenum * $per_page, $action_count ) ),
+                                                                number_format_i18n( $action_count ),
+                                                                $page_links
+                                                                );
+                            echo $page_links_text;
+                            ?>
+                        </div>
+                    </div>
+                    <?php
+                }
+            }
+            else {
+                echo 'No results found';
+            }
+        }
+        else {
+            echo 'User registration for DukaPress is not enabled.';
+        }
+        ?>
+    </div>
+        <?php
+}
+
+add_action('wp_ajax_dp_change_invoices_pagination', 'dp_change_page_invoice');
+function dp_change_page_invoice() {
+    $customer_id = intval($_POST['customer_id']);
+    $page_number = intval($_POST['page']);
+    die(dp_get_invoices_for_customer($customer_id, $page_number));
+}
+
+function dp_get_invoices_for_customer($customer_id, $page_number = 1) {
+    global $dpsc_user_invoice_number;
+    $invoice_numbers = get_user_meta( intval($customer_id), $dpsc_user_invoice_number, TRUE );
+    $count = count($invoice_numbers);
+    $pagenum = $page_number;
+    $per_page = 10;
+    $total = ceil($count / $per_page);
+    $offset = ($pagenum-1) * $per_page;
+    $output = '';
+    if($total > 1) {
+        $page_links_text = sprintf( '<span class="displaying-num">' . __( 'Displaying %s&#8211;%s of %s' ) . '</span>',
+                                            number_format_i18n( ( $pagenum - 1 ) * $per_page + 1 ),
+                                            number_format_i18n( min( $pagenum * $per_page, $count ) ),
+                                            number_format_i18n( $count )
+                                            );
+        $output .= '<div class="tablenav"><div class="tablenav-pages" style="float: left!important;">' . $page_links_text . '</div></div>';
+    }
+    $invoice_numbers = array_splice($invoice_numbers, $offset, $per_page);
+    $output .= '<ol>';
+    foreach ($invoice_numbers as $invoice) {
+        $output .= '<li><a href="?page=dukapress-shopping-cart-order-log&id=' . $invoice . '">' . $invoice . '</a></li>';
+    }
+    $output .= '</ol>';
+    if ($total > 1) {
+        $output .= '<p>';
+        if ($page_number > 1) {
+            $prev_id = $page_number - 1;
+            $output .= '<span class="dp_pagination" rel="' . $customer_id . '" id="1">&laquo; First</span>';
+            $output .= '<span class="dp_pagination" rel="' . $customer_id . '" id="' . $prev_id . '">&laquo; Previous</span>';
+        }
+        for ($i = 1; $i < $total+1; $i++) {
+            if (($total <= 15) || (($i >= intval($page_number)) && ($i < (intval($page_number)+15))) || (($i > ($total-16)) && ($i < (intval($page_number)+15)) && $total > 15)) {
+                if ($i === intval($page_number)) {
+                    $output .= '<span class="dp_current" rel="' . $customer_id . '" id="' . $i . '">' . $i . '</span>';
+                }
+                else {
+                    $output .= '<span class="dp_pagination" rel="' . $customer_id . '" id="' . $i . '">' . $i . '</span>';
+                }
+            }
+        }
+        if (intval($page_number) != intval($total)) {
+            $next_id = $page_number+1;
+            $output .= '<span class="dp_pagination" rel="' . $customer_id . '" id="' . $next_id . '">Next &raquo;</span>';
+            $output .= '<span class="dp_pagination" rel="' . $customer_id . '" id="' . $total . '">Last &raquo;</span>';
+        }
+        $output .= '<img id="dp_action_search_pagi_' . $customer_id . '" src="' . DP_PLUGIN_URL . '/images/wpspin_light.gif" style="display: none;"></p>';
+    }
+    return $output;
+}
 
 /**
  * This part handles the CSS and JS
@@ -83,7 +224,7 @@ function dp_pnj_create_admin_menu() {
  */
 if (is_admin()) {
     wp_enqueue_style('dpsc_admin_css', DP_PLUGIN_URL.'/css/dp-admin.css');
-    if ($_REQUEST['page'] === 'dukapress-shopping-cart-settings') {
+    if ($_REQUEST['page'] === 'dukapress-shopping-cart-settings' || $_REQUEST['page'] === 'dukapress-shopping-cart-customer-log') {
         wp_enqueue_script('dp_jquery_ui_js', DP_PLUGIN_URL . '/js/jquery-ui-1.8.4.custom.min.js', array('jquery'));
     }
     wp_enqueue_style('dp_acc_style', DP_PLUGIN_URL . '/css/jquery-ui-1.8.5.custom.css');
@@ -130,6 +271,20 @@ else {
     wp_enqueue_script('dpsc_livequery',DP_PLUGIN_URL.'/js/jquery.livequery.js',array('jquery'));
 }
 
+add_action('wp_ajax_dp_delete_transaction', 'dp_delete_transaction');
+function dp_delete_transaction () {
+    $invoice = $_POST['invoice'];
+    global $wpdb;
+    $table_name = $wpdb->prefix . "dpsc_transactions";
+    $res = $wpdb->query("DELETE FROM {$table_name} WHERE `invoice` = '$invoice'");
+    if($res)
+        echo 'true';
+    else
+        echo 'false';
+    die;
+}
+
+
 /**
  * This function displays Order Log
  *
@@ -140,6 +295,10 @@ function dukapress_shopping_cart_order_log() {
 //    echo '<h2>DukaPress Shop Order Log</h2>';
     $table_name = $wpdb->prefix . "dpsc_transactions";
     if (!isset($_GET['id'])) {
+        echo '<a class="button add-new-h2" href="' . get_bloginfo('wpurl') . '/wp-admin/admin.php?page=dukapress-shopping-cart-order-log&delete_all=true">Delete All</a>';
+        if ($_GET['delete_all'] === 'true') {
+            $wpdb->query("DELETE FROM `{$table_name}`");
+        }
         $sql = "SELECT * FROM {$table_name} ORDER BY `id` DESC";
 //        $get_by_page = $get_by_page ? $get_by_page : 1;
         $pagenum = isset($_GET['paged']) ? $_GET['paged'] : 1;
@@ -196,7 +355,9 @@ function dukapress_shopping_cart_order_log() {
                     <tr>
                         <td><?php printf(__("%d"),$count);?></td>
                         <!--<td><?php// echo $count;?></td> -->
-                        <td><a href="?page=dukapress-shopping-cart-order-log&id=<?php printf(__("%d"),$result->id); ?>"><?php echo $result->invoice;?></a></td>
+                        <td><a href="?page=dukapress-shopping-cart-order-log&id=<?php echo $result->invoice; ?>"><?php echo $result->invoice;?></a>
+                            <p><a class="deletethis"style="cursor:pointer" rel="<?php echo $result->invoice ?>">Delete</a></p>
+                        </td>
                         <!--<td><a href="?page=dukapress-shopping-cart-order-log&id=<?php// echo $result->id; ?>"><?php// echo $result->invoice;?></a></td> -->
                         <td><?php printf(__("%s %s"),$result->billing_first_name, $result->billing_last_name);?></td>
                         <td><?php printf(__("%s"),$result->date);?></td>
@@ -273,8 +434,8 @@ if ($page_links) {
         }
     }
     else {
-        $order_id = intval($_GET['id']);
-        $query = "SELECT * FROM {$table_name} WHERE `id`={$order_id}";
+        $order_id = $_GET['id'];
+        $query = "SELECT * FROM {$table_name} WHERE `invoice`='{$order_id}'";
         $result = $wpdb->get_row($query);
         if ($result) {
             if (isset($_GET['status']) && $_GET['status'] === 'send') {
@@ -398,7 +559,13 @@ $amount = number_format($total+$shipping+$total_tax-$total_discount,2);
         <td><?php _e("Total:","dp-lang");?> </td><td>+<?php echo $amount;?></td>
     </tr>
 </table>
+<?php
+if ($dp_shopping_cart_settings['dp_shop_pdf_generation'] === 'checked') {
+?>
 <p><a href="<?php echo DP_PLUGIN_URL .'/pdf/invoice_' . $result->invoice . '.pdf';?>"><?php _e("Click here to download your Invoice.","dp-lang");?></a></p>
+<?php
+}
+?>
 <p><a href="?page=dukapress-shopping-cart-order-log&id=<?php echo $result->id; ?>&status=send"><?php _e("Send Payment Notification.","dp-lang")?></a></p>
             <?php
         }
@@ -493,6 +660,7 @@ function dukapress_shopping_cart_setting() {
         $ap_c_code = $_POST['dp_alertpay_currency'];
         $wp_c_code = $_POST['dp_worldpay_currency'];
         $dp_shop_user_registration = $_POST['dp_shop_user_registration'];
+        $dp_shop_pdf_generation = $_POST['dp_shop_pdf_generation'];
         $dp_main_image_width = !empty($_POST['dp_main_image_width']) ? $_POST['dp_main_image_width'] : '310';
         $dp_main_image_height = !empty($_POST['dp_main_image_height']) ? $_POST['dp_main_image_height'] : '383';
         $dp_thumb_image_width = !empty($_POST['dp_thumb_image_width']) ? $_POST['dp_thumb_image_width'] : '50';
@@ -504,6 +672,7 @@ function dukapress_shopping_cart_setting() {
         if (!is_array($dp_shopping_cart_settings)) {
             $dp_shopping_cart_settings = array();
         }
+        $dp_shopping_cart_settings['dp_shop_pdf_generation'] = $dp_shop_pdf_generation;
         $dp_shopping_cart_settings['dp_shop_user_registration'] = $dp_shop_user_registration;
         $dp_shopping_cart_settings['mobile_names'] = $dp_mobile_name;
         $dp_shopping_cart_settings['mobile_number'] = $dp_mobile_number;
@@ -668,6 +837,12 @@ function dukapress_shopping_cart_setting() {
                         <th scope="row"><?php _e("Enable User Registration:","dp-lang");?></th>
                         <td>
                             <input type="checkbox" value="checked" name="dp_shop_user_registration" <?php echo $dp_shopping_cart_settings['dp_shop_user_registration']; ?>/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?php _e("Enable Invoice PDF Generation:","dp-lang");?></th>
+                        <td>
+                            <input type="checkbox" value="checked" name="dp_shop_pdf_generation" <?php echo $dp_shopping_cart_settings['dp_shop_pdf_generation']; ?>/>
                         </td>
                     </tr>
                     <tr>
@@ -1392,8 +1567,13 @@ function dpsc_pnj_send_mail($to, $from, $name, $subject, $msg, $attachment = FAL
     $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
     $headers .= 'From: ' . $name . ' <' . $from . '>' . "\r\n";
     if ($attachment) {
-        $mail_attachment = array(DP_PLUGIN_DIR. '/pdf/invoice_' . $attachment . '.pdf');
-        @wp_mail($to, $subject, $msg, $headers,$mail_attachment);
+        if ($dp_shopping_cart_settings['dp_shop_pdf_generation'] === 'checked') {
+            $mail_attachment = array(DP_PLUGIN_DIR. '/pdf/invoice_' . $attachment . '.pdf');
+            @wp_mail($to, $subject, $msg, $headers,$mail_attachment);
+        }
+        else {
+            @wp_mail($to, $subject, $msg, $headers);
+        }
     }
     else {
         @wp_mail($to, $subject, $msg, $headers);

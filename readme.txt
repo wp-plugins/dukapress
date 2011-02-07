@@ -4,8 +4,8 @@ Donate link: http://dukapress.org/about/
 Tags: shopping cart, web shop, cart, shop, Worldpay, Paypal, Alertpay, paypal, e-commerce, ecommerce, MPESA, ZAP, yuCash, Mobile Payments,online duka, duka, online shop, JQZoom, Multiple Currencies
 
 Requires at least: 3.0
-Tested up to: 3.0.3
-Stable tag: 2.0
+Tested up to: 3.0.4
+Stable tag: 2.1
 
 DukaPress is an open source e-commerce solution built for Wordpress.
 
@@ -17,7 +17,7 @@ Main Features:
 
 * You can sell tangible regular products;
 * You can sell tangible products with selectable options (size, colour, etc);
-* You can sell Digital products;
+* You can sell digital products;
 * Choose between a normal shop mode and a catalogue mode;
 * Numerous payment processing options including Paypal, Alertpay and Mobile Phone payments;
 * Ability to work with multiple currencies
@@ -38,6 +38,7 @@ View a DukaPress Demo Shop: [DukaPress Demo](http://dukapress.org/demo/ "Your fa
 Premium Addons:
 
 1. [Simple Product SlideShow](http://dukapress.com/products/simple-slideshow/ "Simple Product SlideShow")
+1. [DukaPress Styles](http://dukapress.com/products/styles/ "DukaPress Styles - make DukaPress look good without getting a new theme")
 1. [Shipping Pro](http://dukapress.com/products/shipping-pro/ "Shipping Pro - location-based shipping")
 
 
@@ -47,7 +48,7 @@ Due to public demand, you can get an absolutely free DukaPress hosted (just sign
 
 1. Upload the DukaPress folder to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Make sure your web host allows scripts like timthum.php to run on your site.  If they don't, your DukaPress images will be broken.
+1. Make sure your web host allows scripts like timthumb.php to run on your site.  If they don't, your DukaPress images will be broken.
 1. After this, visit the [DukaPress documentation](http://dukapress.org/docs/ "DukaPress documentation")
 
 
@@ -68,6 +69,8 @@ Unfortunately, for security reasons, web hosts sometimes disable timthumb from w
 = Why is the make payment button not working? =
 
 Nine out of ten times, this is because there is a javascript error somewhere on your site.  The first place to look is your theme - try and run DukaPress using the default WordPress theme to confirm if it is your theme that is failing you.
+
+Another reason is usually the pdf folder inside of DukaPress. Please try make it writable or disable the PDF invoice option from DukaPress basic settings.
 
 = Why doesn't DukaPress work for me?  It seems to work for everyone else =
 
@@ -98,6 +101,14 @@ div class="dpsc-shopping-cart">cart code</div
 [View Screenshots](http://www.flickr.com/photos/moshthepitt/sets/72157624534741496/ "DukaPress screenshots")
 
 == Changelog ==
+
+= 2.1 =
+* Crushed many bugs
+* Added customer order logs
+* Made it possible to delete order logs
+* Made the PDF invoice optional
+* Paginated all order logs
+* Fixed some typos
 
 = 2.0 =
 * Crushed a lot of puny (and not so puny) bugs
@@ -147,6 +158,9 @@ div class="dpsc-shopping-cart">cart code</div
 * Initial Release
 
 == Upgrade Notice ==
+
+= 2.1 =
+This is primarily a bug fix release meant to make DukaPress run better and without any issues.  The ability to turn off PDF invoices, in particular, will solve the issues of the "make payment" button not working for many people.
 
 = 2.0 =
 Our most major release to date, featuring tons of bugfixes and many new features.

@@ -15,7 +15,7 @@
 <!-- 6. WordPress will then import each of the posts, comments, and categories -->
 <!--    contained in this file into your blog -->
 
-<!-- generator="WordPress/3.0.2" created="2010-12-07 13:05"-->
+<!-- generator="WordPress/3.0.4" created="2011-01-22 03:58"-->
 <rss version="2.0"
 	xmlns:excerpt="http://wordpress.org/export/1.0/excerpt/"
 	xmlns:content="http://purl.org/rss/1.0/modules/content/"
@@ -29,7 +29,7 @@
 	<link>http://dukapress.org/demo</link>
 	<description>Just another DukaPress Shop</description>
 	<pubDate>Sat, 21 Aug 2010 20:03:14 +0000</pubDate>
-	<generator>http://wordpress.org/?v=3.0.2</generator>
+	<generator>http://wordpress.org/?v=3.0.4</generator>
 	<language>en</language>
 	<wp:wxr_version>1.0</wp:wxr_version>
 	<wp:base_site_url>http://dukapress.org/demo</wp:base_site_url>
@@ -39,7 +39,7 @@
 		<wp:category><wp:category_nicename>products</wp:category_nicename><wp:category_parent></wp:category_parent><wp:cat_name><![CDATA[Products]]></wp:cat_name></wp:category>
 				<wp:term><wp:term_taxonomy>nav_menu</wp:term_taxonomy><wp:term_slug>main</wp:term_slug><wp:term_parent></wp:term_parent><wp:term_name><![CDATA[Main]]></wp:term_name></wp:term>
 	
-	<generator>http://wordpress.org/?v=3.0.2</generator>
+	<generator>http://wordpress.org/?v=3.0.4</generator>
 
 		<item>
 		<title></title>
@@ -82,16 +82,16 @@
 							</item>
 		<item>
 		<title>Auto Draft</title>
-		<link>http://dukapress.org/demo/?p=185</link>
+		<link>http://dukapress.org/demo/?p=189</link>
 		<pubDate>Thu, 01 Jan 1970 00:00:00 +0000</pubDate>
 		<dc:creator><![CDATA[parshwa]]></dc:creator>
 		
-		<guid isPermaLink="false">http://dukapress.org/demo/?p=185</guid>
+		<guid isPermaLink="false">http://dukapress.org/demo/?p=189</guid>
 		<description></description>
 		<content:encoded><![CDATA[]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>185</wp:post_id>
-		<wp:post_date>2010-12-06 14:32:16</wp:post_date>
+		<wp:post_id>189</wp:post_id>
+		<wp:post_date>2011-01-12 12:12:43</wp:post_date>
 		<wp:post_date_gmt>0000-00-00 00:00:00</wp:post_date_gmt>
 		<wp:comment_status>open</wp:comment_status>
 		<wp:ping_status>open</wp:ping_status>
@@ -158,7 +158,9 @@
 		<description></description>
 		<content:encoded><![CDATA[<strong><span style="color: #ff0000;">WARNING:  This is just a demo shop and the items displayed here are not for sale.  If you feel generous enough to make an actual payment, no refunds are available.</span></strong></br></br>
 
-[dpsc_checkout] ]]></content:encoded>
+[dpsc_checkout]
+
+]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
 		<wp:post_id>6</wp:post_id>
 		<wp:post_date>2010-07-19 08:21:31</wp:post_date>
@@ -174,7 +176,7 @@
 		<wp:is_sticky>0</wp:is_sticky>
 								<wp:postmeta>
 		<wp:meta_key>_edit_lock</wp:meta_key>
-		<wp:meta_value><![CDATA[1279573754]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1295197368]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>_edit_last</wp:meta_key>
@@ -183,6 +185,10 @@
 				<wp:postmeta>
 		<wp:meta_key>_wp_page_template</wp:meta_key>
 		<wp:meta_value><![CDATA[default]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>_Content_Counter</wp:meta_key>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							</item>
 		<item>
@@ -258,7 +264,7 @@
 		<wp:is_sticky>0</wp:is_sticky>
 								<wp:postmeta>
 		<wp:meta_key>_edit_lock</wp:meta_key>
-		<wp:meta_value><![CDATA[1291487595]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1295197205]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>_edit_last</wp:meta_key>
@@ -892,11 +898,11 @@ The inhabitants of the mountainous Kabyle region along the Mediterranean coast i
 		<wp:is_sticky>0</wp:is_sticky>
 								<wp:postmeta>
 		<wp:meta_key>currently_in_stock</wp:meta_key>
-		<wp:meta_value><![CDATA[1862]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1852]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>_edit_lock</wp:meta_key>
-		<wp:meta_value><![CDATA[1285912974]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1292870995]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>_edit_last</wp:meta_key>
@@ -919,14 +925,42 @@ The inhabitants of the mountainous Kabyle region along the Mediterranean coast i
 		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 								<wp:comment>
-		<wp:comment_id>47</wp:comment_id>
-		<wp:comment_author><![CDATA[cxulqumv]]></wp:comment_author>
-		<wp:comment_author_email>oxwmzs@fbyejy.com</wp:comment_author_email>
-		<wp:comment_author_url>http://xogxhsnuupnv.com/</wp:comment_author_url>
-		<wp:comment_author_IP>188.92.77.12</wp:comment_author_IP>
-		<wp:comment_date>2010-11-26 23:31:35</wp:comment_date>
-		<wp:comment_date_gmt>2010-11-26 20:31:35</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[ODuaCe  <a href="http://cukwktuqbjzm.com/" rel="nofollow">cukwktuqbjzm</a>, [url=http://ydyxdwgquslv.com/]ydyxdwgquslv[/url], [link=http://iugyoniudhev.com/]iugyoniudhev[/link], http://twlaljatkemw.com/]]></wp:comment_content>
+		<wp:comment_id>168</wp:comment_id>
+		<wp:comment_author><![CDATA[Shamika Dutch]]></wp:comment_author>
+		<wp:comment_author_email>Ryman@tessen.info</wp:comment_author_email>
+		<wp:comment_author_url>http://pisanki.info</wp:comment_author_url>
+		<wp:comment_author_IP>200.17.56.7</wp:comment_author_IP>
+		<wp:comment_date>2011-01-14 21:35:54</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-14 18:35:54</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[I am extremely impressed with your writing skills and also with the layout on your blog. Is this a paid theme or did you customize it yourself? Either way keep up the nice quality writing, it's rare to see a nice blog like this one these days.. :)]]></wp:comment_content>
+		<wp:comment_approved>spam</wp:comment_approved>
+		<wp:comment_type></wp:comment_type>
+		<wp:comment_parent>0</wp:comment_parent>
+		<wp:comment_user_id>0</wp:comment_user_id>
+		</wp:comment>
+				<wp:comment>
+		<wp:comment_id>157</wp:comment_id>
+		<wp:comment_author><![CDATA[fOorJxCJ]]></wp:comment_author>
+		<wp:comment_author_email>x.soutes@nic.net</wp:comment_author_email>
+		<wp:comment_author_url>http://emopornsluts.com/</wp:comment_author_url>
+		<wp:comment_author_IP>221.120.233.114</wp:comment_author_IP>
+		<wp:comment_date>2011-01-08 11:24:19</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-08 08:24:19</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[<a href="http://emopornsluts.com/" title="" rel="nofollow"></a> Can you tell me where else I can find fapworthy vids. I want ...]]></wp:comment_content>
+		<wp:comment_approved>spam</wp:comment_approved>
+		<wp:comment_type></wp:comment_type>
+		<wp:comment_parent>0</wp:comment_parent>
+		<wp:comment_user_id>0</wp:comment_user_id>
+		</wp:comment>
+				<wp:comment>
+		<wp:comment_id>193</wp:comment_id>
+		<wp:comment_author><![CDATA[Wieczorowa]]></wp:comment_author>
+		<wp:comment_author_email>Guyer445240@gmail.com</wp:comment_author_email>
+		<wp:comment_author_url>http://www.elegancka-sukienka.pl</wp:comment_author_url>
+		<wp:comment_author_IP>190.69.155.99</wp:comment_author_IP>
+		<wp:comment_date>2011-01-21 14:46:22</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-21 11:46:22</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[Very nice information,I found your blog on google and read a few of your other posts. I just added you to my Google News Reader. Keep up the good work Look forward to reading more from you in the future.]]></wp:comment_content>
 		<wp:comment_approved>spam</wp:comment_approved>
 		<wp:comment_type></wp:comment_type>
 		<wp:comment_parent>0</wp:comment_parent>
@@ -1003,7 +1037,7 @@ This figure probably represented a community's founding ancestor or a warrior an
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>currently_in_stock</wp:meta_key>
-		<wp:meta_value><![CDATA[40]]></wp:meta_value>
+		<wp:meta_value><![CDATA[32]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>dropdown_option</wp:meta_key>
@@ -1021,119 +1055,7 @@ This figure probably represented a community's founding ancestor or a warrior an
 		<wp:meta_key>_Content_Counter</wp:meta_key>
 		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
-								<wp:comment>
-		<wp:comment_id>48</wp:comment_id>
-		<wp:comment_author><![CDATA[Branchenbuch]]></wp:comment_author>
-		<wp:comment_author_email>RositaMarcisak864614@hotmail.com</wp:comment_author_email>
-		<wp:comment_author_url>http://www.steele-online.de</wp:comment_author_url>
-		<wp:comment_author_IP>93.191.54.193</wp:comment_author_IP>
-		<wp:comment_date>2010-11-27 13:19:31</wp:comment_date>
-		<wp:comment_date_gmt>2010-11-27 10:19:31</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[Hello. Wonderful work. I didn't anticipate this on the Wednesday. This is really a terrific story. Thanks!]]></wp:comment_content>
-		<wp:comment_approved>spam</wp:comment_approved>
-		<wp:comment_type></wp:comment_type>
-		<wp:comment_parent>0</wp:comment_parent>
-		<wp:comment_user_id>0</wp:comment_user_id>
-		</wp:comment>
-				<wp:comment>
-		<wp:comment_id>41</wp:comment_id>
-		<wp:comment_author><![CDATA[colon cleanse]]></wp:comment_author>
-		<wp:comment_author_email>Feagler@omega3.com</wp:comment_author_email>
-		<wp:comment_author_url>http://cleansedietdetox.com</wp:comment_author_url>
-		<wp:comment_author_IP>201.86.128.8</wp:comment_author_IP>
-		<wp:comment_date>2010-11-22 17:11:38</wp:comment_date>
-		<wp:comment_date_gmt>2010-11-22 14:11:38</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[If you don't like something about yourself, change it. If you can't change it, accept it.]]></wp:comment_content>
-		<wp:comment_approved>spam</wp:comment_approved>
-		<wp:comment_type></wp:comment_type>
-		<wp:comment_parent>0</wp:comment_parent>
-		<wp:comment_user_id>0</wp:comment_user_id>
-		</wp:comment>
-				<wp:comment>
-		<wp:comment_id>44</wp:comment_id>
-		<wp:comment_author><![CDATA[beach body coach]]></wp:comment_author>
-		<wp:comment_author_email>Kinstler@p90x.com</wp:comment_author_email>
-		<wp:comment_author_url>http://www.homebasedaffiliatemarketingbusiness.com</wp:comment_author_url>
-		<wp:comment_author_IP>201.86.128.8</wp:comment_author_IP>
-		<wp:comment_date>2010-11-23 18:28:31</wp:comment_date>
-		<wp:comment_date_gmt>2010-11-23 15:28:31</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[Life is one long struggle to disinter oneself, to keep one's head above the accumulations, the ever deepening layers of objects ... which attempt to cover one over, steadily, almost irresistibly, like falling snow.]]></wp:comment_content>
-		<wp:comment_approved>spam</wp:comment_approved>
-		<wp:comment_type></wp:comment_type>
-		<wp:comment_parent>0</wp:comment_parent>
-		<wp:comment_user_id>0</wp:comment_user_id>
-		</wp:comment>
-				<wp:comment>
-		<wp:comment_id>72</wp:comment_id>
-		<wp:comment_author><![CDATA[shakeology]]></wp:comment_author>
-		<wp:comment_author_email>Leaphart@proteinshakes.com</wp:comment_author_email>
-		<wp:comment_author_url>http://www.mealreplacementshakediet.com</wp:comment_author_url>
-		<wp:comment_author_IP>210.101.131.232</wp:comment_author_IP>
-		<wp:comment_date>2010-12-06 03:54:02</wp:comment_date>
-		<wp:comment_date_gmt>2010-12-06 00:54:02</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA["The most beautiful things in the world cannot be seen or even touched, they must be felt with the heart." ~ Helen Keller]]></wp:comment_content>
-		<wp:comment_approved>spam</wp:comment_approved>
-		<wp:comment_type></wp:comment_type>
-		<wp:comment_parent>0</wp:comment_parent>
-		<wp:comment_user_id>0</wp:comment_user_id>
-		</wp:comment>
-				<wp:comment>
-		<wp:comment_id>75</wp:comment_id>
-		<wp:comment_author><![CDATA[visalus]]></wp:comment_author>
-		<wp:comment_author_email>Pettay@visalus.com</wp:comment_author_email>
-		<wp:comment_author_url>http://www.bodybyvi90daychallenge.com</wp:comment_author_url>
-		<wp:comment_author_IP>210.101.131.232</wp:comment_author_IP>
-		<wp:comment_date>2010-12-06 15:51:32</wp:comment_date>
-		<wp:comment_date_gmt>2010-12-06 12:51:32</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[Many of us are looking for a simple solution, an easy way to get in shape!]]></wp:comment_content>
-		<wp:comment_approved>spam</wp:comment_approved>
-		<wp:comment_type></wp:comment_type>
-		<wp:comment_parent>0</wp:comment_parent>
-		<wp:comment_user_id>0</wp:comment_user_id>
-		</wp:comment>
-				<wp:comment>
-		<wp:comment_id>76</wp:comment_id>
-		<wp:comment_author><![CDATA[kyani]]></wp:comment_author>
-		<wp:comment_author_email>Wengerd@kyani.com</wp:comment_author_email>
-		<wp:comment_author_url>http://www.kyaninitrofx.com</wp:comment_author_url>
-		<wp:comment_author_IP>82.206.129.160</wp:comment_author_IP>
-		<wp:comment_date>2010-12-07 05:19:45</wp:comment_date>
-		<wp:comment_date_gmt>2010-12-07 02:19:45</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[I have never cared much for fish - it floats in the belly as much as in the pond.]]></wp:comment_content>
-		<wp:comment_approved>spam</wp:comment_approved>
-		<wp:comment_type></wp:comment_type>
-		<wp:comment_parent>0</wp:comment_parent>
-		<wp:comment_user_id>0</wp:comment_user_id>
-		</wp:comment>
-				<wp:comment>
-		<wp:comment_id>57</wp:comment_id>
-		<wp:comment_author><![CDATA[shakeology 3 day cleanse]]></wp:comment_author>
-		<wp:comment_author_email>Guilbe@shakeology.com</wp:comment_author_email>
-		<wp:comment_author_url>http://www.facebook.com/shakeologynutrition</wp:comment_author_url>
-		<wp:comment_author_IP>41.190.16.17</wp:comment_author_IP>
-		<wp:comment_date>2010-12-01 08:30:58</wp:comment_date>
-		<wp:comment_date_gmt>2010-12-01 05:30:58</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[Everything should be made as simple as possible ... but not simpler.]]></wp:comment_content>
-		<wp:comment_approved>spam</wp:comment_approved>
-		<wp:comment_type></wp:comment_type>
-		<wp:comment_parent>0</wp:comment_parent>
-		<wp:comment_user_id>0</wp:comment_user_id>
-		</wp:comment>
-				<wp:comment>
-		<wp:comment_id>73</wp:comment_id>
-		<wp:comment_author><![CDATA[protein shake]]></wp:comment_author>
-		<wp:comment_author_email>Diogo@proteinshakes.com</wp:comment_author_email>
-		<wp:comment_author_url>http://www.mealreplacementshakediet.com</wp:comment_author_url>
-		<wp:comment_author_IP>210.101.131.232</wp:comment_author_IP>
-		<wp:comment_date>2010-12-06 06:12:26</wp:comment_date>
-		<wp:comment_date_gmt>2010-12-06 03:12:26</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[Everything should be made as simple as possible ... but not simpler.]]></wp:comment_content>
-		<wp:comment_approved>spam</wp:comment_approved>
-		<wp:comment_type></wp:comment_type>
-		<wp:comment_parent>0</wp:comment_parent>
-		<wp:comment_user_id>0</wp:comment_user_id>
-		</wp:comment>
-			</item>
+							</item>
 		<item>
 		<title>Carved Goat Head</title>
 		<link>http://dukapress.org/demo/products/carved-goat-head/</link>
@@ -1305,7 +1227,7 @@ The inhabitants of the mountainous Kabyle region along the Mediterranean coast i
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>currently_in_stock</wp:meta_key>
-		<wp:meta_value><![CDATA[1968]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1960]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>item_weight</wp:meta_key>
@@ -1315,7 +1237,37 @@ The inhabitants of the mountainous Kabyle region along the Mediterranean coast i
 		<wp:meta_key>_Content_Counter</wp:meta_key>
 		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
-							</item>
+								<wp:comment>
+		<wp:comment_id>156</wp:comment_id>
+		<wp:comment_author><![CDATA[emoporn]]></wp:comment_author>
+		<wp:comment_author_email>f.rouslog@php.cn</wp:comment_author_email>
+		<wp:comment_author_url>http://emopornsluts.com/</wp:comment_author_url>
+		<wp:comment_author_IP>201.20.18.165</wp:comment_author_IP>
+		<wp:comment_date>2011-01-08 11:23:13</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-08 08:23:13</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[<a href="http://emopornsluts.com/" title=" emo porn sluts" rel="nofollow"> emo porn sluts</a> Where else can I get some of the best stuff I've seen in a long time. I wanna see  scene porn...]]></wp:comment_content>
+		<wp:comment_approved>spam</wp:comment_approved>
+		<wp:comment_type></wp:comment_type>
+		<wp:comment_parent>0</wp:comment_parent>
+		<wp:comment_user_id>0</wp:comment_user_id>
+		</wp:comment>
+				<wp:comment>
+		<wp:comment_id>181</wp:comment_id>
+		<wp:comment_author><![CDATA[Hannelore Boensch]]></wp:comment_author>
+		<wp:comment_author_email>Lauber@freenet.com</wp:comment_author_email>
+		<wp:comment_author_url>http://webdesigner11essen.wetpaint.com</wp:comment_author_url>
+		<wp:comment_author_IP>173.234.86.89</wp:comment_author_IP>
+		<wp:comment_date>2011-01-18 23:18:44</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-18 20:18:44</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[In searching for web sites related to internet hosting and particularly comparison hosting linux strategy web,
+your web site came up.
+You really are a incredibly good Individual!]]></wp:comment_content>
+		<wp:comment_approved>spam</wp:comment_approved>
+		<wp:comment_type></wp:comment_type>
+		<wp:comment_parent>0</wp:comment_parent>
+		<wp:comment_user_id>0</wp:comment_user_id>
+		</wp:comment>
+			</item>
 		<item>
 		<title>Yoruba-Armlets</title>
 		<link>http://dukapress.org/demo/products/yoruba-armlets/yoruba-armlets-3/</link>
@@ -1408,7 +1360,40 @@ This pair of armlets may have been part of the regalia of the Olowo of Owo, a Yo
 		<wp:meta_key>_Content_Counter</wp:meta_key>
 		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
-							</item>
+								<wp:comment>
+		<wp:comment_id>177</wp:comment_id>
+		<wp:comment_author><![CDATA[Bobette Haydal]]></wp:comment_author>
+		<wp:comment_author_email>Eth@tessen.info</wp:comment_author_email>
+		<wp:comment_author_url>http://pisanki.info</wp:comment_author_url>
+		<wp:comment_author_IP>89.28.178.40</wp:comment_author_IP>
+		<wp:comment_date>2011-01-18 01:43:36</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-17 22:43:36</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[Sweet, eventually a set up that fulfills my research. So lots of individuals get th is subject wrong. You're a great thinker.]]></wp:comment_content>
+		<wp:comment_approved>spam</wp:comment_approved>
+		<wp:comment_type></wp:comment_type>
+		<wp:comment_parent>0</wp:comment_parent>
+		<wp:comment_user_id>0</wp:comment_user_id>
+		</wp:comment>
+				<wp:comment>
+		<wp:comment_id>191</wp:comment_id>
+		<wp:comment_author><![CDATA[How to Reverse Cell Phone Trace]]></wp:comment_author>
+		<wp:comment_author_email>j.kruxan@hotmail.biz</wp:comment_author_email>
+		<wp:comment_author_url>http://knol.google.com/k/anonymous/how-to-perform-a-reverse-cell-phone/e7risbr5r4e3/1#knols</wp:comment_author_url>
+		<wp:comment_author_IP>98.113.59.46</wp:comment_author_IP>
+		<wp:comment_date>2011-01-21 13:34:39</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-21 10:34:39</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[Perform a reverse cell phone trace to find out who is calling you. Also you can find information such as where the person lives, works, and other personal details. Trace a cell phone now.
+
+Additional resources:
+
+<a href="http://knol.google.com/k/anonymous/how-to-perform-a-reverse-cell-phone/e7risbr5r4e3/1#knols" title="Reverse Cell Phone" rel="nofollow">Reverse Cell Phone</a>
+<a href="http://knol.google.com/k/anonymous/how-to-perform-a-reverse-cell-phone/e7risbr5r4e3/1#knols" title="Reverse Cell Phone" rel="nofollow">Reverse Cell Phone</a>]]></wp:comment_content>
+		<wp:comment_approved>spam</wp:comment_approved>
+		<wp:comment_type></wp:comment_type>
+		<wp:comment_parent>0</wp:comment_parent>
+		<wp:comment_user_id>0</wp:comment_user_id>
+		</wp:comment>
+			</item>
 		<item>
 		<title>Teke-Vessel</title>
 		<link>http://dukapress.org/demo/products/teke-vessels/teke-vessel-2/</link>
@@ -1487,7 +1472,7 @@ The dynamic sculptural quality of this vessel is enhanced by the sweeping curves
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>currently_in_stock</wp:meta_key>
-		<wp:meta_value><![CDATA[1844]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1833]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>item_weight</wp:meta_key>
@@ -1497,37 +1482,7 @@ The dynamic sculptural quality of this vessel is enhanced by the sweeping curves
 		<wp:meta_key>_Content_Counter</wp:meta_key>
 		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
-								<wp:comment>
-		<wp:comment_id>50</wp:comment_id>
-		<wp:comment_author><![CDATA[tagesgeldvergleich]]></wp:comment_author>
-		<wp:comment_author_email>Yousko@gmail.com</wp:comment_author_email>
-		<wp:comment_author_url>http://www.tagesgeld-sieger.de/</wp:comment_author_url>
-		<wp:comment_author_IP>64.120.37.63</wp:comment_author_IP>
-		<wp:comment_date>2010-11-29 09:26:25</wp:comment_date>
-		<wp:comment_date_gmt>2010-11-29 06:26:25</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[Nice publish! GA can be my largest earning. Nevertheless, it’s not a a lot.
-thanks !! pretty helpful publish!
-amazing stuff thanx]]></wp:comment_content>
-		<wp:comment_approved>spam</wp:comment_approved>
-		<wp:comment_type></wp:comment_type>
-		<wp:comment_parent>0</wp:comment_parent>
-		<wp:comment_user_id>0</wp:comment_user_id>
-		</wp:comment>
-				<wp:comment>
-		<wp:comment_id>71</wp:comment_id>
-		<wp:comment_author><![CDATA[levitra kaufen]]></wp:comment_author>
-		<wp:comment_author_email>Alterio@gmail.com</wp:comment_author_email>
-		<wp:comment_author_url>http://www.blurty.com/users/franziska23schr</wp:comment_author_url>
-		<wp:comment_author_IP>64.120.34.217</wp:comment_author_IP>
-		<wp:comment_date>2010-12-05 12:43:11</wp:comment_date>
-		<wp:comment_date_gmt>2010-12-05 09:43:11</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[Thank you for another fantastic write-up. Exactly where else could anyone get that type of facts in these a perfect way of writing? I've a presentation subsequent week, and I'm around the look for such info.]]></wp:comment_content>
-		<wp:comment_approved>spam</wp:comment_approved>
-		<wp:comment_type></wp:comment_type>
-		<wp:comment_parent>0</wp:comment_parent>
-		<wp:comment_user_id>0</wp:comment_user_id>
-		</wp:comment>
-			</item>
+							</item>
 		<item>
 		<title>Goatman-Mask</title>
 		<link>http://dukapress.org/demo/products/goatman-mask/goatman-mask-3/</link>
@@ -1597,7 +1552,7 @@ Skin-covered masks in Africa are found only in southeastern Nigeria and western 
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>_edit_lock</wp:meta_key>
-		<wp:meta_value><![CDATA[1289574412]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1292567737]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>dropdown_option</wp:meta_key>
@@ -1609,7 +1564,7 @@ Skin-covered masks in Africa are found only in southeastern Nigeria and western 
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>currently_in_stock</wp:meta_key>
-		<wp:meta_value><![CDATA[1969]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1953]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>item_weight</wp:meta_key>
@@ -1620,30 +1575,29 @@ Skin-covered masks in Africa are found only in southeastern Nigeria and western 
 		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 								<wp:comment>
-		<wp:comment_id>51</wp:comment_id>
-		<wp:comment_author><![CDATA[viagra online bestellen]]></wp:comment_author>
-		<wp:comment_author_email>ManTarinrxequ@hotmail.com</wp:comment_author_email>
-		<wp:comment_author_url>http://www.potenzmittel-apo.com</wp:comment_author_url>
-		<wp:comment_author_IP>208.117.11.245</wp:comment_author_IP>
-		<wp:comment_date>2010-11-29 10:17:35</wp:comment_date>
-		<wp:comment_date_gmt>2010-11-29 07:17:35</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[To start earning funds with your weblog, in the beginning use Google adsense but steadily as your traffic
-increases, maintain adding more and more money generating programs for your website.
-thanks !! pretty useful publish!]]></wp:comment_content>
+		<wp:comment_id>174</wp:comment_id>
+		<wp:comment_author><![CDATA[Claud Huertes]]></wp:comment_author>
+		<wp:comment_author_email>Colehour@freenet.com</wp:comment_author_email>
+		<wp:comment_author_url>http://webdesignerberlin31.blog.friendster.com/2010/11/the-new-apple-iphone-four-will-increase-anyones-top-quality-of-living-as-it-gives-so-a-lot</wp:comment_author_url>
+		<wp:comment_author_IP>64.120.34.14</wp:comment_author_IP>
+		<wp:comment_date>2011-01-16 10:42:08</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-16 07:42:08</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[Hello!, Pretty curiosity angle, we were talking about the exact same factor at work and found your site quite stimulating. So felt compelled to com?ment a little thank you for all of your energy. Please maintain up the wonderful perform your performing!]]></wp:comment_content>
 		<wp:comment_approved>spam</wp:comment_approved>
 		<wp:comment_type></wp:comment_type>
 		<wp:comment_parent>0</wp:comment_parent>
 		<wp:comment_user_id>0</wp:comment_user_id>
 		</wp:comment>
 				<wp:comment>
-		<wp:comment_id>53</wp:comment_id>
-		<wp:comment_author><![CDATA[viagra online kaufen]]></wp:comment_author>
-		<wp:comment_author_email>NeelyRoyserbxro@hotmail.com</wp:comment_author_email>
-		<wp:comment_author_url>http://www.potenzmittel-apo.com/potenzmittel/viagra-marke.html</wp:comment_author_url>
-		<wp:comment_author_IP>64.120.34.231</wp:comment_author_IP>
-		<wp:comment_date>2010-11-29 19:29:58</wp:comment_date>
-		<wp:comment_date_gmt>2010-11-29 16:29:58</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[Strange this publish is totaly unrelated to what I was looking google for, but it was listed on the initial web page. I guess your performing some thing correct if Google likes you sufficient to put you around the first web page of a non associated search.]]></wp:comment_content>
+		<wp:comment_id>167</wp:comment_id>
+		<wp:comment_author><![CDATA[Krysten Kelp]]></wp:comment_author>
+		<wp:comment_author_email>Boeshore@freenet.com</wp:comment_author_email>
+		<wp:comment_author_url>http://quizilla.teennick.com/stories/17589502/weight-loss-advantage-of-jogging-how-to-get-rid-of-adore-addresses</wp:comment_author_url>
+		<wp:comment_author_IP>173.246.33.189</wp:comment_author_IP>
+		<wp:comment_date>2011-01-14 18:18:09</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-14 15:18:09</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[Of course, what a fantastic internet site and informative posts, I'll add backlink - bookmark this site? Regards,
+Reader.]]></wp:comment_content>
 		<wp:comment_approved>spam</wp:comment_approved>
 		<wp:comment_type></wp:comment_type>
 		<wp:comment_parent>0</wp:comment_parent>
@@ -1760,7 +1714,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tristique eleife
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>currently_in_stock</wp:meta_key>
-		<wp:meta_value><![CDATA[873]]></wp:meta_value>
+		<wp:meta_value><![CDATA[863]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>item_weight</wp:meta_key>
@@ -1869,7 +1823,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tristique eleife
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>_edit_lock</wp:meta_key>
-		<wp:meta_value><![CDATA[1285101934]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1292871003]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>dropdown_option</wp:meta_key>
@@ -1885,7 +1839,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tristique eleife
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>currently_in_stock</wp:meta_key>
-		<wp:meta_value><![CDATA[1101]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1086]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>item_weight</wp:meta_key>
@@ -1896,227 +1850,463 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tristique eleife
 		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 								<wp:comment>
-		<wp:comment_id>52</wp:comment_id>
-		<wp:comment_author><![CDATA[seo company]]></wp:comment_author>
-		<wp:comment_author_email>d.tepoulm@php.ca</wp:comment_author_email>
-		<wp:comment_author_url>http://seo-it-right.co.uk</wp:comment_author_url>
-		<wp:comment_author_IP>213.229.87.39</wp:comment_author_IP>
-		<wp:comment_date>2010-11-29 11:47:39</wp:comment_date>
-		<wp:comment_date_gmt>2010-11-29 08:47:39</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[http://seo-it-right.co.uk Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
+		<wp:comment_id>172</wp:comment_id>
+		<wp:comment_author><![CDATA[vaginoplasty]]></wp:comment_author>
+		<wp:comment_author_email>i.smafistruh@novell.ru</wp:comment_author_email>
+		<wp:comment_author_url>http://www.plasticsurgeoncosmetic.com/vaginoplasty/</wp:comment_author_url>
+		<wp:comment_author_IP>173.233.66.115</wp:comment_author_IP>
+		<wp:comment_date>2011-01-15 18:37:38</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-15 15:37:38</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[<a href="http://www.plasticsurgeoncosmetic.com/vaginoplasty/" title=" vaginal rejuvenation" rel="nofollow"> vaginal rejuvenation</a> Hi there this is a extremely attractive photograph. How do you snap it? Always keep up your superior work. Will certainly come back for more.]]></wp:comment_content>
 		<wp:comment_approved>spam</wp:comment_approved>
 		<wp:comment_type></wp:comment_type>
 		<wp:comment_parent>0</wp:comment_parent>
 		<wp:comment_user_id>0</wp:comment_user_id>
 		</wp:comment>
 				<wp:comment>
-		<wp:comment_id>49</wp:comment_id>
-		<wp:comment_author><![CDATA[traveling cheap]]></wp:comment_author>
-		<wp:comment_author_email>n.krobren@nic.ch</wp:comment_author_email>
-		<wp:comment_author_url>http://www.generatearticlelinks.info/2010/11/flying-low-cost-on-airline-miles/</wp:comment_author_url>
-		<wp:comment_author_IP>109.169.62.135</wp:comment_author_IP>
-		<wp:comment_date>2010-11-27 16:34:24</wp:comment_date>
-		<wp:comment_date_gmt>2010-11-27 13:34:24</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[<a href="http://www.generatearticlelinks.info/2010/11/flying-low-cost-on-airline-miles/" title="traveling cheap" rel="nofollow">traveling cheap</a> Seriously, you're paying to much. Check out buying with miles.. ei]]></wp:comment_content>
+		<wp:comment_id>169</wp:comment_id>
+		<wp:comment_author><![CDATA[solar panels]]></wp:comment_author>
+		<wp:comment_author_email>n.yijin@php.com.au</wp:comment_author_email>
+		<wp:comment_author_url>http://solarpanelsinfo.blogs.experienceproject.com</wp:comment_author_url>
+		<wp:comment_author_IP>109.169.63.25</wp:comment_author_IP>
+		<wp:comment_date>2011-01-14 21:48:28</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-14 18:48:28</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[http://solarpanelsinfo.blogs.experienceproject.com Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
 		<wp:comment_approved>spam</wp:comment_approved>
 		<wp:comment_type></wp:comment_type>
 		<wp:comment_parent>0</wp:comment_parent>
 		<wp:comment_user_id>0</wp:comment_user_id>
 		</wp:comment>
 				<wp:comment>
-		<wp:comment_id>42</wp:comment_id>
-		<wp:comment_author><![CDATA[http://www.internetmarketing.com/blog/website-development-blog/good-navigation-important-for-seo-important-for-sales]]></wp:comment_author>
-		<wp:comment_author_email>i.nieshey@php.org</wp:comment_author_email>
-		<wp:comment_author_url>http://www.internetmarketing.com/blog/website-development-blog/good-navigation-important-for-seo-important-for-sales</wp:comment_author_url>
-		<wp:comment_author_IP>94.208.129.153</wp:comment_author_IP>
-		<wp:comment_date>2010-11-23 09:05:00</wp:comment_date>
-		<wp:comment_date_gmt>2010-11-23 06:05:00</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[http://www.internetmarketing.com/blog/website-development-blog/good-navigation-important-for-seo-important-for-sales Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
+		<wp:comment_id>162</wp:comment_id>
+		<wp:comment_author><![CDATA[website]]></wp:comment_author>
+		<wp:comment_author_email>x.wajel@hotmail.dk</wp:comment_author_email>
+		<wp:comment_author_url>http://www.zappsite.nl/index.php</wp:comment_author_url>
+		<wp:comment_author_IP>90.152.65.107</wp:comment_author_IP>
+		<wp:comment_date>2011-01-10 18:46:01</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-10 15:46:01</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[http://www.zappsite.nl/index.php Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
 		<wp:comment_approved>spam</wp:comment_approved>
 		<wp:comment_type></wp:comment_type>
 		<wp:comment_parent>0</wp:comment_parent>
 		<wp:comment_user_id>0</wp:comment_user_id>
 		</wp:comment>
 				<wp:comment>
-		<wp:comment_id>45</wp:comment_id>
-		<wp:comment_author><![CDATA[watch free movies online without downloading anything]]></wp:comment_author>
-		<wp:comment_author_email>c.spouteagh@php.net</wp:comment_author_email>
-		<wp:comment_author_url>http://www.hdmoviesforfree.com</wp:comment_author_url>
-		<wp:comment_author_IP>79.22.150.243</wp:comment_author_IP>
-		<wp:comment_date>2010-11-25 09:52:06</wp:comment_date>
-		<wp:comment_date_gmt>2010-11-25 06:52:06</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[http://www.hdmoviesforfree.com Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
+		<wp:comment_id>160</wp:comment_id>
+		<wp:comment_author><![CDATA[The Blueprint Project Black Edition Review]]></wp:comment_author>
+		<wp:comment_author_email>i.qeshos@mail.dk</wp:comment_author_email>
+		<wp:comment_author_url>http://www.commissionpayload.info/2010/12/blueprint-project-black-edition.html</wp:comment_author_url>
+		<wp:comment_author_IP>109.230.251.6</wp:comment_author_IP>
+		<wp:comment_date>2011-01-10 08:56:43</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-10 05:56:43</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[http://www.commissionpayload.info/2010/12/blueprint-project-black-edition.html Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
 		<wp:comment_approved>spam</wp:comment_approved>
 		<wp:comment_type></wp:comment_type>
 		<wp:comment_parent>0</wp:comment_parent>
 		<wp:comment_user_id>0</wp:comment_user_id>
 		</wp:comment>
 				<wp:comment>
-		<wp:comment_id>46</wp:comment_id>
-		<wp:comment_author><![CDATA[fly free with miles]]></wp:comment_author>
-		<wp:comment_author_email>c.quprestean@hotmail.cn</wp:comment_author_email>
-		<wp:comment_author_url>http://articledirectory365.com/author/coy9hoffman7/</wp:comment_author_url>
-		<wp:comment_author_IP>109.169.62.135</wp:comment_author_IP>
-		<wp:comment_date>2010-11-25 16:31:53</wp:comment_date>
-		<wp:comment_date_gmt>2010-11-25 13:31:53</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[<a href="http://articledirectory365.com/author/coy9hoffman7/" title="fly free with miles" rel="nofollow">fly free with miles</a> Seriously, you're paying to much. Check out buying with miles.. ei]]></wp:comment_content>
+		<wp:comment_id>173</wp:comment_id>
+		<wp:comment_author><![CDATA[wedding sweet shop]]></wp:comment_author>
+		<wp:comment_author_email>z.flijugh@suse.nl</wp:comment_author_email>
+		<wp:comment_author_url>http://www.sweetheaven-online.co.uk/</wp:comment_author_url>
+		<wp:comment_author_IP>77.93.27.69</wp:comment_author_IP>
+		<wp:comment_date>2011-01-15 21:54:35</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-15 18:54:35</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[http://www.sweetheaven-online.co.uk/ Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
 		<wp:comment_approved>spam</wp:comment_approved>
 		<wp:comment_type></wp:comment_type>
 		<wp:comment_parent>0</wp:comment_parent>
 		<wp:comment_user_id>0</wp:comment_user_id>
 		</wp:comment>
 				<wp:comment>
-		<wp:comment_id>54</wp:comment_id>
-		<wp:comment_author><![CDATA[home equity loans]]></wp:comment_author>
-		<wp:comment_author_email>p.slowouy@apache.tv</wp:comment_author_email>
-		<wp:comment_author_url>http://jiffy-loans.com/home-equity-loans/home-equity-loan-online-use-your-assets-equity-for-money/</wp:comment_author_url>
-		<wp:comment_author_IP>74.98.252.182</wp:comment_author_IP>
-		<wp:comment_date>2010-11-29 20:01:28</wp:comment_date>
-		<wp:comment_date_gmt>2010-11-29 17:01:28</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[http://jiffy-loans.com/home-equity-loans/home-equity-loan-online-use-your-assets-equity-for-money/ Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
+		<wp:comment_id>178</wp:comment_id>
+		<wp:comment_author><![CDATA[emporio fragrance diamonds armani what new]]></wp:comment_author>
+		<wp:comment_author_email>g.dristriskeak@t-online.info</wp:comment_author_email>
+		<wp:comment_author_url>http://yourwatches.net/new-emporio-armani-diamonds-fragrance-for-men-with-josh-hartnett/</wp:comment_author_url>
+		<wp:comment_author_IP>173.233.77.157</wp:comment_author_IP>
+		<wp:comment_date>2011-01-18 02:51:20</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-17 23:51:20</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[http://yourwatches.net/new-emporio-armani-diamonds-fragrance-for-men-with-josh-hartnett/ Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
 		<wp:comment_approved>spam</wp:comment_approved>
 		<wp:comment_type></wp:comment_type>
 		<wp:comment_parent>0</wp:comment_parent>
 		<wp:comment_user_id>0</wp:comment_user_id>
 		</wp:comment>
 				<wp:comment>
-		<wp:comment_id>55</wp:comment_id>
-		<wp:comment_author><![CDATA[network management solution]]></wp:comment_author>
-		<wp:comment_author_email>y.chofowoun@suse.jp</wp:comment_author_email>
-		<wp:comment_author_url>http://networkmanagementt.co.cc</wp:comment_author_url>
-		<wp:comment_author_IP>95.211.99.91</wp:comment_author_IP>
-		<wp:comment_date>2010-11-29 23:53:01</wp:comment_date>
-		<wp:comment_date_gmt>2010-11-29 20:53:01</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[http://networkmanagementt.co.cc Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
+		<wp:comment_id>158</wp:comment_id>
+		<wp:comment_author><![CDATA[live streaming tv online]]></wp:comment_author>
+		<wp:comment_author_email>z.vesog@debian.dk</wp:comment_author_email>
+		<wp:comment_author_url>http://giganet.syr.edu/Forum/tabid/728/ctl/UserProfile/mid/1418/userid/526/language/en-US/Default.aspx</wp:comment_author_url>
+		<wp:comment_author_IP>94.9.125.15</wp:comment_author_IP>
+		<wp:comment_date>2011-01-08 19:53:29</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-08 16:53:29</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[http://giganet.syr.edu/Forum/tabid/728/ctl/UserProfile/mid/1418/userid/526/language/en-US/Default.aspx Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
 		<wp:comment_approved>spam</wp:comment_approved>
 		<wp:comment_type></wp:comment_type>
 		<wp:comment_parent>0</wp:comment_parent>
 		<wp:comment_user_id>0</wp:comment_user_id>
 		</wp:comment>
 				<wp:comment>
-		<wp:comment_id>58</wp:comment_id>
-		<wp:comment_author><![CDATA[Quit Smoking Aid]]></wp:comment_author>
-		<wp:comment_author_email>t.croflous@gmail.to</wp:comment_author_email>
-		<wp:comment_author_url>http://hubpages.com/hub/My-Quit-Smoking-Story</wp:comment_author_url>
-		<wp:comment_author_IP>173.66.170.17</wp:comment_author_IP>
-		<wp:comment_date>2010-12-01 09:21:23</wp:comment_date>
-		<wp:comment_date_gmt>2010-12-01 06:21:23</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[http://hubpages.com/hub/My-Quit-Smoking-Story Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
+		<wp:comment_id>179</wp:comment_id>
+		<wp:comment_author><![CDATA[CNA Training Classes]]></wp:comment_author>
+		<wp:comment_author_email>h.fricif@nic.ca</wp:comment_author_email>
+		<wp:comment_author_url>http://cnatraining-nursingdegree.com</wp:comment_author_url>
+		<wp:comment_author_IP>98.18.110.170</wp:comment_author_IP>
+		<wp:comment_date>2011-01-18 13:05:32</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-18 10:05:32</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[<a href="http://cnatraining-nursingdegree.com" title=" CNA Training Classes" rel="nofollow"> CNA Training Classes</a> 
+I have been reading out many of your stories and it's pretty good stuff. I will make sure to bookmark your website.]]></wp:comment_content>
 		<wp:comment_approved>spam</wp:comment_approved>
 		<wp:comment_type></wp:comment_type>
 		<wp:comment_parent>0</wp:comment_parent>
 		<wp:comment_user_id>0</wp:comment_user_id>
 		</wp:comment>
 				<wp:comment>
-		<wp:comment_id>60</wp:comment_id>
-		<wp:comment_author><![CDATA[UK SEO]]></wp:comment_author>
-		<wp:comment_author_email>b.cajin@hotmail.ch</wp:comment_author_email>
-		<wp:comment_author_url>http://seo-it-right.co.uk</wp:comment_author_url>
-		<wp:comment_author_IP>213.229.116.230</wp:comment_author_IP>
-		<wp:comment_date>2010-12-02 08:46:25</wp:comment_date>
-		<wp:comment_date_gmt>2010-12-02 05:46:25</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[http://seo-it-right.co.uk Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
+		<wp:comment_id>192</wp:comment_id>
+		<wp:comment_author><![CDATA[cameras helpful digital about most mastering gadget]]></wp:comment_author>
+		<wp:comment_author_email>n.cleashuld@php.com</wp:comment_author_email>
+		<wp:comment_author_url>http://iseekthetruth.com/about-digital-cameras-mastering-a-most-helpful-gadget/</wp:comment_author_url>
+		<wp:comment_author_IP>109.230.217.163</wp:comment_author_IP>
+		<wp:comment_date>2011-01-21 13:36:19</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-21 10:36:19</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[<a href="http://iseekthetruth.com/about-digital-cameras-mastering-a-most-helpful-gadget/" title="about your cameras gadget mastering helpful most digital" rel="nofollow">about your cameras gadget mastering helpful most digital</a> I found a great blog about cameras helpful digital about most mastering gadget. See for yourself!]]></wp:comment_content>
 		<wp:comment_approved>spam</wp:comment_approved>
 		<wp:comment_type></wp:comment_type>
 		<wp:comment_parent>0</wp:comment_parent>
 		<wp:comment_user_id>0</wp:comment_user_id>
 		</wp:comment>
 				<wp:comment>
-		<wp:comment_id>62</wp:comment_id>
-		<wp:comment_author><![CDATA[Household Insurance Quotes]]></wp:comment_author>
-		<wp:comment_author_email>l.chustresloun@t-online.info</wp:comment_author_email>
-		<wp:comment_author_url>http://paigehu21.terapad.com/index.cfm?fa=contentNews.newsDetails&amp;newsID=1125428&amp;from=list</wp:comment_author_url>
-		<wp:comment_author_IP>96.2.113.71</wp:comment_author_IP>
-		<wp:comment_date>2010-12-02 21:00:53</wp:comment_date>
-		<wp:comment_date_gmt>2010-12-02 18:00:53</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[http://paigehu21.terapad.com/index.cfm?fa=contentNews.newsDetails&amp;newsID=1125428&amp;from=list Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
+		<wp:comment_id>186</wp:comment_id>
+		<wp:comment_author><![CDATA[LG 32LH30 32-Inch LCD HDTV]]></wp:comment_author>
+		<wp:comment_author_email>v.vislugh@apache.com.au</wp:comment_author_email>
+		<wp:comment_author_url>http://lg32lh30.net/lg-32lh30-32inch-lcd-hdtv.htm</wp:comment_author_url>
+		<wp:comment_author_IP>76.120.56.227</wp:comment_author_IP>
+		<wp:comment_date>2011-01-20 08:55:19</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-20 05:55:19</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[<a href="http://lg32lh30.net/lg-32lh30-32inch-lcd-hdtv.htm" title=" 2010" rel="nofollow"> 2010</a> Get the best  deal  for the  32LH30 32 in Flat Screen, the seasons most popular LCD, TV, HDTV  This Holiday Season]]></wp:comment_content>
 		<wp:comment_approved>spam</wp:comment_approved>
 		<wp:comment_type></wp:comment_type>
 		<wp:comment_parent>0</wp:comment_parent>
 		<wp:comment_user_id>0</wp:comment_user_id>
 		</wp:comment>
 				<wp:comment>
-		<wp:comment_id>64</wp:comment_id>
-		<wp:comment_author><![CDATA[gold heart locket]]></wp:comment_author>
-		<wp:comment_author_email>z.xitray@debian.net</wp:comment_author_email>
-		<wp:comment_author_url>http://ezinearticles.com/?Locket-Bracelet---Do-You-Need-a-New-Jewelry-Alternative?&amp;id=4993883</wp:comment_author_url>
-		<wp:comment_author_IP>81.198.211.38</wp:comment_author_IP>
-		<wp:comment_date>2010-12-02 23:18:23</wp:comment_date>
-		<wp:comment_date_gmt>2010-12-02 20:18:23</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[<a href="http://ezinearticles.com/?Locket-Bracelet---Do-You-Need-a-New-Jewelry-Alternative?&amp;id=4993883" title=" gold locket" rel="nofollow"> gold locket</a> 
-Some great content pieces at this site with regards to just how to take good care of your  antique gold locket]]></wp:comment_content>
+		<wp:comment_id>184</wp:comment_id>
+		<wp:comment_author><![CDATA[elmo extreme]]></wp:comment_author>
+		<wp:comment_author_email>l.beaqekean@novell.net</wp:comment_author_email>
+		<wp:comment_author_url>http://elmotmx.info/tickle-me-tmx.htm</wp:comment_author_url>
+		<wp:comment_author_IP>76.120.56.227</wp:comment_author_IP>
+		<wp:comment_date>2011-01-19 20:29:45</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-19 17:29:45</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[<a href="http://elmotmx.info/tickle-me-tmx.htm" title=" elmo extreme" rel="nofollow"> elmo extreme</a> Elmo Tickle Me Extreme the best Toy for your child this Xmas Season.]]></wp:comment_content>
 		<wp:comment_approved>spam</wp:comment_approved>
 		<wp:comment_type></wp:comment_type>
 		<wp:comment_parent>0</wp:comment_parent>
 		<wp:comment_user_id>0</wp:comment_user_id>
 		</wp:comment>
 				<wp:comment>
-		<wp:comment_id>66</wp:comment_id>
-		<wp:comment_author><![CDATA[downloads movies free]]></wp:comment_author>
-		<wp:comment_author_email>h.vaklun@web.de</wp:comment_author_email>
-		<wp:comment_author_url>http://www.hdmoviesforfree.com</wp:comment_author_url>
-		<wp:comment_author_IP>95.245.179.29</wp:comment_author_IP>
-		<wp:comment_date>2010-12-04 05:26:41</wp:comment_date>
-		<wp:comment_date_gmt>2010-12-04 02:26:41</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[http://www.hdmoviesforfree.com Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
+		<wp:comment_id>185</wp:comment_id>
+		<wp:comment_author><![CDATA[alexistexas.com]]></wp:comment_author>
+		<wp:comment_author_email>o.flacoskeay@hotmail.nl</wp:comment_author_email>
+		<wp:comment_author_url>http://www.ealexistexas.com/</wp:comment_author_url>
+		<wp:comment_author_IP>46.109.69.241</wp:comment_author_IP>
+		<wp:comment_date>2011-01-20 00:01:51</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-19 21:01:51</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[http://www.ealexistexas.com/ Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
 		<wp:comment_approved>spam</wp:comment_approved>
 		<wp:comment_type></wp:comment_type>
 		<wp:comment_parent>0</wp:comment_parent>
 		<wp:comment_user_id>0</wp:comment_user_id>
 		</wp:comment>
 				<wp:comment>
-		<wp:comment_id>68</wp:comment_id>
-		<wp:comment_author><![CDATA[Kim Kardashian]]></wp:comment_author>
-		<wp:comment_author_email>p.cheaxaslouc@gmail.ru</wp:comment_author_email>
-		<wp:comment_author_url>http://garry6morales.typepad.com/blog/2010/11/ray-j-and-kimk-tape.html</wp:comment_author_url>
-		<wp:comment_author_IP>174.34.133.211</wp:comment_author_IP>
-		<wp:comment_date>2010-12-04 12:04:14</wp:comment_date>
-		<wp:comment_date_gmt>2010-12-04 09:04:14</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[http://garry6morales.typepad.com/blog/2010/11/ray-j-and-kimk-tape.html Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
+		<wp:comment_id>190</wp:comment_id>
+		<wp:comment_author><![CDATA[supplements for joint health]]></wp:comment_author>
+		<wp:comment_author_email>o.stoukeas@gmail.biz</wp:comment_author_email>
+		<wp:comment_author_url>http://www.supplementsforjointhealth.info</wp:comment_author_url>
+		<wp:comment_author_IP>77.250.153.8</wp:comment_author_IP>
+		<wp:comment_date>2011-01-21 12:54:36</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-21 09:54:36</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[<a href="http://www.supplementsforjointhealth.info" title=" best joint supplement" rel="nofollow"> best joint supplement</a> I seriously wish you will really enjoy my Impressive Study All around joint health supplements]]></wp:comment_content>
 		<wp:comment_approved>spam</wp:comment_approved>
 		<wp:comment_type></wp:comment_type>
 		<wp:comment_parent>0</wp:comment_parent>
 		<wp:comment_user_id>0</wp:comment_user_id>
 		</wp:comment>
 				<wp:comment>
-		<wp:comment_id>70</wp:comment_id>
-		<wp:comment_author><![CDATA[Note Brokering]]></wp:comment_author>
-		<wp:comment_author_email>i.ghieyekran@yahoo.de</wp:comment_author_email>
-		<wp:comment_author_url>http://papersourceonline.com/</wp:comment_author_url>
-		<wp:comment_author_IP>76.176.104.47</wp:comment_author_IP>
-		<wp:comment_date>2010-12-05 12:31:58</wp:comment_date>
-		<wp:comment_date_gmt>2010-12-05 09:31:58</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[http://papersourceonline.com/ Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
+		<wp:comment_id>154</wp:comment_id>
+		<wp:comment_author><![CDATA[financial college aid]]></wp:comment_author>
+		<wp:comment_author_email>r.brabofiln@gmail.ru</wp:comment_author_email>
+		<wp:comment_author_url>http://icollegegrants.org/255/no-money-for-college/</wp:comment_author_url>
+		<wp:comment_author_IP>173.208.14.172</wp:comment_author_IP>
+		<wp:comment_date>2011-01-07 15:14:01</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-07 12:14:01</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[http://icollegegrants.org/255/no-money-for-college/ Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
 		<wp:comment_approved>spam</wp:comment_approved>
 		<wp:comment_type></wp:comment_type>
 		<wp:comment_parent>0</wp:comment_parent>
 		<wp:comment_user_id>0</wp:comment_user_id>
 		</wp:comment>
 				<wp:comment>
-		<wp:comment_id>74</wp:comment_id>
-		<wp:comment_author><![CDATA[anxiety attack symptoms]]></wp:comment_author>
-		<wp:comment_author_email>x.pliflouduc@hotmail.ca</wp:comment_author_email>
-		<wp:comment_author_url>http://panicattacks-nomore.blogspot.com/2010/11/anxiety-attack-symptoms-diagnostic.html</wp:comment_author_url>
-		<wp:comment_author_IP>87.187.4.231</wp:comment_author_IP>
-		<wp:comment_date>2010-12-06 13:47:38</wp:comment_date>
-		<wp:comment_date_gmt>2010-12-06 10:47:38</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[Panic attacks will be series using intense  anxiety symptoms or discomfort which have been using rapid beginning and using reasonably fleeting time. Panic attacks generally initiate unexpectedly, access a topmost within 10 record, and are generally mostly well over within 30 minutes DSM-IV. <a href="http://panicattacks-nomore.blogspot.com/2010/11/anxiety-attack-symptoms-diagnostic.html" title=" anxiety symptoms" rel="nofollow"> anxiety symptoms</a> can be as quick for as 15 moments, or might be returning, stable for the unlimited time, occasionally period. American Psychological Organization Many a lot of afflicted will be utilize considerable anticipatory fear and restrained symptom assaults in between assaults, with situations wherein assaults induce formerly occurred.
-The results of a panic assault alter. Some, substantially first-time victims, might entail emergency military. Many who utilize a panic assault, typically for the first time, fear these are working with a affection assault or a nervous breakdown. Encountering a panic assault has been said to be one of the vital intensely creepy, upsetting and uncomfortable experiences of a person's duration.
-Panic attacks will be found out from other forms of fear thanks to their particular vigor and their particular rapid, sporadic features. They are often skillful in addition to fear sickness and other psychological disorders, besides the fact that children panic attacks are certainly not generally indicative of a academic interruption.]]></wp:comment_content>
+		<wp:comment_id>175</wp:comment_id>
+		<wp:comment_author><![CDATA[http://adultonlychild.org/healthblogsindia/]]></wp:comment_author>
+		<wp:comment_author_email>f.debras@suse.tv</wp:comment_author_email>
+		<wp:comment_author_url>http://adultonlychild.org/healthblogsindia/</wp:comment_author_url>
+		<wp:comment_author_IP>173.234.54.103</wp:comment_author_IP>
+		<wp:comment_date>2011-01-17 15:43:03</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-17 12:43:03</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[http://adultonlychild.org/healthblogsindia/ Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
 		<wp:comment_approved>spam</wp:comment_approved>
 		<wp:comment_type></wp:comment_type>
 		<wp:comment_parent>0</wp:comment_parent>
 		<wp:comment_user_id>0</wp:comment_user_id>
 		</wp:comment>
 				<wp:comment>
-		<wp:comment_id>77</wp:comment_id>
-		<wp:comment_author><![CDATA[San Diego Views]]></wp:comment_author>
-		<wp:comment_author_email>e.ghagund@suse.com</wp:comment_author_email>
-		<wp:comment_author_url>http://sandiegocountylist.com</wp:comment_author_url>
+		<wp:comment_id>176</wp:comment_id>
+		<wp:comment_author><![CDATA[vaginal rejuvenation]]></wp:comment_author>
+		<wp:comment_author_email>x.slebreay@suse.ph</wp:comment_author_email>
+		<wp:comment_author_url>http://www.plasticsurgeoncosmetic.com/vaginoplasty/</wp:comment_author_url>
+		<wp:comment_author_IP>173.233.66.115</wp:comment_author_IP>
+		<wp:comment_date>2011-01-17 18:44:25</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-17 15:44:25</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[<a href="http://www.plasticsurgeoncosmetic.com/vaginoplasty/" title=" vaginal rejuvenation" rel="nofollow"> vaginal rejuvenation</a> Hey there this is a truly good photograph. Just how do you actually snap it? Keep up the excellent job. Will return back again for more.]]></wp:comment_content>
+		<wp:comment_approved>spam</wp:comment_approved>
+		<wp:comment_type></wp:comment_type>
+		<wp:comment_parent>0</wp:comment_parent>
+		<wp:comment_user_id>0</wp:comment_user_id>
+		</wp:comment>
+				<wp:comment>
+		<wp:comment_id>194</wp:comment_id>
+		<wp:comment_author><![CDATA[tenant screening report]]></wp:comment_author>
+		<wp:comment_author_email>k.skiwiesceas@yahoo.cn</wp:comment_author_email>
+		<wp:comment_author_url>http://tenant-screening-report.wetpaint.com/</wp:comment_author_url>
+		<wp:comment_author_IP>71.142.214.7</wp:comment_author_IP>
+		<wp:comment_date>2011-01-21 15:23:04</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-21 12:23:04</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[<a href="http://tenant-screening-report.wetpaint.com/" title="tenant screening report" rel="nofollow">tenant screening report</a> Hey there, Carrying out a personal background check most likely will suggest a lot of enlightening critical info.]]></wp:comment_content>
+		<wp:comment_approved>spam</wp:comment_approved>
+		<wp:comment_type></wp:comment_type>
+		<wp:comment_parent>0</wp:comment_parent>
+		<wp:comment_user_id>0</wp:comment_user_id>
+		</wp:comment>
+				<wp:comment>
+		<wp:comment_id>155</wp:comment_id>
+		<wp:comment_author><![CDATA[CNA Training]]></wp:comment_author>
+		<wp:comment_author_email>a.frocloublous@mail.tv</wp:comment_author_email>
+		<wp:comment_author_url>http://cnatraining-nursingdegree.com</wp:comment_author_url>
+		<wp:comment_author_IP>98.18.101.48</wp:comment_author_IP>
+		<wp:comment_date>2011-01-08 10:47:13</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-08 07:47:13</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[<a href="http://cnatraining-nursingdegree.com" title="CNA Training" rel="nofollow">CNA Training</a> 
+There is apparently a bunch to realize about this.  I believe you made certain nice points in features also.]]></wp:comment_content>
+		<wp:comment_approved>spam</wp:comment_approved>
+		<wp:comment_type></wp:comment_type>
+		<wp:comment_parent>0</wp:comment_parent>
+		<wp:comment_user_id>0</wp:comment_user_id>
+		</wp:comment>
+				<wp:comment>
+		<wp:comment_id>159</wp:comment_id>
+		<wp:comment_author><![CDATA[CNA Training]]></wp:comment_author>
+		<wp:comment_author_email>v.stabies@debian.net</wp:comment_author_email>
+		<wp:comment_author_url>http://cnatraining-nursingdegree.com</wp:comment_author_url>
+		<wp:comment_author_IP>98.18.101.48</wp:comment_author_IP>
+		<wp:comment_date>2011-01-09 07:35:58</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-09 04:35:58</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[<a href="http://cnatraining-nursingdegree.com" title="CNA Training" rel="nofollow">CNA Training</a> 
+You made some nice points there. I looked on the internet for the issue and found most guys will approve with your blog.]]></wp:comment_content>
+		<wp:comment_approved>spam</wp:comment_approved>
+		<wp:comment_type></wp:comment_type>
+		<wp:comment_parent>0</wp:comment_parent>
+		<wp:comment_user_id>0</wp:comment_user_id>
+		</wp:comment>
+				<wp:comment>
+		<wp:comment_id>165</wp:comment_id>
+		<wp:comment_author><![CDATA[online bingo]]></wp:comment_author>
+		<wp:comment_author_email>z.clufew@gmail.ru</wp:comment_author_email>
+		<wp:comment_author_url>http://www.bingoliner.co.uk</wp:comment_author_url>
+		<wp:comment_author_IP>46.51.159.204</wp:comment_author_IP>
+		<wp:comment_date>2011-01-14 11:11:17</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-14 08:11:17</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[www.bingoliner.co.uk Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
+		<wp:comment_approved>spam</wp:comment_approved>
+		<wp:comment_type></wp:comment_type>
+		<wp:comment_parent>0</wp:comment_parent>
+		<wp:comment_user_id>0</wp:comment_user_id>
+		</wp:comment>
+				<wp:comment>
+		<wp:comment_id>171</wp:comment_id>
+		<wp:comment_author><![CDATA[Computer Memory]]></wp:comment_author>
+		<wp:comment_author_email>x.crinokac@hotmail.cn</wp:comment_author_email>
+		<wp:comment_author_url>http://www.thefuturetechnology.com</wp:comment_author_url>
+		<wp:comment_author_IP>77.250.153.8</wp:comment_author_IP>
+		<wp:comment_date>2011-01-15 06:43:32</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-15 03:43:32</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[<a href="http://www.thefuturetechnology.com" title=" Computer Components" rel="nofollow"> Computer Components</a> I fully have high hopes that you adore my Fine Go over With regard to  Printers]]></wp:comment_content>
+		<wp:comment_approved>spam</wp:comment_approved>
+		<wp:comment_type></wp:comment_type>
+		<wp:comment_parent>0</wp:comment_parent>
+		<wp:comment_user_id>0</wp:comment_user_id>
+		</wp:comment>
+				<wp:comment>
+		<wp:comment_id>166</wp:comment_id>
+		<wp:comment_author><![CDATA[online nursing degree]]></wp:comment_author>
+		<wp:comment_author_email>e.gheamat@mail.dk</wp:comment_author_email>
+		<wp:comment_author_url>http://onlinenursingdegreeprogram.com/</wp:comment_author_url>
+		<wp:comment_author_IP>98.18.118.162</wp:comment_author_IP>
+		<wp:comment_date>2011-01-14 12:14:42</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-14 09:14:42</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[<a href="http://onlinenursingdegreeprogram.com/" title="online nursing degree" rel="nofollow">online nursing degree</a> 
+Nice post. I was checking constantly this blog and I am impressed! Extremely helpful info particularly the last part :) I care for such info much. I was seeking this particular info for a very long time. Thank you and best of luck.]]></wp:comment_content>
+		<wp:comment_approved>spam</wp:comment_approved>
+		<wp:comment_type></wp:comment_type>
+		<wp:comment_parent>0</wp:comment_parent>
+		<wp:comment_user_id>0</wp:comment_user_id>
+		</wp:comment>
+				<wp:comment>
+		<wp:comment_id>163</wp:comment_id>
+		<wp:comment_author><![CDATA[club player casino]]></wp:comment_author>
+		<wp:comment_author_email>n.fietrujour@mail.com.au</wp:comment_author_email>
+		<wp:comment_author_url>http://www.clubplayercasinonodepositcodes.com</wp:comment_author_url>
+		<wp:comment_author_IP>189.3.13.130</wp:comment_author_IP>
+		<wp:comment_date>2011-01-12 02:28:12</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-11 23:28:12</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[http://www.clubplayercasinonodepositcodes.com Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
+		<wp:comment_approved>spam</wp:comment_approved>
+		<wp:comment_type></wp:comment_type>
+		<wp:comment_parent>0</wp:comment_parent>
+		<wp:comment_user_id>0</wp:comment_user_id>
+		</wp:comment>
+				<wp:comment>
+		<wp:comment_id>164</wp:comment_id>
+		<wp:comment_author><![CDATA[buy cialis from canada]]></wp:comment_author>
+		<wp:comment_author_email>j.caplefrat@hotmail.jp</wp:comment_author_email>
+		<wp:comment_author_url>http://best-cialis-store.com/?wm=12953&amp;tr=8030</wp:comment_author_url>
+		<wp:comment_author_IP>173.233.77.157</wp:comment_author_IP>
+		<wp:comment_date>2011-01-12 09:16:43</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-12 06:16:43</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[http://best-cialis-store.com/?wm=12953&amp;tr=8030 Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
+		<wp:comment_approved>spam</wp:comment_approved>
+		<wp:comment_type></wp:comment_type>
+		<wp:comment_parent>0</wp:comment_parent>
+		<wp:comment_user_id>0</wp:comment_user_id>
+		</wp:comment>
+				<wp:comment>
+		<wp:comment_id>170</wp:comment_id>
+		<wp:comment_author><![CDATA[online nursing degree]]></wp:comment_author>
+		<wp:comment_author_email>h.jutroc@t-online.ca</wp:comment_author_email>
+		<wp:comment_author_url>http://onlinenursingdegreeprogram.com/</wp:comment_author_url>
+		<wp:comment_author_IP>98.18.118.162</wp:comment_author_IP>
+		<wp:comment_date>2011-01-14 23:28:17</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-14 20:28:17</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[<a href="http://onlinenursingdegreeprogram.com/" title="online nursing degree" rel="nofollow">online nursing degree</a> 
+Fantastic goods from you, man. I've understand your stuff previous to and you are just extremely wonderful. I actually like what you have acquired here, really like what you are stating and the way in which you say it. You make it enjoyable and you still take care of to keep it wise. I cant wait to read much more from you. This is really a great website.]]></wp:comment_content>
+		<wp:comment_approved>spam</wp:comment_approved>
+		<wp:comment_type></wp:comment_type>
+		<wp:comment_parent>0</wp:comment_parent>
+		<wp:comment_user_id>0</wp:comment_user_id>
+		</wp:comment>
+				<wp:comment>
+		<wp:comment_id>180</wp:comment_id>
+		<wp:comment_author><![CDATA[Boob Talk &amp; Pussy Baitin]]></wp:comment_author>
+		<wp:comment_author_email>y.feshec@suse.to</wp:comment_author_email>
+		<wp:comment_author_url>http://nakedgirlswithbigtits.com/naked-girls-with-big-tits/boob-talk-pussy-baitin/</wp:comment_author_url>
+		<wp:comment_author_IP>99.6.128.245</wp:comment_author_IP>
+		<wp:comment_date>2011-01-18 23:04:39</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-18 20:04:39</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[http://nakedgirlswithbigtits.com/naked-girls-with-big-tits/boob-talk-pussy-baitin/ Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
+		<wp:comment_approved>spam</wp:comment_approved>
+		<wp:comment_type></wp:comment_type>
+		<wp:comment_parent>0</wp:comment_parent>
+		<wp:comment_user_id>0</wp:comment_user_id>
+		</wp:comment>
+				<wp:comment>
+		<wp:comment_id>182</wp:comment_id>
+		<wp:comment_author><![CDATA[online nursing degree programs]]></wp:comment_author>
+		<wp:comment_author_email>v.rateporn@mail.cn</wp:comment_author_email>
+		<wp:comment_author_url>http://onlinenursingdegreeprogram.com/</wp:comment_author_url>
+		<wp:comment_author_IP>98.18.110.170</wp:comment_author_IP>
+		<wp:comment_date>2011-01-19 05:43:25</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-19 02:43:25</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[<a href="http://onlinenursingdegreeprogram.com/" title="online nursing degree" rel="nofollow">online nursing degree</a> 
+hey there and thank you for your info – I have definitely picked up anything new from right here. I did however expertise a few technical points using this site, since I experienced to reload the site a lot of times previous to I could get it to load correctly. I had been wondering if your hosting is OK? Not that I'm complaining, but slow loading instances times will sometimes affect your placement in google and can damage your high-quality score if advertising and marketing with Adwords. Anyway I’m adding this RSS to my e-mail and can look out for a lot more of your respective intriguing content. Ensure that you update this again soon..]]></wp:comment_content>
+		<wp:comment_approved>spam</wp:comment_approved>
+		<wp:comment_type></wp:comment_type>
+		<wp:comment_parent>0</wp:comment_parent>
+		<wp:comment_user_id>0</wp:comment_user_id>
+		</wp:comment>
+				<wp:comment>
+		<wp:comment_id>187</wp:comment_id>
+		<wp:comment_author><![CDATA[local search optimization]]></wp:comment_author>
+		<wp:comment_author_email>u.pluloy@t-online.cn</wp:comment_author_email>
+		<wp:comment_author_url>http://www.localstreetmarketing.com/?p=4</wp:comment_author_url>
+		<wp:comment_author_IP>24.22.247.254</wp:comment_author_IP>
+		<wp:comment_date>2011-01-20 12:31:00</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-20 09:31:00</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[http://www.localstreetmarketing.com/?p=4 Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
+		<wp:comment_approved>spam</wp:comment_approved>
+		<wp:comment_type></wp:comment_type>
+		<wp:comment_parent>0</wp:comment_parent>
+		<wp:comment_user_id>0</wp:comment_user_id>
+		</wp:comment>
+				<wp:comment>
+		<wp:comment_id>183</wp:comment_id>
+		<wp:comment_author><![CDATA[Bullet Proof Windows]]></wp:comment_author>
+		<wp:comment_author_email>d.kikoun@apache.net</wp:comment_author_email>
+		<wp:comment_author_url>http://bulletproofwalls.com</wp:comment_author_url>
 		<wp:comment_author_IP>70.183.105.171</wp:comment_author_IP>
-		<wp:comment_date>2010-12-07 15:01:16</wp:comment_date>
-		<wp:comment_date_gmt>2010-12-07 12:01:16</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[<a href="http://sandiegocountylist.com" title=" San Diego Views" rel="nofollow"> San Diego Views</a> San Diego News and Views]]></wp:comment_content>
+		<wp:comment_date>2011-01-19 17:20:27</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-19 14:20:27</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[<a href="http://bulletproofwalls.com" title="Bullet Proof Windows" rel="nofollow">Bullet Proof Windows</a> You Need Bullet Proof Wall, Windows and Doors
+in today's violent scociety.
+
+http://bulletproofwalls.com
+<a href="http://bulletproofwalls.com" rel="nofollow">Bulletproof walls</a>
+<a href="http://bulletproofwalls.com" rel="nofollow">Bullet proof walls</a>
+<a href="http://bulletproofwalls.com" rel="nofollow">Bulletproof windows</a>
+<a href="http://bulletproofwalls.com" rel="nofollow">Bullet proof windows</a>
+<a href="http://bulletproofwalls.com" rel="nofollow">Bulletproof doors</a>
+<a href="http://bulletproofwalls.com" rel="nofollow">Bullet proof doors</a>]]></wp:comment_content>
+		<wp:comment_approved>spam</wp:comment_approved>
+		<wp:comment_type></wp:comment_type>
+		<wp:comment_parent>0</wp:comment_parent>
+		<wp:comment_user_id>0</wp:comment_user_id>
+		</wp:comment>
+				<wp:comment>
+		<wp:comment_id>188</wp:comment_id>
+		<wp:comment_author><![CDATA[interpretation services]]></wp:comment_author>
+		<wp:comment_author_email>m.tripus@novell.jp</wp:comment_author_email>
+		<wp:comment_author_url>http://www.cssdrive.com/index.php/member/133202/</wp:comment_author_url>
+		<wp:comment_author_IP>175.156.139.179</wp:comment_author_IP>
+		<wp:comment_date>2011-01-20 15:51:18</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-20 12:51:18</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[http://www.cssdrive.com/index.php/member/133202/ Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
+		<wp:comment_approved>spam</wp:comment_approved>
+		<wp:comment_type></wp:comment_type>
+		<wp:comment_parent>0</wp:comment_parent>
+		<wp:comment_user_id>0</wp:comment_user_id>
+		</wp:comment>
+				<wp:comment>
+		<wp:comment_id>189</wp:comment_id>
+		<wp:comment_author><![CDATA[Karina Rubs One Out!]]></wp:comment_author>
+		<wp:comment_author_email>d.boghouspuf@php.ph</wp:comment_author_email>
+		<wp:comment_author_url>http://nakedgirlswithbigtits.com/naked-girls-with-big-tits/karina-rubs-one-out/</wp:comment_author_url>
+		<wp:comment_author_IP>99.6.128.245</wp:comment_author_IP>
+		<wp:comment_date>2011-01-20 22:31:49</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-20 19:31:49</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[http://nakedgirlswithbigtits.com/naked-girls-with-big-tits/karina-rubs-one-out/ Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
+		<wp:comment_approved>spam</wp:comment_approved>
+		<wp:comment_type></wp:comment_type>
+		<wp:comment_parent>0</wp:comment_parent>
+		<wp:comment_user_id>0</wp:comment_user_id>
+		</wp:comment>
+				<wp:comment>
+		<wp:comment_id>161</wp:comment_id>
+		<wp:comment_author><![CDATA[CNA Training]]></wp:comment_author>
+		<wp:comment_author_email>i.straprosnes@yahoo.com.au</wp:comment_author_email>
+		<wp:comment_author_url>http://cnatraining-nursingdegree.com</wp:comment_author_url>
+		<wp:comment_author_IP>98.18.101.48</wp:comment_author_IP>
+		<wp:comment_date>2011-01-10 09:54:16</wp:comment_date>
+		<wp:comment_date_gmt>2011-01-10 06:54:16</wp:comment_date_gmt>
+		<wp:comment_content><![CDATA[<a href="http://cnatraining-nursingdegree.com" title="CNA Training" rel="nofollow">CNA Training</a> Great site and post!]]></wp:comment_content>
 		<wp:comment_approved>spam</wp:comment_approved>
 		<wp:comment_type></wp:comment_type>
 		<wp:comment_parent>0</wp:comment_parent>
@@ -2221,7 +2411,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tristique eleife
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>_edit_lock</wp:meta_key>
-		<wp:meta_value><![CDATA[1290450955]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1291729220]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>dropdown_option</wp:meta_key>
@@ -2233,7 +2423,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tristique eleife
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>currently_in_stock</wp:meta_key>
-		<wp:meta_value><![CDATA[1805]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1793]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>item_weight</wp:meta_key>
@@ -2243,133 +2433,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tristique eleife
 		<wp:meta_key>_Content_Counter</wp:meta_key>
 		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
-								<wp:comment>
-		<wp:comment_id>43</wp:comment_id>
-		<wp:comment_author><![CDATA[representative china shenzhen register what office]]></wp:comment_author>
-		<wp:comment_author_email>y.bachelab@php.net</wp:comment_author_email>
-		<wp:comment_author_url>http://www.horfx.com/register-china-representative-office-in-shenzhen.html</wp:comment_author_url>
-		<wp:comment_author_IP>222.186.13.37</wp:comment_author_IP>
-		<wp:comment_date>2010-11-23 12:32:57</wp:comment_date>
-		<wp:comment_date_gmt>2010-11-23 09:32:57</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[Hi, talk about china shenzhen representative register what office, you can go here more <a href="http://www.horfx.com/register-china-representative-office-in-shenzhen.html" title="china shenzhen representative register what office" rel="nofollow">china shenzhen representative register what office</a>]]></wp:comment_content>
-		<wp:comment_approved>spam</wp:comment_approved>
-		<wp:comment_type></wp:comment_type>
-		<wp:comment_parent>0</wp:comment_parent>
-		<wp:comment_user_id>0</wp:comment_user_id>
-		</wp:comment>
-				<wp:comment>
-		<wp:comment_id>56</wp:comment_id>
-		<wp:comment_author><![CDATA[network management tool]]></wp:comment_author>
-		<wp:comment_author_email>h.voudeab@hotmail.cn</wp:comment_author_email>
-		<wp:comment_author_url>http://networkmanagementt.co.cc</wp:comment_author_url>
-		<wp:comment_author_IP>95.211.99.91</wp:comment_author_IP>
-		<wp:comment_date>2010-11-29 23:53:16</wp:comment_date>
-		<wp:comment_date_gmt>2010-11-29 20:53:16</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[http://networkmanagementt.co.cc Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
-		<wp:comment_approved>spam</wp:comment_approved>
-		<wp:comment_type></wp:comment_type>
-		<wp:comment_parent>0</wp:comment_parent>
-		<wp:comment_user_id>0</wp:comment_user_id>
-		</wp:comment>
-				<wp:comment>
-		<wp:comment_id>59</wp:comment_id>
-		<wp:comment_author><![CDATA[Quit Smoking Aid]]></wp:comment_author>
-		<wp:comment_author_email>m.seajoc@yahoo.nl</wp:comment_author_email>
-		<wp:comment_author_url>http://hubpages.com/hub/My-Quit-Smoking-Story</wp:comment_author_url>
-		<wp:comment_author_IP>173.66.170.17</wp:comment_author_IP>
-		<wp:comment_date>2010-12-01 09:21:42</wp:comment_date>
-		<wp:comment_date_gmt>2010-12-01 06:21:42</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[http://hubpages.com/hub/My-Quit-Smoking-Story Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
-		<wp:comment_approved>spam</wp:comment_approved>
-		<wp:comment_type></wp:comment_type>
-		<wp:comment_parent>0</wp:comment_parent>
-		<wp:comment_user_id>0</wp:comment_user_id>
-		</wp:comment>
-				<wp:comment>
-		<wp:comment_id>61</wp:comment_id>
-		<wp:comment_author><![CDATA[UK SEO]]></wp:comment_author>
-		<wp:comment_author_email>c.baried@gmail.ca</wp:comment_author_email>
-		<wp:comment_author_url>http://seo-it-right.co.uk</wp:comment_author_url>
-		<wp:comment_author_IP>213.229.116.230</wp:comment_author_IP>
-		<wp:comment_date>2010-12-02 08:46:40</wp:comment_date>
-		<wp:comment_date_gmt>2010-12-02 05:46:40</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[http://seo-it-right.co.uk Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
-		<wp:comment_approved>spam</wp:comment_approved>
-		<wp:comment_type></wp:comment_type>
-		<wp:comment_parent>0</wp:comment_parent>
-		<wp:comment_user_id>0</wp:comment_user_id>
-		</wp:comment>
-				<wp:comment>
-		<wp:comment_id>63</wp:comment_id>
-		<wp:comment_author><![CDATA[Household Insurance Quotes]]></wp:comment_author>
-		<wp:comment_author_email>p.klipleay@web.dk</wp:comment_author_email>
-		<wp:comment_author_url>http://paigehu21.terapad.com/index.cfm?fa=contentNews.newsDetails&amp;newsID=1125428&amp;from=list</wp:comment_author_url>
-		<wp:comment_author_IP>96.2.113.71</wp:comment_author_IP>
-		<wp:comment_date>2010-12-02 21:01:09</wp:comment_date>
-		<wp:comment_date_gmt>2010-12-02 18:01:09</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[http://paigehu21.terapad.com/index.cfm?fa=contentNews.newsDetails&amp;newsID=1125428&amp;from=list Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
-		<wp:comment_approved>spam</wp:comment_approved>
-		<wp:comment_type></wp:comment_type>
-		<wp:comment_parent>0</wp:comment_parent>
-		<wp:comment_user_id>0</wp:comment_user_id>
-		</wp:comment>
-				<wp:comment>
-		<wp:comment_id>65</wp:comment_id>
-		<wp:comment_author><![CDATA[online casino]]></wp:comment_author>
-		<wp:comment_author_email>w.kruxoslun@mail.ph</wp:comment_author_email>
-		<wp:comment_author_url>http://bettingbookmakers.net/what-are-online-casino-bonuses</wp:comment_author_url>
-		<wp:comment_author_IP>173.234.152.101</wp:comment_author_IP>
-		<wp:comment_date>2010-12-02 23:38:24</wp:comment_date>
-		<wp:comment_date_gmt>2010-12-02 20:38:24</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[http://bettingbookmakers.net/what-are-online-casino-bonuses Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
-		<wp:comment_approved>spam</wp:comment_approved>
-		<wp:comment_type></wp:comment_type>
-		<wp:comment_parent>0</wp:comment_parent>
-		<wp:comment_user_id>0</wp:comment_user_id>
-		</wp:comment>
-				<wp:comment>
-		<wp:comment_id>67</wp:comment_id>
-		<wp:comment_author><![CDATA[downloads movies free]]></wp:comment_author>
-		<wp:comment_author_email>a.fleashuy@web.jp</wp:comment_author_email>
-		<wp:comment_author_url>http://www.hdmoviesforfree.com</wp:comment_author_url>
-		<wp:comment_author_IP>95.245.179.29</wp:comment_author_IP>
-		<wp:comment_date>2010-12-04 05:26:57</wp:comment_date>
-		<wp:comment_date_gmt>2010-12-04 02:26:57</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[http://www.hdmoviesforfree.com Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
-		<wp:comment_approved>spam</wp:comment_approved>
-		<wp:comment_type></wp:comment_type>
-		<wp:comment_parent>0</wp:comment_parent>
-		<wp:comment_user_id>0</wp:comment_user_id>
-		</wp:comment>
-				<wp:comment>
-		<wp:comment_id>69</wp:comment_id>
-		<wp:comment_author><![CDATA[Kim Kardashian]]></wp:comment_author>
-		<wp:comment_author_email>s.meaflouc@php.com.au</wp:comment_author_email>
-		<wp:comment_author_url>http://garry6morales.typepad.com/blog/2010/11/ray-j-and-kimk-tape.html</wp:comment_author_url>
-		<wp:comment_author_IP>174.34.133.211</wp:comment_author_IP>
-		<wp:comment_date>2010-12-04 12:04:33</wp:comment_date>
-		<wp:comment_date_gmt>2010-12-04 09:04:33</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[http://garry6morales.typepad.com/blog/2010/11/ray-j-and-kimk-tape.html Thanks for that awesome posting. It saved MUCH time :-)]]></wp:comment_content>
-		<wp:comment_approved>spam</wp:comment_approved>
-		<wp:comment_type></wp:comment_type>
-		<wp:comment_parent>0</wp:comment_parent>
-		<wp:comment_user_id>0</wp:comment_user_id>
-		</wp:comment>
-				<wp:comment>
-		<wp:comment_id>78</wp:comment_id>
-		<wp:comment_author><![CDATA[San Diego News]]></wp:comment_author>
-		<wp:comment_author_email>e.flistran@hotmail.ch</wp:comment_author_email>
-		<wp:comment_author_url>http://sandiegocountylist.com</wp:comment_author_url>
-		<wp:comment_author_IP>70.183.105.171</wp:comment_author_IP>
-		<wp:comment_date>2010-12-07 15:01:37</wp:comment_date>
-		<wp:comment_date_gmt>2010-12-07 12:01:37</wp:comment_date_gmt>
-		<wp:comment_content><![CDATA[<a href="http://sandiegocountylist.com" title="San Diego News" rel="nofollow">San Diego News</a> San Diego News and Views]]></wp:comment_content>
-		<wp:comment_approved>spam</wp:comment_approved>
-		<wp:comment_type></wp:comment_type>
-		<wp:comment_parent>0</wp:comment_parent>
-		<wp:comment_user_id>0</wp:comment_user_id>
-		</wp:comment>
-			</item>
+							</item>
 		<item>
 		<title>Hello World!</title>
 		<link>http://dukapress.org/demo/2010/08/hello-world/</link>
@@ -2571,7 +2635,7 @@ This is a digital product. Lorem ipsum dolor sit amet, consectetur adipiscing el
 		<wp:is_sticky>0</wp:is_sticky>
 								<wp:postmeta>
 		<wp:meta_key>_edit_lock</wp:meta_key>
-		<wp:meta_value><![CDATA[1285141767]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1294076644]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>_edit_last</wp:meta_key>
@@ -2780,6 +2844,87 @@ WARNING:  This is just a demo shop and the items displayed here are not for sale
 				<wp:postmeta>
 		<wp:meta_key>_menu_item_url</wp:meta_key>
 		<wp:meta_value><![CDATA[]]></wp:meta_value>
+		</wp:postmeta>
+							</item>
+		<item>
+		<title>the richest man in babylon</title>
+		<link>http://dukapress.org/demo/products/the-richest-man-in-babylon/the-richest-man-in-babylon/</link>
+		<pubDate>Mon, 03 Jan 2011 17:46:07 +0000</pubDate>
+		<dc:creator><![CDATA[DukaPress]]></dc:creator>
+		
+		<guid isPermaLink="false">http://dukapress.org/demo/wp-content/uploads/2011/01/the-richest-man-in-babylon.jpg</guid>
+		<description></description>
+		<content:encoded><![CDATA[]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>187</wp:post_id>
+		<wp:post_date>2011-01-03 20:46:07</wp:post_date>
+		<wp:post_date_gmt>2011-01-03 17:46:07</wp:post_date_gmt>
+		<wp:comment_status>open</wp:comment_status>
+		<wp:ping_status>open</wp:ping_status>
+		<wp:post_name>the-richest-man-in-babylon</wp:post_name>
+		<wp:status>inherit</wp:status>
+		<wp:post_parent>186</wp:post_parent>
+		<wp:menu_order>0</wp:menu_order>
+		<wp:post_type>attachment</wp:post_type>
+		<wp:post_password></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+				<wp:attachment_url>http://dukapress.org/demo/wp-content/uploads/2011/01/the-richest-man-in-babylon.jpg</wp:attachment_url>
+								<wp:postmeta>
+		<wp:meta_key>_wp_attached_file</wp:meta_key>
+		<wp:meta_value><![CDATA[2011/01/the-richest-man-in-babylon.jpg]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>_wp_attachment_metadata</wp:meta_key>
+		<wp:meta_value><![CDATA[a:6:{s:5:"width";s:3:"425";s:6:"height";s:3:"480";s:14:"hwstring_small";s:22:"height='96' width='85'";s:4:"file";s:38:"2011/01/the-richest-man-in-babylon.jpg";s:5:"sizes";a:3:{s:9:"thumbnail";a:3:{s:4:"file";s:38:"the-richest-man-in-babylon-150x150.jpg";s:5:"width";s:3:"150";s:6:"height";s:3:"150";}s:6:"medium";a:3:{s:4:"file";s:38:"the-richest-man-in-babylon-265x300.jpg";s:5:"width";s:3:"265";s:6:"height";s:3:"300";}s:14:"post-thumbnail";a:3:{s:4:"file";s:38:"the-richest-man-in-babylon-425x198.jpg";s:5:"width";s:3:"425";s:6:"height";s:3:"198";}}s:10:"image_meta";a:10:{s:8:"aperture";s:1:"0";s:6:"credit";s:0:"";s:6:"camera";s:0:"";s:7:"caption";s:0:"";s:17:"created_timestamp";s:1:"0";s:9:"copyright";s:0:"";s:12:"focal_length";s:1:"0";s:3:"iso";s:1:"0";s:13:"shutter_speed";s:1:"0";s:5:"title";s:0:"";}}]]></wp:meta_value>
+		</wp:postmeta>
+							</item>
+		<item>
+		<title>The Richest Man in Babylon</title>
+		<link>http://dukapress.org/demo/products/the-richest-man-in-babylon/</link>
+		<pubDate>Mon, 03 Jan 2011 17:47:16 +0000</pubDate>
+		<dc:creator><![CDATA[DukaPress]]></dc:creator>
+		
+		<category><![CDATA[Digital]]></category>
+
+		<category domain="category" nicename="digital"><![CDATA[Digital]]></category>
+
+		<guid isPermaLink="false">http://dukapress.org/demo/?post_type=duka&#038;p=186</guid>
+		<description></description>
+		<content:encoded><![CDATA[[dpsc_display_product]
+
+This is a digital product. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tristique eleifend consectetur. Proin molestie ultricies vehicula. Suspendisse tempus pellentesque mi in commodo. Curabitur bibendum urna non ipsum accumsan iaculis. Nulla porttitor consectetur orci, vitae ullamcorper metus sodales ac. Nulla eleifend sapien non felis vulputate elementum in vel nunc. Lorem ipsum dolor sit amet, consectetur adipiscing elit.]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>186</wp:post_id>
+		<wp:post_date>2011-01-03 20:47:16</wp:post_date>
+		<wp:post_date_gmt>2011-01-03 17:47:16</wp:post_date_gmt>
+		<wp:comment_status>open</wp:comment_status>
+		<wp:ping_status>open</wp:ping_status>
+		<wp:post_name>the-richest-man-in-babylon</wp:post_name>
+		<wp:status>publish</wp:status>
+		<wp:post_parent>0</wp:post_parent>
+		<wp:menu_order>0</wp:menu_order>
+		<wp:post_type>duka</wp:post_type>
+		<wp:post_password></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+								<wp:postmeta>
+		<wp:meta_key>_edit_last</wp:meta_key>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>_edit_lock</wp:meta_key>
+		<wp:meta_value><![CDATA[1294076840]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>price</wp:meta_key>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>digital_file</wp:meta_key>
+		<wp:meta_value><![CDATA[theRichestManInBabylon.pdf]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>_Content_Counter</wp:meta_key>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							</item>
 	</channel>

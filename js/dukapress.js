@@ -208,13 +208,13 @@ jQuery(document).ready(function () {
             }
          }
         if(!regexNum.test(dpsc_b_phone)){
-            jQuery('#phoneError').html("Please write only numeric here");
+            jQuery('#phoneError').html("Please write only numbers here");
             dpsc_b_phone=null;
         }
 
         if(!emailReg.test(dpsc_b_email))
             {
-                jQuery('#emailError').html("Please put right email id");
+                jQuery('#emailError').html("Please put the right email id");
                 dpsc_b_email=null;
             }
         if(!dpsc_b_fname)
