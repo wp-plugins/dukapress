@@ -30,11 +30,13 @@ function dpsc_add_to_cart() {
     if (isset($_POST['var'])) {
         $product_variations = $_POST['var'];
         $product_variation_names = array();
-        foreach ($product_variations as $product_variation) {
-            $product_variation_tmp = explode(',:_._:,', $product_variation);
-            $product_variation_names[] = $product_variation_tmp[0];
-            $product_price = floatval($product_variation_tmp[1]);
-            $product_variation_prices += $product_price;
+        if (is_array($product_variations)) {
+            foreach ($product_variations as $product_variation) {
+                $product_variation_tmp = explode(',:_._:,', $product_variation);
+                $product_variation_names[] = $product_variation_tmp[0];
+                $product_price = floatval($product_variation_tmp[1]);
+                $product_variation_prices += $product_price;
+            }
         }
         $product_variation_names = implode(', ', $product_variation_names);
     }
@@ -111,8 +113,10 @@ if ($_REQUEST['dpsc_ajax_action'] === 'empty_cart') {
 }
 function dpsc_empty_cart() {
     $products = $_SESSION['dpsc_products'];
-    foreach ($products as $key => $item) {
-        unset($products[$key]);
+    if (is_array($products)) {
+        foreach ($products as $key => $item) {
+            unset($products[$key]);
+        }
     }
     $_SESSION['dpsc_products'] = $products;
     if ($_REQUEST['ajax'] == 'true') {
@@ -144,24 +148,28 @@ function dpsc_update_quantity() {
     $product_quantity = intval($_POST['quantity']);
     if ($_POST['dpsc_ajax_action'] === 'update_quantity' && $product_quantity > 0) {
         $dpsc_products = $_SESSION['dpsc_products'];
-        foreach ($dpsc_products as $key => $item) {
-            if ($item['item_number'] === $product_id && $item['var'] === $product_variation_name) {
-                if (is_numeric($item['max'])) {
-                    if ($product_quantity > $item['max']) {
-                    $product_quantity = $item['max'];
+        if (is_array($dpsc_products)) {
+            foreach ($dpsc_products as $key => $item) {
+                if ($item['item_number'] === $product_id && $item['var'] === $product_variation_name) {
+                    if (is_numeric($item['max'])) {
+                        if ($product_quantity > $item['max']) {
+                        $product_quantity = $item['max'];
+                    }
+                    }
+                    $item['quantity'] = $product_quantity;
+                    unset($dpsc_products[$key]);
+                    array_push($dpsc_products, $item);
                 }
-                }
-                $item['quantity'] = $product_quantity;
-                unset($dpsc_products[$key]);
-                array_push($dpsc_products, $item);
             }
         }
     }
     else {
         $dpsc_products = $_SESSION['dpsc_products'];
-        foreach ($dpsc_products as $key => $item) {
-            if ($item['item_number'] === $product_id && $item['var'] === $product_variation_name) {
-                unset($dpsc_products[$key]);
+        if (is_array($dpsc_products)) {
+            foreach ($dpsc_products as $key => $item) {
+                if ($item['item_number'] === $product_id && $item['var'] === $product_variation_name) {
+                    unset($dpsc_products[$key]);
+                }
             }
         }
     }
@@ -641,7 +649,7 @@ function dpsc_on_payment_save($dpsc_total = FALSE, $dpsc_shipping_value = FALSE,
     if (!$tax) {
         $tax = 0;
     }
-    if (!$dpsc_shipping_value) {
+    if (!$dpsc_shipping_value || $dpsc_shipping_value === 'ship_pro') {
         $dpsc_shipping_value = 0.00;
     }
     if (!$dpsc_discount_value) {
@@ -713,7 +721,7 @@ function dpsc_on_payment_save($dpsc_total = FALSE, $dpsc_shipping_value = FALSE,
 
                 Someone has just placed an order at your shop located at ' . get_bloginfo('url') . '.<br/><br/>
 
-                You can find details of the items ordered by going here: ' . get_bloginfo('url') . '/wp-admin/admin.php?page=dukapress-shopping-cart-order-log&id=' . $order_id .' <br/><br/>
+                You can find details of the items ordered by going here: ' . get_bloginfo('url') . '/wp-admin/admin.php?page=dukapress-shopping-cart-order-log&id=' . $invoice .' <br/><br/>
 
                 Here are the details of the person who placed the order: <br/><br/>
 
@@ -832,14 +840,42 @@ function dpsc_pnj_calculate_cart_price($on_payment = FALSE) {
         $count = 0;
         foreach ($dpsc_products as $dpsc_product) {
             $dpsc_var = '';
+            $dpsc_var_price = 0.0;
+            $all_custom_fields = get_post_custom(intval($dpsc_product['item_number']));
             if (!empty($dpsc_product['var'])) {
                 $dpsc_var = ' ('.$dpsc_product['var'].')';
+                $get_vars = explode('||',$all_custom_fields['dropdown_option'][0]);
+                $all_vars_in_product = array();
+                foreach ($get_vars as $get_var) {
+                    $pro_vars = explode('|', $get_var);
+                    foreach ($pro_vars as $pro_var) {
+                        $get_var = explode(';',$pro_var);
+                        $var_price = floatval($get_var[1]);
+                        $all_vars_in_product[$get_var[0]] = $var_price;
+                    }
+                }
+                $dpsc_var_array = explode(', ', $dpsc_product['var']);
+                if (is_array($dpsc_var_array)) {
+                    foreach ($dpsc_var_array as $dpsc_check_var) {
+                        $dpsc_var_price += $all_vars_in_product[$dpsc_check_var];
+                    }
+                }
             }
-            $dpsc_total += floatval($dpsc_product['price']*$dpsc_product['quantity']);
+            if (is_numeric($all_custom_fields['new_price'][0])) {
+                $product_price = $all_custom_fields['new_price'][0];
+            }
+            else {
+                $product_price = $all_custom_fields['price'][0];
+            }
+            if (isset($all_custom_fields['item_weight'][0])) {
+                $dpsc_product['item_weight'] = $all_custom_fields['item_weight'][0];
+            }
+//            var_dump($product_price, $dpsc_var_price, $product_price+$dpsc_var_price);die;
+            $dpsc_total += floatval(($product_price+$dpsc_var_price)*$dpsc_product['quantity']);
             $dpsc_weight += $dpsc_product['item_weight']*$dpsc_product['quantity'];
             $product['id'] = $dpsc_product['item_number'];
             $product['name'] = $dpsc_product['name'].$dpsc_var;
-            $product['price'] = $dpsc_product['price'];
+            $product['price'] = $product_price+$dpsc_var_price;
             $product['quantity'] = $dpsc_product['quantity'];
             $product['weight'] = $dpsc_product['item_weight'];
             $products[] = $product;
@@ -931,9 +967,9 @@ function dpsc_pnj_calculate_shipping_price($shipping_weight = FALSE, $sub_total_
                 $b[1] = (float) $b[1];
 
                 if ($b[1] > 1.00) {
-                    $b[1] = $b[1] + 1.00;
+                    $b[1] = $b[1] + 0.0001;
                 } else {
-                    $b[1] = $b[1] + 0.10;
+                    $b[1] = $b[1] + 0.0001;
                 }
 
 
@@ -1094,25 +1130,28 @@ function dpsc_pnj_thank_you_page() {
                                     <th>' . __('Quantity',"dp-lang") . '</th>
                                 </tr>';
         $inq_count = 1;
-        foreach ($products as $product) {
-            $message_content .= '<tr>
-                                    <td>' . __($inq_count,"dp-lang") . '</td>
-                                    <td>' . __($product['name'],"dp-lang") . '</td>
-                                    <td>' . __($product['quantity'],"dp-lang") . '</td>
-                                </tr>';
-            $inq_count++;
+        if (is_array($products)) {
+            foreach ($products as $product) {
+                $message_content .= '<tr>
+                                        <td>' . __($inq_count,"dp-lang") . '</td>
+                                        <td>' . __($product['name'],"dp-lang") . '</td>
+                                        <td>' . __($product['quantity'],"dp-lang") . '</td>
+                                    </tr>';
+                $inq_count++;
+            }
         }
         $message_content .= '</table>';
         $final_msg = 'From: ' . $from_name . '(' . $from_email . ')<br/>Subject:' . $subject . '<br/>' . $message . '<br/>' . $message_content;
         $to = get_option('admin_email');
         dpsc_pnj_send_mail($to, $to, __('Inquiry Form Submitted',"dp-lang"), $subject, $final_msg);
-        $output = '<h3>' . __('Thank you for submitting Inquiry form.',"dp-lang") . '</h3><p>' . __('We will contact you soon.',"dp-lang") . '</p>';
+        $output = '<h3>' . __('Thank you for submitting our Inquiry form.',"dp-lang") . '</h3><p>' . __('We will contact you soon.',"dp-lang") . '</p>';
         return $output;
     }
     if (!$status) {
         $output = '<h2>' . __('Thank you for your order!',"dp-lang") . '</h2>';
         $query = "SELECT * FROM {$table_name} WHERE `invoice`='{$invoice}'";
         $result = $wpdb->get_row($query);
+//        var_dump($query,$result);
         if ($result) {
             $total = $result->total;
             $shipping = $result->shipping;
@@ -1149,7 +1188,7 @@ function dpsc_pnj_thank_you_page() {
 
 
                 case 'Bank Transfer':
-                    $output .= '<h4>' . __('Please transfer',"dp-lang") . ' <span id="dpsc_payment_amount">' . $dp_shopping_cart_settings['dp_currency_symbol'] . $amount . '</span> ' . __('to our Bank Account using following information:',"dp-lang") . '</h4>
+                    $output .= '<h4>' . __('Please transfer',"dp-lang") . ' <span id="dpsc_payment_amount">' . $dp_shopping_cart_settings['dp_currency_symbol'] . $amount . '</span> ' . __('to our Bank Account using the following information:',"dp-lang") . '</h4>
                                 <table>
                                     <tr>
                                         <td>' . __('Name of Recipent:',"dp-lang") . '</td><td>' . __($dp_shopping_cart_settings['bank_account_owner']) . '</td>

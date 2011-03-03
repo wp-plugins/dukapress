@@ -129,7 +129,7 @@ function dpsc_get_product_details($product_id) {
                     break;
 
                 case 'mzp_effect':
-                    $image_content = dp_pnj_mzp_effect($attachment_images, $product_id);
+                    $image_content = dp_pnj_mz_effect($attachment_images, $product_id);
                     break;
 
                 case 'lightbox':
@@ -336,7 +336,7 @@ function dpsc_pnj_grid_display($atts, $content=null) {
         $page_links = '';
     }
     if ($order != 'rand') {
-        $order_string = 'orderby=ID&order=' . $order . '&';
+        $order_string = 'orderby=post_date&order=' . $order . '&';
     }
     else {
         $order_string = 'orderby=rand&';
@@ -364,6 +364,7 @@ function dpsc_pnj_grid_display($atts, $content=null) {
                 $content .= '</div>';
                 $content .= '<div class="dpsc_grid_product_detail">';
                 $content .= '<p class="title"><a href="' . $prod_permalink . '" title="' .$product->post_title . '">' . __($product->post_title) . '</a></p>';
+                $content .= '<p class="detail">' . $product->post_excerpt . '</p>';
                 $content .= '<p class="price">' . $output['price'] . '</p>';
                 $content .= $output['start'];
                 $content .= $output['add_to_cart'];
@@ -672,4 +673,108 @@ function dp_create_post_type() {
 	'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments', 'custom-fields', 'posts', 'revisions', 'trackbacks' )
     ));
 }
+
+
+add_shortcode('dp_search', 'dp_custom_search_fn');
+function dp_custom_search_fn($atts, $content = null) {
+    $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
+    extract(shortcode_atts( array(
+            'per_page' => '',
+			'column' => '3'
+            ), $atts));
+    global $dp_custom_search_word;
+    $dp_custom_search_word = trim(esc_attr($_GET['dp_s']));
+    if ($dp_custom_search_word != '') {
+        $custom_search_args = array('post_type' => 'duka', 'meta_key' => 'price');
+        if (!empty($per_page)) {
+            $pagenum = isset($_GET['dpage']) ? $_GET['dpage'] : 1;
+            add_filter( 'posts_where', 'dp_product_search_filter');
+            $count = count(query_posts($custom_search_args));
+            wp_reset_query();
+            $page_links = paginate_links( array(
+                'base' => add_query_arg( 'dpage', '%#%' ),
+                'format' => '',
+                'prev_text' => __('&laquo;'),
+                'next_text' => __('&raquo;'),
+                'total' => ceil($count / $per_page),
+                'current' => $pagenum
+            ));
+            $page_links = '<div class="dpsc_grid_pagination">' . $page_links . '</div>';
+            $custom_search_args['posts_per_page'] = intval($per_page);
+            $custom_search_args['paged'] = intval($pagenum);
+        }
+        else {
+            $per_page = $total;
+            $page_links = '';
+        }
+
+        add_filter( 'posts_where', 'dp_product_search_filter');
+        $products = query_posts($custom_search_args);
+        global $wp_query;
+        wp_reset_query();
+        if (is_array($products) && count($products) > 0) {
+            $content .= '<div class="dpsc_grid_display">';
+            $count = 1;
+            $all_count = 0;
+            foreach ($products as $product) {
+                $output = dpsc_get_product_details($product->ID);
+                if ($output) {
+                    $attachment_images =&get_children('post_type=attachment&post_status=inherit&post_mime_type=image&post_parent=' . $product->ID);
+                    $main_image = '';
+                    foreach ($attachment_images as $image) {
+                        $main_image = $image->guid;
+                        break;
+                    }
+                    $prod_permalink = get_permalink($product->ID);
+                    $content .= '<div class="dpsc_grid_product">';
+                    $content .= '<div class="dpsc_grid_product_image">';
+                    if ($main_image != '') {
+                        $content .= '<a href="' . $prod_permalink . '" title="' .$product->post_title . '"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $main_image . '&w=' . $dp_shopping_cart_settings['g_w'] . '&h=' . $dp_shopping_cart_settings['g_h'] . '&zc=1" ></a>';
+                    }
+                    $content .= '</div>';
+                    $content .= '<div class="dpsc_grid_product_detail">';
+                    $content .= '<p class="title"><a href="' . $prod_permalink . '" title="' .$product->post_title . '">' . __($product->post_title) . '</a></p>';
+                    $content .= '<p class="detail">' . $product->post_excerpt . '</p>';
+                    $content .= '<p class="price">' . $output['price'] . '</p>';
+                    $content .= $output['start'];
+                    $content .= $output['add_to_cart'];
+                    $content .= $output['end'];
+                    $content .= '</div>';
+                    $content .= '</div>';
+                    if ($count === intval($column)) {
+                        $content .= '<div class="clear"></div>';
+                        $count = 0;
+                    }
+                    $count++;
+                    $all_count++;
+                }
+            }
+            $content .= '<div class="clear"></div>' . $page_links . '<div class="clear"></div>';
+            $content .= '</div>';
+            $content .= '<div class="clear"></div>';
+        }
+        else {
+            $content .= 'No Results Found.';
+        }
+    }
+    else {
+        $content .= 'No Results Found.';
+    }
+    return $content;
+}
+
+function dp_product_search_filter($where) {
+    global $wpdb, $dp_custom_search_word;
+    $dp_search_query_likes = explode(' ', $dp_custom_search_word);
+    if (is_array($dp_search_query_likes)) {
+        $final_like = array();
+        foreach($dp_search_query_likes as $dp_search_query_like) {
+            $final_like[] = "LIKE '%{$dp_search_query_like}%'";
+        }
+        $final_like = implode(" AND {$wpdb->posts}.post_title ", $final_like);
+        $where .= " AND {$wpdb->posts}.post_title {$final_like}";
+    }
+    return $where;
+}
+
 ?>

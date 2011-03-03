@@ -316,7 +316,7 @@ class dpsc_show_product_widget extends WP_Widget {
         echo $before_widget;
         echo $before_title.$title.$after_title;
         $widget_html = '';
-        $widget_products = get_posts('numberposts=' . $instance['number'] . '&post_type=' . $instance['type'] . '&meta_key=price&category=' . $instance['category']);
+        $widget_products = get_posts('numberposts=' . $instance['number'] . '&post_type=' . $instance['type'] . '&meta_key=price&category=' . $instance['category'] . 'orderby=post_date&order=DESC');
         if (is_array($widget_products)) {
             $widget_html .= '<div class="dp_products_widget">';
             foreach ($widget_products as $product) {
@@ -349,6 +349,59 @@ class dpsc_show_product_widget extends WP_Widget {
             $widget_html .= '</div>';
         }
         echo $widget_html;
+        echo $after_widget;
+    }
+}
+
+add_action('widgets_init', create_function('', 'return register_widget("dpsc_custom_search_widget");'));
+class dpsc_custom_search_widget extends WP_Widget {
+    function dpsc_custom_search_widget() {
+        $widget_ops = array('description' => __('Search Widget For DukaPress',"dp-lang"));
+        $control_ops = array('width' => 100, 'height' => 300);
+        parent::WP_Widget(false,$name= __('DukaPress Search Widget',"dp-lang"),$widget_ops,$control_ops);
+    }
+
+    function form($instance) {
+        $instance = wp_parse_args( (array) $instance, array(  'title' => '', 'page_id' => '') );
+        $title = esc_attr( $instance['title'] );
+        $page_id = intval(esc_attr( $instance['page_id']));
+        ?>
+<p>
+    <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:',"dp-lang");?></label>
+    <input type="text" value="<?php echo $title; ?>" name="<?php echo $this->get_field_name('title'); ?>" id="<?php echo $this->get_field_id('title'); ?>" class="widefat" />
+</p>
+<p>
+    <label for="<?php echo $this->get_field_id('page_id'); ?>"><?php _e('Select Search Result Page:',"dp-lang");?></label>
+<!--    <input type="text" value="<?php echo $title; ?>" name="<?php echo $this->get_field_name('title'); ?>" id="<?php echo $this->get_field_id('title'); ?>" class="widefat" />-->
+    <?php
+    $args = array('selected' => $page_id, 'name' => $this->get_field_name('page_id'));
+    wp_dropdown_pages($args);
+    ?>
+</p>
+        <?php
+    }
+
+    function update($new_instance, $old_instance) {
+        $instance = $old_instance;
+        $instance['title'] = strip_tags( $new_instance['title'] );
+        $instance['page_id'] = strip_tags( $new_instance['page_id'] );
+        return $instance;
+    }
+
+    function widget($args, $instance) {
+        extract($args);
+        $title = $instance['title'];
+        $dp_search_page_id = $instance['page_id'];
+        echo $before_widget;
+        if (!empty($title)) {
+            echo $before_title.$title.$after_title;
+        }
+        ?>
+<form id="dp_searchform" action="<?php echo get_permalink($dp_search_page_id)?>" method="GET">
+    <input id="dp_s" type="text" name="dp_s" value="" />
+    <input id="dp_search_submit" type="submit" value="Search" />
+</form>
+        <?php
         echo $after_widget;
     }
 }
