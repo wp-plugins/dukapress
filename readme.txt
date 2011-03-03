@@ -1,5 +1,5 @@
 === DukaPress ===
-Contributors: parshwa, moshthepitt
+Contributors: NetMadeEz, moshthepitt
 Donate link: http://dukapress.org/about/
 Tags: shopping cart, web shop, cart, shop, Worldpay, Paypal, Alertpay, paypal, e-commerce, ecommerce, MPESA, ZAP, yuCash, Mobile Payments,online duka, duka, online shop, JQZoom, Multiple Currencies
 
@@ -84,7 +84,7 @@ You currently HAVE to have at least one custom field per prodct in order for tho
 
 = Why am I getting multiple/many emails when an order is placed? =
 
-If you are getting many emails with the subject “Receipt of Order No: xxxxx“, then it may be because you have PayPal IPN settings turned on. Please turn them off.
+If you are getting many emails with the subject ï¿½Receipt of Order No: xxxxxï¿½, then it may be because you have PayPal IPN settings turned on. Please turn them off.
 
 = Why isn't the "Inquiry"/"Catalogue mode" working properly? =
 
