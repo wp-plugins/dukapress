@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the DukaPress Shopping Cart package.
 msgid ""
 msgstr ""
-"Project-Id-Version: DukaPress Shopping Cart 2.1\n"
+"Project-Id-Version: DukaPress Shopping Cart 2.2\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/dukapress\n"
-"POT-Creation-Date: 2011-02-07 10:47:17+00:00\n"
+"POT-Creation-Date: 2011-03-03 17:45:47+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,13 +20,13 @@ msgstr ""
 msgid "Total %d orders sold with total amount of %s %d"
 msgstr ""
 
-#: dukapress.php:101 dukapress.php:312 php/dp-cart.php:1237
-#: php/dp-products.php:324
+#: dukapress.php:101 dukapress.php:312 php/dp-products.php:324
+#: php/dp-products.php:697 php/dp-cart.php:1276
 msgid "&laquo;"
 msgstr ""
 
-#: dukapress.php:102 dukapress.php:313 php/dp-cart.php:1238
-#: php/dp-products.php:325
+#: dukapress.php:102 dukapress.php:313 php/dp-products.php:325
+#: php/dp-products.php:698 php/dp-cart.php:1277
 msgid "&raquo;"
 msgstr ""
 
@@ -64,11 +64,11 @@ msgstr ""
 msgid "Sub-Total:"
 msgstr ""
 
-#: dukapress.php:550 php/dp-cart.php:338
+#: dukapress.php:550 php/dp-cart.php:346
 msgid "Shipping:"
 msgstr ""
 
-#: dukapress.php:553 php/dp-cart.php:302
+#: dukapress.php:553 php/dp-cart.php:310
 msgid "Discount:"
 msgstr ""
 
@@ -76,7 +76,7 @@ msgstr ""
 msgid "Tax:"
 msgstr ""
 
-#: dukapress.php:559 php/dp-cart.php:340 php/dp-widgets.php:209
+#: dukapress.php:559 php/dp-cart.php:348 php/dp-widgets.php:209
 msgid "Total:"
 msgstr ""
 
@@ -100,7 +100,7 @@ msgstr ""
 msgid "Name of Shop"
 msgstr ""
 
-#: dukapress.php:766 php/dp-cart.php:988 php/dp-cart.php:1017
+#: dukapress.php:766 php/dp-cart.php:1024 php/dp-cart.php:1053
 msgid "Address"
 msgstr ""
 
@@ -108,7 +108,7 @@ msgstr ""
 msgid "State / Province"
 msgstr ""
 
-#: dukapress.php:778 php/dp-cart.php:994 php/dp-cart.php:1023
+#: dukapress.php:778 php/dp-cart.php:1030 php/dp-cart.php:1059
 msgid "Postal Code"
 msgstr ""
 
@@ -268,7 +268,7 @@ msgstr ""
 msgid "Download Links Duration:"
 msgstr ""
 
-#: dukapress.php:1067 php/dp-cart.php:473 php/dp-cart.php:531
+#: dukapress.php:1067 php/dp-cart.php:481 php/dp-cart.php:539
 msgid "PayPal"
 msgstr ""
 
@@ -280,7 +280,7 @@ msgstr ""
 msgid "PayPal ID"
 msgstr ""
 
-#: dukapress.php:1120 php/dp-cart.php:479 php/dp-cart.php:535
+#: dukapress.php:1120 php/dp-cart.php:487 php/dp-cart.php:543
 msgid "Authorize.net"
 msgstr ""
 
@@ -300,7 +300,7 @@ msgstr ""
 msgid "Test-Request"
 msgstr ""
 
-#: dukapress.php:1157 php/dp-cart.php:485 php/dp-cart.php:539
+#: dukapress.php:1157 php/dp-cart.php:493 php/dp-cart.php:547
 msgid "WorldPay"
 msgstr ""
 
@@ -323,7 +323,7 @@ msgstr ""
 msgid "WorldPay Currency Code"
 msgstr ""
 
-#: dukapress.php:1211 php/dp-cart.php:491 php/dp-cart.php:543
+#: dukapress.php:1211 php/dp-cart.php:499 php/dp-cart.php:551
 msgid "AlertPay"
 msgstr ""
 
@@ -390,7 +390,7 @@ msgstr ""
 msgid "Enable Discount"
 msgstr ""
 
-#: dukapress.php:1367 php/dp-cart.php:400
+#: dukapress.php:1367 php/dp-cart.php:408
 msgid "Enter Discount Code"
 msgstr ""
 
@@ -406,282 +406,13 @@ msgstr ""
 msgid "DukaPress News"
 msgstr ""
 
-#: php/dp-cart.php:212
-msgid "Please review your order"
-msgstr ""
-
-#: php/dp-cart.php:230 php/dp-payment.php:125
+#: php/dp-payment.php:124 php/dp-cart.php:238
 msgid "There are no products in your cart."
 msgstr ""
 
-#: php/dp-cart.php:256 php/dp-widgets.php:180
-msgid "Price"
-msgstr ""
-
-#: php/dp-cart.php:262 php/dp-products.php:648 php/dp-widgets.php:189
-msgid "Product"
-msgstr ""
-
-#: php/dp-cart.php:262 php/dp-cart.php:1094
-msgid "Quantity"
-msgstr ""
-
-#: php/dp-cart.php:339 php/dp-products.php:22 php/dp-products.php:26
-#: php/dp-products.php:410
+#: php/dp-products.php:22 php/dp-products.php:26 php/dp-products.php:411
+#: php/dp-cart.php:347
 msgid "Price:"
-msgstr ""
-
-#: php/dp-cart.php:384
-msgid "Your Name:"
-msgstr ""
-
-#: php/dp-cart.php:385
-msgid "Your Email:"
-msgstr ""
-
-#: php/dp-cart.php:386
-msgid "Subject:"
-msgstr ""
-
-#: php/dp-cart.php:387
-msgid "Message:"
-msgstr ""
-
-#: php/dp-cart.php:402
-msgid "Discount Code"
-msgstr ""
-
-#: php/dp-cart.php:403
-msgid "Check"
-msgstr ""
-
-#: php/dp-cart.php:497 php/dp-cart.php:547
-msgid "Bank transfer in advance"
-msgstr ""
-
-#: php/dp-cart.php:503 php/dp-cart.php:551
-msgid "Cash at store"
-msgstr ""
-
-#: php/dp-cart.php:509 php/dp-cart.php:559
-msgid "Cash on delivery"
-msgstr ""
-
-#: php/dp-cart.php:515 php/dp-cart.php:555
-msgid "Pay by Mobile Phone"
-msgstr ""
-
-#: php/dp-cart.php:527
-msgid "Make payment using "
-msgstr ""
-
-#: php/dp-cart.php:574
-msgid "Make Payment"
-msgstr ""
-
-#: php/dp-cart.php:799
-msgid "New user registration on your site %s:"
-msgstr ""
-
-#: php/dp-cart.php:800 php/dp-cart.php:808
-msgid "Username: %s"
-msgstr ""
-
-#: php/dp-cart.php:801
-msgid "E-mail: %s"
-msgstr ""
-
-#: php/dp-cart.php:803
-msgid "[%s] New User Registration"
-msgstr ""
-
-#: php/dp-cart.php:809
-msgid "Password: %s"
-msgstr ""
-
-#: php/dp-cart.php:818
-msgid "[%s] Your username and password"
-msgstr ""
-
-#: php/dp-cart.php:983
-msgid "Billing Address"
-msgstr ""
-
-#: php/dp-cart.php:984 php/dp-cart.php:1013
-msgid "First Name"
-msgstr ""
-
-#: php/dp-cart.php:985 php/dp-cart.php:1014
-msgid "Please enter the First Name"
-msgstr ""
-
-#: php/dp-cart.php:986 php/dp-cart.php:1015
-msgid "Last Name"
-msgstr ""
-
-#: php/dp-cart.php:987 php/dp-cart.php:1016
-msgid "Please enter the Last Name"
-msgstr ""
-
-#: php/dp-cart.php:989 php/dp-cart.php:1018
-msgid "Please enter the Address"
-msgstr ""
-
-#: php/dp-cart.php:990 php/dp-cart.php:1019
-msgid "City"
-msgstr ""
-
-#: php/dp-cart.php:991 php/dp-cart.php:1020
-msgid "Please enter the City"
-msgstr ""
-
-#: php/dp-cart.php:992 php/dp-cart.php:1021
-msgid "Province / State"
-msgstr ""
-
-#: php/dp-cart.php:993 php/dp-cart.php:1022
-msgid "Please enter the State"
-msgstr ""
-
-#: php/dp-cart.php:995 php/dp-cart.php:1024
-msgid "Please enter the Postal Code"
-msgstr ""
-
-#: php/dp-cart.php:996 php/dp-cart.php:1025
-msgid "Country"
-msgstr ""
-
-#: php/dp-cart.php:1006
-msgid "Email"
-msgstr ""
-
-#: php/dp-cart.php:1007
-msgid "Please enter the Email"
-msgstr ""
-
-#: php/dp-cart.php:1008
-msgid "Phone Number"
-msgstr ""
-
-#: php/dp-cart.php:1009
-msgid "Please enter the Phone"
-msgstr ""
-
-#: php/dp-cart.php:1012
-msgid "Shipping Address"
-msgstr ""
-
-#: php/dp-cart.php:1036
-msgid "I have a different Shipping Address."
-msgstr ""
-
-#: php/dp-cart.php:1092
-msgid "Sr No."
-msgstr ""
-
-#: php/dp-cart.php:1093
-msgid "Product Name"
-msgstr ""
-
-#: php/dp-cart.php:1108
-msgid "Inquiry Form Submitted"
-msgstr ""
-
-#: php/dp-cart.php:1109
-msgid "Thank you for submitting Inquiry form."
-msgstr ""
-
-#: php/dp-cart.php:1109
-msgid "We will contact you soon."
-msgstr ""
-
-#: php/dp-cart.php:1113
-msgid "Thank you for your order!"
-msgstr ""
-
-#: php/dp-cart.php:1142 php/dp-cart.php:1147
-msgid "Please keep"
-msgstr ""
-
-#: php/dp-cart.php:1142
-msgid "ready for payment upon delivery."
-msgstr ""
-
-#: php/dp-cart.php:1147
-msgid "ready for payment when you come to take your order."
-msgstr ""
-
-#: php/dp-cart.php:1152
-msgid "Please transfer"
-msgstr ""
-
-#: php/dp-cart.php:1152
-msgid "to our Bank Account using following information:"
-msgstr ""
-
-#: php/dp-cart.php:1155
-msgid "Name of Recipent:"
-msgstr ""
-
-#: php/dp-cart.php:1158
-msgid "for:</td><td>Order No.:"
-msgstr ""
-
-#: php/dp-cart.php:1161
-msgid "Name of Bank:"
-msgstr ""
-
-#: php/dp-cart.php:1164
-msgid "Routing Number:"
-msgstr ""
-
-#: php/dp-cart.php:1167
-msgid "Account Number:"
-msgstr ""
-
-#: php/dp-cart.php:1170
-msgid "IBAN:"
-msgstr ""
-
-#: php/dp-cart.php:1173
-msgid "BIC/SWIFT:"
-msgstr ""
-
-#: php/dp-cart.php:1176
-msgid ""
-"When we have received your payment in our account, we will begin to Process "
-"your Order."
-msgstr ""
-
-#: php/dp-cart.php:1180
-msgid "Please send"
-msgstr ""
-
-#: php/dp-cart.php:1180
-msgid "to any of the following numbers:"
-msgstr ""
-
-#: php/dp-cart.php:1193
-msgid ""
-"Please also send your invoice number to us by SMS using the phone that you "
-"used to send the money. When we have received your payment in any of our "
-"accounts, we shall begin to Process your Order."
-msgstr ""
-
-#: php/dp-cart.php:1197
-msgid "Thank you for making the payment of"
-msgstr ""
-
-#: php/dp-cart.php:1197
-msgid "using"
-msgstr ""
-
-#: php/dp-cart.php:1198
-msgid "We will process your order soon."
-msgstr ""
-
-#: php/dp-cart.php:1219
-msgid "Order canceled !!"
 msgstr ""
 
 #: php/dp-products.php:48
@@ -704,91 +435,360 @@ msgstr ""
 msgid "Inquire"
 msgstr ""
 
-#: php/dp-products.php:411
+#: php/dp-products.php:412
 msgid "New Price:"
 msgstr ""
 
-#: php/dp-products.php:412
+#: php/dp-products.php:413
 msgid "Currently In Stock:"
 msgstr ""
 
-#: php/dp-products.php:413
+#: php/dp-products.php:414
 msgid "Item Weight:"
 msgstr ""
 
-#: php/dp-products.php:414
+#: php/dp-products.php:415
 msgid "Digital File:"
 msgstr ""
 
-#: php/dp-products.php:417
+#: php/dp-products.php:418
 msgid "Dropdown Options"
 msgstr ""
 
-#: php/dp-products.php:424
+#: php/dp-products.php:425
 msgid "Option Name"
 msgstr ""
 
-#: php/dp-products.php:428
+#: php/dp-products.php:429
 msgid "Variation Name"
 msgstr ""
 
-#: php/dp-products.php:432
+#: php/dp-products.php:433
 msgid "Variation Price"
 msgstr ""
 
-#: php/dp-products.php:647 php/dp-widgets.php:225
+#: php/dp-products.php:648 php/dp-widgets.php:225
 msgid "Products"
 msgstr ""
 
-#: php/dp-products.php:649 php/dp-products.php:650
+#: php/dp-products.php:649 php/dp-cart.php:270 php/dp-widgets.php:189
+msgid "Product"
+msgstr ""
+
+#: php/dp-products.php:650 php/dp-products.php:651
 msgid "Add New Product"
 msgstr ""
 
-#: php/dp-products.php:651
+#: php/dp-products.php:652
 msgid "Edit"
 msgstr ""
 
-#: php/dp-products.php:652
+#: php/dp-products.php:653
 msgid "Edit Product"
 msgstr ""
 
-#: php/dp-products.php:653
+#: php/dp-products.php:654
 msgid "New Product"
 msgstr ""
 
-#: php/dp-products.php:654 php/dp-products.php:655
+#: php/dp-products.php:655 php/dp-products.php:656
 msgid "View Product"
 msgstr ""
 
-#: php/dp-products.php:656
+#: php/dp-products.php:657
 msgid "Search Products"
 msgstr ""
 
-#: php/dp-products.php:657
+#: php/dp-products.php:658
 msgid "No products found"
 msgstr ""
 
-#: php/dp-products.php:658
+#: php/dp-products.php:659
 msgid "No products found in Trash"
 msgstr ""
 
-#: php/dp-products.php:660
+#: php/dp-products.php:661
 msgid "Products for use with DukaPress"
+msgstr ""
+
+#: php/dp-cart.php:220
+msgid "Please review your order"
+msgstr ""
+
+#: php/dp-cart.php:264 php/dp-widgets.php:180
+msgid "Price"
+msgstr ""
+
+#: php/dp-cart.php:270 php/dp-cart.php:1130
+msgid "Quantity"
+msgstr ""
+
+#: php/dp-cart.php:392
+msgid "Your Name:"
+msgstr ""
+
+#: php/dp-cart.php:393
+msgid "Your Email:"
+msgstr ""
+
+#: php/dp-cart.php:394
+msgid "Subject:"
+msgstr ""
+
+#: php/dp-cart.php:395
+msgid "Message:"
+msgstr ""
+
+#: php/dp-cart.php:410
+msgid "Discount Code"
+msgstr ""
+
+#: php/dp-cart.php:411
+msgid "Check"
+msgstr ""
+
+#: php/dp-cart.php:505 php/dp-cart.php:555
+msgid "Bank transfer in advance"
+msgstr ""
+
+#: php/dp-cart.php:511 php/dp-cart.php:559
+msgid "Cash at store"
+msgstr ""
+
+#: php/dp-cart.php:517 php/dp-cart.php:567
+msgid "Cash on delivery"
+msgstr ""
+
+#: php/dp-cart.php:523 php/dp-cart.php:563
+msgid "Pay by Mobile Phone"
+msgstr ""
+
+#: php/dp-cart.php:535
+msgid "Make payment using "
+msgstr ""
+
+#: php/dp-cart.php:582
+msgid "Make Payment"
+msgstr ""
+
+#: php/dp-cart.php:807
+msgid "New user registration on your site %s:"
+msgstr ""
+
+#: php/dp-cart.php:808 php/dp-cart.php:816
+msgid "Username: %s"
+msgstr ""
+
+#: php/dp-cart.php:809
+msgid "E-mail: %s"
+msgstr ""
+
+#: php/dp-cart.php:811
+msgid "[%s] New User Registration"
+msgstr ""
+
+#: php/dp-cart.php:817
+msgid "Password: %s"
+msgstr ""
+
+#: php/dp-cart.php:826
+msgid "[%s] Your username and password"
+msgstr ""
+
+#: php/dp-cart.php:1019
+msgid "Billing Address"
+msgstr ""
+
+#: php/dp-cart.php:1020 php/dp-cart.php:1049
+msgid "First Name"
+msgstr ""
+
+#: php/dp-cart.php:1021 php/dp-cart.php:1050
+msgid "Please enter the First Name"
+msgstr ""
+
+#: php/dp-cart.php:1022 php/dp-cart.php:1051
+msgid "Last Name"
+msgstr ""
+
+#: php/dp-cart.php:1023 php/dp-cart.php:1052
+msgid "Please enter the Last Name"
+msgstr ""
+
+#: php/dp-cart.php:1025 php/dp-cart.php:1054
+msgid "Please enter the Address"
+msgstr ""
+
+#: php/dp-cart.php:1026 php/dp-cart.php:1055
+msgid "City"
+msgstr ""
+
+#: php/dp-cart.php:1027 php/dp-cart.php:1056
+msgid "Please enter the City"
+msgstr ""
+
+#: php/dp-cart.php:1028 php/dp-cart.php:1057
+msgid "Province / State"
+msgstr ""
+
+#: php/dp-cart.php:1029 php/dp-cart.php:1058
+msgid "Please enter the State"
+msgstr ""
+
+#: php/dp-cart.php:1031 php/dp-cart.php:1060
+msgid "Please enter the Postal Code"
+msgstr ""
+
+#: php/dp-cart.php:1032 php/dp-cart.php:1061
+msgid "Country"
+msgstr ""
+
+#: php/dp-cart.php:1042
+msgid "Email"
+msgstr ""
+
+#: php/dp-cart.php:1043
+msgid "Please enter the Email"
+msgstr ""
+
+#: php/dp-cart.php:1044
+msgid "Phone Number"
+msgstr ""
+
+#: php/dp-cart.php:1045
+msgid "Please enter the Phone"
+msgstr ""
+
+#: php/dp-cart.php:1048
+msgid "Shipping Address"
+msgstr ""
+
+#: php/dp-cart.php:1072
+msgid "I have a different Shipping Address."
+msgstr ""
+
+#: php/dp-cart.php:1128
+msgid "Sr No."
+msgstr ""
+
+#: php/dp-cart.php:1129
+msgid "Product Name"
+msgstr ""
+
+#: php/dp-cart.php:1146
+msgid "Inquiry Form Submitted"
+msgstr ""
+
+#: php/dp-cart.php:1147
+msgid "Thank you for submitting our Inquiry form."
+msgstr ""
+
+#: php/dp-cart.php:1147
+msgid "We will contact you soon."
+msgstr ""
+
+#: php/dp-cart.php:1151
+msgid "Thank you for your order!"
+msgstr ""
+
+#: php/dp-cart.php:1181 php/dp-cart.php:1186
+msgid "Please keep"
+msgstr ""
+
+#: php/dp-cart.php:1181
+msgid "ready for payment upon delivery."
+msgstr ""
+
+#: php/dp-cart.php:1186
+msgid "ready for payment when you come to take your order."
+msgstr ""
+
+#: php/dp-cart.php:1191
+msgid "Please transfer"
+msgstr ""
+
+#: php/dp-cart.php:1191
+msgid "to our Bank Account using the following information:"
+msgstr ""
+
+#: php/dp-cart.php:1194
+msgid "Name of Recipent:"
+msgstr ""
+
+#: php/dp-cart.php:1197
+msgid "for:</td><td>Order No.:"
+msgstr ""
+
+#: php/dp-cart.php:1200
+msgid "Name of Bank:"
+msgstr ""
+
+#: php/dp-cart.php:1203
+msgid "Routing Number:"
+msgstr ""
+
+#: php/dp-cart.php:1206
+msgid "Account Number:"
+msgstr ""
+
+#: php/dp-cart.php:1209
+msgid "IBAN:"
+msgstr ""
+
+#: php/dp-cart.php:1212
+msgid "BIC/SWIFT:"
+msgstr ""
+
+#: php/dp-cart.php:1215
+msgid ""
+"When we have received your payment in our account, we will begin to Process "
+"your Order."
+msgstr ""
+
+#: php/dp-cart.php:1219
+msgid "Please send"
+msgstr ""
+
+#: php/dp-cart.php:1219
+msgid "to any of the following numbers:"
+msgstr ""
+
+#: php/dp-cart.php:1232
+msgid ""
+"Please also send your invoice number to us by SMS using the phone that you "
+"used to send the money. When we have received your payment in any of our "
+"accounts, we shall begin to Process your Order."
+msgstr ""
+
+#: php/dp-cart.php:1236
+msgid "Thank you for making the payment of"
+msgstr ""
+
+#: php/dp-cart.php:1236
+msgid "using"
+msgstr ""
+
+#: php/dp-cart.php:1237
+msgid "We will process your order soon."
+msgstr ""
+
+#: php/dp-cart.php:1258
+msgid "Order canceled !!"
 msgstr ""
 
 #: php/dp-widgets.php:14
 msgid "Displays DukaPress Shopping Cart"
 msgstr ""
 
-#. #-#-#-#-#  plugin.pot (DukaPress Shopping Cart 2.1)  #-#-#-#-#
+#. #-#-#-#-#  plugin.pot (DukaPress Shopping Cart 2.2)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
-#. #-#-#-#-#  plugin.pot (DukaPress Shopping Cart 2.1)  #-#-#-#-#
+#. #-#-#-#-#  plugin.pot (DukaPress Shopping Cart 2.2)  #-#-#-#-#
 #. Description of the plugin/theme
 #: php/dp-widgets.php:16 php/dp-widgets.php:39
 msgid "DukaPress Shopping Cart"
 msgstr ""
 
-#: php/dp-widgets.php:24 php/dp-widgets.php:68
+#: php/dp-widgets.php:24 php/dp-widgets.php:68 php/dp-widgets.php:370
 msgid "Title:"
 msgstr ""
 
@@ -852,13 +852,25 @@ msgstr ""
 msgid "DukaPress Product Display"
 msgstr ""
 
-#. #-#-#-#-#  plugin.pot (DukaPress Shopping Cart 2.1)  #-#-#-#-#
+#: php/dp-widgets.php:359
+msgid "Search Widget For DukaPress"
+msgstr ""
+
+#: php/dp-widgets.php:361
+msgid "DukaPress Search Widget"
+msgstr ""
+
+#: php/dp-widgets.php:374
+msgid "Select Search Result Page:"
+msgstr ""
+
+#. #-#-#-#-#  plugin.pot (DukaPress Shopping Cart 2.2)  #-#-#-#-#
 #. Plugin URI of the plugin/theme
-#. #-#-#-#-#  plugin.pot (DukaPress Shopping Cart 2.1)  #-#-#-#-#
+#. #-#-#-#-#  plugin.pot (DukaPress Shopping Cart 2.2)  #-#-#-#-#
 #. Author URI of the plugin/theme
 msgid "http://dukapress.org/"
 msgstr ""
 
 #. Author of the plugin/theme
-msgid "Parshwa Nemi Jain and Nickel Pro"
+msgid "NetMadeEz and Nickel Pro"
 msgstr ""
