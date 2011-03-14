@@ -67,7 +67,7 @@ function dpsc_get_product_details($product_id) {
             $custom_fields_output['dropdown'] = $dropdown_content;
             if($dp_shopping_cart_settings['dp_shop_mode'] != 'inquiry') {
                 $custom_fields_output['end'] = '<script language="javascript" type="text/javascript">
-                var flag=0; //whether ie or ff
+                var flag=0;var SalePriceLabel1=0; //whether ie or ff
                 if(navigator.appName=="Microsoft Internet Explorer"){initialCost=SalePriceLabel1.value;flag=1;}
                 //change value in variant and get final price
                 function getFinalPrice_' . $product_id . '(){
