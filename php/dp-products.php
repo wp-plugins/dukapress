@@ -658,18 +658,19 @@ function dp_create_post_type() {
             'not_found' => __( 'No products found' ,"dp-lang"),
             'not_found_in_trash' => __( 'No products found in Trash',"dp-lang" )
         ),
-        'description' => __('Products for use with DukaPress',"dp-lang"),
+    'description' => __('Products for use with DukaPress',"dp-lang"),
 	'public' => true,
 	'show_ui' => true,
 	'capability_type' => 'post',
-        'taxonomies' => array( 'category', 'post_tag'),
-        'menu_position' => 30,
-        'publicly_queryable' => true,
-        'exclude_from_search' => false,
-        'query_var' => true,
+    'taxonomies' => array( 'category', 'post_tag'),
+    'menu_position' => 30,
+    'publicly_queryable' => true,
+    'exclude_from_search' => false,
+    'query_var' => true,
 	'hierarchical' => false,
-        'menu_icon' => DP_PLUGIN_URL . '/images/dp_icon.png',
+    'menu_icon' => DP_PLUGIN_URL . '/images/dp_icon.png',
 	'rewrite' => array('slug' => 'products', 'with_front' => false),
+	'has_archive' => true,
 	'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments', 'custom-fields', 'posts', 'revisions', 'trackbacks' )
     ));
 }
