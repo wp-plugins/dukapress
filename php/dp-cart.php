@@ -389,10 +389,10 @@ function dpsc_print_checkout_inquiry_form() {
 
     $output = '<div id="dpsc_inquiry_form">';
     $output .= '<form name="dpsc_inquiry_form" action="' . $return_path . '" method="POST">';
-    $output .= '<label for="dpsc_inquiry_from_name">'.__("Your Name:","dp-lang").' </label><br/><input name="dpsc_inquiry_from_name" type="text" value="" /><br/>';
-    $output .= '<label for="dpsc_inquiry_from">'.__("Your Email:","dp-lang").' </label><br/><input name="dpsc_inquiry_from" type="text" value="" /><br/>';
-    $output .= '<label for="dpsc_inquiry_subject">'.__("Subject:","dp-lang").' </label><br/><input name="dpsc_inquiry_subject" type="text" value="" /><br/>';
-    $output .= '<label for="dpsc_inquiry_custom_msg">'.__("Message:","dp-lang").' </label><br/><textarea name="dpsc_inquiry_custom_msg"></textarea><br/>';
+    $output .= '<label for="dpsc_inquiry_from_name">'.__("Your Name:","dp-lang").' </label><br/><input id="dpsc_inquiry_from_name" name="dpsc_inquiry_from_name" type="text" value="" /><span class="dpsc_error_msg" id="NameError">' . __('Please enter your Name',"dp-lang") . '</span><br/>';
+    $output .= '<label for="dpsc_inquiry_from">'.__("Your Email:","dp-lang").' </label><br/><input id="dpsc_inquiry_from" name="dpsc_inquiry_from" type="text" value="" /><span class="dpsc_error_msg" id="emailError">' . __('Please enter your Email',"dp-lang") . '</span><br/>';
+    $output .= '<label for="dpsc_inquiry_subject">'.__("Subject:","dp-lang").' </label><br/><input id="dpsc_inquiry_subject" name="dpsc_inquiry_subject" type="text" value="" /><span class="dpsc_error_msg" id="subjectError">' . __('Please enter Subject',"dp-lang") . '</span><br/>';
+    $output .= '<label for="dpsc_inquiry_custom_msg">'.__("Message:","dp-lang").' </label><br/><textarea id="dpsc_inquiry_custom_msg" name="dpsc_inquiry_custom_msg"></textarea><span class="dpsc_error_msg" id="contentError">' . __('Please enter Message',"dp-lang") . '</span><br/>';
     $output .= '<input type="submit" name="dpsc_inquire_submit" value="Ask For Quote"/>';
     $output .= '</form>';
     $output .= '</div>';
@@ -1145,6 +1145,14 @@ function dpsc_pnj_thank_you_page() {
         $to = get_option('admin_email');
         dpsc_pnj_send_mail($to, $to, __('Inquiry Form Submitted',"dp-lang"), $subject, $final_msg);
         $output = '<h3>' . __('Thank you for submitting our Inquiry form.',"dp-lang") . '</h3><p>' . __('We will contact you soon.',"dp-lang") . '</p>';
+        $products = $_SESSION['dpsc_products'];
+
+        foreach ($products as $key => $item) {
+
+            unset($products[$key]);
+
+        }
+        $_SESSION['dpsc_products'] = $products;
         return $output;
     }
     if (!$status) {

@@ -1,20 +1,5 @@
 jQuery(document).ready(function () {
-    jQuery('#firstNameError').hide();
-    jQuery('#lastNameError').hide();
-    jQuery('#addressError').hide();
-    jQuery('#cityError').hide();
-    jQuery('#stateError').hide();
-    jQuery('#postelError').hide();
-    jQuery('#countryError').hide();
-    jQuery('#emailError').hide();
-    jQuery('#phoneError').hide();
-    jQuery('#shipCountryError').hide();
-    jQuery('#shipPostalError').hide();
-    jQuery('#shipStateError').hide();
-    jQuery('#shipAddressError').hide();
-    jQuery('#shipLNameError').hide();
-    jQuery('#shipFNameError').hide();
-    jQuery('#shipCityError').hide();
+    jQuery('.dpsc_error_msg').hide();
 
     jQuery("form[ID^=dpsc_product_form_]").submit(function() {
         jQuery('div.dpsc_update_icon', jQuery(this)).css('display', 'inline');
@@ -26,6 +11,39 @@ jQuery(document).ready(function () {
             jQuery.post( dpsc_js.dpsc_url+"/index.php?ajax=true", form_values, function(returned_data) {
                 eval(returned_data);
             });
+            return false;
+        }
+    });
+
+    jQuery("form[name=dpsc_inquiry_form]").submit(function() {
+        jQuery('.dpsc_error_msg').hide();
+        var dpsc_name = jQuery('#dpsc_inquiry_from_name').val();
+        var dpsc_email = jQuery('#dpsc_inquiry_from').val();
+        var dpsc_subject = jQuery('#dpsc_inquiry_subject').val();
+        var dpsc_msg = jQuery('#dpsc_inquiry_custom_msg').val();
+
+        var no_error = true;
+        if (!dpsc_name) {
+            jQuery('#NameError').show();
+            no_error = false;
+        }
+        if (!dpsc_email) {
+            jQuery('#emailError').show();
+            no_error = false;
+        }
+        if (!dpsc_subject) {
+            jQuery('#subjectError').show();
+            no_error = false;
+        }
+        if (!dpsc_msg) {
+            jQuery('#contentError').show();
+            no_error = false;
+        }
+
+        if (no_error) {
+            return true;
+        }
+        else {
             return false;
         }
     });
