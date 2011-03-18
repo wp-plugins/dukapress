@@ -389,10 +389,10 @@ function dpsc_print_checkout_inquiry_form() {
 
     $output = '<div id="dpsc_inquiry_form">';
     $output .= '<form name="dpsc_inquiry_form" action="' . $return_path . '" method="POST">';
-    $output .= '<label for="dpsc_inquiry_from_name">'.__("Your Name:","dp-lang").' </label><br/><input id="dpsc_inquiry_from_name" name="dpsc_inquiry_from_name" type="text" value="" /><span class="dpsc_error_msg" id="NameError">' . __('Please enter your Name',"dp-lang") . '</span><br/>';
-    $output .= '<label for="dpsc_inquiry_from">'.__("Your Email:","dp-lang").' </label><br/><input id="dpsc_inquiry_from" name="dpsc_inquiry_from" type="text" value="" /><span class="dpsc_error_msg" id="emailError">' . __('Please enter your Email',"dp-lang") . '</span><br/>';
-    $output .= '<label for="dpsc_inquiry_subject">'.__("Subject:","dp-lang").' </label><br/><input id="dpsc_inquiry_subject" name="dpsc_inquiry_subject" type="text" value="" /><span class="dpsc_error_msg" id="subjectError">' . __('Please enter Subject',"dp-lang") . '</span><br/>';
-    $output .= '<label for="dpsc_inquiry_custom_msg">'.__("Message:","dp-lang").' </label><br/><textarea id="dpsc_inquiry_custom_msg" name="dpsc_inquiry_custom_msg"></textarea><span class="dpsc_error_msg" id="contentError">' . __('Please enter Message',"dp-lang") . '</span><br/>';
+    $output .= '<label for="dpsc_inquiry_from_name">'.__("Your Name:","dp-lang").' </label><br/><input id="dpsc_inquiry_from_name" name="dpsc_inquiry_from_name" type="text" value="" /><span class="dpsc_error_msg" id="NameError">' . __('Please enter your name',"dp-lang") . '</span><br/>';
+    $output .= '<label for="dpsc_inquiry_from">'.__("Your Email:","dp-lang").' </label><br/><input id="dpsc_inquiry_from" name="dpsc_inquiry_from" type="text" value="" /><span class="dpsc_error_msg" id="emailError">' . __('Please enter your email address',"dp-lang") . '</span><br/>';
+    $output .= '<label for="dpsc_inquiry_subject">'.__("Subject:","dp-lang").' </label><br/><input id="dpsc_inquiry_subject" name="dpsc_inquiry_subject" type="text" value="" /><span class="dpsc_error_msg" id="subjectError">' . __('Please enter the subject',"dp-lang") . '</span><br/>';
+    $output .= '<label for="dpsc_inquiry_custom_msg">'.__("Message:","dp-lang").' </label><br/><textarea id="dpsc_inquiry_custom_msg" name="dpsc_inquiry_custom_msg"></textarea><span class="dpsc_error_msg" id="contentError">' . __('Please enter the message',"dp-lang") . '</span><br/>';
     $output .= '<input type="submit" name="dpsc_inquire_submit" value="Ask For Quote"/>';
     $output .= '</form>';
     $output .= '</div>';
