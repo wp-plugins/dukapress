@@ -1380,13 +1380,7 @@ function dukapress_shopping_cart_setting() {
                                     <td>
                                         <input size="50" type="text" value="<?php if(isset($dp_shopping_cart_settings['bank_bic'])) {echo $dp_shopping_cart_settings['bank_bic'];}?>" name="bank_bic">
                                     </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"><?php _e("BIC/SWIFT","dp-lang");?></th>
-                                    <td>
-                                        <input size="50" type="text" value="<?php if(isset($dp_shopping_cart_settings['bank_bic'])) {echo $dp_shopping_cart_settings['bank_bic'];}?>" name="bank_bic">
-                                    </td>
-                                </tr>
+                                </tr>                                
                             </table>
                         </div>
                     </div>
