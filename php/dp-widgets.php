@@ -118,7 +118,6 @@ class dpsc_mini_shopping_cart_widget extends WP_Widget {
         extract($args);
         echo $before_widget;
         echo $before_title.$after_title;
-        echo $before_widget;
         ?>
 <div class="dpsc-mini-shopping-cart" id="dpsc-mini-shopping-cart">
             <?php echo dpsc_print_cart_html(TRUE);?>

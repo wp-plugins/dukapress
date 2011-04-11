@@ -7,10 +7,25 @@ jQuery(document).ready(function () {
         if(file_upload_elements.length > 0) {
             return true;
         } else {
-            form_values = jQuery(this).serialize();
-            jQuery.post( dpsc_js.dpsc_url+"/index.php?ajax=true", form_values, function(returned_data) {
-                eval(returned_data);
-            });
+            var productId = jQuery(this).attr('id').split('_')[3];
+            var buy_now_present = jQuery('#dpsc_buy_now_button_present_'+productId).val();
+            var form_values = jQuery(this).serialize();
+            if (buy_now_present == '1') {
+                jQuery.ajax({
+                            type: "POST",
+                            url: dpsc_js.ajaxurl,
+                            data: form_values,
+                            success: function(response){
+                                jQuery('div#dpsc_paypal_form_'+productId).html(response);
+                                jQuery('#dpsc_payment_form').submit();
+                            }
+                });
+            }
+            else {
+                jQuery.post( dpsc_js.dpsc_url+"/index.php?ajax=true", form_values, function(returned_data) {
+                    eval(returned_data);
+                });
+            }
             return false;
         }
     });

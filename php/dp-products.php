@@ -8,13 +8,14 @@
  * This function outputs the Product detail
  *
  */
-function dpsc_get_product_details($product_id) {
+function dpsc_get_product_details($product_id, $buy_now = false) {
     global $wpdb;
+    
     $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
     $all_custom_fields = get_post_custom($product_id);
     if (is_numeric($all_custom_fields['price'][0])) {
         $custom_fields_output = array();
-
+        
         $custom_fields_output['start'] = '<form id="dpsc_product_form_' . $product_id . '" name="dpsc_product_form_' . $product_id . '" class="product_form" action="" method="post" enctype="multipart/form-data">';
         if($dp_shopping_cart_settings['dp_shop_mode'] != 'inquiry') {
             if (is_numeric($all_custom_fields['new_price'][0])) {
@@ -31,12 +32,16 @@ function dpsc_get_product_details($product_id) {
             $item_weight = '<input type="hidden" name="product_weight" value="' . $all_custom_fields['item_weight'][0] .  '">';
         }
 
+        $action = 'dpsc_add_to_cart';
+        if ($buy_now) {
+            $action = 'dpsc_paypal_button';
+        }
         $custom_fields_output['end'] = $item_weight . '
-                                        <input type="hidden" name="action" value="dpsc_add_to_cart"/><div class="dpsc_update_icon" id="dpsc_update_icon_' . $product_id . '" style="display:none;"><img src="' . DP_PLUGIN_URL . '/images/update.gif"></div>
+                                        <input type="hidden" name="action" value="' . $action . '"/><div class="dpsc_update_icon" id="dpsc_update_icon_' . $product_id . '" style="display:none;"><img src="' . DP_PLUGIN_URL . '/images/update.gif"></div>
                                         <input type="hidden" name="product_id" value="' . $product_id . '"/>
                                         <input type="hidden" name="product" value="' . get_the_title($product_id) . '"/>
-                                        <input id="dpsc_actual_price_' . $product_id . '" type="hidden" name="price" value="'.$product_price.'"/>
-                                    </form>';
+                                        <input id="dpsc_actual_price_' . $product_id . '" type="hidden" name="price" value="' . $product_price . '"/>
+                                    </form><div id="dpsc_paypal_form_' . $product_id . '"></div>';
 
         if (isset ($all_custom_fields['dropdown_option'][0])) {
             $dropdown_content .= '<div class="dpsc_variation_main">';
@@ -153,9 +158,11 @@ function dpsc_get_product_details($product_id) {
         $in_stock = '';
         $available_in_stock = TRUE;
         if($dp_shopping_cart_settings['dp_shop_inventory_active'] === 'yes' && isset($all_custom_fields['currently_in_stock'][0])) {
-            if($dp_shopping_cart_settings['dp_shop_inventory_stocks'] === 'yes' && $all_custom_fields['currently_in_stock'][0] > 0) {
+            if( $all_custom_fields['currently_in_stock'][0] > 0) {
                 $custom_fields_output['end'] = '<input type="hidden" name="max_quantity" value="' . $all_custom_fields['currently_in_stock'][0] . '"/>' . $custom_fields_output['end'];
-                $in_stock = '<span class="dpsc_in_stock">' . __('Currently in Stock',"dp-lang") . '</span>';
+                if ($dp_shopping_cart_settings['dp_shop_inventory_stocks'] === 'yes' ) {
+                    $in_stock = '<span class="dpsc_in_stock">' . __('Currently in Stock',"dp-lang") . '</span>';
+                }
             }
             elseif ($dp_shopping_cart_settings['dp_shop_inventory_soldout'] === 'yes' && $all_custom_fields['currently_in_stock'][0] < 1) {
                 $in_stock = '<span class="dpsc_in_stock_sold_out">' . __('Out of Stock',"dp-lang") . '</span>';
@@ -168,11 +175,17 @@ function dpsc_get_product_details($product_id) {
         if($dp_shopping_cart_settings['dp_shop_mode'] === 'inquiry') {
             $value_atc = __('Inquire',"dp-lang");
         }
+        $buy_now_present = '0';
+        if ($buy_now) {
+            $value_atc = __('Buy Now', "dp-lang");
+            $buy_now_present = '1';
+        }
         $disabled_add_to_cart = '';
         if (!$available_in_stock) {
             $disabled_add_to_cart = 'disabled="disabled"';
         }
         $custom_fields_output['add_to_cart'] = '<input ' . $disabled_add_to_cart . ' type="submit" class="dpsc_submit_button" id="dpsc_submit_button_' . $product_id . '" name="dpsc_add_to_cart" value="' . $value_atc . '" />';
+        $custom_fields_output['add_to_cart'] .= '<input type="hidden" id="dpsc_buy_now_button_present_' . $product_id . '" name="dpsc_buy_now_button_present_' . $product_id . '" value="' . $buy_now_present . '" />';
         return $custom_fields_output;
     }
     return FALSE;
@@ -276,8 +289,15 @@ function dp_pnj_no_effect($attachment_images, $product_id) {
  */
 add_shortcode('dpsc_display_product', 'dpsc_pnj_display_product_name');
 function dpsc_pnj_display_product_name($atts, $content = null) {
+    extract(shortcode_atts(array(
+                'buy_now' => ''
+                    ), $atts));
+    $p_b_n = false;
+    if (!empty($buy_now)) {
+        $p_b_n = true;
+    }
     $product_id = get_the_ID();
-    $output = dpsc_get_product_details($product_id);
+    $output = dpsc_get_product_details($product_id, $p_b_n);
     $content .= '<div class="dpsc_product_main_container">';
     $content .= '<div class="dpsc_image_container">';
     $content .= $output['image_output'];
@@ -778,4 +798,59 @@ function dp_product_search_filter($where) {
     return $where;
 }
 
+add_action('wp_ajax_dpsc_paypal_button', 'dpsc_paypal_button');
+add_action('wp_ajax_nopriv_dpsc_paypal_button', 'dpsc_paypal_button');
+
+function dpsc_paypal_button() {
+    $product_id = $_POST['product_id'];
+    $product_variations = $_POST['var'];
+    $product_variation_names = '';
+    $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
+    $all_custom_fields = get_post_custom($product_id);
+    $product_weight = $all_custom_fields['item_weight'];
+    //
+    $product_base_price = $_POST['price'];
+    $product_updated_price = $_POST['dpsc_price_updated'];
+    $product_variation_names = '';
+    $product_variation_prices = 0.00;
+    $product_quantity = isset($_POST['quantity']) ? intval($_POST['quantity']) : 1;
+    $product_max_quantity = isset($_POST['max_quantity']) ? intval($_POST['max_quantity']) : FALSE;
+    if ($product_max_quantity) {
+        if ($product_quantity > $product_max_quantity) {
+            $product_quantity = $product_max_quantity;
+        }
+    }
+    $product_weight = isset($_POST['product_weight']) ? intval($_POST['product_weight']) : 0;
+    if (isset($_POST['var'])) {
+        $product_variations = $_POST['var'];
+        $product_variation_names = array();
+        if (is_array($product_variations)) {
+            foreach ($product_variations as $product_variation) {
+                $product_variation_tmp = explode(',:_._:,', $product_variation);
+                $product_variation_names[] = $product_variation_tmp[0];
+                $product_price = floatval($product_variation_tmp[1]);
+                $product_variation_prices += $product_price;
+            }
+        }
+        $product_variation_names = implode(', ', $product_variation_names);
+    } else {
+        $product_updated_price = $product_base_price;
+    }
+    //
+    if (($dp_shopping_cart_settings['dp_shop_inventory_active'] === 'yes' && $all_custom_fields['currently_in_stock'][0] > 0) || ($dp_shopping_cart_settings['dp_shop_inventory_active'] === 'no') || (!isset($all_custom_fields['currently_in_stock'][0]) || $all_custom_fields['currently_in_stock'][0] === '')) {
+        $dpsc_product = array('name' => get_the_title($product_id), 'var' => $product_variation_names, 'price' => $product_updated_price, 'quantity' => 1, 'item_number' => $product_id, 'item_weight' => $product_weight, 'max' => "");
+        $dpsc_products = array();
+        $dpsc_products[] = $dpsc_product;
+        sort($dpsc_products);
+        $_SESSION['dpsc_products'] = $dpsc_products;
+    } else {
+        die('This product is not currently in stock.');
+    }
+    list($dpsc_total, $dpsc_shipping_weight, $products, $number_of_items_in_cart) = dpsc_pnj_calculate_cart_price();
+    if ($products) {
+        list($invoice, $bfname, $blname, $bcity, $baddress, $bstate, $bzip, $bcountry, $bemail) = dpsc_on_payment_save($dpsc_total, $dpsc_shipping_value, $products, $dpsc_discount_value, 'PayPal Buy Now');
+        $output = dpsc_paypal_payment($dpsc_total, $dpsc_shipping_value, $dpsc_discount_value, $invoice);
+    }
+    die($output);
+}
 ?>
