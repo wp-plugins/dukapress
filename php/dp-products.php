@@ -406,6 +406,52 @@ function dpsc_pnj_grid_display($atts, $content=null) {
     return $content;
 }
 
+/*
+* Shortcode to display product images ONLY
+*/
+add_shortcode('dpsc_display_product_image_only', 'dpsc_pnj_display_product_images');
+ 
+function dpsc_pnj_display_product_images($atts, $content = null) {
+    $product_id = get_the_ID();
+    $output = dpsc_get_product_details($product_id);
+      
+               $content .= '<div class="dpsc_image_container">';
+                              $content .= $output['image_output'];
+    $content .= '<div class="clear"></div>';
+   
+    return $content;
+}//end dpsc_pnj_display_product_images
+ 
+/*
+* Shortcode to display product information ONLY
+*/
+add_shortcode('dpsc_display_product_information_only', 'dpsc_pnj_display_product_informations');
+ 
+function dpsc_pnj_display_product_informations($atts, $content = null) {
+ 
+    $product_id = get_the_ID();
+    $output = dpsc_get_product_details($product_id);
+   
+               $content .= '<div class="dpsc_content_container">';
+               if ($output['final_price']) {
+               $content .= $output['final_price'];
+                   }
+               else {
+               $content .= $output['price'];
+                   }
+   
+                              $content .= $output['in_stock'];
+   
+                              //$content .= $output['currently_in_stock'];   
+                              $content .= $output['start'];
+               $content .= $output['dropdown'];
+                   $content .= $output['add_to_cart'];
+               $content .= $output['end'];   
+               $content .= '</div><!-- /end .dpsc_content_container -->'; 
+               $content .= '<div class="clear"></div>';              
+               return $content;
+}//end dpsc_pnj_display_product_informations
+
 /**
  * Add Meta Box for ease
  *
@@ -465,7 +511,7 @@ function dp_rm_content_visibility_meta_box() {
 }
 
 /**
- * This function displays the varitions.
+ * This function displays the variations.
  *
  */
 function dp_get_dropdown_option_to_display($post_id) {
@@ -659,7 +705,7 @@ function dp_rm_varition_delete_data() {
      }
      die();
 }
-
+//Creates the DukaPress "Products" Post type
 add_action( 'init', 'dp_create_post_type' );
 
 function dp_create_post_type() {
@@ -695,7 +741,7 @@ function dp_create_post_type() {
     ));
 }
 
-
+//Ads shortcode for searchpage
 add_shortcode('dp_search', 'dp_custom_search_fn');
 function dp_custom_search_fn($atts, $content = null) {
     $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
@@ -797,7 +843,7 @@ function dp_product_search_filter($where) {
     }
     return $where;
 }
-
+//Adds PayPal Buy Now Button
 add_action('wp_ajax_dpsc_paypal_button', 'dpsc_paypal_button');
 add_action('wp_ajax_nopriv_dpsc_paypal_button', 'dpsc_paypal_button');
 

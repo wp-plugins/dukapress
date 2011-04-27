@@ -116,10 +116,10 @@ function dp_dashboard_transactions() {
 add_action('admin_menu', 'dp_pnj_create_admin_menu');
 function dp_pnj_create_admin_menu() {
     $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
-    add_object_page('DukaPress', 'DukaPress', 'manage_options', 'dukapress-shopping-cart-order-log', '', DP_PLUGIN_URL . '/images/dp_icon.png');
-    add_submenu_page('dukapress-shopping-cart-order-log', 'DukaPress Order Log', 'Order Log', 'manage_options', 'dukapress-shopping-cart-order-log', 'dukapress_shopping_cart_order_log');
+    add_object_page('DukaPress', 'DukaPress', 'edit_others_posts', 'dukapress-shopping-cart-order-log', '', DP_PLUGIN_URL . '/images/dp_icon.png');
+    add_submenu_page('dukapress-shopping-cart-order-log', 'DukaPress Order Log', 'Order Log', 'edit_others_posts', 'dukapress-shopping-cart-order-log', 'dukapress_shopping_cart_order_log');
     if ($dp_shopping_cart_settings['dp_shop_user_registration'] === 'checked') {
-        add_submenu_page('dukapress-shopping-cart-order-log', 'DukaPress Customer Log', 'Customer Log', 'manage_options', 'dukapress-shopping-cart-customer-log', 'dukapress_shopping_cart_customer_log');
+        add_submenu_page('dukapress-shopping-cart-order-log', 'DukaPress Customer Log', 'Customer Log', 'edit_others_posts', 'dukapress-shopping-cart-customer-log', 'dukapress_shopping_cart_customer_log');
     }
     add_submenu_page('dukapress-shopping-cart-order-log', 'DukaPress Settings', 'Settings', 'manage_options', 'dukapress-shopping-cart-settings', 'dukapress_shopping_cart_setting');
 }
@@ -1198,7 +1198,7 @@ function dukapress_shopping_cart_setting() {
                                         }
                                         else {
                                         ?>
-                                            <tr><td colspan="2">Your Shops' Currency Code is not compatible with PayPal. Please choose a Currency Code from the below list. Payments will be converted to the selected Currency Code, when Payments are sent to PayPal.</td></tr>
+                                            <tr><td colspan="2">Your Shop's Currency Code is not compatible with PayPal. Please choose a Currency Code from the below list. Payments will be converted to the selected Currency Code, when Payments are sent to PayPal.</td></tr>
                                             <tr><th scope="row">PayPal Currency Code</th>
                                             <td>
                                                 <select name="dp_paypal_currency">
@@ -1290,7 +1290,7 @@ function dukapress_shopping_cart_setting() {
                                         }
                                         else {
                                         ?>
-                                        <tr><td colspan="2"><?php _e("Your Shops' Currency Code is not compatible with WorldPay. Please choose a Currency Code from the below list. Payments will be converted to the selected Currency Code, when Payments are sent to WorldPay.","dp-lang");?></td></tr>
+                                        <tr><td colspan="2"><?php _e("Your Shop's Currency Code is not compatible with WorldPay. Please choose a Currency Code from the below list. Payments will be converted to the selected Currency Code, when Payments are sent to WorldPay.","dp-lang");?></td></tr>
                                         <tr><th scope="row"><?php _e("WorldPay Currency Code","dp-lang");?></th>
                                             <td>
                                                 <select name="dp_worldpay_currency">
@@ -1335,7 +1335,7 @@ function dukapress_shopping_cart_setting() {
                                         }
                                         else {
                                         ?>
-                                        <tr><td colspan="2"><?php _e("Your Shops' Currency Code is not compatible with AlertPay. Please choose a Currency Code from the below list. Payments will be converted to the selected Currency Code, when Payments are sent to AlertPay.","dp-lang");?></td></tr>
+                                        <tr><td colspan="2"><?php _e("Your Shop's Currency Code is not compatible with AlertPay. Please choose a Currency Code from the below list. Payments will be converted to the selected Currency Code, when Payments are sent to AlertPay.","dp-lang");?></td></tr>
                                         <tr><th scope="row"><?php _e("AlertPay Currency Code","dp-lang");?></th>
                                             <td>
                                                 <select name="dp_alertpay_currency">
