@@ -319,6 +319,40 @@ function dpsc_pnj_display_product_name($atts, $content = null) {
     return $content;
 }
 
+//Add Shortcode to display Add to Cart With Product Details
+add_shortcode('dpsc_display_addcart', 'dpsc_pnj_display_product_cart');
+function dpsc_pnj_display_product_cart($atts, $content = null) {
+	extract(shortcode_atts(array(
+                'buy_now' => ''
+                    ), $atts));
+    $p_b_n = false;
+    if (!empty($buy_now)) {
+        $p_b_n = true;
+    }
+    $product_id = get_the_ID();
+    $output = dpsc_get_product_details($product_id);    
+
+    $content .= '<div class="dpsc_content_container">';
+    $content .= $output['prod_desc'];    
+    $content .= '<div id="price_cont">';
+    $content .= $output['in_stock'];
+    if ($output['final_price']) {
+        $content .= $output['final_price'];
+    }
+    else {
+        $content .= $output['price'];
+    }    
+    $content .= $output['start'];
+    $content .= $output['dropdown'];    
+    $content .=  $output['add_to_cart'];    
+    $content .= $output['end'];
+    $content .= '</div>';
+    $content .= '<div id="inline-cart"><div class="dpsc-shopping-cart">'.dpsc_print_cart_html().'</div></div>';
+    $content .= '</div>';
+    $content .= '</div><div class="clear"></div>';
+    return $content;
+}
+
 /**
  * Shortcode to display product in grid views
  *
