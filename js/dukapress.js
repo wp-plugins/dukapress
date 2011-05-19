@@ -116,6 +116,15 @@ jQuery(document).ready(function () {
         jQuery('#shipFNameError').hide();
         jQuery('#shipCityError').hide();
 
+		var check_other_shipping = jQuery('input[name=other_shipping_present]').val();
+
+        if (check_other_shipping == 'true') {
+          var cstom_shipping_val = jQuery('input[name=custom_shipping_value]').val();
+          if (cstom_shipping_val == 'no_val') {
+            return;
+          }
+        }
+		
         jQuery('#dpsc_po_error').css('display', 'none');
         var check = jQuery('input[name=dpsc_po]').is(':checked');
         var check_hidden = jQuery('#dpsc_po_hidden').length;

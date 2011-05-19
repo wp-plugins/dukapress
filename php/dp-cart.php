@@ -397,7 +397,7 @@ function dpsc_print_checkout_table_html($dpsc_discount_value = 0) {
                 $content .= '<input type="hidden" name="dpsc_total_hidden_value_for_shipping" value="' . $total_for_shipping . '" />';
             }
             $content .= $dpsc_product_price_at_end . $dpsc_shipping_total_at_end . $dpsc_tax_total_at_end . $dpsc_discount_total_at_end . $dpsc_total_price_at_the_end;
-            $content .= '</table><input type="hidden" name="custom_shipping_value" value="0.00" />';
+            $content .= '</table><input type="hidden" name="custom_shipping_value" value="no_val" />';
 //            $content .= $dp_shipping_calculate_html;
         }
         if ($_REQUEST['ajax'] === 'true') {
