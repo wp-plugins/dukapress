@@ -763,7 +763,7 @@ function dp_create_post_type() {
 	'show_ui' => true,
 	'capability_type' => 'post',
     'taxonomies' => array( 'category', 'post_tag'),
-    'menu_position' => 30,
+    'menu_position' => null,
     'publicly_queryable' => true,
     'exclude_from_search' => false,
     'query_var' => true,
