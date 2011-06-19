@@ -1764,14 +1764,14 @@ function dukapress_shopping_cart_setting() {
                          </div>
                      </div>
                  </div>
-            <h3><a href="#"><?php _e("Inventary","dp-lang");?></a></h3>
+            <h3><a href="#"><?php _e("Inventory","dp-lang");?></a></h3>
                 <div>
                      <div class="email-management">
 <!--                         <h3><a href="#">To Admin</a></h3>
                          <div>
                              A
                          </div>-->
-                         <h3><a href="#">To User</a></h3>
+                         <h3><a href="#">To Admin</a></h3>
                          <div>
                            <div>
                                 <?php
