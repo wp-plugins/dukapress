@@ -1595,7 +1595,7 @@ function dukapress_shopping_cart_setting() {
               <div>
                 <div>
                      <div class="email-management">
-                         <h3><a href="#">To Admin</a></h3>
+                         <h3><a href="#"><?php _e("To Admin","dp-lang");?></a></h3>
                          <div>
                              <?php
                                 $nme_dp_mail_option = get_option('dp_order_mail_options', true);
@@ -1603,7 +1603,7 @@ function dukapress_shopping_cart_setting() {
                                     <table class="form-table">
                                         <tr>
                                             <th scope="row">
-                                                <label for="dp_order_send_mail_title">Subject</label>
+                                                <label for="dp_order_send_mail_title"><?php _e("Subject","dp-lang");?></label>
                                             </th>
                                             <td>
                                                 <input size="80" type="text" id="dp_order_send_mail_title" name="dp_order_send_mail_title" value="<?php echo stripslashes($nme_dp_mail_option['dp_order_send_mail_title']) ?>" >
@@ -1611,16 +1611,16 @@ function dukapress_shopping_cart_setting() {
                                         </tr>
                                         <tr>
                                             <th valign="top">
-                                                <label for="dp_order_send_mail_messege">Message</label>
+                                                <label for="dp_order_send_mail_messege"><?php _e("Message","dp-lang");?></label>
                                             </th>
                                             <td>
-                                                <span class="description">Use <strong>%baddress%</strong>, <strong>%saddress%</strong>, <strong>%inv%</strong>, <strong>%siteurl%</strong>, <strong>%shop%</strong> ,<strong>%order-log-transaction%</strong> as Billing Address, Shipping Address, Invoice, Site URL, Shop Name, Order Log Transaction</span><br/>
+                                                <span class="description"><?php _e("Use","dp-lang");?> <strong>%baddress%</strong>, <strong>%saddress%</strong>, <strong>%inv%</strong>, <strong>%siteurl%</strong>, <strong>%shop%</strong> ,<strong>%order-log-transaction%</strong> <?php _e("as Billing Address, Shipping Address, Invoice, Site URL, Shop Name, Order Log Transaction","dp-lang");?></span><br/>
                                                 <textarea rows="15" cols="78" id="dp_order_send_mail_messege" name="dp_order_send_mail_body"><?php echo stripslashes($nme_dp_mail_option['dp_order_send_mail_body']) ?></textarea>
                                             </td>
                                         </tr>
                                     </table>
                          </div>
-                         <h3><a href="#">To User</a></h3>
+                         <h3><a href="#"><?php _e("To User","dp-lang");?></a></h3>
                          <div>
                              <?php
                                 $nme_dp_mail_option = get_option('dp_order_mail_user_options', true);
@@ -1628,7 +1628,7 @@ function dukapress_shopping_cart_setting() {
                                     <table class="form-table">
                                         <tr>
                                             <th scope="row">
-                                                <label for="dp_order_send_mail_user_title">Subject</label>
+                                                <label for="dp_order_send_mail_user_title"><?php _e("Subject","dp-lang");?></label>
                                             </th>
                                             <td>
                                                 <input size="80" type="text" id="dp_order_send_mail_user_title" name="dp_order_send_mail_user_title" value="<?php echo stripslashes($nme_dp_mail_option['dp_order_send_mail_user_title']) ?>" >
@@ -1636,10 +1636,10 @@ function dukapress_shopping_cart_setting() {
                                         </tr>
                                         <tr>
                                             <th valign="top">
-                                                <label for="dp_order_send_mail_user_messege">Message</label>
+                                                <label for="dp_order_send_mail_user_messege"><?php _e("Message","dp-lang");?></label>
                                             </th>
                                             <td>
-                                                <span class="description">Use <strong>%fname%</strong>, <strong>%lanme%</strong>, <strong>%inv%</strong>, <strong>%shop%</strong>, <strong>%siteurl%</strong> As Billing First Name, Billing Last Name, Invoice, Shop Name and site URL</span><br/>
+                                                <span class="description"><?php _e("Use","dp-lang");?> <strong>%fname%</strong>, <strong>%lanme%</strong>, <strong>%inv%</strong>, <strong>%shop%</strong>, <strong>%siteurl%</strong> <?php _e("As Billing First Name, Billing Last Name, Invoice, Shop Name and site URL","dp-lang");?></span><br/>
                                                 <textarea rows="15" cols="78" id="dp_order_send_mail_messege" name="dp_order_send_mail_user_body"><?php echo stripslashes($nme_dp_mail_option['dp_order_send_mail_user_body']) ?></textarea>
                                             </td>
                                         </tr>
@@ -1652,7 +1652,7 @@ function dukapress_shopping_cart_setting() {
               <div>
                 <div>
                      <div class="email-management">
-                         <h3><a href="#">To Admin</a></h3>
+                         <h3><a href="#"><?php _e("To Admin","dp-lang");?></a></h3>
                          <div>
                              <?php
                                 $nme_dp_mail_option = get_option('dp_order_cancelled_mail_options', true);
@@ -1660,7 +1660,7 @@ function dukapress_shopping_cart_setting() {
                                     <table class="form-table">
                                         <tr>
                                             <th scope="row">
-                                                <label for="dp_order_cancelled_send_mail_title">Subject</label>
+                                                <label for="dp_order_cancelled_send_mail_title"><?php _e("Subject","dp-lang");?></label>
                                             </th>
                                             <td>
                                                 <input size="80" type="text" id="dp_order_cancelled_send_mail_title" name="dp_order_cancelled_send_mail_title" value="<?php echo stripslashes($nme_dp_mail_option['dp_order_cancelled_send_mail_title']) ?>" >
@@ -1668,16 +1668,16 @@ function dukapress_shopping_cart_setting() {
                                         </tr>
                                         <tr>
                                             <th valign="top">
-                                                <label for="dp_order_cancelled_send_mail_messege">Message</label>
+                                                <label for="dp_order_cancelled_send_mail_messege"><?php _e("Message","dp-lang");?></label>
                                             </th>
                                             <td>
-                                                <span class="description">Use <strong>%fname%</strong>, <strong>%lname%</strong>, <strong>%saddress%</strong>, <strong>%inv%</strong>, <strong>%status%</strong>, <strong>%digi%</strong>,<strong>%siteurl%</strong>, <strong>%shop%</strong> ,<strong>%order-log-transaction%</strong> FirstName,Last Name, Invoice, Status,Digi,Site URL, Shop Name, Order Log Transaction</span><br/>
+                                                <span class="description"><?php _e("Use","dp-lang");?> <strong>%fname%</strong>, <strong>%lname%</strong>, <strong>%saddress%</strong>, <strong>%inv%</strong>, <strong>%status%</strong>, <strong>%digi%</strong>,<strong>%siteurl%</strong>, <strong>%shop%</strong> ,<strong>%order-log-transaction%</strong> <?php _e("FirstName,Last Name, Invoice, Status,Digi,Site URL, Shop Name, Order Log Transaction","dp-lang");?></span><br/>
                                                 <textarea rows="15" cols="78" id="dp_order_cancelled_send_mail_messege" name="dp_order_cancelled_send_mail_body"><?php echo stripslashes($nme_dp_mail_option['dp_order_cancelled_send_mail_body']) ?></textarea>
                                             </td>
                                         </tr>
                                     </table>
                          </div>
-                         <h3><a href="#">To User</a></h3>
+                         <h3><a href="#"><?php _e("To User","dp-lang");?></a></h3>
                          <div>
                              <?php
                                 $nme_dp_mail_option = get_option('dp_order_cancelled_mail_user_options', true);
@@ -1685,7 +1685,7 @@ function dukapress_shopping_cart_setting() {
                                     <table class="form-table">
                                         <tr>
                                             <th scope="row">
-                                                <label for="dp_order_cancelled_send_mail_user_title">Subject</label>
+                                                <label for="dp_order_cancelled_send_mail_user_title"><?php _e("Subject","dp-lang");?></label>
                                             </th>
                                             <td>
                                                 <input size="80" type="text" id="dp_order_cancelled_send_mail_user_title" name="dp_order_cancelled_send_mail_user_title" value="<?php echo stripslashes($nme_dp_mail_option['dp_order_cancelled_send_mail_user_title']) ?>" >
@@ -1693,10 +1693,10 @@ function dukapress_shopping_cart_setting() {
                                         </tr>
                                         <tr>
                                             <th valign="top">
-                                                <label for="dp_order_cancelled_send_mail_user_messege">Message</label>
+                                                <label for="dp_order_cancelled_send_mail_user_messege"><?php _e("Message","dp-lang");?></label>
                                             </th>
                                             <td>
-                                                <span class="description">Use <strong>%fname%</strong>, <strong>%lanme%</strong>, <strong>%inv%</strong>,<strong>%status%</strong>, <strong>%shop%</strong>, <strong>%siteurl%</strong> As Billing First Name, Billing Last Name, Invoice,Status, Shop Name and site URL</span><br/>
+                                                <span class="description"><?php _e("Use","dp-lang");?> <strong>%fname%</strong>, <strong>%lanme%</strong>, <strong>%inv%</strong>,<strong>%status%</strong>, <strong>%shop%</strong>, <strong>%siteurl%</strong> <?php _e("As Billing First Name, Billing Last Name, Invoice,Status, Shop Name and site URL","dp-lang");?></span><br/>
                                                 <textarea rows="15" cols="78" id="dp_order_cancelled_send_mail_messege" name="dp_order_cancelled_send_mail_user_body"><?php echo stripslashes($nme_dp_mail_option['dp_order_cancelled_send_mail_user_body']) ?></textarea>
                                             </td>
                                         </tr>
@@ -1708,7 +1708,7 @@ function dukapress_shopping_cart_setting() {
             <h3><a href="#"><?php _e("User Registration","dp-lang");?></a></h3>
                <div>
                    <div class="email-management">
-                      <h3><a href="#">To Admin</a></h3>
+                      <h3><a href="#"><?php _e("To Admin","dp-lang");?></a></h3>
                         <div>
                           <div>
                             <?php
@@ -1717,7 +1717,7 @@ function dukapress_shopping_cart_setting() {
                                 <table class="form-table">
                                     <tr>
                                         <th scope="row">
-                                            <label for="dp_reg_admin_mail_title">Subject</label>
+                                            <label for="dp_reg_admin_mail_title"><?php _e("Subject","dp-lang");?></label>
                                         </th>
                                         <td>
                                             <input size="80" type="text" id="dp_reg_admin_mail_title" name="dp_reg_admin_mail_title" value="<?php echo stripslashes($nme_dp_mail_option['dp_reg_admin_mail_title']) ?>" >
@@ -1725,17 +1725,17 @@ function dukapress_shopping_cart_setting() {
                                     </tr>
                                     <tr>
                                         <th valign="top">
-                                            <label for="dp_reg_admin_mail_messege">Message</label>
+                                            <label for="dp_reg_admin_mail_messege"><?php _e("Message","dp-lang");?></label>
                                         </th>
                                         <td>
-                                            <span class="description">Use <strong>%uname%</strong>, <strong>%pass%</strong>, <strong>%email%</strong>, <strong>%shop%</strong>  as User Name, Password, email, ShopName</span><br/>
+                                            <span class="description"><?php _e("Use","dp-lang");?> <strong>%uname%</strong>, <strong>%pass%</strong>, <strong>%email%</strong>, <strong>%shop%</strong>  <?php _e("as User Name, Password, email, and ShopName","dp-lang");?></span><br/>
                                             <textarea rows="15" cols="78" id="dp_order_send_mail_messege" name="dp_reg_admin_mail_body"><?php echo stripslashes($nme_dp_mail_option['dp_reg_admin_mail_body']) ?></textarea>
                                         </td>
                                     </tr>
                                 </table>
                         </div>
                       </div>
-                         <h3><a href="#">To User</a></h3>
+                         <h3><a href="#"><?php _e("To User","dp-lang");?></a></h3>
                          <div>
                            <div>
                                 <?php
@@ -1744,7 +1744,7 @@ function dukapress_shopping_cart_setting() {
                                     <table class="form-table">
                                         <tr>
                                             <th scope="row">
-                                                <label for="dp_usr_reg_mail_title">Subject</label>
+                                                <label for="dp_usr_reg_mail_title"><?php _e("Subject","dp-lang");?></label>
                                             </th>
                                             <td>
                                                 <input size="80" type="text" id="dp_order_send_mail_title" name="dp_usr_reg_mail_title" value="<?php echo stripslashes($nme_dp_mail_option['dp_usr_reg_mail_title']) ?>" >
@@ -1752,10 +1752,10 @@ function dukapress_shopping_cart_setting() {
                                         </tr>
                                         <tr>
                                             <th valign="top">
-                                                <label for="dp_usr_reg_mail_messege">Message</label>
+                                                <label for="dp_usr_reg_mail_messege"><?php _e("Message","dp-lang");?></label>
                                             </th>
                                             <td>
-                                                <span class="description">Use <strong>%uname%</strong>, <strong>%pass%</strong>, <strong>%email%</strong>, <strong>%login%</strong>, <strong>%shop%</strong>  as User Name, Password, email, Login URL, ShopName</span><br/>
+                                                <span class="description"><?php _e("Use","dp-lang");?> <strong>%uname%</strong>, <strong>%pass%</strong>, <strong>%email%</strong>, <strong>%login%</strong>, <strong>%shop%</strong>  <?php _e("as User Name, Password, email, Login URL, and ShopName","dp-lang");?></span><br/>
                                                 <textarea rows="15" cols="78" id="dp_order_send_mail_messege" name="dp_usr_reg_mail_body"><?php echo stripslashes($nme_dp_mail_option['dp_usr_reg_mail_body']) ?></textarea>
                                             </td>
                                         </tr>
@@ -1771,7 +1771,7 @@ function dukapress_shopping_cart_setting() {
                          <div>
                              A
                          </div>-->
-                         <h3><a href="#">To Admin</a></h3>
+                         <h3><a href="#"><?php _e("To Admin","dp-lang");?></a></h3>
                          <div>
                            <div>
                                 <?php
@@ -1780,7 +1780,7 @@ function dukapress_shopping_cart_setting() {
                                     <table class="form-table">
                                         <tr>
                                             <th scope="row">
-                                                <label for="dp_usr_inventory_mail_title">Subject</label>
+                                                <label for="dp_usr_inventory_mail_title"><?php _e("Subject","dp-lang");?></label>
                                             </th>
                                             <td>
                                                 <input size="80" type="text" id="dp_usr_inventory_mail_title" name="dp_usr_inventory_mail_title" value="<?php echo stripslashes($nme_dp_mail_option['dp_usr_inventory_mail_title']) ?>" >
@@ -1788,10 +1788,10 @@ function dukapress_shopping_cart_setting() {
                                         </tr>
                                         <tr>
                                             <th valign="top">
-                                                <label for="dp_usr_inventory_mail_messege">Message</label>
+                                                <label for="dp_usr_inventory_mail_messege"><?php _e("Message","dp-lang");?></label>
                                             </th>
                                             <td>
-                                                <span class="description">Use <strong>%pno%</strong>, <strong>%pname%</strong>, <strong>%stock%</strong>, <strong>%footer%</strong>, as Product No., Product Name, Currently in Stock Quantity,footer </span><br/>
+                                                <span class="description"><?php _e("Use","dp-lang");?> <strong>%pno%</strong>, <strong>%pname%</strong>, <strong>%stock%</strong>, <strong>%footer%</strong>, <?php _e("as Product No., Product Name, Currently in Stock Quantity, and footer","dp-lang");?> </span><br/>
                                                 <textarea rows="15" cols="78" id="dp_usr_inventory_mail_messege" name="dp_usr_inventory_mail_body"><?php echo stripslashes($nme_dp_mail_option['dp_usr_inventory_mail_body']) ?></textarea>
                                             </td>
                                         </tr>
@@ -1807,7 +1807,7 @@ function dukapress_shopping_cart_setting() {
                          <div>
                              
                          </div>-->
-                         <h3><a href="#">To Admin</a></h3>
+                         <h3><a href="#"><?php _e("To Admin","dp-lang");?></a></h3>
                          <div>
                              <div>
                                 <?php
@@ -1816,7 +1816,7 @@ function dukapress_shopping_cart_setting() {
                                     <table class="form-table">
                                         <tr>
                                             <th scope="row">
-                                                <label for="dp_usr_enquiry_mail_title">Subject</label>
+                                                <label for="dp_usr_enquiry_mail_title"><?php _e("Subject","dp-lang");?></label>
                                             </th>
                                             <td>
                                                 <input size="80" type="text" id="dp_usr_inventory_mail_title" name="dp_usr_enquiry_mail_title" value="<?php echo stripslashes($nme_dp_mail_option['dp_usr_enquiry_mail_title']) ?>" >
@@ -1824,10 +1824,10 @@ function dukapress_shopping_cart_setting() {
                                         </tr>
                                         <tr>
                                             <th valign="top">
-                                                <label for="dp_usr_enquiry_mail_messege">Message</label>
+                                                <label for="dp_usr_enquiry_mail_messege"><?php _e("Message","dp-lang");?></label>
                                             </th>
                                             <td>
-                                                <span class="description">Use <strong>%from%</strong>, <strong>%from_email%</strong>, <strong>%enq_subject%</strong>, <strong>%details%</strong>, <strong>%custom_message%</strong>, as Enquirers Name, Enquirers email, Enquiry Subject, Enquiry Details, Enquiry custom message </span><br/>
+                                                <span class="description"><?php _e("Use","dp-lang");?> <strong>%from%</strong>, <strong>%from_email%</strong>, <strong>%enq_subject%</strong>, <strong>%details%</strong>, <strong>%custom_message%</strong>, <?php _e("as Enquirers Name, Enquirers email, Enquiry Subject, Enquiry Details, and Enquiry custom message","dp-lang");?> </span><br/>
                                                 <textarea rows="15" cols="78" id="dp_usr_enquiry_mail_messege" name="dp_usr_enquiry_mail_body"><?php echo stripslashes($nme_dp_mail_option['dp_usr_enquiry_mail_body']) ?></textarea>
                                             </td>
                                         </tr>
@@ -1840,7 +1840,7 @@ function dukapress_shopping_cart_setting() {
                <h3><a href="#"><?php _e("Payments","dp-lang");?></a></h3>
                <div>
                     <div class="email-management">
-                        <h3><a href="#">To Admin</a></h3>
+                        <h3><a href="#"><?php _e("To Admin","dp-lang");?></a></h3>
                          <div>
                               <div>
                                 <?php
@@ -1849,7 +1849,7 @@ function dukapress_shopping_cart_setting() {
                                     <table class="form-table">
                                         <tr>
                                             <th scope="row">
-                                                <label for="dp_admin_mail_title">Subject</label>
+                                                <label for="dp_admin_mail_title"><?php _e("Subject","dp-lang");?></label>
                                             </th>
                                             <td>
                                                 <input size="80" type="text" id="dp_admin_payment_mail_title" name="dp_usr_admin_payment_mail_title" value="<?php echo stripslashes($nme_dp_mail_option['dp_usr_admin_payment_mail_title']) ?>" >
@@ -1857,17 +1857,17 @@ function dukapress_shopping_cart_setting() {
                                         </tr>
                                         <tr>
                                             <th valign="top">
-                                                <label for="dp_admin_payment_mail_messege">Message</label>
+                                                <label for="dp_admin_payment_mail_messege"><?php _e("Message","dp-lang");?></label>
                                             </th>
                                             <td>
-                                                <span class="description">Use <strong>%fname%</strong>, <strong>%email%</strong>, <strong>%inv%</strong>, <strong>%status%</strong>, <strong>%digi%</strong>, <strong>%shop%</strong>, as Payers First Name, Payers email, Invoice, Payment status, Digital Products, Shop Name </span><br/>
+                                                <span class="description"><?php _e("Use","dp-lang");?> <strong>%fname%</strong>, <strong>%email%</strong>, <strong>%inv%</strong>, <strong>%status%</strong>, <strong>%digi%</strong>, <strong>%shop%</strong>, <?php _e("as Payers First Name, Payers email, Invoice, Payment status, Digital Products, and Shop Name","dp-lang");?> </span><br/>
                                                 <textarea rows="15" cols="78" id="dp_admin_payment_mail_messege" name="dp_admin_payment_mail_body"><?php echo stripslashes($nme_dp_mail_option['dp_admin_payment_mail_body']) ?></textarea>
                                             </td>
                                         </tr>
                                     </table>
                             </div>
                          </div>
-                         <h3><a href="#">To User</a></h3>
+                         <h3><a href="#"><?php _e("To User","dp-lang");?></a></h3>
                          <div>
                              <div>
                                 <?php
@@ -1876,7 +1876,7 @@ function dukapress_shopping_cart_setting() {
                                     <table class="form-table">
                                         <tr>
                                             <th scope="row">
-                                                <label for="dp_usr_payment_mail_title">Subject</label>
+                                                <label for="dp_usr_payment_mail_title"><?php _e("Subject","dp-lang");?></label>
                                             </th>
                                             <td>
                                                 <input size="80" type="text" id="dp_usr_payment_mail_title" name="dp_usr_payment_mail_title" value="<?php echo stripslashes($nme_dp_mail_option['dp_usr_payment_mail_title']) ?>" >
@@ -1884,10 +1884,10 @@ function dukapress_shopping_cart_setting() {
                                         </tr>
                                         <tr>
                                             <th valign="top">
-                                                <label for="dp_usr_enquiry_mail_messege">Message</label>
+                                                <label for="dp_usr_enquiry_mail_messege"><?php _e("Message","dp-lang");?></label>
                                             </th>
                                             <td>
-                                                <span class="description">Use <strong>%fname%</strong>, <strong>%email%</strong>, <strong>%inv%</strong>, <strong>%status%</strong>, <strong>%digi%</strong>, <strong>%shop%</strong>, as Payers First Name, Payers email, Invoice, Payment Status, Digital Products, Shop Name </span><br/>
+                                                <span class="description"><?php _e("Use","dp-lang");?> <strong>%fname%</strong>, <strong>%email%</strong>, <strong>%inv%</strong>, <strong>%status%</strong>, <strong>%digi%</strong>, <strong>%shop%</strong>, <?php _e("as Payers First Name, Payers email, Invoice, Payment Status, Digital Products, and Shop Name","dp-lang");?> </span><br/>
                                                 <textarea rows="15" cols="78" id="dp_usr_payment_mail_messege" name="dp_usr_payment_mail_body"><?php echo stripslashes($nme_dp_mail_option['dp_usr_payment_mail_body']) ?></textarea>
                                             </td>
                                         </tr>
