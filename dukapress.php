@@ -129,7 +129,7 @@ function dukapress_shopping_cart_customer_log() {
     $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
     ?>
     <div class="wrap">
-        <h2>DukaPress Customer Log</h2>
+        <h2><?php _e("DukaPress Customer Log","dp-lang");?></h2>
         <?php
         if ($dp_shopping_cart_settings['dp_shop_user_registration'] === 'checked') {
             $sql = "SELECT `user_id` FROM {$wpdb->usermeta} WHERE `meta_key`='{$dpsc_user_invoice_number}'";
@@ -445,12 +445,12 @@ function dukapress_shopping_cart_order_log() {
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Invoice Number</th>
-                        <th>Name</th>
-                        <th>Date</th>
-                        <th>Amount</th>
-                        <th>Mode of Payment</th>
-                        <th>Status</th>
+                        <th><?php _e("Invoice Number","dp-lang");?></th>
+                        <th><?php _e("Name","dp-lang");?></th>
+                        <th><?php _e("Date","dp-lang");?></th>
+                        <th><?php _e("Amount","dp-lang");?></th>
+                        <th><?php _e("Mode of Payment","dp-lang");?></th>
+                        <th><?php _e("Status","dp-lang");?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -462,7 +462,7 @@ function dukapress_shopping_cart_order_log() {
                         <td><?php printf(__("%d"),$count);?></td>
                         <!--<td><?php// echo $count;?></td> -->
                         <td><a href="?page=dukapress-shopping-cart-order-log&id=<?php echo $result->invoice; ?>"><?php echo $result->invoice;?></a>
-                            <p><a class="deletethis"style="cursor:pointer" rel="<?php echo $result->invoice ?>">Delete</a></p>
+                            <p><a class="deletethis"style="cursor:pointer" rel="<?php echo $result->invoice ?>">Delete","dp-lang");?></a></p>
                         </td>
                         <!--<td><a href="?page=dukapress-shopping-cart-order-log&id=<?php// echo $result->id; ?>"><?php// echo $result->invoice;?></a></td> -->
                         <td><?php printf(__("%s %s"),$result->billing_first_name, $result->billing_last_name);?></td>
@@ -619,16 +619,16 @@ if ($page_links) {
             ?>
 <h3><?php printf(__("Transaction Details for Invoice No. ") . $result->invoice);?></h3>
 <!--<h3>Transaction Details for Invoice No. <?php echo $result->invoice;?></h3>-->
-<p>Mode of Payment: <?php printf(__("%s"),$result->payment_option);?></p>
-<p>Payment Status: <?php printf(__("%s"),$result->payment_status);?></p>
+<p><?php _e("Mode of Payment","dp-lang");?>: <?php printf(__("%s"),$result->payment_option);?></p>
+<p><?php _e("Payment Status","dp-lang");?>: <?php printf(__("%s"),$result->payment_status);?></p>
             <table class="widefat post fixed">
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Product Name</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Total Amount</th>
+                        <th><?php _e("Product Name","dp-lang");?></th>
+                        <th><?php _e("Price","dp-lang");?></th>
+                        <th><?php _e("Quantity","dp-lang");?></th>
+                        <th><?php _e("Total Amount","dp-lang");?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -1046,7 +1046,7 @@ function dukapress_shopping_cart_setting() {
                                 <option value="mzp_effect" <?php if($dp_shopping_cart_settings['image_effect'] === 'mzp_effect') {echo 'selected';}?>>Magic Zoom Plus</option>
                                 <option value="jqzoom_effect" <?php if($dp_shopping_cart_settings['image_effect'] === 'jqzoom_effect') {echo 'selected';}?>>JQZoom</option>
                                 <option value="lightbox" <?php if($dp_shopping_cart_settings['image_effect'] === 'lightbox') {echo 'selected';}?>>Lightbox</option>
-                                <option value="no_effect" <?php if($dp_shopping_cart_settings['image_effect'] === 'no_effect') {echo 'selected';}?>>No Effect</option>
+                                <option value="no_effect" <?php if($dp_shopping_cart_settings['image_effect'] === 'no_effect') {echo 'selected';}?>><?php _e("No Effect","dp-lang");?></option>
                             </select>
                         </td>
                     </tr>
@@ -1055,10 +1055,10 @@ function dukapress_shopping_cart_setting() {
                         <td>
                             <table class="form-table">
                                 <tr>
-                                    <th scope="row"><label for="dp_main_image_width">Width</label></th><td><input type="text" id="dp_main_image_width" name="dp_main_image_width" size="5" value="<?php echo $dp_shopping_cart_settings['m_w'];?>" /><i>px</i></td>
+                                    <th scope="row"><label for="dp_main_image_width"><?php _e("Width","dp-lang");?></label></th><td><input type="text" id="dp_main_image_width" name="dp_main_image_width" size="5" value="<?php echo $dp_shopping_cart_settings['m_w'];?>" /><i>px</i></td>
                                 </tr>
                                 <tr>
-                                    <th scope="row"><label for="dp_main_image_height">Height</label></th><td><input type="text" id="dp_main_image_height" name="dp_main_image_height" size="5" value="<?php echo $dp_shopping_cart_settings['m_h'];?>" /><i>px</i></td>
+                                    <th scope="row"><label for="dp_main_image_height"><?php _e("Height","dp-lang");?></label></th><td><input type="text" id="dp_main_image_height" name="dp_main_image_height" size="5" value="<?php echo $dp_shopping_cart_settings['m_h'];?>" /><i>px</i></td>
                                 </tr>
                             </table>
                         </td>
@@ -1068,10 +1068,10 @@ function dukapress_shopping_cart_setting() {
                         <td>
                             <table class="form-table">
                                 <tr>
-                                    <th scope="row"><label for="dp_thumb_image_width">Width</label></th><td><input type="text" id="dp_thumb_image_width" name="dp_thumb_image_width" size="5" value="<?php echo $dp_shopping_cart_settings['t_w'];?>" /><i>px</i></td>
+                                    <th scope="row"><label for="dp_thumb_image_width"><?php _e("Width","dp-lang");?></label></th><td><input type="text" id="dp_thumb_image_width" name="dp_thumb_image_width" size="5" value="<?php echo $dp_shopping_cart_settings['t_w'];?>" /><i>px</i></td>
                                 </tr>
                                 <tr>
-                                    <th scope="row"><label for="dp_thumb_image_height">Height</label></th><td><input type="text" id="dp_thumb_image_height" name="dp_thumb_image_height" size="5" value="<?php echo $dp_shopping_cart_settings['t_h'];?>" /><i>px</i></td>
+                                    <th scope="row"><label for="dp_thumb_image_height"><?php _e("Height","dp-lang");?></label></th><td><input type="text" id="dp_thumb_image_height" name="dp_thumb_image_height" size="5" value="<?php echo $dp_shopping_cart_settings['t_h'];?>" /><i>px</i></td>
                                 </tr>
                             </table>
                         </td>
@@ -1081,10 +1081,10 @@ function dukapress_shopping_cart_setting() {
                         <td>
                             <table class="form-table">
                                 <tr>
-                                    <th scope="row"><label for="dp_thumb_grid_width">Width</label></th><td><input type="text" id="dp_thumb_grid_width" name="dp_thumb_grid_width" size="5" value="<?php echo $dp_shopping_cart_settings['g_w'];?>" /><i>px</i></td>
+                                    <th scope="row"><label for="dp_thumb_grid_width"><?php _e("Width","dp-lang");?></label></th><td><input type="text" id="dp_thumb_grid_width" name="dp_thumb_grid_width" size="5" value="<?php echo $dp_shopping_cart_settings['g_w'];?>" /><i>px</i></td>
                                 </tr>
                                 <tr>
-                                    <th scope="row"><label for="dp_thumb_grid_height">Height</label></th><td><input type="text" id="dp_thumb_grid_height" name="dp_thumb_grid_height" size="5" value="<?php echo $dp_shopping_cart_settings['g_h'];?>" /><i>px</i></td>
+                                    <th scope="row"><label for="dp_thumb_grid_height"><?php _e("Height","dp-lang");?></label></th><td><input type="text" id="dp_thumb_grid_height" name="dp_thumb_grid_height" size="5" value="<?php echo $dp_shopping_cart_settings['g_h'];?>" /><i>px</i></td>
                                 </tr>
                             </table>
                         </td>
@@ -1120,10 +1120,10 @@ function dukapress_shopping_cart_setting() {
                             <input type="checkbox" name="dp_po[]" value="authorize" <?php if (in_array('authorize', $dp_shopping_cart_settings['dp_po'])) {echo "checked";} ?>/> Authorize.net <br />
                             <input type="checkbox" name="dp_po[]" value="worldpay" <?php if (in_array('worldpay', $dp_shopping_cart_settings['dp_po'])) {echo "checked";} ?>/> WorldPay <br />
                             <input type="checkbox" name="dp_po[]" value="alertpay" <?php if (in_array('alertpay', $dp_shopping_cart_settings['dp_po'])) {echo "checked";} ?>/> AlertPay <br />
-                            <input type="checkbox" name="dp_po[]" value="bank" <?php if (in_array('bank', $dp_shopping_cart_settings['dp_po'])) {echo "checked";} ?>/> Bank transfer in advance <br />
-                            <input type="checkbox" name="dp_po[]" value="cash" <?php if (in_array('cash', $dp_shopping_cart_settings['dp_po'])) {echo "checked";} ?>/> Cash at store <br />
-                            <input type="checkbox" name="dp_po[]" value="mobile" <?php if (in_array('mobile', $dp_shopping_cart_settings['dp_po'])) {echo "checked";} ?>/> Mobile Payment <br />
-                            <input type="checkbox" name="dp_po[]" value="delivery" <?php if (in_array('delivery', $dp_shopping_cart_settings['dp_po'])) {echo "checked";} ?>/> Cash on delivery <br />
+                            <input type="checkbox" name="dp_po[]" value="bank" <?php if (in_array('bank', $dp_shopping_cart_settings['dp_po'])) {echo "checked";} ?>/> <?php _e("Bank transfer in advance","dp-lang");?> <br />
+                            <input type="checkbox" name="dp_po[]" value="cash" <?php if (in_array('cash', $dp_shopping_cart_settings['dp_po'])) {echo "checked";} ?>/> <?php _e("Cash at store","dp-lang");?> <br />
+                            <input type="checkbox" name="dp_po[]" value="mobile" <?php if (in_array('mobile', $dp_shopping_cart_settings['dp_po'])) {echo "checked";} ?>/> <?php _e("Mobile Payment","dp-lang");?> <br />
+                            <input type="checkbox" name="dp_po[]" value="delivery" <?php if (in_array('delivery', $dp_shopping_cart_settings['dp_po'])) {echo "checked";} ?>/> <?php _e("Cash on delivery","dp-lang");?> <br />
                             <?php do_action('dp_more_payment_option'); ?>
                         </td>
                     </tr>
@@ -1292,8 +1292,8 @@ function dukapress_shopping_cart_setting() {
                                         }
                                         else {
                                         ?>
-                                            <tr><td colspan="2">Your Shop's Currency Code is not compatible with PayPal. Please choose a Currency Code from the below list. Payments will be converted to the selected Currency Code, when Payments are sent to PayPal.</td></tr>
-                                            <tr><th scope="row">PayPal Currency Code</th>
+                                            <tr><td colspan="2"><?php _e("Your Shop's Currency Code is not compatible with PayPal. Please choose a Currency Code from the below list. Payments will be converted to the selected Currency Code, when Payments are sent to PayPal.","dp-lang");?></td></tr>
+                                            <tr><th scope="row"><?php _e("PayPal Currency Code","dp-lang");?></th>
                                             <td>
                                                 <select name="dp_paypal_currency">
                                                     <?php
@@ -1648,7 +1648,7 @@ function dukapress_shopping_cart_setting() {
                       </div>
                  </div>
               </div>
-            <h3><a href="#"><?php  _e("Order Cancelled","dp-lang");?></a></h3>
+            <h3><a href="#"><?php  _e("Order Canceled","dp-lang");?></a></h3>
               <div>
                 <div>
                      <div class="email-management">

@@ -536,7 +536,7 @@ function dp_rm_content_visibility_meta_box() {
         <tr><td><label for="price"><b><?php _e('Price:', "dp-lang"); ?></b></label></td><td><input id="price" type="text" name="price" value="<?php echo $content_price; ?>" /></td></tr>
         <tr><td><label for="new_price"><b><?php _e('New Price:', "dp-lang"); ?></b></label></td><td><input id="new_price" type="text" name="new_price" value="<?php echo $new_price; ?>" /></td></tr>
         <tr><td><label for="currently_in_stock"><b><?php _e('Currently In Stock:', "dp-lang"); ?></b></label></td><td><input id="currently_in_stock" type="text" name="currently_in_stock" value="<?php echo $content_stock; ?>" /></td></tr>
-        <tr><td><label for="item_weight"><b><?php _e('Item Weight:', "dp-lang"); ?></b></label></td><td><input id="item_weight" type="text" name="item_weight" value="<?php echo $content_weight; ?>" /> (in grams)</td></tr>
+        <tr><td><label for="item_weight"><b><?php _e('Item Weight:', "dp-lang"); ?></b></label></td><td><input id="item_weight" type="text" name="item_weight" value="<?php echo $content_weight; ?>" /> (<?php _e('in grams', "dp-lang"); ?>)</td></tr>
         <tr><td><label for="digital_file"><b><?php _e('Digital File:', "dp-lang"); ?></b></label></td><td><input id="digital_file" type="text" name="digital_file" value="<?php echo $content_file; ?>" /></td></tr>
     </table>
 

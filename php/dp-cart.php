@@ -331,14 +331,14 @@ function dpsc_print_checkout_table_html($dpsc_discount_value = 0) {
                 <input type="hidden" name="qpvar" value="' . $dpsc_product['var'] . '"/>
                 <input type="hidden" name="dpsc_ajax_action" value="update_quantity"/>
                 <input type="text" name="quantity" size="1" value="' . $dpsc_product['quantity'] . '"/>
-                <input type="submit" value="Update" name="qupdate"></form></td>
+                <input type="submit" value="' . __('Update', "dp-lang") . '" name="qupdate"></form></td>
                 ' . $price_row_output . '
                 <td><form action="" method="post" class="product_update">
                 <input type="hidden" name="qpid" value="' . $dpsc_product['item_number'] . '"/>
                 <input type="hidden" name="quantity" value="0"/>
                 <input type="hidden" name="dpsc_ajax_action" value="update_quantity"/>
                 <input type="hidden" name="qpvar" value="' . $dpsc_product['var'] . '"/>
-                <input type="submit" value="Remove" name="qupdate"></form></td></tr>';
+                <input type="submit" value="' . __('Remove', "dp-lang") . '" name="qupdate"></form></td></tr>';
             $dpsc_count_product++;
         }
         sort($dpsc_products);
@@ -627,7 +627,7 @@ function dpsc_print_checkout_payment_form() {
     if (!is_numeric($dpsc_shipping_value) && $dpsc_shipping_weight != 0) {
         $disabled_button = 'disabled="disabled"';
     }
-    $output .= ' <input type="submit" ' . $disabled_button . ' id="dpsc_make_payment" value="' . __('Make Payment') . '" />';
+    $output .= ' <input type="submit" ' . $disabled_button . ' id="dpsc_make_payment" value="' . __('Make Payment', "dp-lang") . '" />';
     $output .= '</div>';
     $output .= '<div id="dpsc_hidden_payment_form" style="display: none"></div>';
     return $output;
@@ -1350,24 +1350,24 @@ function dpsc_pnj_thank_you_page() {
                     foreach ($product_details as $product) {
 ?>
                         <table class="transaction_summary">
-                            <th colspan="2" align="center">Purchase details:</th>
+                            <th colspan="2" align="center"><?php _e("Purchase details","dp-lang");?>:</th>
                             <tr>
-                                <td align="right">Product Name :</td><td><?php printf(__("%s"), $product['name']); ?></td>
+                                <td align="right"><?php _e("Product Name","dp-lang");?> :</td><td><?php printf(__("%s"), $product['name']); ?></td>
                             </tr>
                             <tr>
-                                <td align="right">Product Price :</td><td><?php echo $symbol;
+                                <td align="right"><?php _e("Product Price","dp-lang");?> :</td><td><?php echo $symbol;
                         printf(__("%d"), $product['price']); ?></td>
                 </tr>
                 <tr>
-                    <td align="right">Product Quantity :</td><td><?php echo $product['quantity']; ?></td>
+                    <td align="right"><?php _e("Product Quantity","dp-lang");?> :</td><td><?php echo $product['quantity']; ?></td>
                 </tr>
                 <tr>
-                    <td align="right">Tax Amount :</td><td><?php echo $symbol;
+                    <td align="right"><?php _e("Tax Amount","dp-lang");?> :</td><td><?php echo $symbol;
                         echo ($product['price'] * $product['quantity'] / 100) * $tax; ?></td>
                 </tr>
 
                 <tr>
-                    <td align="right">Total Price :</td><td><?php echo $symbol;
+                    <td align="right"><?php _e("Total Price","dp-lang");?> :</td><td><?php echo $symbol;
                         echo ($product['price'] * $product['quantity']) + ($product['price'] * $product['quantity'] / 100) * $tax; ?></td>
                 </tr>
             </table>

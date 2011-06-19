@@ -252,51 +252,51 @@ class dpsc_show_product_widget extends WP_Widget {
         $category = esc_attr($instance['category']);
         ?>
         <p>
-            <label for="<?php echo $this->get_field_id('title'); ?>">Title:</label>
+            <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e("Title","dp-lang");?>:</label>
             <input type="text" value="<?php echo $title; ?>" name="<?php echo $this->get_field_name('title'); ?>" id="<?php echo $this->get_field_id('title'); ?>" class="widefat" />
         </p>
         <p>
-            <label for="<?php echo $this->get_field_id('number'); ?>">Number of products to display:</label>
+            <label for="<?php echo $this->get_field_id('number'); ?>"><?php _e("Number of products to display","dp-lang");?>:</label>
             <input type="text" value="<?php echo $number; ?>" name="<?php echo $this->get_field_name('number'); ?>" id="<?php echo $this->get_field_id('number'); ?>" class="widefat" />
         </p>
         <p>
-            <label for="<?php echo $this->get_field_id('category'); ?>">Category ID (<small>comma separated. e.g. <i>1,2,3</i></small>):</label>
+            <label for="<?php echo $this->get_field_id('category'); ?>"><?php _e("Category ID","dp-lang");?> (<small><?php _e("comma separated. e.g.","dp-lang");?> <i>1,2,3</i></small>):</label>
             <input type="text" value="<?php echo $category; ?>" name="<?php echo $this->get_field_name('category'); ?>" id="<?php echo $this->get_field_id('category'); ?>" class="widefat" />
         </p>
         <p>
-            <label>Post Type:</label>
+            <label><?php _e("Post Type","dp-lang");?>:</label>
             <select name="<?php echo $this->get_field_name('type'); ?>">
-                <option value="post" <?php if ($type === 'post') { echo 'selected="selected"';}?>>Normal Post</option>
-                <option value="duka" <?php if ($type === 'duka') { echo 'selected="selected"';}?>>DukaPress Product Post Type</option>
+                <option value="post" <?php if ($type === 'post') { echo 'selected="selected"';}?>><?php _e("Normal Post","dp-lang");?></option>
+                <option value="duka" <?php if ($type === 'duka') { echo 'selected="selected"';}?>><?php _e("DukaPress Product Post Type","dp-lang");?></option>
             </select>
         </p>
         <p>
-            <label>Show Thumbnail:</label>
+            <label><?php _e("Show Thumbnail","dp-lang");?>:</label>
             <select name="<?php echo $this->get_field_name('thumbnail'); ?>">
-                <option value="yes" <?php if ($thumbnail === 'yes') { echo 'selected="selected"';}?>>Yes</option>
-                <option value="no" <?php if ($thumbnail === 'no') { echo 'selected="selected"';}?>>No</option>
+                <option value="yes" <?php if ($thumbnail === 'yes') { echo 'selected="selected"';}?>><?php _e("Yes","dp-lang");?></option>
+                <option value="no" <?php if ($thumbnail === 'no') { echo 'selected="selected"';}?>><?php _e("No","dp-lang");?></option>
             </select>
         </p>
         <p>
-            <label for="<?php echo $this->get_field_id('width'); ?>">Thumbnail Width:</label>
+            <label for="<?php echo $this->get_field_id('width'); ?>"><?php _e("Thumbnail Width","dp-lang");?>:</label>
             <input type="text" value="<?php echo $width; ?>" name="<?php echo $this->get_field_name('width'); ?>" id="<?php echo $this->get_field_id('width'); ?>" class="widefat" />
         </p>
         <p>
-            <label for="<?php echo $this->get_field_id('height'); ?>">Thumbnail Height:</label>
+            <label for="<?php echo $this->get_field_id('height'); ?>"><?php _e("Thumbnail Height","dp-lang");?>:</label>
             <input type="text" value="<?php echo $height; ?>" name="<?php echo $this->get_field_name('height'); ?>" id="<?php echo $this->get_field_id('height'); ?>" class="widefat" />
         </p>
         <p>
-            <label>Show Add to Cart:</label>
+            <label><?php _e("Show Add to Cart","dp-lang");?>:</label>
             <select name="<?php echo $this->get_field_name('atc'); ?>">
-                <option value="yes" <?php if ($atc === 'yes') { echo 'selected="selected"';}?>>Yes</option>
-                <option value="no" <?php if ($atc === 'no') { echo 'selected="selected"';}?>>No</option>
+                <option value="yes" <?php if ($atc === 'yes') { echo 'selected="selected"';}?>><?php _e("Yes","dp-lang");?></option>
+                <option value="no" <?php if ($atc === 'no') { echo 'selected="selected"';}?>><?php _e("No","dp-lang");?></option>
             </select>
         </p>
         <p>
-            <label>Buy Now:</label>
+            <label><?php _e("Buy Now","dp-lang");?>:</label>
             <select name="<?php echo $this->get_field_name('buy_now'); ?>">
-                <option value="no" <?php if ($buy_now === 'no') { echo 'selected="selected"';}?>>No</option>
-                <option value="yes" <?php if ($buy_now === 'yes') { echo 'selected="selected"';}?>>Yes</option>
+                <option value="no" <?php if ($buy_now === 'no') { echo 'selected="selected"';}?>><?php _e("No","dp-lang");?></option>
+                <option value="yes" <?php if ($buy_now === 'yes') { echo 'selected="selected"';}?>><?php _e("Yes","dp-lang");?></option>
             </select>
         </p>
         <?php
@@ -318,7 +318,7 @@ class dpsc_show_product_widget extends WP_Widget {
 
     function widget($args, $instance) {
         extract($args);
-        $title = empty( $instance['title'] ) ? 'DukaPress Checkout' : $instance['title'];
+        $title = empty( $instance['title'] ) ? 'DukaPress Products' : $instance['title'];
         echo $before_widget;
         echo $before_title.$title.$after_title;
         $direct_checkout = false;
