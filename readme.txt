@@ -41,8 +41,9 @@ Premium Addons:
 1. [DukaPress Styles](http://dukapress.com/products/styles/ "DukaPress Styles - make DukaPress look good without getting a new theme")
 1. [Shipping Pro](http://dukapress.com/products/shipping-pro/ "Shipping Pro - location-based shipping")
 
+Premium Themes:
 
-Due to public demand, you can get an absolutely free DukaPress hosted (just sign up and start selling in five minutes, no fuss) shop here: [Our Duka](http://ourduka.com/ "Get a free online shop")
+1. [The Duka Theme](http://madoido.com/products/duka-theme/ "The Duka Theme")
 
 == Installation ==
 

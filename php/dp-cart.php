@@ -97,6 +97,9 @@ function dpsc_add_to_cart() {
     }
     sort($dpsc_products);
     $_SESSION['dpsc_products'] = $dpsc_products;
+    if ($_REQUEST['dpsc_buy_now_button_present_' . $product_id] == '2') {
+      die ($dp_shopping_cart_settings['checkout']);
+    }
     if ($_REQUEST['ajax'] == 'true') {
         ob_start();
         echo dpsc_print_cart_html(FALSE, $product_name);
@@ -121,9 +124,8 @@ function dpsc_add_to_cart() {
  * This function empties the cart
  *
  */
-if ($_REQUEST['dpsc_ajax_action'] === 'empty_cart') {
-    add_action('init', 'dpsc_empty_cart');
-}
+add_action('wp_ajax_dpsc_empty_your_cart', 'dpsc_empty_cart');
+add_action('wp_ajax_no_priv_dpsc_empty_your_cart', 'dpsc_empty_cart');
 
 function dpsc_empty_cart() {
     unset($_SESSION['dpsc_shiping_price']);
@@ -134,20 +136,18 @@ function dpsc_empty_cart() {
         }
     }
     $_SESSION['dpsc_products'] = $products;
-    if ($_REQUEST['ajax'] == 'true') {
-        ob_start();
-        echo dpsc_print_cart_html();
-        $output = ob_get_contents();
-        ob_end_clean();
-        $output = str_replace(Array("\n", "\r"), Array("\\n", "\\r"), addslashes($output));
-        $output1 = dpsc_print_cart_html(TRUE);
-        $output1 = str_replace(Array("\n", "\r"), Array("\\n", "\\r"), addslashes($output1));
-        echo "jQuery('div.dpsc-shopping-cart').html('$output');";
-        echo "jQuery('div.dpsc-mini-shopping-cart').html('$output1');";
-        echo "jQuery('form.product_form').removeClass('product_in_cart');";
-        echo "jQuery('span.dpsc_in_cart').html('&nbsp;');";
-        exit();
-    }
+    ob_start();
+    echo dpsc_print_cart_html();
+    $output = ob_get_contents();
+    ob_end_clean();
+    $output = str_replace(Array("\n", "\r"), Array("\\n", "\\r"), addslashes($output));
+    $output1 = dpsc_print_cart_html(TRUE);
+    $output1 = str_replace(Array("\n", "\r"), Array("\\n", "\\r"), addslashes($output1));
+    echo "jQuery('div.dpsc-shopping-cart').html('$output');";
+    echo "jQuery('div.dpsc-mini-shopping-cart').html('$output1');";
+    echo "jQuery('form.product_form').removeClass('product_in_cart');";
+    echo "jQuery('span.dpsc_in_cart').html('&nbsp;');";
+    die();
 }
 
 /**
@@ -377,13 +377,11 @@ function dpsc_print_checkout_table_html($dpsc_discount_value = 0) {
                         }
                         break;
 
-                    case 'fedex':
-                        if ($dpsc_shipping_weight > 0) {
-                            $dp_shipping_calculate_html = dp_fedex_get_country_dropdown();
-                        }
-                        break;
-
                     default:
+                        ob_start();
+                        do_action('dpsc_shipping_html_at_checkout');
+                        $dp_shipping_calculate_html = ob_get_contents();
+                        ob_end_clean();
                         break;
                 }
             }
@@ -567,6 +565,12 @@ function dpsc_print_checkout_payment_form() {
 								</tr>';
                     break;
 
+                case 'mercadopago_pro':
+                    $output .= '<tr><td class="radio"><input type="radio" name="dpsc_po" value="mercadopago" /></td>
+                                    <td class="description">' . __("Mercadopago", "dp-lang") . '</td>
+                                </tr>';
+                    break;
+
                 default:
                     break;
             }
@@ -606,6 +610,10 @@ function dpsc_print_checkout_payment_form() {
 
                 case 'delivery':
                     $output .= __('Cash on delivery', "dp-lang") . '<input type="hidden" id="dpsc_po_hidden" name="dpsc_po" value="delivery" />';
+                    break;
+
+                case 'mercadopago_pro':
+                    $output .= __('Mercadopago', "dp-lang") . '<input type="hidden" id="dpsc_po_hidden" name="dpsc_po" value="mercadopago" />';
                     break;
 
                 default:
@@ -682,7 +690,7 @@ function dpsc_on_payment_save($dpsc_total = FALSE, $dpsc_shipping_value = FALSE,
     if (!$tax) {
         $tax = 0;
     }
-    if (!$dpsc_shipping_value || $dpsc_shipping_value === 'ship_pro') {
+    if (!$dpsc_shipping_value || !is_numeric($dpsc_shipping_value)) {
         $dpsc_shipping_value = 0.00;
     }
     if (!$dpsc_discount_value) {
@@ -749,36 +757,40 @@ function dpsc_on_payment_save($dpsc_total = FALSE, $dpsc_shipping_value = FALSE,
             update_option('dpsc_discount_codes', $updated_discount_codes);
         }
     }
+
     $order_id = $wpdb->insert_id;
-    $subject = 'New Order #' . $invoice;
-    $message = 'Hello,<br/><br/>
 
-                Someone has just placed an order at your shop located at ' . get_bloginfo('url') . '.<br/><br/>
+    $billing_addreess = 'BILLING ADDRESS<br/>
+                        Name: ' . $bfname . ' ' . $blname . '<br/>
+                        Address: ' . $baddress . '<br/>
+                        City: ' . $bcity . '<br/>
+                        Province/State: ' . $bstate . '<br/>
+                        Postal Code: ' . $bzip . '<br/>
+                        Country: ' . $bcountry . '<br/>
+                        Email: ' . $bemail . '<br/>
+                        Phone: ' . $phone . '<br/><br/>';
 
-                You can find details of the items ordered by going here: ' . get_bloginfo('url') . '/wp-admin/admin.php?page=dukapress-shopping-cart-order-log&id=' . $invoice . ' <br/><br/>
+    $shipping_address = 'SHIPPING ADDRESS<br/>
+                        Name: ' . $sfname . ' ' . $slname . '<br/>
+                        Address: ' . $saddress . '<br/>
+                        City: ' . $scity . '<br/>
+                        Province/State: ' . $sstate . '<br/>
+                        Postal Code: ' . $szip . '<br/>
+                        Country: ' . $scountry . '<br/><br/>';
 
-                Here are the details of the person who placed the order: <br/><br/>
+    $shop_name = $dp_shopping_cart_settings['shop_name'];
+    $site_url = get_bloginfo('url');
+    $transaction_log =$site_url.'/wp-admin/admin.php?page=dukapress-shopping-cart-order-log&id='.$invoice;
+    $nme_dp_mail_option = get_option('dp_order_mail_options', true);
+    $message = $nme_dp_mail_option['dp_order_send_mail_body'];
+    $message = str_replace("\r", '<br>', $message);
 
-                BILLING ADDRESS<br/>
-                Name: ' . $bfname . ' ' . $blname . '<br/>
-                Address: ' . $baddress . '<br/>
-                City: ' . $bcity . '<br/>
-                Province/State: ' . $bstate . '<br/>
-                Postal Code: ' . $bzip . '<br/>
-                Country: ' . $bcountry . '<br/>
-                Email: ' . $bemail . '<br/>
-                Phone: ' . $phone . '<br/><br/>
+    $array1 = array('%baddress%', '%order%', '%saddress%', '%inv%', '%shop%', '%siteurl%','%order-log-transaction%');
+    $array2 = array($billing_addreess, $order_id, $shipping_address, $invoice, $shop_name, $site_url,$transaction_log);
+    $message = str_replace($array1, $array2, $message);
 
-                SHIPPING ADDRESS<br/>
-                Name: ' . $sfname . ' ' . $slname . '<br/>
-                Address: ' . $saddress . '<br/>
-                City: ' . $scity . '<br/>
-                Province/State: ' . $sstate . '<br/>
-                Postal Code: ' . $szip . '<br/>
-                Country: ' . $scountry . '<br/><br/>
+    $subject = $nme_dp_mail_option['dp_order_send_mail_title'];
 
-                --
-                Warm regards,<br/><br/>' . $dp_shopping_cart_settings['shop_name'];
     $to = get_option('admin_email');
     dpsc_pnj_send_mail($to, $to, $dp_shopping_cart_settings['shop_name'], $subject, $message);
     if ($dp_shopping_cart_settings['dp_shop_pdf_generation'] === 'checked') {
@@ -793,7 +805,7 @@ function dpsc_on_payment_save($dpsc_total = FALSE, $dpsc_shipping_value = FALSE,
         }
 
         if (!$user_id && $payment_option != 'PayPal Buy Now') {
-//            require_once( ABSPATH . WPINC . '/registration.php');
+//          require_once( ABSPATH . WPINC . '/registration.php');
             $user_pass = wp_generate_password();
             $user_id = wp_create_user($bemail, $user_pass, $bemail);
             update_user_option($user_id, 'default_password_nag', true, true);
@@ -834,31 +846,47 @@ function dp_new_user_notification($user_id, $plaintext_pass = '') {
 
     $user_login = stripslashes($user->user_login);
     $user_email = stripslashes($user->user_email);
+    $login_url = wp_login_url();
+
+    $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
+    $shop_name = $dp_shopping_cart_settings['shop_name'];
 
     // The blogname option is escaped with esc_html on the way into the database in sanitize_option
     // we want to reverse this for the plain text arena of emails.
     $blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
 
-    $message = sprintf(__('New user registration on your site %s:'), $blogname) . "\r\n\r\n";
-    $message .= sprintf(__('Username: %s'), $user_login) . "\r\n\r\n";
-    $message .= sprintf(__('E-mail: %s'), $user_email) . "\r\n";
+    $nme_dp_mail_option = get_option('dp_reg_admin_mail', true);
+    $from = get_option('admin_email');
 
-    @wp_mail(get_option('admin_email'), sprintf(__('[%s] New User Registration'), $blogname), $message);
+    $msg = $nme_dp_mail_option['dp_reg_admin_mail_body'];
+    $sub = $nme_dp_mail_option['dp_reg_admin_mail_title'];
+    $msg = str_replace("\r", '<br>', $msg);
+
+
+
+    $array1 = array('%uname%', '%pass%', '%email%', '%shop%');
+    $array2 = array($user_login, $plaintext_pass, $user_email, $shop_name);
+    $msg = str_replace($array1, $array2, $msg);
+
+
+    dpsc_pnj_send_mail(get_option('admin_email'),$from, $shop_name, $sub, $msg);
 
     if (empty($plaintext_pass))
         return;
 
-    $message = sprintf(__('Username: %s'), $user_login) . "\r\n";
-    $message .= sprintf(__('Password: %s'), $plaintext_pass) . "\r\n";
-    $message .= wp_login_url() . "\r\n";
 
-    $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
 
-    $name = $dp_shopping_cart_settings['shop_name'];
+    $nme_dp_mail_option = get_option('dp_usr_reg_mail_options', true);
 
-    $from = get_option('admin_email');
+    $message = stripslashes($nme_dp_mail_option['dp_usr_reg_mail_body']);
+    $subject = stripslashes($nme_dp_mail_option['dp_usr_reg_mail_title']);
+    $message = str_replace("\r", '<br>', $message);
 
-    dpsc_pnj_send_mail($user_email, $from, $name, sprintf(__('[%s] Your username and password'), $blogname), $message);
+    $array1 = array('%uname%', '%pass%', '%email%', '%login%', '%shop%');
+    $array2 = array($user_login, $plaintext_pass, $user_email, $login_url, $shop_name);
+    $message = str_replace($array1, $array2, $message);
+
+    dpsc_pnj_send_mail($user_email, $from, $shop_name, $subject, $message);
 }
 
 /**
@@ -930,21 +958,33 @@ function dpsc_pnj_calculate_cart_price($on_payment = FALSE) {
             $product['weight'] = $dpsc_product['item_weight'];
             $products[] = $product;
             $in_stock = get_post_meta(intval($dpsc_product['item_number']), 'currently_in_stock', true);
+
             if ($on_payment) {
                 if ($in_stock && intval($in_stock) > 0) {
                     $in_stock = $in_stock - $dpsc_product['quantity'];
                     update_post_meta(intval($dpsc_product['item_number']), 'currently_in_stock', $in_stock);
-                    if ((intval(get_post_meta(intval($dpsc_product['item_number']), 'currently_in_stock', true)) < 10) && $dp_shopping_cart_settings['dp_shop_inventory_warning'] === 'yes') {
+//                    if ((intval(get_post_meta(intval($dpsc_product['item_number']), 'currently_in_stock', true)) < 10) && $dp_shopping_cart_settings['dp_shop_inventory_warning'] === 'yes') {
+                    if ((intval(get_post_meta(intval($dpsc_product['item_number']), 'currently_in_stock', true)) < intval($dp_shopping_cart_settings['dp_shop_inventory_stock_warning'])) && $dp_shopping_cart_settings['dp_shop_inventory_warning'] === 'yes') {
                         $to = $dp_shopping_cart_settings['dp_shop_inventory_email'];
                         $from = get_option('admin_email');
-                        $message = 'Hey,<br/>
-                                Product No.: ' . $dpsc_product['item_number'] . '<br/>
-                                Product Name: ' . $dpsc_product['name'] . ' is running low in inventory.<br/>
-                                Currently in stock: ' . $in_stock . '<br/>
-                                Kindly replenish your inventory.<br/>
-                                <br/>
-                                -DukaPress Automatic Warning Mail Service';
-                        dpsc_pnj_send_mail($to, $from, 'Low Inventory Warning', 'Low Inventory Warning', $message);
+
+                        $product_no = $dpsc_product['item_number'];
+                        $product_name = $dpsc_product['name'];
+                        $in_stock = $in_stock;
+                        $footer = 'DukaPress Automatic Warning Mail Service';
+
+                        $nme_dp_mail_option = get_option('dp_usr_inventory_mail', true);
+
+                        $message = $nme_dp_mail_option['dp_usr_inventory_mail_body'];
+                        $subject = $nme_dp_mail_option['dp_usr_inventory_mail_title'];
+                        $message = str_replace("\r", '<br>', $message);
+
+                        $array1 = array('%pno%', '%pname%', '%stock%', '%footer%');
+                        $array2 = array($product_no, $product_name, $in_stock, $footer);
+                        $message = str_replace($array1, $array2, $message);
+
+                        dpsc_pnj_send_mail($to, $from, $subject, $subject, $message);
+//                      dpsc_pnj_send_mail($to, $from, 'Low Inventory Warning', 'Low Inventory Warning', $message);
                     }
                 }
             }
@@ -957,6 +997,9 @@ function dpsc_pnj_calculate_cart_price($on_payment = FALSE) {
     return array(FALSE, FALSE, FALSE, FALSE);
 }
 
+
+remove_action ('dp_on_settings_saved', 'dp_save_mercadopago_settings');
+remove_action ('dp_more_payment_option', 'dp_add_mercadopago_payment');
 /**
  * This function calculates the shipping price.
  *
@@ -1034,16 +1077,12 @@ function dpsc_pnj_calculate_shipping_price($shipping_weight = FALSE, $sub_total_
             $shipping_price = $per_item_rate * $number_of_items_in_cart;
             break;
 
-        case 'fedex':
-            $shipping_price = 'fedex';
-            break;
-
         case 'ship_pro':
             $shipping_price = 'ship_pro';
             break;
 
         default:
-            $shipping_price = 0.00;
+            $shipping_price = 'Addon';
             break;
     }
     return $shipping_price;
@@ -1109,6 +1148,7 @@ function dpsc_pnj_show_contact_information() {
                 <input type="text" id="s_zipcode" name="s_zipcode" value="' . __($user_info['szip'], "dp-lang") . '" /><span class="dpsc_error_msg" id="shipPostalError">' . __('Please enter the Postal Code', "dp-lang") . '</span><br />';
     $output .= '<label for="s_country">' . __('Country', "dp-lang") . '</label>
                 <select name="s_country" id="s_country">';
+
     foreach ($dpsc_country_code_name as $country_code => $country_name) {
         $selected = '';
         if ($country_code === $user_info['scountry']) {
@@ -1190,9 +1230,21 @@ function dpsc_pnj_thank_you_page() {
             }
         }
         $message_content .= '</table>';
-        $final_msg = 'From: ' . $from_name . '(' . $from_email . ')<br/>Subject:' . $subject . '<br/>' . $message . '<br/>' . $message_content;
+//        $final_msg = 'From: ' . $from_name . '(' . $from_email . ')<br/>Subject:' . $subject . '<br/>' . $message . '<br/>' . $message_content;
         $to = get_option('admin_email');
-        dpsc_pnj_send_mail($to, $to, __('Inquiry Form Submitted', "dp-lang"), $subject, $final_msg);
+
+        $nme_dp_mail_option = get_option('dp_usr_enquiry_mail', true);
+
+        $msg = $nme_dp_mail_option['dp_usr_enquiry_mail_body'];
+        $email_subject = $nme_dp_mail_option['dp_usr_enquiry_mail_title'];
+        $msg = str_replace("\r", '<br>', $msg);
+
+
+        $array1 = array('%from%', '%from_email%', '%details%', '%custom_message%');
+        $array2 = array($from_name, $from_email, $message_content, $subject, $message);
+        $msg = str_replace($array1, $array2, $msg);
+
+        dpsc_pnj_send_mail($to, $to, __('Inquiry Form Submitted', "dp-lang"), $email_subject, $msg);
         $output = '<h3>' . __('Thank you for submitting our Inquiry form.', "dp-lang") . '</h3><p>' . __('We will contact you soon.', "dp-lang") . '</p>';
         $products = $_SESSION['dpsc_products'];
 
@@ -1305,9 +1357,9 @@ function dpsc_pnj_thank_you_page() {
                             <tr>
                                 <td align="right">Product Price :</td><td><?php echo $symbol;
                         printf(__("%d"), $product['price']); ?></td>
-                            </tr>
-                            <tr>
-                                <td align="right">Product Quantity :</td><td><?php echo $product['quantity']; ?></td>
+                </tr>
+                <tr>
+                    <td align="right">Product Quantity :</td><td><?php echo $product['quantity']; ?></td>
                 </tr>
                 <tr>
                     <td align="right">Tax Amount :</td><td><?php echo $symbol;
@@ -1332,13 +1384,20 @@ function dpsc_pnj_thank_you_page() {
             if ($dp_shopping_cart_settings['dp_shop_pdf_generation'] === 'checked') {
                 $output .= '<p><a href="' . DP_PLUGIN_URL . '/pdf/invoice_' . $invoice . '.pdf">Click here to download your Invoice.</a></p>';
             }
-            $message = 'Hi ' . $bfname . ' ' . $blname . ',<br/>
-                        We have received your Order No.: ' . $invoice . '.<br/>
-                        We will start processing your Order the moment we get payment.
-                        <br/><br/>
-                        Thanks,<br/>
-                        ' . $dp_shopping_cart_settings['shop_name'];
-            $subject = 'Receipt of Order No.: ' . $invoice;
+            $site_url = get_bloginfo('url');
+            $shop_name = $dp_shopping_cart_settings['shop_name'];
+
+            $nme_dp_mail_option = get_option('dp_order_mail_user_options', true);
+
+            $subject = $nme_dp_mail_option['dp_order_send_mail_user_title'];
+            $message = $nme_dp_mail_option['dp_order_send_mail_user_body'];
+            $message = str_replace("\r", '<br>', $message);
+
+            $array1 = array('%fname%', '%lname%', '%inv%', '%shop%', '%siteurl%');
+            $array2 = array($bfname, $blname, $invoice, $shop_name, $site_url);
+            $message = str_replace($array1, $array2, $message);
+
+
             dpsc_pnj_send_mail($to_email, $from_email, $dp_shopping_cart_settings['shop_name'], $subject, $message, $invoice);
             return $output;
         }

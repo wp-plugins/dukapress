@@ -3,6 +3,7 @@ jQuery(document).ready(function () {
         jQuery('#dp_settings').accordion({active: false, autoHeight: false, collapsible: true});
         jQuery('#po').accordion({active: false, autoHeight: false, collapsible: true});
         jQuery('#product-management').accordion({active: false, autoHeight: false, collapsible: true});
+        jQuery('.email-management').accordion({active: false, autoHeight: false, collapsible: true});
     
         jQuery('#dp_discount_submit').live('click', function(){
             var dpsc_discount_code = jQuery("#discount_code").val();

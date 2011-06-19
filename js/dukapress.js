@@ -21,6 +21,16 @@ jQuery(document).ready(function () {
                             }
                 });
             }
+            else if (buy_now_present == '2') {
+              jQuery.ajax({
+                            type: "POST",
+                            url: dpsc_js.ajaxurl,
+                            data: form_values,
+                            success: function(response){
+                                window.location = response;
+                            }
+                });
+            }
             else {
                 jQuery.post( dpsc_js.dpsc_url+"/index.php?ajax=true", form_values, function(returned_data) {
                     eval(returned_data);
@@ -63,16 +73,16 @@ jQuery(document).ready(function () {
         }
     });
 
-    jQuery("form.dpsc_empty_cart span.emptycart a").livequery(function(){
-        jQuery(this).live('click', function() {
-            parent_form = jQuery(this).parents("form.dpsc_empty_cart");
-            form_values = "ajax=true&";
-            form_values += jQuery(parent_form).serialize();
-            jQuery.post( dpsc_js.dpsc_url+'/index.php', form_values, function(returned_data) {
-                eval(returned_data);
-            });
-            return false;
+    jQuery('.dpsc_empty_your_cart').live('click', function() {
+        jQuery.ajax({
+                    type: "POST",
+                    url: dpsc_js.ajaxurl,
+                    data: 'action=dpsc_empty_your_cart',
+                    success: function(response){
+                        eval(response);
+                    }
         });
+        return false;
     });
 
     jQuery("form.product_update").livequery(function(){
@@ -80,7 +90,7 @@ jQuery(document).ready(function () {
             form_values = "ajax=true&";
             form_values += jQuery(this).serialize();
             jQuery.post( dpsc_js.dpsc_url+'/index.php', form_values, function(returned_data) {
-                eval(returned_data);
+            eval(returned_data);
             });
             return false;
         });
@@ -116,7 +126,7 @@ jQuery(document).ready(function () {
         jQuery('#shipFNameError').hide();
         jQuery('#shipCityError').hide();
 
-		var check_other_shipping = jQuery('input[name=other_shipping_present]').val();
+        var check_other_shipping = jQuery('input[name=other_shipping_present]').val();
 
         if (check_other_shipping == 'true') {
           var cstom_shipping_val = jQuery('input[name=custom_shipping_value]').val();
@@ -124,7 +134,7 @@ jQuery(document).ready(function () {
             return;
           }
         }
-		
+
         jQuery('#dpsc_po_error').css('display', 'none');
         var check = jQuery('input[name=dpsc_po]').is(':checked');
         var check_hidden = jQuery('#dpsc_po_hidden').length;
@@ -328,7 +338,7 @@ jQuery(document).ready(function () {
             }
             var shipping = jQuery('input[name=custom_shipping_value]').val();
             var ship_string = '';
-            if (shipping != '0.00') {
+            if (shipping != 'no_val') {
                 ship_string = "&shipping="+shipping;
             }
             var dpsc_payment = "ajax=true&dpsc_ajax_action=dpsc_payment_option"+ship_string+"&payment_selected=" + payment_option + payment_discount_string + '&b_fname=' + dpsc_b_fname + '&b_lname=' + dpsc_b_lname + '&b_country=' + dpsc_b_country + '&b_address=' + dpsc_b_address + '&b_city=' + dpsc_b_city + '&b_state=' + dpsc_b_state + '&b_zip=' + dpsc_b_zipcode + '&b_email=' + dpsc_b_email + '&ship_present=' + diff_ship + ship_details + '&b_phone=' + dpsc_b_phone;

@@ -94,7 +94,7 @@ class dpsc_show_checkout_link_widget extends WP_Widget {
 }
 
 /**
- * Widget to display Mni Shopping Cart
+ * Widget to display Mini Shopping Cart
  *
  */
 add_action('widgets_init', create_function('', 'return register_widget("dpsc_mini_shopping_cart_widget");'));
@@ -118,6 +118,7 @@ class dpsc_mini_shopping_cart_widget extends WP_Widget {
         extract($args);
         echo $before_widget;
         echo $before_title.$after_title;
+        echo $before_widget;
         ?>
 <div class="dpsc-mini-shopping-cart" id="dpsc-mini-shopping-cart">
             <?php echo dpsc_print_cart_html(TRUE);?>
@@ -207,12 +208,9 @@ function dpsc_print_cart_html($mini=FALSE, $product_name = FALSE) {
             if($dp_shopping_cart_settings['dp_shop_mode'] != 'inquiry') {
                 $dpsc_output .= '<strong>' . __('Total:',"dp-lang") . $dp_shopping_cart_settings['dp_currency_symbol'] . ' ' . number_format($dpsc_total,2) . '</strong>';
             }
-            $dpsc_output .= '<form action="" method="post" class="dpsc_empty_cart">
-                <input type="hidden" name="dpsc_ajax_action" value="empty_cart" />
-                <span class="emptycart">
-			<a href="'.htmlentities(add_query_arg("dpsc_ajax_action", "empty_cart", remove_query_arg("ajax")), ENT_QUOTES).'">' . __('Empty your cart',"dp-lang") . '</a>
-                </span>
-                </form>';
+            $dpsc_output .= '<div><span class="emptycart">
+			<a href="#" class="dpsc_empty_your_cart">' . __('Empty your cart',"dp-lang") . '</a>
+                </span></div>';
             $dpsc_output .= "<span class='gocheckout'>" . dpsc_go_to_checkout_link() . "</span>";
         }
     }
@@ -230,7 +228,7 @@ function dpsc_print_cart_html($mini=FALSE, $product_name = FALSE) {
 
 
 /**
- * Widget to display Go to Checkout Widget
+ * Widget to display Products
  *
  */
 add_action('widgets_init', create_function('', 'return register_widget("dpsc_show_product_widget");'));
@@ -247,6 +245,7 @@ class dpsc_show_product_widget extends WP_Widget {
         $number = esc_attr( $instance['number'] );
         $type = esc_attr( $instance['type'] );
         $thumbnail = esc_attr( $instance['thumbnail'] );
+        $buy_now = esc_attr( $instance['buy_now'] );
         $width = esc_attr( $instance['width'] );
         $height = esc_attr( $instance['height'] );
         $atc = esc_attr( $instance['atc'] );
@@ -293,6 +292,13 @@ class dpsc_show_product_widget extends WP_Widget {
                 <option value="no" <?php if ($atc === 'no') { echo 'selected="selected"';}?>>No</option>
             </select>
         </p>
+        <p>
+            <label>Buy Now:</label>
+            <select name="<?php echo $this->get_field_name('buy_now'); ?>">
+                <option value="no" <?php if ($buy_now === 'no') { echo 'selected="selected"';}?>>No</option>
+                <option value="yes" <?php if ($buy_now === 'yes') { echo 'selected="selected"';}?>>Yes</option>
+            </select>
+        </p>
         <?php
     }
 
@@ -305,6 +311,7 @@ class dpsc_show_product_widget extends WP_Widget {
         $instance['width'] = strip_tags( $new_instance['width'] );
         $instance['height'] = strip_tags( $new_instance['height'] );
         $instance['atc'] = strip_tags( $new_instance['atc'] );
+        $instance['buy_now'] = strip_tags( $new_instance['buy_now'] );
         $instance['category'] = strip_tags( $new_instance['category'] );
         return $instance;
     }
@@ -314,12 +321,16 @@ class dpsc_show_product_widget extends WP_Widget {
         $title = empty( $instance['title'] ) ? 'DukaPress Checkout' : $instance['title'];
         echo $before_widget;
         echo $before_title.$title.$after_title;
+        $direct_checkout = false;
+        if ($instance['buy_now'] === 'yes') {
+          $direct_checkout = true;
+        }
         $widget_html = '';
         $widget_products = get_posts('numberposts=' . $instance['number'] . '&post_type=' . $instance['type'] . '&meta_key=price&category=' . $instance['category'] . 'orderby=post_date&order=DESC');
         if (is_array($widget_products)) {
             $widget_html .= '<div class="dp_products_widget">';
             foreach ($widget_products as $product) {
-                $output = dpsc_get_product_details($product->ID);
+                $output = dpsc_get_product_details($product->ID, false, $direct_checkout);
                 $widget_html .= '<div class="dp_widget_product">';
                 $prod_permalink = get_permalink($product->ID);
                 if ($instance['thumbnail'] === 'yes') {

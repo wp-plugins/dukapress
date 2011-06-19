@@ -119,9 +119,9 @@ function dp_pnj_create_admin_menu() {
     add_object_page('DukaPress', 'DukaPress', 'edit_others_posts', 'dukapress-shopping-cart-order-log', '', DP_PLUGIN_URL . '/images/dp_icon.png');
     add_submenu_page('dukapress-shopping-cart-order-log', 'DukaPress Order Log', 'Order Log', 'edit_others_posts', 'dukapress-shopping-cart-order-log', 'dukapress_shopping_cart_order_log');
     if ($dp_shopping_cart_settings['dp_shop_user_registration'] === 'checked') {
-        add_submenu_page('dukapress-shopping-cart-order-log', 'DukaPress Customer Log', 'Customer Log', 'edit_others_posts', 'dukapress-shopping-cart-customer-log', 'dukapress_shopping_cart_customer_log');
+        add_submenu_page('dukapress-shopping-cart-order-log', 'DukaPress Customer Log', 'Customer Log', 'manage_options', 'dukapress-shopping-cart-customer-log', 'dukapress_shopping_cart_customer_log');
     }
-    add_submenu_page('dukapress-shopping-cart-order-log', 'DukaPress Settings', 'Settings', 'manage_options', 'dukapress-shopping-cart-settings', 'dukapress_shopping_cart_setting');
+    add_submenu_page('dukapress-shopping-cart-order-log', 'DukaPress Settings', 'Settings', 'edit_others_posts', 'dukapress-shopping-cart-settings', 'dukapress_shopping_cart_setting');
 }
 
 function dukapress_shopping_cart_customer_log() {
@@ -543,9 +543,9 @@ if ($page_links) {
         $order_id = $_GET['id'];
         $query = "SELECT * FROM {$table_name} WHERE `invoice`='{$order_id}'";
         $result = $wpdb->get_row($query);
+        $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
         if ($result) {
             if (isset($_GET['status']) && $_GET['status'] === 'send') {
-                $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
                 $message = '';
                 if ($result->payment_status === 'Paid') {
                     $digital_message = '';
@@ -565,34 +565,56 @@ if ($page_links) {
                             }
                         }
                     }
-                    $message = 'Hi ' . $result->billing_first_name .',<br/>
-                                We have received the payment for Invoice No.: '. $result->invoice . '.<br/>
-                                We will start processing your order soon.<br/>' . $digital_message . '
-                                Thanks,<br/>
-                                '. $dp_shopping_cart_settings['shop_name'];
+//                    $message = 'Hi ' . $result->billing_first_name .',<br/>
+//                                We have received the payment for Invoice No.: '. $result->invoice . '.<br/>
+//                                We will start processing your order soon.<br/>' . $digital_message . '
+//                                Thanks,<br/>
+//                                '. $dp_shopping_cart_settings['shop_name'];
+//
+//                    $subject = 'Payment Received For Invoice No: ' . $result->invoice;
+//                }
+//                elseif ($result->payment_status === 'Canceled') {
+//                    $subject = 'Payment Canceled For Invoice No.:' . $result->invoice;
+//                    $message = 'Hi ' . $result->billing_first_name .',<br/>
+//                                The payment for Invoice No.: '. $result->invoice . ' was canceled. Kindly make the payment, so that we can proceed with the order.<br/>
+//                                <br/>
+//                                Thanks,<br/>
+//                                '. $dp_shopping_cart_settings['shop_name'];
+//                }
+//                else {
+//                    $subject = 'Payment Pending For Invoice No.:' . $result->invoice;
+//                    $message = 'Hi ' . $result->billing_first_name .',<br/>
+//                                The payment for Invoice No.: '. $result->invoice . ' is still pending. Kindly make the payment, so that we can proceed with the order.<br/>
+//                                <br/>
+//                                Thanks,<br/>
+//                                '. $dp_shopping_cart_settings['shop_name'];
+                }
 
-                    $subject = 'Payment Received For Invoice No: ' . $result->invoice;
-                }
-                elseif ($result->payment_status === 'Canceled') {
-                    $subject = 'Payment Canceled For Invoice No.:' . $result->invoice;
-                    $message = 'Hi ' . $result->billing_first_name .',<br/>
-                                The payment for Invoice No.: '. $result->invoice . ' was canceled. Kindly make the payment, so that we can proceed with the order.<br/>
-                                <br/>
-                                Thanks,<br/>
-                                '. $dp_shopping_cart_settings['shop_name'];
-                }
-                else {
-                    $subject = 'Payment Pending For Invoice No.:' . $result->invoice;
-                    $message = 'Hi ' . $result->billing_first_name .',<br/>
-                                The payment for Invoice No.: '. $result->invoice . ' is still pending. Kindly make the payment, so that we can proceed with the order.<br/>
-                                <br/>
-                                Thanks,<br/>
-                                '. $dp_shopping_cart_settings['shop_name'];
-                }
                 $to = $result->billing_email;
                 $from = get_option('admin_email');
+
+                $nme_dp_mail_option = get_option('dp_usr_payment_mail', true);
+
+                $subject = $nme_dp_mail_option['dp_usr_payment_mail_title'];
+                $message = $nme_dp_mail_option['dp_usr_payment_mail_body'];
+                $message = str_replace("\r",'<br>', $message);
+
+                $array1 = array('%fname%', '%status%', '%email%', '%inv%', '%digi%', '%shop%');
+                $array2 = array($result->billing_first_name, $result->payment_status, $to, $result->invoice, $digital_message, $dp_shopping_cart_settings['shop_name']);
+                $message = str_replace($array1, $array2, $message);
+
                 dpsc_pnj_send_mail($to, $from, $dp_shopping_cart_settings['shop_name'], $subject, $message);
-                dpsc_pnj_send_mail($from, $to, $dp_shopping_cart_settings['shop_name'], $subject, $subject);
+
+                $nme_dp_mail_option = get_option('dp_admin_payment_mail', true);
+
+                $message = $nme_dp_mail_option['dp_admin_payment_mail_body'];
+                $subject = $nme_dp_mail_option['dp_admin_payment_mail_title'];
+
+                $find = array('%fname%', '%status%', '%email%', '%inv%', '%digi%', '%shop%');
+                $replace = array($result->billing_first_name, $result->payment_status, $to, $result->invoice, $digital_message, $dp_shopping_cart_settings['shop_name']);
+                $message = str_replace($find, $replace, $message);
+
+                dpsc_pnj_send_mail($from, $to, $dp_shopping_cart_settings['shop_name'], $subject, $message);
             }
             ?>
 <h3><?php printf(__("Transaction Details for Invoice No. ") . $result->invoice);?></h3>
@@ -684,6 +706,7 @@ if ($dp_shopping_cart_settings['dp_shop_pdf_generation'] === 'checked') {
  */
 add_action('wp_ajax_dpsc_change_order_status', 'dpsc_change_order_status');
 function dpsc_change_order_status() {
+    global $wpdb,$table_name;
     $order_id = intval($_POST['id']);
     $current_status = $_POST['current_status'];
     if ($order_id > 0) {
@@ -697,9 +720,47 @@ function dpsc_change_order_status() {
             $updated_status = "Pending";
         }
         global $wpdb;
+        $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
         $table_name = $wpdb->prefix . "dpsc_transactions";
         $query = "UPDATE {$table_name} SET `payment_status`='{$updated_status}' WHERE `id`={$order_id}";
         $wpdb->query($query);
+        if ($updated_status === 'Canceled') {
+        $message = '';
+        $digital_message = '';
+        $check_query = "SELECT * FROM {$table_name} WHERE `id`={$order_id}";
+        $result = $wpdb->get_row($check_query);
+        $email_fname = $result->billing_first_name ;
+        $email_lname = $result->billing_last_name ;
+        $invoice =$result->invoice;
+        
+        $email_shop_name = $dp_shopping_cart_settings['shop_name'];
+        $to = $result->billing_email;
+        $from = get_option('admin_email');
+
+//email to user on cancelled order
+        $nme_dp_mail_option = get_option('dp_order_cancelled_mail_user_options', true);
+
+        $message = $nme_dp_mail_option['dp_order_cancelled_send_mail_user_body'];
+        $message = str_replace("\r",'<br>', $message);
+        $subject = $nme_dp_mail_option['dp_order_cancelled_send_mail_user_title'];
+
+        $find_tag = array('%fname%', '%lname%','%status%', '%email%', '%inv%', '%digi%', '%shop%');
+        $rep_tag = array($email_fname, $email_lname,$updated_status, $to, $invoice, $digital_message, $email_shop_name);
+        $message =str_replace($find_tag, $rep_tag, $message);
+//email to admin on cannceled order        
+        dpsc_pnj_send_mail($to, $from, $dp_shopping_cart_settings['shop_name'], $subject, $message);
+
+        $nme_dp_mail_option = get_option('dp_order_cancelled_mail_options', true);
+        $message = $nme_dp_mail_option['dp_order_cancelled_send_mail_body'];
+        $message = str_replace("\r",'<br>', $message);
+        $subject = $nme_dp_mail_option['dp_order_cancelled_send_mail_title'];
+        
+        $find_tag = array('%fname%','%lname%', '%status%', '%email%', '%inv%', '%digi%', '%shop%','%order-log-transaction%');
+        $rep_tag = array($email_fname,$email_lname, $updated_status, $to, $invoice, $digital_message, $email_shop_name,$transaction_log);
+        $message = str_replace($find_tag, $rep_tag, $message);
+        //email to admin
+        dpsc_pnj_send_mail($from, $to, $dp_shopping_cart_settings['shop_name'], $subject, $message);
+      }
         $updated_status1 = "'" . $updated_status . "'";
         $button_html = '<input type="submit" value="' . $updated_status . '" onclick="dpsc_pnj_change_status(' . $updated_status1 . ', ' . $order_id . ')" />';
         die($button_html);
@@ -732,6 +793,8 @@ function dukapress_shopping_cart_setting() {
         $dp_shop_inventory_stocks = $_POST['dp_shop_inventory_stocks'];
         $dp_shop_inventory_soldout = $_POST['dp_shop_inventory_soldout'];
         $dp_shop_inventory_warning = $_POST['dp_shop_inventory_warning'];
+        $dp_shop_inventory_email = $_POST['dp_shop_inventory_email'];
+        $dp_shop_inventory_stock_warning = $_POST['dp_shop_inventory_stock_warning'];
         $dp_po = $_POST['dp_po'];
         $dp_shipping_flat_rate = $_POST['dp_shipping_flat_rate'];
         $dp_shipping_flat_limit_rate = $_POST['dp_shipping_flat_limit_rate'];
@@ -836,8 +899,31 @@ function dukapress_shopping_cart_setting() {
         $dp_shopping_cart_settings['dp_shop_inventory_stocks'] = $dp_shop_inventory_stocks;
         $dp_shopping_cart_settings['dp_shop_inventory_soldout'] = $dp_shop_inventory_soldout;
         $dp_shopping_cart_settings['dp_shop_inventory_warning'] = $dp_shop_inventory_warning;
+        $dp_shopping_cart_settings['dp_shop_inventory_email'] = $dp_shop_inventory_email;
+        $dp_shopping_cart_settings['dp_shop_inventory_stock_warning'] = $dp_shop_inventory_stock_warning;
         update_option('dp_shopping_cart_settings', $dp_shopping_cart_settings);
         update_option('dp_dl_link_expiration_time', $dp_shop_dl_duration);
+        $dp_oder_placed_mail_save = array('dp_order_send_mail_title' => $_POST['dp_order_send_mail_title'], 'dp_order_send_mail_body' => $_POST['dp_order_send_mail_body']);
+        update_option('dp_order_mail_options', $dp_oder_placed_mail_save);
+        $dp_oder_cancelled_mail_save = array('dp_order_cancelled_send_mail_title' => $_POST['dp_order_cancelled_send_mail_title'], 'dp_order_cancelled_send_mail_body' => $_POST['dp_order_cancelled_send_mail_body']);
+        update_option('dp_order_cancelled_mail_options', $dp_oder_cancelled_mail_save);
+        $dp_order_mail_user_options = array('dp_order_send_mail_user_title' => $_POST['dp_order_send_mail_user_title'], 'dp_order_send_mail_user_body' => $_POST['dp_order_send_mail_user_body']);
+        $dp_oder_cancelled_mail_user_save = array('dp_order_cancelled_send_mail_user_title' => $_POST['dp_order_cancelled_send_mail_user_title'], 'dp_order_cancelled_send_mail_user_body' => $_POST['dp_order_cancelled_send_mail_user_body']);
+        update_option('dp_order_cancelled_mail_user_options', $dp_oder_cancelled_mail_user_save);
+        $dp_order_mail_user_options = array('dp_order_send_mail_user_title' => $_POST['dp_order_send_mail_user_title'], 'dp_order_send_mail_user_body' => $_POST['dp_order_send_mail_user_body']);
+        update_option('dp_order_mail_user_options', $dp_order_mail_user_options);
+        $dp_reg_admin_mail = array('dp_reg_admin_mail_title' => $_POST['dp_reg_admin_mail_title'], 'dp_reg_admin_mail_body' => $_POST['dp_reg_admin_mail_body']);
+        update_option('dp_reg_admin_mail', $dp_reg_admin_mail);
+        $dp_usr_reg_mail_options = array('dp_usr_reg_mail_title' => $_POST['dp_usr_reg_mail_title'], 'dp_usr_reg_mail_body' => $_POST['dp_usr_reg_mail_body']);
+        update_option('dp_usr_reg_mail_options', $dp_usr_reg_mail_options);
+        $dp_usr_inventory_mail = array('dp_usr_inventory_mail_title' => $_POST['dp_usr_inventory_mail_title'], 'dp_usr_inventory_mail_body' => $_POST['dp_usr_inventory_mail_body']);
+        update_option('dp_usr_inventory_mail', $dp_usr_inventory_mail);
+        $dp_usr_enquiry_mail = array('dp_usr_enquiry_mail_title' => $_POST['dp_usr_enquiry_mail_title'], 'dp_usr_enquiry_mail_body' => $_POST['dp_usr_enquiry_mail_body']);
+        update_option('dp_usr_enquiry_mail', $dp_usr_enquiry_mail);
+        $dp_admin_payment_mail = array('dp_usr_admin_payment_mail_title' => $_POST['dp_usr_admin_payment_mail_title'], 'dp_admin_payment_mail_body' => $_POST['dp_admin_payment_mail_body']);
+        update_option('dp_admin_payment_mail', $dp_admin_payment_mail);
+        $dp_usr_payment_mail = array('dp_usr_payment_mail_title' => $_POST['dp_usr_payment_mail_title'], 'dp_usr_payment_mail_body' => $_POST['dp_usr_payment_mail_body']);
+        update_option('dp_usr_payment_mail', $dp_usr_payment_mail);
         ?>
         <h4><?php _e('Settings Saved',"dp-lang");?></h4>
         <?php
@@ -855,6 +941,7 @@ function dukapress_shopping_cart_setting() {
     $worldpay_supported_currency = array('ARS', 'AUD', 'BRL', 'CAD', 'CHF', 'CLP', 'CNY', 'COP', 'CZK', 'DKK', 'EUR', 'GBP', 'HKD', 'HUF', 'IDR', 'ISK', 'JPY', 'KES', 'KRW', 'MXP', 'MYR', 'NOK', 'NZD', 'PLN', 'PTE', 'SEK', 'SGD', 'SKK', 'THB', 'TWD', 'USD', 'VND', 'ZAR');
     $authorize_supported_currency = array('USD');
     ?>
+<div class="wrap">
 <form action="" method="post" enctype="multipart/form-data">
 <div id="dp_settings" class="dukapress-settings">
 
@@ -1037,6 +1124,7 @@ function dukapress_shopping_cart_setting() {
                             <input type="checkbox" name="dp_po[]" value="cash" <?php if (in_array('cash', $dp_shopping_cart_settings['dp_po'])) {echo "checked";} ?>/> Cash at store <br />
                             <input type="checkbox" name="dp_po[]" value="mobile" <?php if (in_array('mobile', $dp_shopping_cart_settings['dp_po'])) {echo "checked";} ?>/> Mobile Payment <br />
                             <input type="checkbox" name="dp_po[]" value="delivery" <?php if (in_array('delivery', $dp_shopping_cart_settings['dp_po'])) {echo "checked";} ?>/> Cash on delivery <br />
+                            <?php do_action('dp_more_payment_option'); ?>
                         </td>
                     </tr>
                 </table>
@@ -1090,6 +1178,12 @@ function dukapress_shopping_cart_setting() {
                                         <th scope="row"><?php _e("Inventory warning email","dp-lang");?></th>
                                         <td>
                                             <input type="text" value="<?php if (isset($dp_shopping_cart_settings['dp_shop_inventory_email'])) {echo $dp_shopping_cart_settings['dp_shop_inventory_email'];}?>" name="dp_shop_inventory_email"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><?php _e("Inventory Stock for Warning","dp-lang");?></th>
+                                        <td>
+                                            <input type="text" value="<?php if (isset($dp_shopping_cart_settings['dp_shop_inventory_stock_warning'])) {echo $dp_shopping_cart_settings['dp_shop_inventory_stock_warning'];}?>" name="dp_shop_inventory_stock_warning"/>
                                         </td>
                                     </tr>
                                 </table>
@@ -1447,7 +1541,7 @@ function dukapress_shopping_cart_setting() {
                             </table>
                         </div>
                     </div>
-                
+                <?php do_action('dp_other_payment_option_details');?>
             </div>
         </div>
         <h3><a href="#"><?php _e("Discount Management","dp-lang");?></a></h3>
@@ -1494,13 +1588,322 @@ function dukapress_shopping_cart_setting() {
                 </div>
             </div>
         </div>
+       <h3><a href="#"><?php _e("Email Management","dp-lang");?></a></h3>
+        <div>
+        <div class="email-management">
+            <h3><a href="#"><?php _e("Order Placed","dp-lang");?></a></h3>
+              <div>
+                <div>
+                     <div class="email-management">
+                         <h3><a href="#">To Admin</a></h3>
+                         <div>
+                             <?php
+                                $nme_dp_mail_option = get_option('dp_order_mail_options', true);
+                                ?>
+                                    <table class="form-table">
+                                        <tr>
+                                            <th scope="row">
+                                                <label for="dp_order_send_mail_title">Subject</label>
+                                            </th>
+                                            <td>
+                                                <input size="80" type="text" id="dp_order_send_mail_title" name="dp_order_send_mail_title" value="<?php echo stripslashes($nme_dp_mail_option['dp_order_send_mail_title']) ?>" >
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th valign="top">
+                                                <label for="dp_order_send_mail_messege">Message</label>
+                                            </th>
+                                            <td>
+                                                <span class="description">Use <strong>%baddress%</strong>, <strong>%saddress%</strong>, <strong>%inv%</strong>, <strong>%siteurl%</strong>, <strong>%shop%</strong> ,<strong>%order-log-transaction%</strong> as Billing Address, Shipping Address, Invoice, Site URL, Shop Name, Order Log Transaction</span><br/>
+                                                <textarea rows="15" cols="78" id="dp_order_send_mail_messege" name="dp_order_send_mail_body"><?php echo stripslashes($nme_dp_mail_option['dp_order_send_mail_body']) ?></textarea>
+                                            </td>
+                                        </tr>
+                                    </table>
+                         </div>
+                         <h3><a href="#">To User</a></h3>
+                         <div>
+                             <?php
+                                $nme_dp_mail_option = get_option('dp_order_mail_user_options', true);
+                                ?>
+                                    <table class="form-table">
+                                        <tr>
+                                            <th scope="row">
+                                                <label for="dp_order_send_mail_user_title">Subject</label>
+                                            </th>
+                                            <td>
+                                                <input size="80" type="text" id="dp_order_send_mail_user_title" name="dp_order_send_mail_user_title" value="<?php echo stripslashes($nme_dp_mail_option['dp_order_send_mail_user_title']) ?>" >
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th valign="top">
+                                                <label for="dp_order_send_mail_user_messege">Message</label>
+                                            </th>
+                                            <td>
+                                                <span class="description">Use <strong>%fname%</strong>, <strong>%lanme%</strong>, <strong>%inv%</strong>, <strong>%shop%</strong>, <strong>%siteurl%</strong> As Billing First Name, Billing Last Name, Invoice, Shop Name and site URL</span><br/>
+                                                <textarea rows="15" cols="78" id="dp_order_send_mail_messege" name="dp_order_send_mail_user_body"><?php echo stripslashes($nme_dp_mail_option['dp_order_send_mail_user_body']) ?></textarea>
+                                            </td>
+                                        </tr>
+                                    </table>
+                         </div>
+                      </div>
+                 </div>
+              </div>
+            <h3><a href="#"><?php  _e("Order Cancelled","dp-lang");?></a></h3>
+              <div>
+                <div>
+                     <div class="email-management">
+                         <h3><a href="#">To Admin</a></h3>
+                         <div>
+                             <?php
+                                $nme_dp_mail_option = get_option('dp_order_cancelled_mail_options', true);
+                                ?>
+                                    <table class="form-table">
+                                        <tr>
+                                            <th scope="row">
+                                                <label for="dp_order_cancelled_send_mail_title">Subject</label>
+                                            </th>
+                                            <td>
+                                                <input size="80" type="text" id="dp_order_cancelled_send_mail_title" name="dp_order_cancelled_send_mail_title" value="<?php echo stripslashes($nme_dp_mail_option['dp_order_cancelled_send_mail_title']) ?>" >
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th valign="top">
+                                                <label for="dp_order_cancelled_send_mail_messege">Message</label>
+                                            </th>
+                                            <td>
+                                                <span class="description">Use <strong>%fname%</strong>, <strong>%lname%</strong>, <strong>%saddress%</strong>, <strong>%inv%</strong>, <strong>%status%</strong>, <strong>%digi%</strong>,<strong>%siteurl%</strong>, <strong>%shop%</strong> ,<strong>%order-log-transaction%</strong> FirstName,Last Name, Invoice, Status,Digi,Site URL, Shop Name, Order Log Transaction</span><br/>
+                                                <textarea rows="15" cols="78" id="dp_order_cancelled_send_mail_messege" name="dp_order_cancelled_send_mail_body"><?php echo stripslashes($nme_dp_mail_option['dp_order_cancelled_send_mail_body']) ?></textarea>
+                                            </td>
+                                        </tr>
+                                    </table>
+                         </div>
+                         <h3><a href="#">To User</a></h3>
+                         <div>
+                             <?php
+                                $nme_dp_mail_option = get_option('dp_order_cancelled_mail_user_options', true);
+                                ?>
+                                    <table class="form-table">
+                                        <tr>
+                                            <th scope="row">
+                                                <label for="dp_order_cancelled_send_mail_user_title">Subject</label>
+                                            </th>
+                                            <td>
+                                                <input size="80" type="text" id="dp_order_cancelled_send_mail_user_title" name="dp_order_cancelled_send_mail_user_title" value="<?php echo stripslashes($nme_dp_mail_option['dp_order_cancelled_send_mail_user_title']) ?>" >
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th valign="top">
+                                                <label for="dp_order_cancelled_send_mail_user_messege">Message</label>
+                                            </th>
+                                            <td>
+                                                <span class="description">Use <strong>%fname%</strong>, <strong>%lanme%</strong>, <strong>%inv%</strong>,<strong>%status%</strong>, <strong>%shop%</strong>, <strong>%siteurl%</strong> As Billing First Name, Billing Last Name, Invoice,Status, Shop Name and site URL</span><br/>
+                                                <textarea rows="15" cols="78" id="dp_order_cancelled_send_mail_messege" name="dp_order_cancelled_send_mail_user_body"><?php echo stripslashes($nme_dp_mail_option['dp_order_cancelled_send_mail_user_body']) ?></textarea>
+                                            </td>
+                                        </tr>
+                                    </table>
+                         </div>
+                      </div>
+                 </div>
+              </div>
+            <h3><a href="#"><?php _e("User Registration","dp-lang");?></a></h3>
+               <div>
+                   <div class="email-management">
+                      <h3><a href="#">To Admin</a></h3>
+                        <div>
+                          <div>
+                            <?php
+                            $nme_dp_mail_option = get_option('dp_reg_admin_mail', true);
+                            ?>
+                                <table class="form-table">
+                                    <tr>
+                                        <th scope="row">
+                                            <label for="dp_reg_admin_mail_title">Subject</label>
+                                        </th>
+                                        <td>
+                                            <input size="80" type="text" id="dp_reg_admin_mail_title" name="dp_reg_admin_mail_title" value="<?php echo stripslashes($nme_dp_mail_option['dp_reg_admin_mail_title']) ?>" >
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th valign="top">
+                                            <label for="dp_reg_admin_mail_messege">Message</label>
+                                        </th>
+                                        <td>
+                                            <span class="description">Use <strong>%uname%</strong>, <strong>%pass%</strong>, <strong>%email%</strong>, <strong>%shop%</strong>  as User Name, Password, email, ShopName</span><br/>
+                                            <textarea rows="15" cols="78" id="dp_order_send_mail_messege" name="dp_reg_admin_mail_body"><?php echo stripslashes($nme_dp_mail_option['dp_reg_admin_mail_body']) ?></textarea>
+                                        </td>
+                                    </tr>
+                                </table>
+                        </div>
+                      </div>
+                         <h3><a href="#">To User</a></h3>
+                         <div>
+                           <div>
+                                <?php
+                                $nme_dp_mail_option = get_option('dp_usr_reg_mail_options', true);
+                                ?>
+                                    <table class="form-table">
+                                        <tr>
+                                            <th scope="row">
+                                                <label for="dp_usr_reg_mail_title">Subject</label>
+                                            </th>
+                                            <td>
+                                                <input size="80" type="text" id="dp_order_send_mail_title" name="dp_usr_reg_mail_title" value="<?php echo stripslashes($nme_dp_mail_option['dp_usr_reg_mail_title']) ?>" >
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th valign="top">
+                                                <label for="dp_usr_reg_mail_messege">Message</label>
+                                            </th>
+                                            <td>
+                                                <span class="description">Use <strong>%uname%</strong>, <strong>%pass%</strong>, <strong>%email%</strong>, <strong>%login%</strong>, <strong>%shop%</strong>  as User Name, Password, email, Login URL, ShopName</span><br/>
+                                                <textarea rows="15" cols="78" id="dp_order_send_mail_messege" name="dp_usr_reg_mail_body"><?php echo stripslashes($nme_dp_mail_option['dp_usr_reg_mail_body']) ?></textarea>
+                                            </td>
+                                        </tr>
+                                    </table>
+                            </div>
+                         </div>
+                     </div>
+                 </div>
+            <h3><a href="#"><?php _e("Inventary","dp-lang");?></a></h3>
+                <div>
+                     <div class="email-management">
+<!--                         <h3><a href="#">To Admin</a></h3>
+                         <div>
+                             A
+                         </div>-->
+                         <h3><a href="#">To User</a></h3>
+                         <div>
+                           <div>
+                                <?php
+                                $nme_dp_mail_option = get_option('dp_usr_inventory_mail', true);
+                                ?>
+                                    <table class="form-table">
+                                        <tr>
+                                            <th scope="row">
+                                                <label for="dp_usr_inventory_mail_title">Subject</label>
+                                            </th>
+                                            <td>
+                                                <input size="80" type="text" id="dp_usr_inventory_mail_title" name="dp_usr_inventory_mail_title" value="<?php echo stripslashes($nme_dp_mail_option['dp_usr_inventory_mail_title']) ?>" >
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th valign="top">
+                                                <label for="dp_usr_inventory_mail_messege">Message</label>
+                                            </th>
+                                            <td>
+                                                <span class="description">Use <strong>%pno%</strong>, <strong>%pname%</strong>, <strong>%stock%</strong>, <strong>%footer%</strong>, as Product No., Product Name, Currently in Stock Quantity,footer </span><br/>
+                                                <textarea rows="15" cols="78" id="dp_usr_inventory_mail_messege" name="dp_usr_inventory_mail_body"><?php echo stripslashes($nme_dp_mail_option['dp_usr_inventory_mail_body']) ?></textarea>
+                                            </td>
+                                        </tr>
+                                    </table>
+                            </div>
+                         </div>
+                     </div>
+                 </div>
+            <h3><a href="#"><?php _e("Enquiry","dp-lang");?></a></h3>
+                <div>
+                     <div class="email-management">
+<!--                         <h3><a href="#">To User</a></h3>
+                         <div>
+                             
+                         </div>-->
+                         <h3><a href="#">To Admin</a></h3>
+                         <div>
+                             <div>
+                                <?php
+                                $nme_dp_mail_option = get_option('dp_usr_enquiry_mail', true);
+                                ?>
+                                    <table class="form-table">
+                                        <tr>
+                                            <th scope="row">
+                                                <label for="dp_usr_enquiry_mail_title">Subject</label>
+                                            </th>
+                                            <td>
+                                                <input size="80" type="text" id="dp_usr_inventory_mail_title" name="dp_usr_enquiry_mail_title" value="<?php echo stripslashes($nme_dp_mail_option['dp_usr_enquiry_mail_title']) ?>" >
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th valign="top">
+                                                <label for="dp_usr_enquiry_mail_messege">Message</label>
+                                            </th>
+                                            <td>
+                                                <span class="description">Use <strong>%from%</strong>, <strong>%from_email%</strong>, <strong>%enq_subject%</strong>, <strong>%details%</strong>, <strong>%custom_message%</strong>, as Enquirers Name, Enquirers email, Enquiry Subject, Enquiry Details, Enquiry custom message </span><br/>
+                                                <textarea rows="15" cols="78" id="dp_usr_enquiry_mail_messege" name="dp_usr_enquiry_mail_body"><?php echo stripslashes($nme_dp_mail_option['dp_usr_enquiry_mail_body']) ?></textarea>
+                                            </td>
+                                        </tr>
+                                    </table>
+                            </div>
+                         </div>
+                     </div>
+                 </div>
+
+               <h3><a href="#"><?php _e("Payments","dp-lang");?></a></h3>
+               <div>
+                    <div class="email-management">
+                        <h3><a href="#">To Admin</a></h3>
+                         <div>
+                              <div>
+                                <?php
+                                $nme_dp_mail_option = get_option('dp_admin_payment_mail', true);
+                                ?>
+                                    <table class="form-table">
+                                        <tr>
+                                            <th scope="row">
+                                                <label for="dp_admin_mail_title">Subject</label>
+                                            </th>
+                                            <td>
+                                                <input size="80" type="text" id="dp_admin_payment_mail_title" name="dp_usr_admin_payment_mail_title" value="<?php echo stripslashes($nme_dp_mail_option['dp_usr_admin_payment_mail_title']) ?>" >
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th valign="top">
+                                                <label for="dp_admin_payment_mail_messege">Message</label>
+                                            </th>
+                                            <td>
+                                                <span class="description">Use <strong>%fname%</strong>, <strong>%email%</strong>, <strong>%inv%</strong>, <strong>%status%</strong>, <strong>%digi%</strong>, <strong>%shop%</strong>, as Payers First Name, Payers email, Invoice, Payment status, Digital Products, Shop Name </span><br/>
+                                                <textarea rows="15" cols="78" id="dp_admin_payment_mail_messege" name="dp_admin_payment_mail_body"><?php echo stripslashes($nme_dp_mail_option['dp_admin_payment_mail_body']) ?></textarea>
+                                            </td>
+                                        </tr>
+                                    </table>
+                            </div>
+                         </div>
+                         <h3><a href="#">To User</a></h3>
+                         <div>
+                             <div>
+                                <?php
+                                $nme_dp_mail_option = get_option('dp_usr_payment_mail', true);
+                                ?>
+                                    <table class="form-table">
+                                        <tr>
+                                            <th scope="row">
+                                                <label for="dp_usr_payment_mail_title">Subject</label>
+                                            </th>
+                                            <td>
+                                                <input size="80" type="text" id="dp_usr_payment_mail_title" name="dp_usr_payment_mail_title" value="<?php echo stripslashes($nme_dp_mail_option['dp_usr_payment_mail_title']) ?>" >
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th valign="top">
+                                                <label for="dp_usr_enquiry_mail_messege">Message</label>
+                                            </th>
+                                            <td>
+                                                <span class="description">Use <strong>%fname%</strong>, <strong>%email%</strong>, <strong>%inv%</strong>, <strong>%status%</strong>, <strong>%digi%</strong>, <strong>%shop%</strong>, as Payers First Name, Payers email, Invoice, Payment Status, Digital Products, Shop Name </span><br/>
+                                                <textarea rows="15" cols="78" id="dp_usr_payment_mail_messege" name="dp_usr_payment_mail_body"><?php echo stripslashes($nme_dp_mail_option['dp_usr_payment_mail_body']) ?></textarea>
+                                            </td>
+                                        </tr>
+                                    </table>
+                            </div>
+                         </div>
+                    </div>
+              </div>
+        </div>
+    </div>
 </div>
     <input type="submit" name="dp_submit" value="Save Settings" />
 </form>
+</div>
         <?php
-}
-
-/**
+}/**
  * This function prints the table of Discount codes
  *
  */

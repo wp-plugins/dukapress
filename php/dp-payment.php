@@ -47,6 +47,10 @@ function dpsc_payment_option() {
                 $output = dpsc_other_payment($invoice);
                 break;
             default:
+                ob_start();
+                do_action('dpsc_other_payment_form_' . $dpsc_payment_option, $dpsc_total, $dpsc_shipping_value, $dpsc_discount_value, $invoice, $bfname, $blname, $bcity, $baddress, $bstate, $bzip, $bcountry, $bemail);
+                $output = ob_get_contents();
+                ob_end_clean();
                 break;
         }
     } else {
@@ -60,7 +64,7 @@ function dpsc_payment_option() {
     dpsc_pnj_calculate_cart_price(TRUE);
     $products = $_SESSION['dpsc_products'];
     foreach ($products as $key => $item) {
-        unset($products[$key]);
+       unset($products[$key]);
     }
     $_SESSION['dpsc_products'] = $products;
     unset($_SESSION['dpsc_shiping_price']);
@@ -203,7 +207,7 @@ function dpsc_authorize_payment($dpsc_total = FALSE, $dpsc_shipping_value = FALS
         $output .= '<input type="hidden" name="x_test_request" value="' . $dp_shopping_cart_settings['authorize_test_request'] . '" />';
         $output .= '<input type="hidden" name="x_show_form" value="PAYMENT_FORM" />';
         $output .= '<input type="hidden" name="x_relay_response" value="TRUE" />';
-//        $output .= '<input type="hidden" name="x_relay_url" value="' . $ipn_path . '" />';
+//      $output .= '<input type="hidden" name="x_relay_url" value="' . $ipn_path . '" />';
         $output .= '<input type="hidden" name="x_receipt_link_method" value="LINK" />';
         $output .= '<input type="hidden" name="x_receipt_link_text" value="Back to Shop" />';
         $output .= '<input type="hidden" name="x_receipt_link_URL" value="' . $return_path . '" />';
@@ -464,17 +468,79 @@ function dpsc_paypal_ipn() {
                         }
                     }
                 }
-                $message = 'Hi ' . $result->billing_first_name . ',<br/>
-                            We have received the payment for Invoice No.: ' . $invoice . '.<br/>
-                            We will start processing your order soon.<br/>' . $digital_message . '
-							<br/><br/>
-							Thanks,<br/>
-                            ' . $dp_shopping_cart_settings['shop_name'];
-                $subject = 'Payment Received For Invoice No: ' . $invoice;
+                $email_fname = $result->billing_first_name ;
+                $email_shop_name = $dp_shopping_cart_settings['shop_name'];
                 $to = $result->billing_email;
                 $from = get_option('admin_email');
+
+
+                $nme_dp_mail_option = get_option('dp_usr_payment_mail', true);
+
+                $message = $nme_dp_mail_option['dp_usr_payment_mail_body'];
+                $subject = $nme_dp_mail_option['dp_usr_payment_mail_title'];
+
+                $find = array('%fname%', '%status%', '%email%', '%inv%', '%digi%', '%shop%');
+                $replace = array($email_fname, $updated_status, $to, $invoice, $digital_message, $email_shop_name);
+                $message = str_replace($find, $replace, $message);
+//email to payer
+                update_option('debug_digital_mail_user', $message);
                 dpsc_pnj_send_mail($to, $from, $dp_shopping_cart_settings['shop_name'], $subject, $message);
-                dpsc_pnj_send_mail($from, $to, $dp_shopping_cart_settings['shop_name'], $subject, $subject);
+                
+                $nme_dp_mail_option = get_option('dp_admin_payment_mail', true);
+
+                $message = $nme_dp_mail_option['dp_admin_payment_mail_body'];
+                $message = str_replace("\r",'<br>', $message);
+                $subject = $nme_dp_mail_option['dp_usr_admin_payment_mail_title'];
+
+                $array1 = array('%fname%', '%status%', '%email%', '%inv%', '%digi%', '%shop%');
+                $array2 = array($email_fname, $updated_status, $to, $invoice, $digital_message, $email_shop_name);
+                $message = str_replace($array1, $array2, $message);
+//email to admin
+                update_option('debug_digital_mail_admin', $message);
+                dpsc_pnj_send_mail($from, $to, $dp_shopping_cart_settings['shop_name'], $subject, $message);
+            }
+            
+//          Mail for Cancelled Order
+            
+            if ($payment_status === 'Canceled') {
+                $message = '';
+                $digital_message = '';
+                $check_query = "SELECT * FROM {$table_name} WHERE `invoice`='{$invoice}'";
+                $result = $wpdb->get_row($check_query);
+                $email_fname = $result->billing_first_name ;
+                $email_lname =$result->billing_last_name;
+                $email_shop_name = $dp_shopping_cart_settings['shop_name'];
+                $to = $result->billing_email;
+                
+                $from = get_option('admin_email');
+                $site_url = get_bloginfo('url');
+                $transaction_log =$site_url.'/wp-admin/admin.php?page=dukapress-shopping-cart-order-log&id='.$invoice;
+
+
+                $nme_dp_mail_option = get_option('dp_order_cancelled_mail_user_options', true);
+
+                $message = $nme_dp_mail_option['dp_order_canncelled_send_mail_user_body'];
+                $subject = $nme_dp_mail_option['dp_order_cancelled_send_mail_user_title'];
+
+                $find = array('%fname%','%lname%','%inv%', '%status%', '%shop%');
+                $replace = array($email_fname, $email_lname,$updated_status,$invoice, $payment_status,$email_shop_name);
+                $message = str_replace($find, $replace, $message);
+//email to payer
+                update_option('debug_digital_mail_user', $message);
+                dpsc_pnj_send_mail($to, $from, $dp_shopping_cart_settings['shop_name'], $subject, $message);
+                
+                $nme_dp_mail_option = get_option('dp_order_cancelled_mail_options', true);
+
+                $message = $nme_dp_mail_option['dp_order_cancelled_send_mail_body'];
+                $message = str_replace("\r",'<br>', $message);
+                $subject = $nme_dp_mail_option['dp_order_send_mail_title'];
+
+                $array1 = array('%fname%', '%status%', '%email%', '%inv%', '%digi%', '%shop%','%order-log-transaction%');
+                $array2 = array($email_fname, $updated_status, $to, $invoice, $digital_message, $email_shop_name,$transaction_log);
+                $message = str_replace($array1, $array2, $message);
+//email to admin
+                update_option('debug_digital_mail_admin', $message);
+                dpsc_pnj_send_mail($from, $to, $dp_shopping_cart_settings['shop_name'], $subject, $message);
             }
         }
     }
@@ -535,17 +601,79 @@ function dpsc_auth_ipn() {
                 }
             }
         }
-        $message = 'Hi ' . $result->billing_first_name . ',<br/>
-                    We have received the payment for Invoice No.: ' . $invoice . '.<br/>
-                    We will start processing your order soon.<br/>' . $digital_message . '
-					<br/><br/>
-					Thanks,<br/>
-                    ' . $dp_shopping_cart_settings['shop_name'];
-        $subject = 'Payment Received For Invoice No: ' . $invoice;
+//        $message = 'Hi ' . $result->billing_first_name . ',<br/>
+//                    We have received the payment for Invoice No.: ' . $invoice . '.<br/>
+//                    We will start processing your order soon.<br/>' . $digital_message . '
+//					<br/><br/>
+//					Thanks,<br/>
+//                    ' . $dp_shopping_cart_settings['shop_name'];
+//        $subject = 'Payment Received For Invoice No: ' . $invoice;
+//        $to = $result->billing_email;
+//        $from = get_option('admin_email');
+//        dpsc_pnj_send_mail($to, $from, $dp_shopping_cart_settings['shop_name'], $subject, $message);
+//        dpsc_pnj_send_mail($from, $to, $dp_shopping_cart_settings['shop_name'], $subject, $subject);
+
+        $email_fname = $result->billing_first_name ;
+        $email_shop_name = $dp_shopping_cart_settings['shop_name'];
         $to = $result->billing_email;
         $from = get_option('admin_email');
+
+
+        $nme_dp_mail_option = get_option('dp_usr_payment_mail', true);
+
+        $message = $nme_dp_mail_option['dp_usr_payment_mail_body'];
+        $subject = $nme_dp_mail_option['dp_usr_payment_mail_title'];
+
+        $find_tag = array('%fname%', '%status%', '%email%', '%inv%', '%digi%', '%shop%');
+        $rep_tag = array($email_fname, $updated_status, $to, $invoice, $digital_message, $email_shop_name);
+        $message =str_replace($find_tag, $rep_tag, $message);
+        //email to payer
         dpsc_pnj_send_mail($to, $from, $dp_shopping_cart_settings['shop_name'], $subject, $message);
-        dpsc_pnj_send_mail($from, $to, $dp_shopping_cart_settings['shop_name'], $subject, $subject);
+
+        $nme_dp_mail_option = get_option('dp_admin_payment_mail', true);
+        $message = $nme_dp_mail_option['dp_admin_payment_mail_body'];
+        $message = str_replace("\r",'<br>', $message);
+        $subject = $nme_dp_mail_option['dp_admin_payment_mail_title'];
+        
+        $find_tag = array('%fname%', '%status%', '%email%', '%inv%', '%digi%', '%shop%');
+        $rep_tag = array($email_fname, $updated_status, $to, $invoice, $digital_message, $email_shop_name);
+        $message = str_replace($find_tag, $rep_tag, $message);
+        //email to admin
+        dpsc_pnj_send_mail($from, $to, $dp_shopping_cart_settings['shop_name'], $subject, $message);
+    }
+    if ($updated_status === 'Canceled') {
+        $message = '';
+        $digital_message = '';
+        $check_query = "SELECT * FROM {$table_name} WHERE `invoice`='{$invoice}'";
+        $result = $wpdb->get_row($check_query);
+
+        $email_fname = $result->billing_first_name ;
+        $email_shop_name = $dp_shopping_cart_settings['shop_name'];
+        $to = $result->billing_email;
+        $from = get_option('admin_email');
+
+//email to user on cancelled order
+        $nme_dp_mail_option = get_option('dp_order_cancelled_mail_user_options', true);
+
+        $message = $nme_dp_mail_option['dp_order_canncelled_send_mail_user_body'];
+        $subject = $nme_dp_mail_option['dp_order_cancelled_send_mail_user_title'];
+
+        $find_tag = array('%fname%', '%status%', '%email%', '%inv%', '%digi%', '%shop%');
+        $rep_tag = array($email_fname, $updated_status, $to, $invoice, $digital_message, $email_shop_name);
+        $message =str_replace($find_tag, $rep_tag, $message);
+//email to admin on cannceled order        
+        dpsc_pnj_send_mail($to, $from, $dp_shopping_cart_settings['shop_name'], $subject, $message);
+
+        $nme_dp_mail_option = get_option('dp_order_cancelled_mail_options', true);
+        $message = $nme_dp_mail_option['dp_order_cancelled_send_mail_body'];
+        $message = str_replace("\r",'<br>', $message);
+        $subject = $nme_dp_mail_option['dp_order_cancelled_send_mail_title'];
+        
+        $find_tag = array('%fname%', '%status%', '%email%', '%inv%', '%digi%', '%shop%','%order-log-transaction%');
+        $rep_tag = array($email_fname, $updated_status, $to, $invoice, $digital_message, $email_shop_name,$transaction_log);
+        $message = str_replace($find_tag, $rep_tag, $message);
+        //email to admin
+        dpsc_pnj_send_mail($from, $to, $dp_shopping_cart_settings['shop_name'], $subject, $message);
     }
     $return_path = $dp_shopping_cart_settings['thank_you'];
     $check_return_path = explode('?', $return_path);
