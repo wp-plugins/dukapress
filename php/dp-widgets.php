@@ -318,9 +318,9 @@ class dpsc_show_product_widget extends WP_Widget {
 
     function widget($args, $instance) {
         extract($args);
-        $title = empty( $instance['title'] ) ? 'DukaPress Products' : $instance['title'];
+        $title = $instance['title'];
         echo $before_widget;
-        echo $before_title.$title.$after_title;
+        if ($title) {echo $before_title.$title.$after_title;}
         $direct_checkout = false;
         if ($instance['buy_now'] === 'yes') {
           $direct_checkout = true;
