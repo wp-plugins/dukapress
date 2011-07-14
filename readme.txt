@@ -4,8 +4,8 @@ Donate link: http://dukapress.org/about/
 Tags: shopping cart, web shop, cart, shop, Worldpay, Paypal, Alertpay, paypal, e-commerce, ecommerce, MPESA, ZAP, yuCash, Mobile Payments,online duka, duka, online shop, JQZoom, Multiple Currencies
 
 Requires at least: 3.0
-Tested up to: 3.1
-Stable tag: 2.2
+Tested up to: 3.2.1
+Stable tag: 2.3
 
 DukaPress is an open source e-commerce solution built for Wordpress.
 
@@ -105,6 +105,15 @@ div class="dpsc-shopping-cart">cart code</div
 
 == Changelog ==
 
+= 2.3 =
+* Enhanced DukaPress security greatly by making it impossible for people to order items that are out of stock or to order more items than the inventory quantity.
+* Introduced a “Buy Now” button that redirects directly to PayPal instead of taking you to the checkout page. 
+* Introduced a “Buy Now” button that redirects directly to PayPal instead of taking you to the checkout page. 
+* Added new shortcodes. 
+* Added the ability for shop admins to edit the content of emails sent out to customers from within DukaPress settings. 
+* Updated timthumb.php to fix numerous security vulnerabilities associated with it.
+* Crushed a lot of bugs
+
 = 2.2 =
 * Fixed a serious security issue that allowed people to use firebug to change prices of goods
 * Added description field to Grid View Shortcode
@@ -168,6 +177,9 @@ div class="dpsc-shopping-cart">cart code</div
 * Initial Release
 
 == Upgrade Notice ==
+
+= 2.3 =
+Major release containing many new features, security updates and bug fixes.
 
 = 2.2 =
 This is an important update containing a major security fix as well as numerous bug fixes.

@@ -2,13 +2,13 @@
 /*
 Plugin Name: DukaPress Shopping Cart
 Description: DukaPress Shopping Cart
-Version: 2.2
+Version: 2.3
 Author: NetMadeEz and Nickel Pro
 Author URI: http://dukapress.org/
 Plugin URI: http://dukapress.org/
 */
 
-$dp_version = 2.2;
+$dp_version = 2.3;
 
 require_once('php/dp-products.php');
 require_once('php/dp-cart.php');
