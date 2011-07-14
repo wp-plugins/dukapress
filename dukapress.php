@@ -462,7 +462,7 @@ function dukapress_shopping_cart_order_log() {
                         <td><?php printf(__("%d"),$count);?></td>
                         <!--<td><?php// echo $count;?></td> -->
                         <td><a href="?page=dukapress-shopping-cart-order-log&id=<?php echo $result->invoice; ?>"><?php echo $result->invoice;?></a>
-                            <p><a class="deletethis"style="cursor:pointer" rel="<?php echo $result->invoice ?>">Delete","dp-lang");?></a></p>
+                            <p><a class="deletethis"style="cursor:pointer" rel="<?php echo $result->invoice ?>"><?php _e("Delete","dp-lang");?></a></p>
                         </td>
                         <!--<td><a href="?page=dukapress-shopping-cart-order-log&id=<?php// echo $result->id; ?>"><?php// echo $result->invoice;?></a></td> -->
                         <td><?php printf(__("%s %s"),$result->billing_first_name, $result->billing_last_name);?></td>
