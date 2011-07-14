@@ -8,7 +8,7 @@ Author URI: http://dukapress.org/
 Plugin URI: http://dukapress.org/
 */
 
-$dp_version = 2.3;
+$dp_version = 2.3.1;
 
 require_once('php/dp-products.php');
 require_once('php/dp-cart.php');
