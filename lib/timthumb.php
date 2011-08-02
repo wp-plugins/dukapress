@@ -24,15 +24,7 @@ define ('MAX_FILE_SIZE', 1500000);			// file size limit to prevent possible DOS 
 define ('CURL_TIMEOUT', 10);				// timeout duration. Tweak as you require (lower = better)
 
 // external domains that are allowed to be displayed on your website
-$allowedSites = array (
-	'flickr.com',
-	'picasa.com',
-	'blogger.com',
-	'wordpress.com',
-	'img.youtube.com',
-	'upload.wikimedia.org',
-	'photobucket.com',
-);
+$allowedSites = array ();
 
 // STOP MODIFYING HERE!
 // --------------------
