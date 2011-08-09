@@ -5,7 +5,7 @@ Tags: shopping cart, web shop, cart, shop, Worldpay, Paypal, Alertpay, paypal, e
 
 Requires at least: 3.0
 Tested up to: 3.2.1
-Stable tag: 2.3.2
+Stable tag: 2.3.3
 
 DukaPress is an open source e-commerce solution built for Wordpress.
 
@@ -105,6 +105,9 @@ div class="dpsc-shopping-cart">cart code</div
 
 == Changelog ==
 
+= 2.3.3 =
+Fixing timthumb security vulnerability (just replaced timthumb.php with version 2.5) 
+
 = 2.3.2 =
 Fixing timthumb security vulnerability (just one line of code) 
 
@@ -183,6 +186,9 @@ Fixing extremely small bug (just one line of code)
 * Initial Release
 
 == Upgrade Notice ==
+
+= 2.3.3 =
+Security update.
 
 = 2.3.2 =
 Security update.
