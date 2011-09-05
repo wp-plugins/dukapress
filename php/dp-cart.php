@@ -125,7 +125,7 @@ function dpsc_add_to_cart() {
  *
  */
 add_action('wp_ajax_dpsc_empty_your_cart', 'dpsc_empty_cart');
-add_action('wp_ajax_no_priv_dpsc_empty_your_cart', 'dpsc_empty_cart');
+add_action('wp_ajax_nopriv_dpsc_empty_your_cart', 'dpsc_empty_cart');
 
 function dpsc_empty_cart() {
     unset($_SESSION['dpsc_shiping_price']);

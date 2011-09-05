@@ -5,7 +5,7 @@ Tags: shopping cart, web shop, cart, shop, Worldpay, Paypal, Alertpay, paypal, e
 
 Requires at least: 3.0
 Tested up to: 3.2.1
-Stable tag: 2.3.3
+Stable tag: 2.3.4
 
 DukaPress is an open source e-commerce solution built for Wordpress.
 
@@ -40,6 +40,7 @@ Premium Addons:
 1. [Simple Product SlideShow](http://dukapress.com/products/simple-slideshow/ "Simple Product SlideShow")
 1. [DukaPress Styles](http://dukapress.com/products/styles/ "DukaPress Styles - make DukaPress look good without getting a new theme")
 1. [Shipping Pro](http://dukapress.com/products/shipping-pro/ "Shipping Pro - location-based shipping")
+1. [List View](http://dukapress.com/products/list-view/ "DukaPress List View - display your products in a handy list")
 
 Premium Themes:
 
@@ -104,6 +105,9 @@ div class="dpsc-shopping-cart">cart code</div
 [View Screenshots](http://www.flickr.com/photos/moshthepitt/sets/72157624534741496/ "DukaPress screenshots")
 
 == Changelog ==
+
+= 2.3.4 =
+Some small, but annoying, bugs have been fixed.  Timthumb updated for continued security. 
 
 = 2.3.3 =
 Fixing timthumb security vulnerability (just replaced timthumb.php with version 2.5) 
@@ -186,6 +190,9 @@ Fixing extremely small bug (just one line of code)
 * Initial Release
 
 == Upgrade Notice ==
+
+= 2.3.4 =
+Bugfix release.
 
 = 2.3.3 =
 Security update.

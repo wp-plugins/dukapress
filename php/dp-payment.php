@@ -274,7 +274,7 @@ function dpsc_worldpay_payment($dpsc_total = FALSE, $dpsc_shipping_value = FALSE
                         <input type="hidden" name="desc" value="Your Order No.: ' . $invoice . '" />
                         <input type="hidden" name="cartId" value="101KT0098" />
                         <input type="hidden" name="amount" value="' . $dpsc_total . '" />
-                        <input type="hidden" name="testMode" value="' . $dp_shopping_cart_settings['worldpay_testmode'] . '" />
+                        <input type="hidden" name="testMode" value="' . $testModeVal . '" />
                         <input type="hidden" name="name" value="' . $name . '" />
                         <input type="hidden" name="address" value="' . $baddress . ' ' . $bcity . ' ' . $bstate . '" />
                         <input type="hidden" name="postcode" value="' . $bzip . '" />
