@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-12-07 14:25+0300\n"
-"PO-Revision-Date: 2011-07-30 17:44+0200\n"
+"PO-Revision-Date: 2011-08-12 20:21+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr "Toplam  %d orders sold with total amount of %s %d"
 
 #: dukapress/dukapress.php:139
 msgid "DukaPress Shop Order Log"
-msgstr ""
+msgstr "Dukapress Mağaza Satış Kayıtları"
 
 #: dukapress/dukapress.php:153
 msgid "&laquo;"
@@ -38,7 +38,7 @@ msgstr ""
 #: dukapress/dukapress.php:243
 #, php-format
 msgid "Displaying %s&#8211;%s of %s"
-msgstr ""
+msgstr "Gösterilen  %s&#8211;%s of %s"
 
 #: dukapress/dukapress.php:197
 #: dukapress/dukapress.php:199
@@ -81,11 +81,11 @@ msgstr "Kargo:"
 
 #: dukapress/dukapress.php:392
 msgid "Discount:"
-msgstr ""
+msgstr "İndirim:"
 
 #: dukapress/dukapress.php:395
 msgid "Tax:"
-msgstr ""
+msgstr "Vergi:"
 
 #: dukapress/dukapress.php:398
 msgid "Total:"
@@ -101,23 +101,23 @@ msgstr ""
 
 #: dukapress/dukapress.php:567
 msgid "Settings Saved"
-msgstr ""
+msgstr "Ayarlar Kaydedildi"
 
 #: dukapress/dukapress.php:586
 msgid "Basic Shop Settings"
-msgstr ""
+msgstr "Temel Mağaza Ayarları"
 
 #: dukapress/dukapress.php:591
 msgid "Name of Shop"
-msgstr ""
+msgstr "Mağazanın Adı"
 
 #: dukapress/dukapress.php:597
 msgid "Address"
-msgstr ""
+msgstr "Adres"
 
 #: dukapress/dukapress.php:603
 msgid "State / Province"
-msgstr ""
+msgstr "İl / İlçe"
 
 #: dukapress/dukapress.php:609
 msgid "Postal Code"
@@ -129,68 +129,68 @@ msgstr "Şehir / İlçe"
 
 #: dukapress/dukapress.php:621
 msgid "Shop Mode"
-msgstr ""
+msgstr "Mağaza Modu"
 
 #: dukapress/dukapress.php:630
 msgid "Country of your shop"
-msgstr ""
+msgstr "Mağazanızın ülkesi"
 
 #: dukapress/dukapress.php:646
 msgid "Currency"
-msgstr ""
+msgstr "Para Birimi"
 
 #: dukapress/dukapress.php:668
 msgid "Enable User Registration:"
-msgstr ""
+msgstr "Üye Olmayı Aktif Et"
 
 #: dukapress/dukapress.php:674
 msgid "Product Page Image Effect"
-msgstr ""
+msgstr "Ürün Sayfası Resim Efekti"
 
 #: dukapress/dukapress.php:686
 msgid "Main Product Image Size"
-msgstr ""
+msgstr "Ana Ürün Resim Boyutu"
 
 #: dukapress/dukapress.php:699
 msgid "Product Thumbnail Size"
-msgstr ""
+msgstr "Ürün Ufak Resim Boyutu"
 
 #: dukapress/dukapress.php:712
 msgid "Grid Product Thumbnail Size"
-msgstr ""
+msgstr "Ürün Sıralama Ufak Resim Boyutu"
 
 #: dukapress/dukapress.php:725
 msgid "Currency Symbol"
-msgstr ""
+msgstr "Para Birimi Sembolü"
 
 #: dukapress/dukapress.php:731
 msgid "Checkout Page URL"
-msgstr ""
+msgstr "Satın Alma Sayfası Adres"
 
 #: dukapress/dukapress.php:737
 msgid "Thank You Page URL"
-msgstr ""
+msgstr "Teşekkürler Sayfası Adres"
 
 #: dukapress/dukapress.php:743
 msgid "Tax"
-msgstr ""
+msgstr "Vergi"
 
 #: dukapress/dukapress.php:749
 #: dukapress/dukapress.php:889
 msgid "Payment Options"
-msgstr ""
+msgstr "Ödeme Ayarları"
 
 #: dukapress/dukapress.php:765
 msgid "Product Management"
-msgstr ""
+msgstr "Ürün Yönetimi"
 
 #: dukapress/dukapress.php:768
 msgid "Inventory Settings"
-msgstr ""
+msgstr "Envanter Ayarları"
 
 #: dukapress/dukapress.php:773
 msgid "Active"
-msgstr ""
+msgstr "Aktif"
 
 #: dukapress/dukapress.php:776
 #: dukapress/dukapress.php:785
@@ -208,19 +208,19 @@ msgstr "Evet"
 
 #: dukapress/dukapress.php:782
 msgid "Display Stocks Amounts"
-msgstr ""
+msgstr "Stok Miktarını Göster"
 
 #: dukapress/dukapress.php:791
 msgid "Sold Out Notice"
-msgstr ""
+msgstr "Tükendi Notu"
 
 #: dukapress/dukapress.php:800
 msgid "Warning Threshold"
-msgstr ""
+msgstr "Uyarı Eşiği"
 
 #: dukapress/dukapress.php:809
 msgid "Inventory warning email"
-msgstr ""
+msgstr "Envanter Uyarı Mail"
 
 #: dukapress/dukapress.php:817
 msgid "Shipping Options"
@@ -276,7 +276,7 @@ msgstr ""
 
 #: dukapress/dukapress.php:874
 msgid "Digital Products"
-msgstr ""
+msgstr "Dijital Ürünler"
 
 #: dukapress/dukapress.php:879
 msgid "Download Links Duration:"
@@ -288,7 +288,7 @@ msgstr ""
 
 #: dukapress/dukapress.php:897
 msgid "Use PayPal Sandbox:"
-msgstr ""
+msgstr "PayPal Sandbox Kullan:"
 
 #: dukapress/dukapress.php:903
 msgid "PayPal ID"
@@ -364,7 +364,7 @@ msgstr "Numara"
 
 #: dukapress/dukapress.php:1126
 msgid "Bank Details"
-msgstr ""
+msgstr "Banka Ayrıntıları"
 
 #: dukapress/dukapress.php:1131
 msgid "Name of Bank"
@@ -372,7 +372,7 @@ msgstr "Bank Adı"
 
 #: dukapress/dukapress.php:1137
 msgid "Routing Number"
-msgstr ""
+msgstr "Şube No"
 
 #: dukapress/dukapress.php:1143
 msgid "Account Number"
@@ -380,7 +380,7 @@ msgstr "Hesap Numarası"
 
 #: dukapress/dukapress.php:1149
 msgid "Bank Account Owner"
-msgstr ""
+msgstr "Banka Sahibi"
 
 #: dukapress/dukapress.php:1155
 msgid "IBAN"
@@ -393,27 +393,27 @@ msgstr ""
 
 #: dukapress/dukapress.php:1178
 msgid "Discount Management"
-msgstr ""
+msgstr "İndirim Yönetimi"
 
 #: dukapress/dukapress.php:1183
 msgid "Enable Discount"
-msgstr ""
+msgstr "İndirim Aktif Et"
 
 #: dukapress/dukapress.php:1192
 msgid "Enter Discount Code"
-msgstr ""
+msgstr "İndirim Kodu Gir"
 
 #: dukapress/dukapress.php:1198
 msgid "Discount"
-msgstr ""
+msgstr "İndirim"
 
 #: dukapress/dukapress.php:1204
 msgid "One Time Discount"
-msgstr ""
+msgstr "Tek Kullanımlık İndirim"
 
 #: dukapress/dukapress.php:1838
 msgid "DukaPress News"
-msgstr ""
+msgstr "Dukapress Haberler"
 
 #: dukapress/php/dp-cart.php:212
 msgid "Please review your order"
@@ -422,7 +422,7 @@ msgstr "Lütfen Ödemenizi Tamamlayınız"
 #: dukapress/php/dp-cart.php:230
 #: dukapress/php/dp-payment.php:63
 msgid "There are no product in your cart."
-msgstr ""
+msgstr "Sepetinizde ürün bulunmamaktadır."
 
 #: dukapress/php/dp-cart.php:256
 #: dukapress/php/dp-widgets.php:180
@@ -465,11 +465,11 @@ msgstr "Mesaj:"
 
 #: dukapress/php/dp-cart.php:402
 msgid "Discount Code"
-msgstr ""
+msgstr "İndirim Kuponu"
 
 #: dukapress/php/dp-cart.php:403
 msgid "Check"
-msgstr ""
+msgstr "Kontrol"
 
 #: dukapress/php/dp-cart.php:497
 #: dukapress/php/dp-cart.php:547
@@ -479,21 +479,21 @@ msgstr "Banka Havalesi"
 #: dukapress/php/dp-cart.php:503
 #: dukapress/php/dp-cart.php:551
 msgid "Cash at store"
-msgstr ""
+msgstr "Mağazada Nakit"
 
 #: dukapress/php/dp-cart.php:509
 #: dukapress/php/dp-cart.php:559
 msgid "Cash on delivery"
-msgstr ""
+msgstr "Nakit olarak Ödeyin"
 
 #: dukapress/php/dp-cart.php:515
 #: dukapress/php/dp-cart.php:555
 msgid "Pay by Mobile Phone"
-msgstr ""
+msgstr "Mobil Telefon İle Öde"
 
 #: dukapress/php/dp-cart.php:527
 msgid "Make payment using "
-msgstr ""
+msgstr "Ödemeyi yap"
 
 #: dukapress/php/dp-cart.php:574
 msgid "Make Payment"
@@ -502,33 +502,33 @@ msgstr "Ödemeyi Tamamla"
 #: dukapress/php/dp-cart.php:797
 #, php-format
 msgid "New user registration on your site %s:"
-msgstr ""
+msgstr "Sitenize yeni kullanıcı kaydoldu %s:"
 
 #: dukapress/php/dp-cart.php:798
 #: dukapress/php/dp-cart.php:806
 #, php-format
 msgid "Username: %s"
-msgstr ""
+msgstr "Kullanıcı Adı: %s"
 
 #: dukapress/php/dp-cart.php:799
 #, php-format
 msgid "E-mail: %s"
-msgstr ""
+msgstr "E-Posta: %s"
 
 #: dukapress/php/dp-cart.php:801
 #, php-format
 msgid "[%s] New User Registration"
-msgstr ""
+msgstr "[%s] Yeni Kullanıcı Kayıt"
 
 #: dukapress/php/dp-cart.php:807
 #, php-format
 msgid "Password: %s"
-msgstr ""
+msgstr "Şifre:  %s"
 
 #: dukapress/php/dp-cart.php:816
 #, php-format
 msgid "[%s] Your username and password"
-msgstr ""
+msgstr "[%s] Kullanıcı Adınız ve Şifreniz"
 
 #: dukapress/php/dp-cart.php:981
 msgid "Billing Address"
@@ -557,7 +557,7 @@ msgstr "Lütfen Soyadınızı Tekrar Giriniz"
 #: dukapress/php/dp-cart.php:987
 #: dukapress/php/dp-cart.php:1016
 msgid "Please enter the Address"
-msgstr ""
+msgstr "Lütfen Adres Giriniz"
 
 #: dukapress/php/dp-cart.php:988
 #: dukapress/php/dp-cart.php:1017
@@ -567,7 +567,7 @@ msgstr "Şehir"
 #: dukapress/php/dp-cart.php:989
 #: dukapress/php/dp-cart.php:1018
 msgid "Please enter the City"
-msgstr ""
+msgstr "Lütfen Şehir Giriniz"
 
 #: dukapress/php/dp-cart.php:990
 #: dukapress/php/dp-cart.php:1019
@@ -577,7 +577,7 @@ msgstr "İlçe"
 #: dukapress/php/dp-cart.php:991
 #: dukapress/php/dp-cart.php:1020
 msgid "Please enter the State"
-msgstr ""
+msgstr "Lütfen ilçe Giriniz"
 
 #: dukapress/php/dp-cart.php:993
 #: dukapress/php/dp-cart.php:1022
@@ -591,11 +591,11 @@ msgstr "Ülke"
 
 #: dukapress/php/dp-cart.php:1004
 msgid "Email"
-msgstr ""
+msgstr "E-Posta"
 
 #: dukapress/php/dp-cart.php:1005
 msgid "Please enter the Email"
-msgstr ""
+msgstr "Lütfen E-Posta Giriniz"
 
 #: dukapress/php/dp-cart.php:1006
 msgid "Phone Number"
@@ -603,7 +603,7 @@ msgstr "Telefon Numarası"
 
 #: dukapress/php/dp-cart.php:1007
 msgid "Please enter the Phone"
-msgstr ""
+msgstr "Lütfen Telefon Giriniz"
 
 #: dukapress/php/dp-cart.php:1010
 msgid "Shipping Address"
@@ -692,7 +692,7 @@ msgstr "Ödemenizi aldıkdan sonra size geri dönüş yapılacak ve siparişiniz
 
 #: dukapress/php/dp-cart.php:1178
 msgid "Please send"
-msgstr ""
+msgstr "Lütfen Gönder"
 
 #: dukapress/php/dp-cart.php:1178
 msgid "to any of the following numbers:"
@@ -704,35 +704,35 @@ msgstr "Please also send your invoice number to us by SMS using the phone that y
 
 #: dukapress/php/dp-cart.php:1195
 msgid "Thank you for making the payment of"
-msgstr ""
+msgstr "Ödemenizi "
 
 #: dukapress/php/dp-cart.php:1195
 msgid "using"
-msgstr ""
+msgstr "kullanarak yaptığınız için teşekkürler"
 
 #: dukapress/php/dp-cart.php:1196
 msgid "We will process your order soon."
-msgstr ""
+msgstr "Siparişinizi en kısa sürece işleme alacağız."
 
 #: dukapress/php/dp-cart.php:1215
 msgid "Order canceled !!"
-msgstr ""
+msgstr "Sipariş İptal Edildi !!"
 
 #: dukapress/php/dp-products.php:48
 msgid "Select"
-msgstr ""
+msgstr "Seç"
 
 #: dukapress/php/dp-products.php:158
 msgid "Currently in Stock"
-msgstr ""
+msgstr "Stok Bilgisi"
 
 #: dukapress/php/dp-products.php:161
 msgid "Out of Stock"
-msgstr ""
+msgstr "Sokta Kalmadı"
 
 #: dukapress/php/dp-products.php:167
 msgid "Add to Cart"
-msgstr ""
+msgstr "Sepete Ekle"
 
 #: dukapress/php/dp-products.php:169
 msgid "Inquire"
@@ -744,19 +744,19 @@ msgstr "Yeni Fiyat:"
 
 #: dukapress/php/dp-products.php:412
 msgid "Currently In Stock:"
-msgstr ""
+msgstr "Stok Bilgisi:"
 
 #: dukapress/php/dp-products.php:413
 msgid "Item Weight:"
-msgstr ""
+msgstr "Nesne Ağırlığı:"
 
 #: dukapress/php/dp-products.php:414
 msgid "Digital File:"
-msgstr ""
+msgstr "Dijital Dosya:"
 
 #: dukapress/php/dp-products.php:417
 msgid "Dropdown Options"
-msgstr ""
+msgstr "Dropdown Ayarları"
 
 #: dukapress/php/dp-products.php:424
 msgid "Option Name"
@@ -764,42 +764,42 @@ msgstr "Ayar Adı"
 
 #: dukapress/php/dp-products.php:428
 msgid "Variation Name"
-msgstr ""
+msgstr "Varyasyon Adı"
 
 #: dukapress/php/dp-products.php:432
 msgid "Variation Price"
-msgstr ""
+msgstr "Varyasyon Fiyatı"
 
 #: dukapress/php/dp-products.php:647
 #: dukapress/php/dp-widgets.php:225
 msgid "Products"
-msgstr ""
+msgstr "Ürünler"
 
 #: dukapress/php/dp-products.php:649
 #: dukapress/php/dp-products.php:650
 msgid "Add New Product"
-msgstr ""
+msgstr "Yeni Ürün Ekle"
 
 #: dukapress/php/dp-products.php:651
 msgid "Edit"
-msgstr ""
+msgstr "Düzenle"
 
 #: dukapress/php/dp-products.php:652
 msgid "Edit Product"
-msgstr ""
+msgstr "Ürünü Düzenle"
 
 #: dukapress/php/dp-products.php:653
 msgid "New Product"
-msgstr ""
+msgstr "Yeni Ürün"
 
 #: dukapress/php/dp-products.php:654
 #: dukapress/php/dp-products.php:655
 msgid "View Product"
-msgstr ""
+msgstr "Ürünü Gör"
 
 #: dukapress/php/dp-products.php:656
 msgid "Search Products"
-msgstr ""
+msgstr "Ürünleri Ara"
 
 #: dukapress/php/dp-products.php:657
 msgid "No products found"
@@ -807,55 +807,55 @@ msgstr "Ürün Bulunamadı."
 
 #: dukapress/php/dp-products.php:658
 msgid "No products found in Trash"
-msgstr ""
+msgstr "Çöpte ürünler bulunamadı"
 
 #: dukapress/php/dp-products.php:660
 msgid "Products for use with DukaPress"
-msgstr ""
+msgstr "Ürünler için Dukapress Kullanım"
 
 #: dukapress/php/dp-widgets.php:14
 msgid "Displays DukaPress Shopping Cart"
-msgstr ""
+msgstr "Dukapress Sepeti Göster"
 
 #: dukapress/php/dp-widgets.php:16
 #: dukapress/php/dp-widgets.php:39
 msgid "DukaPress Shopping Cart"
-msgstr ""
+msgstr "Dukapress Alışveriş Sepeti"
 
 #: dukapress/php/dp-widgets.php:24
 #: dukapress/php/dp-widgets.php:68
 msgid "Title:"
-msgstr ""
+msgstr "Başlık:"
 
 #: dukapress/php/dp-widgets.php:27
 msgid "To change settings"
-msgstr ""
+msgstr "Ayarları Değiştir"
 
 #: dukapress/php/dp-widgets.php:27
 #: dukapress/php/dp-widgets.php:71
 msgid "click here"
-msgstr ""
+msgstr "buraya tıkla"
 
 #: dukapress/php/dp-widgets.php:58
 msgid "Displays DukaPress Checkout Link"
-msgstr ""
+msgstr "Dukapress Satınal Link Göster"
 
 #: dukapress/php/dp-widgets.php:60
 #: dukapress/php/dp-widgets.php:83
 msgid "DukaPress Checkout"
-msgstr ""
+msgstr "Dukapress Satış"
 
 #: dukapress/php/dp-widgets.php:71
 msgid "To change checkout url"
-msgstr ""
+msgstr "Değiştirilen URL"
 
 #: dukapress/php/dp-widgets.php:104
 msgid "Displays Mini DukaPress Shopping Cart"
-msgstr ""
+msgstr "Mini Dukapress Sepeti Göster"
 
 #: dukapress/php/dp-widgets.php:106
 msgid "Mini DukaPress Shopping Cart"
-msgstr ""
+msgstr "Mini Dukapress Sepet"
 
 #: dukapress/php/dp-widgets.php:138
 #: dukapress/php/dp-widgets.php:172
@@ -884,9 +884,9 @@ msgstr "Sepetinizi Boşaltın"
 
 #: dukapress/php/dp-widgets.php:240
 msgid "Product Display"
-msgstr ""
+msgstr "Ürün Gösterimi"
 
 #: dukapress/php/dp-widgets.php:242
 msgid "DukaPress Product Display"
-msgstr ""
+msgstr "Dukapress Ürün Gösterimi"
 
