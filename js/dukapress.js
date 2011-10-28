@@ -31,6 +31,11 @@ jQuery(document).ready(function () {
                             }
                 });
             }
+			else if (buy_now_present == '3') {
+				var affiliate_url = jQuery('#dpsc_affiliate_url_'+productId).val();
+				window.open(affiliate_url,'dp_product_'+productId);
+				jQuery('div.dpsc_update_icon', jQuery(this)).css('display', 'none');
+            }
             else {
                 jQuery.post( dpsc_js.dpsc_url+"/index.php?ajax=true", form_values, function(returned_data) {
                     eval(returned_data);

@@ -38,6 +38,10 @@ function dpsc_get_product_details($product_id, $buy_now = false, $direct = false
         if ($buy_now) {
             $action = 'dpsc_paypal_button';
         }
+		//Dukapress affiliate mode
+		if ($affiliate) {
+            $action = 'dpsc_affiliate';
+        }
 //        if ($direct) {
 //            $action = 'dpsc_direct_checkout_button';
 //        }
@@ -75,7 +79,7 @@ function dpsc_get_product_details($product_id, $buy_now = false, $direct = false
             }
             $dropdown_content .= '</div><div class="clear"></div>';
             $custom_fields_output['dropdown'] = $dropdown_content;
-            if ($dp_shopping_cart_settings['dp_shop_mode'] != 'inquiry') {
+            if ($dp_shopping_cart_settings['dp_shop_mode'] != 'inquiry' || !$affiliate) {
                 $custom_fields_output['end'] = '<script language="javascript" type="text/javascript">
                 var flag=0;var SalePriceLabel1=0; //whether ie or ff
                 if(navigator.appName=="Microsoft Internet Explorer"){initialCost=SalePriceLabel1.value;flag=1;}
@@ -194,12 +198,26 @@ function dpsc_get_product_details($product_id, $buy_now = false, $direct = false
             $value_atc = __('Buy Now', "dp-lang");
             $buy_now_present = '2';
         }
+		//redirect to Affiliate
+		if ($affiliate) {
+            $value_atc = __('Buy Now', "dp-lang");
+            $buy_now_present = '3';
+        }
 		//Out of stock disabled button
         $disabled_add_to_cart = '';
         if (!$available_in_stock) {
             $disabled_add_to_cart = 'disabled="disabled"';
         }
         $custom_fields_output['add_to_cart'] = '<input ' . $disabled_add_to_cart . ' type="submit" class="dpsc_submit_button" id="dpsc_submit_button_' . $product_id . '" name="dpsc_add_to_cart" value="' . $value_atc . '" />';
+		if ($affiliate) {
+			if(isset($all_custom_fields['affiliate_url'][0])){
+				$affiliate_url = $all_custom_fields['affiliate_url'][0];
+			}
+			else if(isset($dp_shopping_cart_settings['affiliate_url'])) {
+				$affiliate_url = $dp_shopping_cart_settings['affiliate_url'];
+			}
+			$custom_fields_output['add_to_cart'] .= '<input type="hidden" id="dpsc_affiliate_url_' . $product_id . '" name="dpsc_affiliate_url_' . $product_id . '" value="' . $affiliate_url . '" />';
+		}
         $custom_fields_output['add_to_cart'] .= '<input type="hidden" id="dpsc_buy_now_button_present_' . $product_id . '" name="dpsc_buy_now_button_present_' . $product_id . '" value="' . $buy_now_present . '" />';
         return $custom_fields_output;
     }
