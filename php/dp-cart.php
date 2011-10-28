@@ -1240,7 +1240,7 @@ function dpsc_pnj_thank_you_page() {
         $msg = str_replace("\r", '<br>', $msg);
 
 
-        $array1 = array('%from%', '%from_email%', '%details%', '%custom_message%');
+        $array1 = array('%from%', '%from_email%', '%details%', '%enq_subject%', '%custom_message%');
         $array2 = array($from_name, $from_email, $message_content, $subject, $message);
         $msg = str_replace($array1, $array2, $msg);
 

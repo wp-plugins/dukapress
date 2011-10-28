@@ -179,15 +179,22 @@ function dpsc_get_product_details($product_id, $buy_now = false, $direct = false
         if ($dp_shopping_cart_settings['dp_shop_mode'] === 'inquiry') {
             $value_atc = __('Inquire', "dp-lang");
         }
+		//Out of Stock Button
+		if ($dp_shopping_cart_settings['dp_shop_inventory_soldout'] === 'yes' && $all_custom_fields['currently_in_stock'][0] < 1) {
+            $value_atc = __('Out of Stock', "dp-lang");
+        }
+		//PayPal Buy Now
         $buy_now_present = '0';
         if ($buy_now) {
             $value_atc = __('Buy Now', "dp-lang");
             $buy_now_present = '1';
         }
+		//redirect to Checkout
         if ($direct) {
             $value_atc = __('Buy Now', "dp-lang");
             $buy_now_present = '2';
         }
+		//Out of stock disabled button
         $disabled_add_to_cart = '';
         if (!$available_in_stock) {
             $disabled_add_to_cart = 'disabled="disabled"';
