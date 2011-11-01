@@ -784,6 +784,7 @@ function dukapress_shopping_cart_setting() {
         $dp_currency_symbol = $_POST['dp_currency_symbol'];
         $dp_checkout_url = $_POST['dp_checkout_url'];
         $dp_thank_you_url = $_POST['dp_thank_you_url'];
+		$dp_affiliate_url = $_POST['dp_affiliate_url'];
         $dp_tax = $_POST['dp_tax'];
         $dp_shop_paypal_id = $_POST['dp_shop_paypal_id'];
         $dp_shop_paypal_pdt = $_POST['dp_shop_paypal_pdt'];
@@ -887,6 +888,7 @@ function dukapress_shopping_cart_setting() {
         $dp_shopping_cart_settings['dp_shop_mode'] = $dp_shop_mode;
         $dp_shopping_cart_settings['checkout'] = $dp_checkout_url;
         $dp_shopping_cart_settings['thank_you'] = $dp_thank_you_url;
+		$dp_shopping_cart_settings['affiliate_url'] = $dp_affiliate_url;
         $dp_shopping_cart_settings['tax'] = $dp_tax;
         $dp_shopping_cart_settings['dp_shop_country'] = $dp_shop_country;
         $dp_shopping_cart_settings['dp_shop_currency'] = $dp_shop_currency;
@@ -1105,6 +1107,12 @@ function dukapress_shopping_cart_setting() {
                         <th scope="row"><?php _e("Thank You Page URL","dp-lang");?></th>
                         <td>
                             <input size="50" type="text" value="<?php if(isset($dp_shopping_cart_settings['thank_you'])) {echo $dp_shopping_cart_settings['thank_you'];}?>" name="dp_thank_you_url">
+                        </td>
+                    </tr>
+					<tr>
+                        <th scope="row"><?php _e("Affiliate URL","dp-lang");?></th>
+                        <td>
+                            <input size="50" type="text" value="<?php if(isset($dp_shopping_cart_settings['affiliate_url'])) {echo $dp_shopping_cart_settings['affiliate_url'];}?>" name="dp_affiliate_url">
                         </td>
                     </tr>
                     <tr>

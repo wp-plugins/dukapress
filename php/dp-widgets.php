@@ -198,7 +198,7 @@ function dpsc_print_cart_html($mini=FALSE, $product_name = FALSE) {
                 else {
                     $dpsc_at_checkout_to_be_displayed_price = '';
                 }
-                $dpsc_var = '';
+				$dpsc_var = '';
 				if (!empty($dpsc_product_in_cart['var'])) {
 					$dpsc_var = ' (' . $dpsc_product_in_cart['var'] . ')';
 				}

@@ -7,7 +7,7 @@
  * This function outputs the Product detail
  *
  */
-function dpsc_get_product_details($product_id, $buy_now = false, $direct = false) {
+function dpsc_get_product_details($product_id, $buy_now = false, $direct = false, $affiliate = false) {
     global $wpdb;
 
     $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
@@ -19,6 +19,8 @@ function dpsc_get_product_details($product_id, $buy_now = false, $direct = false
 //        if ($direct) {
 //          $form_id = 'dpsc_product_direct_form_' . $product_id;
 //        }
+		
+		
         $custom_fields_output['start'] = '<form id="' . $form_id . '" name="dpsc_product_form_' . $product_id . '" class="product_form" action="" method="post" enctype="multipart/form-data">';
         if ($dp_shopping_cart_settings['dp_shop_mode'] != 'inquiry') {
             if (is_numeric($all_custom_fields['new_price'][0])) {
@@ -26,7 +28,7 @@ function dpsc_get_product_details($product_id, $buy_now = false, $direct = false
                 $custom_fields_output['price'] = '<p class="dpsc_price">' . __('Price:', "dp-lang") . ' ' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span class="was">' . $all_custom_fields['price'][0] . '</span>&nbsp;<span class="is">' . $all_custom_fields['new_price'][0] . '</span></p>';
             } else {
                 $product_price = $all_custom_fields['price'][0];
-                $custom_fields_output['price'] = '<p class="dpsc_price">' . __('Price:', "dp-lang") . ' ' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span class="is">' . $all_custom_fields['price'][0] . '</span></p>';
+                $custom_fields_output['price'] = '<p class="dpsc_price">' . __('Price:', "dp-lang") . ' ' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span class="is">' . $all_custom_fields['price'][0]. '</span></p>';
             }
         }
         $item_weight = '';
@@ -38,10 +40,10 @@ function dpsc_get_product_details($product_id, $buy_now = false, $direct = false
         if ($buy_now) {
             $action = 'dpsc_paypal_button';
         }
-		//Dukapress affiliate mode
 		if ($affiliate) {
             $action = 'dpsc_affiliate';
         }
+		
 //        if ($direct) {
 //            $action = 'dpsc_direct_checkout_button';
 //        }
@@ -68,8 +70,8 @@ function dpsc_get_product_details($product_id, $buy_now = false, $direct = false
                     if (isset($get_var[1])) {
                         $var_price = floatval($get_var[1]);
                         $var_price_display = number_format(floatval($get_var[1]), 2);
-                        if ($var_price != 0.00 && ($dp_shopping_cart_settings['dp_shop_mode'] != 'inquiry')) {
-                            $var_price_text = ' ( ' . $dp_shopping_cart_settings['dp_currency_symbol'] . $var_price_display . ' ) ';
+                        if ($var_price != 0.00 && ($dp_shopping_cart_settings['dp_shop_mode'] != 'inquiry' && !$affiliate)) {
+                            //$var_price_text = ' ( ' . $dp_shopping_cart_settings['dp_currency_symbol'] . $var_price_display . ' ) ';
                         }
                     }
                     $dropdown_content .= '<option id="' . $var_price . '" value="' . $get_var[0] . ',:_._:,' . $var_price . '">' . $get_var[0] . $var_price_text . '</option>';
@@ -325,7 +327,8 @@ add_shortcode('dpsc_display_product', 'dpsc_pnj_display_product_name');
 function dpsc_pnj_display_product_name($atts, $content = null) {
     extract(shortcode_atts(array(
                 'buy_now' => '',
-                'direct' => ''
+                'direct' => '',
+				'affiliate' => ''
                     ), $atts));
     $p_b_n = false;
     if (!empty($buy_now)) {
@@ -335,8 +338,12 @@ function dpsc_pnj_display_product_name($atts, $content = null) {
     if (!empty($direct)) {
         $direct_checkout = true;
     }
+	$affiliate_checkout = false;
+    if (!empty($affiliate)) {
+        $affiliate_checkout = true;
+    }
     $product_id = get_the_ID();
-    $output = dpsc_get_product_details($product_id, $p_b_n, $direct_checkout);
+    $output = dpsc_get_product_details($product_id, $p_b_n, $direct_checkout, $affiliate_checkout);
     $content .= '<div class="dpsc_product_main_container">';
     $content .= '<div class="dpsc_image_container">';
     $content .= $output['image_output'];
@@ -366,6 +373,10 @@ function dpsc_pnj_display_product_cart($atts, $content = null) {
     $p_b_n = false;
     if (!empty($buy_now)) {
         $p_b_n = true;
+    }
+	$affiliate_checkout = false;
+    if (!empty($affiliate)) {
+        $affiliate_checkout = true;
     }
     $product_id = get_the_ID();
     $output = dpsc_get_product_details($product_id);    
@@ -407,6 +418,7 @@ function dpsc_pnj_grid_display($atts, $content=null) {
                 'type' => 'post',
                 'order' => 'DESC',
                 'direct' => '',
+				'affiliate' => '',
                 'buy_now' => ''
                     ), $atts));
 
@@ -417,6 +429,10 @@ function dpsc_pnj_grid_display($atts, $content=null) {
     $direct_checkout = false;
     if (!empty($direct)) {
         $direct_checkout = true;
+    }
+	$affiliate_checkout = false;
+    if (!empty($affiliate)) {
+        $affiliate_checkout = true;
     }
     if (!empty($per_page)) {
         $pagenum = isset($_GET['dpage']) ? $_GET['dpage'] : 1;
@@ -448,7 +464,7 @@ function dpsc_pnj_grid_display($atts, $content=null) {
         $count = 1;
         $all_count = 0;
         foreach ($products as $product) {
-            $output = dpsc_get_product_details($product->ID, $p_b_n, $direct_checkout);
+            $output = dpsc_get_product_details($product->ID, $p_b_n, $direct_checkout, $affiliate_checkout);
             if ($output) {
                 $attachment_images = &get_children('post_type=attachment&post_status=inherit&post_mime_type=image&post_parent=' . $product->ID);
                 $main_image = '';
@@ -556,6 +572,7 @@ function dp_rm_content_visibility_meta_box() {
     $content_stock = get_post_meta($post_id, 'currently_in_stock', true);
     $content_weight = get_post_meta($post_id, 'item_weight', true);
     $content_file = get_post_meta($post_id, 'digital_file', true);
+	$affiliate_url = get_post_meta($post_id, 'affiliate_url', true);
 ?>
     <table>
         <tr><td><label for="price"><b><?php _e('Price:', "dp-lang"); ?></b></label></td><td><input id="price" type="text" name="price" value="<?php echo $content_price; ?>" /></td></tr>
@@ -563,6 +580,7 @@ function dp_rm_content_visibility_meta_box() {
         <tr><td><label for="currently_in_stock"><b><?php _e('Currently In Stock:', "dp-lang"); ?></b></label></td><td><input id="currently_in_stock" type="text" name="currently_in_stock" value="<?php echo $content_stock; ?>" /></td></tr>
         <tr><td><label for="item_weight"><b><?php _e('Item Weight:', "dp-lang"); ?></b></label></td><td><input id="item_weight" type="text" name="item_weight" value="<?php echo $content_weight; ?>" /> (<?php _e('in grams', "dp-lang"); ?>)</td></tr>
         <tr><td><label for="digital_file"><b><?php _e('Digital File:', "dp-lang"); ?></b></label></td><td><input id="digital_file" type="text" name="digital_file" value="<?php echo $content_file; ?>" /></td></tr>
+		<tr><td><label for="affiliate_url"><b><?php _e('Affiliate URL:', "dp-lang"); ?></b></label></td><td><input id="affiliate_url" type="text" name="affiliate_url" value="<?php echo $affiliate_url; ?>" /></td></tr>
     </table>
 
     <b><?php _e('Dropdown Options', "dp-lang"); ?></b>
@@ -703,6 +721,17 @@ function dp_save_meta_box($post_id) {
         $content_counter = $_POST['varitaionnumber'];
         update_post_meta($post_id, '_Content_Counter', $content_counter);
     }
+	
+	
+	// for option name
+    if (NULL == $_POST['affiliate_url']) {
+        //do nothing
+    } else {
+        $affiliate_url = $_POST['affiliate_url'];
+        update_post_meta($post_id, 'affiliate_url', $affiliate_url);
+    }
+	
+	
 }
 
 /**
