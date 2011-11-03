@@ -1253,7 +1253,7 @@ function dpsc_pnj_thank_you_page() {
             unset($products[$key]);
         }
         $_SESSION['dpsc_products'] = $products;
-        return $output;
+        return $output.thank_you_page_order_detail();
     }
     if (!$status) {
         $output = '<h2>' . __('Thank you for your order!', "dp-lang") . '</h2>';
@@ -1399,16 +1399,85 @@ function dpsc_pnj_thank_you_page() {
 
 
             dpsc_pnj_send_mail($to_email, $from_email, $dp_shopping_cart_settings['shop_name'], $subject, $message, $invoice);
-            return $output;
+            return $output.thank_you_page_order_detail();
         }
     } else {
         $update_query = "UPDATE {$table_name} SET `payment_status`='Canceled'
                         WHERE `invoice`='{$invoice}'";
         $wpdb->query($update_query);
         $output = __('Order canceled !!', "dp-lang");
-        return $output;
+        return $output.thank_you_page_order_detail();
     }
 }
+
+
+/*
+ * Order info
+ */
+function thank_you_page_order_detail(){
+	global $wpdb;
+	$order_detail_table = '';
+	$order_detail_table = '<br/><table class="thankyou_detail">
+						<tr>
+							<th>' . __('Product Name', "dp-lang") . '</th>
+							<th>' . __('Quantity', "dp-lang") . '</th>
+							<th>' . __('Price', "dp-lang") . '</th>
+						</tr>';
+	$invoice = $_GET['id'];
+	$table_name = $wpdb->prefix . "dpsc_transactions";
+	$query = "SELECT * FROM {$table_name} WHERE `invoice`='{$invoice}'";
+    $result = $wpdb->get_row($query);
+	if ($result) {
+		$dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
+		$currency = $dp_shopping_cart_settings['dp_currency_symbol'];
+		$total = $result->total;
+		$shipping = $result->shipping;
+		$discount = $result->discount;
+		if ($discount > 0) {
+			$total_discount = $total * $discount / 100;
+		} else {
+			$total_discount = 0;
+		}
+		if ($tax > 0) {
+			$total_tax = ($total - $total_discount) * $tax / 100;
+		} else {
+			$total_tax = 0;
+		}
+		$amount = number_format($total + $shipping + $total_tax - $total_discount, 2);
+		$product_details = unserialize($result->products);
+		foreach ($product_details as $product) {
+			$order_detail_table .= '<tr>
+                                        <td>' . __($product['name'], "dp-lang") . '</td>
+                                        <td>' . __($product['quantity'], "dp-lang") . '</td>
+										<td>' . $currency.' '.__($product['price'], "dp-lang") . '</td>
+                                    </tr>';
+		}
+	}
+	$order_detail_table .= '</table>';
+	$order_detail_table .= '<table class="thankyou">
+							<tr>
+								<th>' . __('Price', "dp-lang") . '</th>
+								<th class="thankyou_info">' . $currency. ' ' .$total. '</th>
+							</tr>
+							<tr>
+								<th>' . __('Shipping', "dp-lang") . '</th>
+								<th class="thankyou_info">' .$shipping . '</th>
+							</tr>
+							<tr>
+								<th>' . __('Discount', "dp-lang") . '</th>
+								<th class="thankyou_info">' .$discount . '</th>
+							</tr>
+							<tr>
+								<th>' . __('Total', "dp-lang") . '</th>
+								<th class="thankyou_info">' . $currency. ' '. $amount . '</th>
+							</tr>
+							</table>';
+	
+	return $order_detail_table;
+}
+
+
+
 
 add_shortcode('dp_order_log', 'dp_current_user_order_log');
 

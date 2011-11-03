@@ -487,7 +487,7 @@ function dukapress_shopping_cart_order_log() {
                             $total_tax = 0;
                         }
                         $amount = number_format($total+$shipping+$total_tax-$total_discount,2);
-                                printf(__("%d"), $amount);
+                                printf(__("%01.2f"), $amount);
 //                                echo $amount;
                         ?></td>
                         <td><?php printf(__("%s"),$result->payment_option);?></td>
@@ -670,7 +670,7 @@ else {
 }
 $amount = number_format($total+$shipping+$total_tax-$total_discount,2);
 ?>
-<table>
+<table class="order_log_info">
     <tr>
         <td><?php _e("Sub-Total:","dp-lang");?> </td><td><?php echo number_format($total,2);?></td>
     </tr>
@@ -695,6 +695,62 @@ if ($dp_shopping_cart_settings['dp_shop_pdf_generation'] === 'checked') {
 }
 ?>
 <p><a href="?page=dukapress-shopping-cart-order-log&id=<?php echo $result->invoice; ?>&status=send"><?php _e("Send Payment Notification.","dp-lang")?></a></p>
+
+	<?php 
+		$shipping = empty($result->shipping_first_name);
+		global $dpsc_country_code_name;
+	?>
+		<h4><?php _e("Billing Address:","dp-lang");?></h4>
+		<table class="order_log_info">
+			<tr>
+				<td><?php _e("First Name:","dp-lang");?> </td><td><?php _e($result->billing_first_name, "dp-lang") ;?></td>
+			</tr>
+			<tr>
+				<td><?php _e("Last Name:","dp-lang");?> </td><td><?php _e($result->billing_last_name, "dp-lang") ;?></td>
+			</tr>
+			<tr>
+				<td><?php _e("Address:","dp-lang");?> </td><td><?php _e($result->billing_address, "dp-lang") ;?></td>
+			</tr>
+			<tr>
+				<td><?php _e("City:","dp-lang");?> </td><td><?php _e($result->billing_city, "dp-lang") ;?></td>
+			</tr>
+			<tr>
+				<td><?php _e("Province / State:","dp-lang");?> </td><td><?php _e($result->billing_state, "dp-lang") ;?></td>
+			</tr>
+			<tr>
+				<td><?php _e("Postal Code:","dp-lang");?> </td><td><?php _e($result->billing_zipcode, "dp-lang") ;?></td>
+			</tr>
+			<tr>
+				<td><?php _e("Country:","dp-lang");?> </td><td><?php _e($dpsc_country_code_name[$result->billing_country], "dp-lang") ;?></td>
+			</tr>
+		</table>
+		<?php  if($shipping) { ?>
+			<h4><?php _e("Shipping Address:","dp-lang");?></h4>
+			<table class="order_log_info">
+				<tr>
+					<td><?php _e("First Name:","dp-lang");?> </td><td><?php _e($result->shipping_first_name, "dp-lang") ;?></td>
+				</tr>
+				<tr>
+					<td><?php _e("Last Name:","dp-lang");?> </td><td><?php _e($result->shipping_last_name, "dp-lang") ;?></td>
+				</tr>
+				<tr>
+					<td><?php _e("Address:","dp-lang");?> </td><td><?php _e($result->shipping_address, "dp-lang") ;?></td>
+				</tr>
+				<tr>
+					<td><?php _e("City:","dp-lang");?> </td><td><?php _e($result->shipping_city, "dp-lang") ;?></td>
+				</tr>
+				<tr>
+					<td><?php _e("Province / State:","dp-lang");?> </td><td><?php _e($result->shipping_state, "dp-lang") ;?></td>
+				</tr>
+				<tr>
+					<td><?php _e("Postal Code:","dp-lang");?> </td><td><?php _e($result->shipping_zipcode, "dp-lang") ;?></td>
+				</tr>
+				<tr>
+					<td><?php _e("Country:","dp-lang");?> </td><td><?php _e($dpsc_country_code_name[$result->shipping_country], "dp-lang") ;?></td>
+				</tr>
+			</table>
+		<?php } ?>
+			
             <?php
         }
     }
