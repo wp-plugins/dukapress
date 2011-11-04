@@ -1433,6 +1433,7 @@ function thank_you_page_order_detail(){
 		$total = $result->total;
 		$shipping = $result->shipping;
 		$discount = $result->discount;
+		$tax= $result->tax;
 		if ($discount > 0) {
 			$total_discount = $total * $discount / 100;
 		} else {
@@ -1446,10 +1447,11 @@ function thank_you_page_order_detail(){
 		$amount = number_format($total + $shipping + $total_tax - $total_discount, 2);
 		$product_details = unserialize($result->products);
 		foreach ($product_details as $product) {
+			$price = number_format((float) $product['price'], 2, '.', '');
 			$order_detail_table .= '<tr>
                                         <td>' . __($product['name'], "dp-lang") . '</td>
                                         <td>' . __($product['quantity'], "dp-lang") . '</td>
-										<td>' . $currency.' '.__($product['price'], "dp-lang") . '</td>
+										<td>' . $currency.' '.__($price, "dp-lang") . '</td>
                                     </tr>';
 		}
 	}
@@ -1457,19 +1459,23 @@ function thank_you_page_order_detail(){
 	$order_detail_table .= '<table class="thankyou">
 							<tr>
 								<th>' . __('Price', "dp-lang") . '</th>
-								<th class="thankyou_info">' . $currency. ' ' .$total. '</th>
+								<th class="thankyou_info">' . $currency. ' ' .number_format((float) $total, 2, '.', ''). '</th>
 							</tr>
 							<tr>
 								<th>' . __('Shipping', "dp-lang") . '</th>
-								<th class="thankyou_info">' .$shipping . '</th>
+								<th class="thankyou_info"> + ' .number_format((float) $shipping, 2, '.', '') . '</th>
 							</tr>
 							<tr>
 								<th>' . __('Discount', "dp-lang") . '</th>
-								<th class="thankyou_info">' .$discount . '</th>
+								<th class="thankyou_info"> -' .number_format((float) $discount, 2, '.', '') . '</th>
+							</tr>
+							<tr>
+								<th>' . __('Tax', "dp-lang") . '</th>
+								<th class="thankyou_info"> + ' .number_format((float) $total_tax, 2, '.', '') . '</th>
 							</tr>
 							<tr>
 								<th>' . __('Total', "dp-lang") . '</th>
-								<th class="thankyou_info">' . $currency. ' '. $amount . '</th>
+								<th class="thankyou_info">' . $currency. ' '. number_format((float) $amount, 2, '.', ''). '</th>
 							</tr>
 							</table>';
 	

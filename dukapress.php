@@ -723,8 +723,11 @@ if ($dp_shopping_cart_settings['dp_shop_pdf_generation'] === 'checked') {
 			<tr>
 				<td><?php _e("Country:","dp-lang");?> </td><td><?php _e($dpsc_country_code_name[$result->billing_country], "dp-lang") ;?></td>
 			</tr>
+			<tr>
+				<td><?php _e("Email:","dp-lang");?> </td><td><?php _e($result->billing_email, "dp-lang") ;?></td>
+			</tr>
 		</table>
-		<?php  if($shipping) { ?>
+		<?php  if(!$shipping) { ?>
 			<h4><?php _e("Shipping Address:","dp-lang");?></h4>
 			<table class="order_log_info">
 				<tr>
@@ -748,6 +751,7 @@ if ($dp_shopping_cart_settings['dp_shop_pdf_generation'] === 'checked') {
 				<tr>
 					<td><?php _e("Country:","dp-lang");?> </td><td><?php _e($dpsc_country_code_name[$result->shipping_country], "dp-lang") ;?></td>
 				</tr>
+				
 			</table>
 		<?php } ?>
 			

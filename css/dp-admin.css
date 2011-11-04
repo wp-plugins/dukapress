@@ -88,3 +88,13 @@ div#country_list {
 .dp_pagination {cursor: pointer;border-bottom-color:#B8D3E2;color:#21759B;border-bottom-style:solid;border-bottom-width:2px;font-weight:bold;margin-right:6px;padding-bottom:0;padding-left:2px;padding-right:2px;padding-top:0;}
 
 .dp_pagination:hover {color: #D54E21; border-bottom-color:#999999;}
+
+
+table.order_log_info{
+	width:auto;
+	table-layout: fixed;
+}
+
+table.order_log_info td{
+	width:200px;
+}
