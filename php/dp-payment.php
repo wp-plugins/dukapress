@@ -177,7 +177,7 @@ function dpsc_authorize_payment($dpsc_total = FALSE, $dpsc_shipping_value = FALS
             $conversion_rate = $curr->convert(1, 'USD', $dp_shopping_cart_settings['dp_shop_currency']);
         }
         $total_amount = ($dpsc_total + $total_tax + $total_shipping - $total_discount) * $conversion_rate;
-        $dpsc_total = number_format($total_amount, 2);
+         $dpsc_total = number_format($total_amount, 2, '.', '');
         $sequence = rand(1, 1000);
         $timeStamp = time();
         $return_path = $dp_shopping_cart_settings['thank_you'];
