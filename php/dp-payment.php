@@ -266,7 +266,7 @@ function dpsc_worldpay_payment($dpsc_total = FALSE, $dpsc_shipping_value = FALSE
             $conversion_rate = $curr->convert(1, $dp_shopping_cart_settings['worldpay_currency'], $dp_shopping_cart_settings['dp_shop_currency']);
         }
         $total_amount = ($dpsc_total + $total_tax + $total_shipping - $total_discount) * $conversion_rate;
-        $dpsc_total = number_format($total_amount, 2);
+        $dpsc_total = number_format($total_amount, 2, '.', '');
         $lang = (strlen(WPLANG) > 0 ? substr(WPLANG, 0, 2) : 'en');
         $output = '<form name="dpsc_worldpay_form" id="dpsc_payment_form" action="' . $dpsc_form_action . '" method="post">
                         <input type="hidden" name="instId" value="' . $dp_shopping_cart_settings['worldpay_id'] . '" />
