@@ -2543,7 +2543,7 @@ function dpsc_install() {
     }
     $date = date('M-d-Y', strtotime("+1 days"));
     $next_time_stamp = strtotime($date) + 18000;
-    wp_schedule_event($next_time_stamp, 'dailly', 'dp_delete_files_daily');
+    wp_schedule_event($next_time_stamp, 'daily', 'dp_delete_files_daily');
     update_option('dpsc_version_info', 1.22);
 }
 
