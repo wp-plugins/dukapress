@@ -1253,7 +1253,7 @@ function dpsc_pnj_thank_you_page() {
             unset($products[$key]);
         }
         $_SESSION['dpsc_products'] = $products;
-        return $output.thank_you_page_order_detail();
+        return $output;
     }
     if (!$status) {
         $output = '<h2>' . __('Thank you for your order!', "dp-lang") . '</h2>';
