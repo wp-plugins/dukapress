@@ -35,10 +35,12 @@ Class DP_CURRENCYCONVERTER {
             $this->_error = "$errstr ($errno)<br />\n";
             return false;
         } else {
+			$data = '';
             //$file="/conversiontool2.asp";
-            $file = "/ucc/convert.cgi";
+            $file = "/ucc/convert/";
             //$str = "?amount=".$this->_amt."&ConvertFrom=".$this->_from."&ConvertTo=".$this->_to;
-            $str = "?language=xe&Amount=" . $this->_amt . "&From=" . $this->_from . "&To=" . $this->_to;
+            //$str = "?Amount=" . $this->_amt . "&From=" . $this->_from . "&To=" . $this->_to;
+			$str = "?Amount=" . $this->_amt . "&To=" . $this->_from . "&From=" . $this->_to; //Reverse to make it work
             $out = "GET " . $file . $str . " HTTP/1.0\r\n";
             $out .= "Host: $host\r\n";
             $out .= "Connection: Close\r\n\r\n";
@@ -48,7 +50,7 @@ Class DP_CURRENCYCONVERTER {
                 $data.= @ fgets($fp, 128);
             }
             @fclose($fp);
-
+			
             @preg_match("/^(.*?)\r?\n\r?\n(.*)/s", $data, $match);
             $data = $match[2];
             $search = array("'<script[^>]*?>.*?</script>'si", // Strip out javascript
@@ -80,9 +82,11 @@ Class DP_CURRENCYCONVERTER {
                 "chr(\\1)");
 
             $data = @preg_replace($search, $replace, $data);
+			
             @preg_match_all("/(\d[^\.]*(\.\d+)?)/", $data, $mathces);
-            $return = preg_replace("/[^\d\.]*/", "", $mathces[0][4]);
-            return (double) $return;
+            //$return = preg_replace("/[^0-9]/", "", $mathces[0][4]);
+			$return = explode('=', $mathces[0][4]);
+            return (double) $return[1];
         }
     }
 

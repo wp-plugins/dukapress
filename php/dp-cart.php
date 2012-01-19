@@ -350,6 +350,14 @@ function dpsc_print_checkout_table_html($dpsc_discount_value = 0) {
             $dpsc_total_discount = 0.00;
             if ($dp_shopping_cart_settings['discount_enable'] === 'true') {
                 $dpsc_total_discount = $dpsc_total * $dpsc_discount_value / 100;
+				//Dukapress Discount plugin. Check the product quantity and give the discount
+				global $dp_desc;
+				if(isset($dp_desc)){
+					$dp_desc_disc = dp_disc_prod_discount($dpsc_total_quantity);
+					$dpsc_total_discount += $dp_desc_disc['total'];
+					$dpsc_discount_value += $dp_desc_disc['value'];
+				}
+				//End plugin
                 $dpsc_discount_total_at_end = '<tr id="dpsc-checkout-total-discount"><th>' . __("Discount:", "dp-lang") . '</th><td>-' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span id="discount_total_price">' . number_format($dpsc_total_discount, 2) . '</span><input name="dpsc_discount_code_payment" type="hidden" value="' . $dpsc_discount_value . '"/></td></tr>';
             }
             $dpsc_tax_total_at_end = '';
@@ -486,6 +494,16 @@ function dpsc_validate_discount_code() {
             }
         }
     }
+	//Validate Dukapress discount plugin code
+	global $dp_desc;
+	if(isset($dp_desc)){
+		$dp_discount_percentage = dp_disc_validate_discounts($discount_code);
+		if($dp_discount_percentage['exists'] == 'true'){
+			$dpsc_validate_code = TRUE;
+			$dpsc_discount_value += $dp_discount_percentage['value'];
+			$_SESSION['dpsc_discount'] = $discount_code;
+		}
+	}
     if ($_REQUEST['ajax'] == 'true') {
         list($dpsc_checkout_html, $dp_shipping_calculate_html) = dpsc_print_checkout_table_html($dpsc_discount_value);
         ob_start();
@@ -1345,7 +1363,7 @@ function dpsc_pnj_thank_you_page() {
                     //var_dump($result);
                     $product_details = unserialize($result->products);
                     $tax = $result->tax;
-                    //$output .= 'Product Baught';
+                    //$output .= 'Product Bought';
                     //$getproduct=dpsc_pnj_get_download_links($product_details);
                     foreach ($product_details as $product) {
 ?>
@@ -1397,15 +1415,16 @@ function dpsc_pnj_thank_you_page() {
             $array2 = array($bfname, $blname, $invoice, $shop_name, $site_url);
             $message = str_replace($array1, $array2, $message);
 
-
+			//email required to assign discount code and maybe email the code to the user
             dpsc_pnj_send_mail($to_email, $from_email, $dp_shopping_cart_settings['shop_name'], $subject, $message, $invoice);
-            return $output.thank_you_page_order_detail();
+            return $output.thank_you_page_order_detail($to_email);
         }
     } else {
         $update_query = "UPDATE {$table_name} SET `payment_status`='Canceled'
                         WHERE `invoice`='{$invoice}'";
         $wpdb->query($update_query);
-        $output = __('Order canceled !!', "dp-lang");
+        $output = __('Order canceled !!', "dp-lang"); 
+		
         return $output.thank_you_page_order_detail();
     }
 }
@@ -1414,7 +1433,17 @@ function dpsc_pnj_thank_you_page() {
 /*
  * Order info
  */
-function thank_you_page_order_detail(){
+function thank_you_page_order_detail($email = ''){
+	$new_discount_code = '';
+	
+	//Show code on thank you page
+	global $dp_desc;
+	if(isset($dp_desc)){
+		$new_discount_code = show_on_welcome_page($email);
+		if($new_discount_code){
+			$new_discount_code = '<br/>'.__('You have been awared the discount code : <strong>', "dp-lang").' ' .__($new_discount_code, "dp-lang").'</strong>';
+		}
+	}
 	global $wpdb;
 	$order_detail_table = '';
 	$order_detail_table = '<br/><table class="thankyou_detail">
@@ -1467,7 +1496,7 @@ function thank_you_page_order_detail(){
 							</tr>
 							<tr>
 								<th>' . __('Discount', "dp-lang") . '</th>
-								<th class="thankyou_info"> -' .number_format((float) $discount, 2, '.', '') . '</th>
+								<th class="thankyou_info"> -' .number_format((float) $total_discount, 2, '.', '') . '</th>
 							</tr>
 							<tr>
 								<th>' . __('Tax', "dp-lang") . '</th>

@@ -21,38 +21,44 @@ function dpsc_payment_option() {
     }
     if ($products) {
         list($invoice, $bfname, $blname, $bcity, $baddress, $bstate, $bzip, $bcountry, $bemail) = dpsc_on_payment_save($dpsc_total, $dpsc_shipping_value, $products, $dpsc_discount_value, $dpsc_payment_option);
-        switch ($dpsc_payment_option) {
-            case 'paypal':
-                $output = dpsc_paypal_payment($dpsc_total, $dpsc_shipping_value, $dpsc_discount_value, $invoice);
-                break;
-            case 'authorize':
-                $output = dpsc_authorize_payment($dpsc_total, $dpsc_shipping_value, $dpsc_discount_value, $invoice, $bfname, $blname, $bcity, $baddress, $bstate, $bzip, $bcountry, $bemail);
-                break;
-            case 'worldpay':
-                $output = dpsc_worldpay_payment($dpsc_total, $dpsc_shipping_value, $dpsc_discount_value, $invoice, $bfname, $blname, $bcity, $baddress, $bstate, $bzip, $bcountry, $bemail);
-                break;
-            case 'alertpay':
-                $output = dpsc_alertpay_payment($dpsc_total, $dpsc_shipping_value, $dpsc_discount_value, $invoice, $bfname, $blname, $bcity, $baddress, $bstate, $bzip, $bcountry, $bemail);
-                break;
-            case 'bank':
-                $output = dpsc_other_payment($invoice);
-                break;
-            case 'cash':
-                $output = dpsc_other_payment($invoice);
-                break;
-            case 'mobile':
-                $output = dpsc_other_payment($invoice);
-                break;
-            case 'delivery':
-                $output = dpsc_other_payment($invoice);
-                break;
-            default:
-                ob_start();
-                do_action('dpsc_other_payment_form_' . $dpsc_payment_option, $dpsc_total, $dpsc_shipping_value, $dpsc_discount_value, $invoice, $bfname, $blname, $bcity, $baddress, $bstate, $bzip, $bcountry, $bemail);
-                $output = ob_get_contents();
-                ob_end_clean();
-                break;
-        }
+        //Check if price is zero
+		if(!dps_zero_price_check($dpsc_total,$dpsc_discount_value,$dpsc_shipping_value)){
+			switch ($dpsc_payment_option) {
+				case 'paypal':
+					$output = dpsc_paypal_payment($dpsc_total, $dpsc_shipping_value, $dpsc_discount_value, $invoice);
+					break;
+				case 'authorize':
+					$output = dpsc_authorize_payment($dpsc_total, $dpsc_shipping_value, $dpsc_discount_value, $invoice, $bfname, $blname, $bcity, $baddress, $bstate, $bzip, $bcountry, $bemail);
+					break;
+				case 'worldpay':
+					$output = dpsc_worldpay_payment($dpsc_total, $dpsc_shipping_value, $dpsc_discount_value, $invoice, $bfname, $blname, $bcity, $baddress, $bstate, $bzip, $bcountry, $bemail);
+					break;
+				case 'alertpay':
+					$output = dpsc_alertpay_payment($dpsc_total, $dpsc_shipping_value, $dpsc_discount_value, $invoice, $bfname, $blname, $bcity, $baddress, $bstate, $bzip, $bcountry, $bemail);
+					break;
+				case 'bank':
+					$output = dpsc_other_payment($invoice);
+					break;
+				case 'cash':
+					$output = dpsc_other_payment($invoice);
+					break;
+				case 'mobile':
+					$output = dpsc_other_payment($invoice);
+					break;
+				case 'delivery':
+					$output = dpsc_other_payment($invoice);
+					break;
+				default:
+					ob_start();
+					do_action('dpsc_other_payment_form_' . $dpsc_payment_option, $dpsc_total, $dpsc_shipping_value, $dpsc_discount_value, $invoice, $bfname, $blname, $bcity, $baddress, $bstate, $bzip, $bcountry, $bemail);
+					$output = ob_get_contents();
+					ob_end_clean();
+					break;
+			}
+		}else{
+			dpsc_custom_payment_process($invoice,$bemail);
+			exit();
+		}
     } else {
         $output = __('There are no products in your cart.', "dp-lang");
         $output = str_replace(Array("\n", "\r"), Array("\\n", "\\r"), addslashes($output));
@@ -70,6 +76,110 @@ function dpsc_payment_option() {
     unset($_SESSION['dpsc_shiping_price']);
     echo "jQuery('#dpsc_payment_form').submit();";
     exit ();
+}
+
+//Validate if price is zero and take to thank you page directly
+function dps_zero_price_check($total,$discount,$shipping){
+	$total_discount = 0.00;
+	$zero_price = true;
+	$total_tax = 0.00;
+	
+	$dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
+    $tax = $dp_shopping_cart_settings['tax'];
+	if ($discount > 0) {
+		$total_discount = $total*$discount/100;
+	}
+	else {
+		$total_discount = 0;
+	}
+	if ($tax > 0) {
+		$total_tax = ($total-$total_discount)*$tax/100;
+	}
+	else {
+		$total_tax = 0;
+	}
+	$amount = number_format($total+$shipping+$total_tax-$total_discount,2);
+	if($amount > 0){
+		$zero_price = false;
+	}
+	return $zero_price;
+}
+//Process payment if price is zero
+function dpsc_custom_payment_process($invoice,$payer_email){
+	global $wpdb;
+    $payment_status = 'Paid';
+    
+    $table_name = $wpdb->prefix . "dpsc_transactions";
+    $update_query = "UPDATE {$table_name} SET `payer_email`='{$payer_email}', `payment_status`='{$payment_status}'WHERE `invoice`='{$invoice}'";
+    $wpdb->query($update_query);
+    $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
+	$message = '';
+	$digital_message = '';
+	$check_query = "SELECT * FROM {$table_name} WHERE `invoice`='{$invoice}'";
+	$result = $wpdb->get_row($check_query);
+	$is_digital = dpsc_pnj_is_digital_present($result->products);
+	if ($is_digital) {
+		$file_names = dpsc_pnj_get_download_links($is_digital);
+		if ($file_names) {
+			if (is_array($file_names) && count($file_names) > 0) {
+				$digital_message .= '<br/>Your download links:<br/><ul>';
+				foreach ($file_names as $file_name) {
+					$file_name = explode('@_@||@_@', $file_name);
+					$temp_name = $file_name[0];
+					$real_name = $file_name[1];
+					$digital_message .= '<li><a href="' . DP_PLUGIN_URL . '/download.php?id=' . $temp_name . '">' . $real_name . '</a></li>';
+				}
+				$digital_message .= '</ul><br/>';
+			}
+		}
+	}
+	$email_fname = $result->billing_first_name ;
+	$email_shop_name = $dp_shopping_cart_settings['shop_name'];
+	$to = $result->billing_email;
+	$from = get_option('admin_email');
+
+
+	$nme_dp_mail_option = get_option('dp_usr_payment_mail', true);
+
+	$message = $nme_dp_mail_option['dp_usr_payment_mail_body'];
+	$subject = $nme_dp_mail_option['dp_usr_payment_mail_title'];
+
+	$find_tag = array('%fname%', '%status%', '%email%', '%inv%', '%digi%', '%shop%');
+	$rep_tag = array($email_fname, $updated_status, $to, $invoice, $digital_message, $email_shop_name);
+	$message =str_replace($find_tag, $rep_tag, $message);
+	//email to payer
+	dpsc_pnj_send_mail($to, $from, $dp_shopping_cart_settings['shop_name'], $subject, $message);
+
+	$nme_dp_mail_option = get_option('dp_admin_payment_mail', true);
+	
+	$message = $nme_dp_mail_option['dp_admin_payment_mail_body'];
+	$message = str_replace("\r",'<br>', $message);
+	$subject = $nme_dp_mail_option['dp_usr_admin_payment_mail_title'];
+	
+	$find_tag = array('%fname%', '%status%', '%email%', '%inv%', '%digi%', '%shop%');
+	$rep_tag = array($email_fname, $updated_status, $to, $invoice, $digital_message, $email_shop_name);
+	$message = str_replace($find_tag, $rep_tag, $message);
+	//email to admin
+	dpsc_pnj_send_mail($from, $to, $dp_shopping_cart_settings['shop_name'], $subject, $message);
+    
+    
+    $return_path = $dp_shopping_cart_settings['thank_you'];
+    $check_return_path = explode('?', $return_path);
+    if (count($check_return_path) > 1) {
+        $return_path .= '&id=' . $invoice;
+    } else {
+        $return_path .= '?id=' . $invoice;
+    }
+	
+	$products = $_SESSION['dpsc_products'];
+    foreach ($products as $key => $item) {
+       unset($products[$key]);
+    }
+    $_SESSION['dpsc_products'] = $products;
+    unset($_SESSION['dpsc_shiping_price']);
+	$output = "<script type='text/javascript'> window.location.href='".$return_path."'; </script>";
+	$output = str_replace(Array("\n", "\r"), Array("\\n", "\\r"), addslashes($output));
+    echo "jQuery('div#dpsc_hidden_payment_form').html('$output');";
 }
 
 /**
@@ -633,7 +743,7 @@ function dpsc_auth_ipn() {
         $nme_dp_mail_option = get_option('dp_admin_payment_mail', true);
         $message = $nme_dp_mail_option['dp_admin_payment_mail_body'];
         $message = str_replace("\r",'<br>', $message);
-        $subject = $nme_dp_mail_option['dp_admin_payment_mail_title'];
+        $subject = $nme_dp_mail_option['dp_usr_admin_payment_mail_title'];
         
         $find_tag = array('%fname%', '%status%', '%email%', '%inv%', '%digi%', '%shop%');
         $rep_tag = array($email_fname, $updated_status, $to, $invoice, $digital_message, $email_shop_name);
