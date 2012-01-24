@@ -4,8 +4,8 @@ Donate link: http://dukapress.org/about/
 Tags: shopping cart, web shop, cart, shop, Worldpay, Paypal, Alertpay, paypal, e-commerce, ecommerce, MPESA, ZAP, yuCash, Mobile Payments,online duka, duka, online shop, JQZoom, Multiple Currencies
 
 Requires at least: 3.0
-Tested up to: 3.2.1
-Stable tag: 2.3.4
+Tested up to: 3.3.1
+Stable tag: 2.3.5
 
 DukaPress is an open source e-commerce solution built for Wordpress.
 
@@ -20,6 +20,7 @@ Main Features:
 * You can sell digital products;
 * Choose between a normal shop mode and a catalogue mode;
 * Numerous payment processing options including Paypal, Alertpay and Mobile Phone payments;
+* You can set up 'affiliate' products which redirect to othr products you want to promte (affiliate marketing)
 * Ability to work with multiple currencies
 * Printable invoices;
 * One-page checkout;
@@ -99,12 +100,24 @@ The cart should be inside DIV with class="dpsc-shopping-cart".
 Just put the cart code inside DIV tags to look like:
 div class="dpsc-shopping-cart">cart code</div
 
+= Where can I get more help? =
+
+Please visit: [Our Forums](http://dukapress.org/forums/ "Our Forums")
+
 
 == Screenshots ==
 
 [View Screenshots](http://www.flickr.com/photos/moshthepitt/sets/72157624534741496/ "DukaPress screenshots")
 
 == Changelog ==
+
+= 2.3.5 =
+* Added "affiliate mode".
+* Introduced a real "out of stock" button. 
+* Improved product variations. 
+* Added an order summary to the "thank you" page. 
+* Improved order log. 
+* Crushed a lot of bugs
 
 = 2.3.4 =
 Some small, but annoying, bugs have been fixed.  Timthumb updated for continued security. 
@@ -190,6 +203,9 @@ Fixing extremely small bug (just one line of code)
 * Initial Release
 
 == Upgrade Notice ==
+
+= 2.3.5 =
+Major release.  Added many new features as well as fixed bugs.
 
 = 2.3.4 =
 Bugfix release.
