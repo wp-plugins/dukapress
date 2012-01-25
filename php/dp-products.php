@@ -207,7 +207,7 @@ function dpsc_get_product_details($product_id, $buy_now = false, $direct = false
         }
 		//Out of stock disabled button
         $disabled_add_to_cart = '';
-        if (!$available_in_stock) {
+        if ($dp_shopping_cart_settings['dp_shop_inventory_soldout'] === 'yes' && $all_custom_fields['currently_in_stock'][0] < 1) {
             $disabled_add_to_cart = 'disabled="disabled"';
         }
         $custom_fields_output['add_to_cart'] = '<input ' . $disabled_add_to_cart . ' type="submit" class="dpsc_submit_button" id="dpsc_submit_button_' . $product_id . '" name="dpsc_add_to_cart" value="' . $value_atc . '" />';
