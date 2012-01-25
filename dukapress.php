@@ -1707,7 +1707,7 @@ function dukapress_shopping_cart_setting() {
                                                 <label for="dp_order_send_mail_user_messege"><?php _e("Message","dp-lang");?></label>
                                             </th>
                                             <td>
-                                                <span class="description"><?php _e("Use","dp-lang");?> <strong>%fname%</strong>, <strong>%lanme%</strong>, <strong>%inv%</strong>, <strong>%shop%</strong>, <strong>%siteurl%</strong> <?php _e("As Billing First Name, Billing Last Name, Invoice, Shop Name and site URL","dp-lang");?></span><br/>
+                                                <span class="description"><?php _e("Use","dp-lang");?> <strong>%fname%</strong>, <strong>%lname%</strong>, <strong>%inv%</strong>, <strong>%shop%</strong>, <strong>%siteurl%</strong> <?php _e("As Billing First Name, Billing Last Name, Invoice, Shop Name and site URL","dp-lang");?></span><br/>
                                                 <textarea rows="15" cols="78" id="dp_order_send_mail_messege" name="dp_order_send_mail_user_body"><?php echo stripslashes($nme_dp_mail_option['dp_order_send_mail_user_body']) ?></textarea>
                                             </td>
                                         </tr>
