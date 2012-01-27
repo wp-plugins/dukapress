@@ -1,5 +1,5 @@
 === DukaPress ===
-Contributors: NetMadeEz, moshthepitt
+Contributors: moshthepitt
 Donate link: http://dukapress.org/about/
 Tags: shopping cart, web shop, cart, shop, Worldpay, Paypal, Alertpay, paypal, e-commerce, ecommerce, MPESA, ZAP, yuCash, Mobile Payments,online duka, duka, online shop, JQZoom, Multiple Currencies
 
