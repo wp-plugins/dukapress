@@ -221,6 +221,33 @@ function dpsc_paypal_payment($dpsc_total = FALSE, $dpsc_shipping_value = FALSE, 
                      <input type="hidden" name="currency_code" value="' . $dp_shopping_cart_settings['paypal_currency'] . '"/>
                      <input type="hidden" name="no_note" value="1" />
                      <input type="hidden" name="invoice" value="' . $invoice . '">';
+		//Prepopulate PayPal
+		if (is_user_logged_in () && $dp_shopping_cart_settings['dp_shop_user_registration'] === 'checked') {
+			global $current_user;
+			$first_name = $current_user->first_name;
+			$last_name = $current_user->last_name;
+			$email = $current_user->user_email;
+			$user_info = get_user_meta($current_user->ID, 'dp_user_details', TRUE);
+			$output .= '<input type="hidden" name="first_name" value="' . __($first_name, "dp-lang") . '"/>';
+			$output .= '<input type="hidden" name="last_name" value="' . __($last_name, "dp-lang") . '"/>';
+			$output .= '<input type="hidden" name="address1" value="' . __($user_info['address'], "dp-lang") . '"/>';
+			$output .= '<input type="hidden" name="city" value="' . __($user_info['city'], "dp-lang") . '"/>';
+			$output .= '<input type="hidden" name="state" value="' . __($user_info['state'], "dp-lang") . '"/>';
+			$output .= '<input type="hidden" name="zip" value="' . __($user_info['zip'], "dp-lang") . '"/>';
+			$output .= '<input type="hidden" name="country" value="' . __($user_info['country'], "dp-lang") . '"/>';
+			$output .= '<input type="hidden" name="email" value="' . __($email, "dp-lang") . '"/>';
+		}else{
+			$output .= '<input type="hidden" name="first_name" value="' . __($_POST['b_fname'], "dp-lang") . '"/>';
+			$output .= '<input type="hidden" name="last_name" value="' . __($_POST['b_lname'], "dp-lang") . '"/>';
+			$output .= '<input type="hidden" name="address1" value="' . __($_POST['b_address'], "dp-lang") . '"/>';
+			$output .= '<input type="hidden" name="city" value="' . __($_POST['b_city'], "dp-lang") . '"/>';
+			$output .= '<input type="hidden" name="state" value="' . __($_POST['b_state'], "dp-lang") . '"/>';
+			$output .= '<input type="hidden" name="zip" value="' . __($_POST['b_zip'], "dp-lang") . '"/>';
+			$output .= '<input type="hidden" name="country" value="' . __($_POST['b_country'], "dp-lang") . '"/>';
+			$output .= '<input type="hidden" name="email" value="' . __($_POST['b_email'], "dp-lang") . '"/>';
+		}			 
+		//End prepopulate PayPal				 
+					 
         $dpsc_count_product = 1;
         $tax_rate = 0;
         $dpsc_shipping_total = 0.00;
