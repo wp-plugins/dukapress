@@ -95,7 +95,8 @@ jQuery(document).ready(function () {
             form_values = "ajax=true&";
             form_values += jQuery(this).serialize();
             jQuery.post( dpsc_js.dpsc_url+'/index.php', form_values, function(returned_data) {
-            eval(returned_data);
+            //eval(returned_data);
+				window.location.reload(); //refresh
             });
             return false;
         });
