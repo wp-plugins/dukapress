@@ -590,6 +590,10 @@ function dpsc_print_checkout_payment_form() {
                     break;
 
                 default:
+                    ob_start();
+                    do_action('dp_add_payment_option_case_' . $payment_option);
+                    $output .= ob_get_contents();
+                    ob_end_clean();
                     break;
             }
         }
@@ -635,6 +639,10 @@ function dpsc_print_checkout_payment_form() {
                     break;
 
                 default:
+                    ob_start();
+                    do_action('dp_add_payment_option_case_hidden_' . $payment_option);
+                    $output .= ob_get_contents();
+                    ob_end_clean();
                     break;
             }
         }
