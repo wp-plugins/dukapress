@@ -419,7 +419,8 @@ function dpsc_pnj_grid_display($atts, $content=null) {
                 'order' => 'DESC',
                 'direct' => '',
 				'affiliate' => '',
-                'buy_now' => ''
+                'buy_now' => '',
+				'exclude' => ''
                     ), $atts));
 
     $p_b_n = false;
@@ -463,38 +464,45 @@ function dpsc_pnj_grid_display($atts, $content=null) {
         $content .= '<div class="dpsc_grid_display">';
         $count = 1;
         $all_count = 0;
+		
+		//get comma seperated ids in an array and split at comma
+		$product_ids_exclude = explode(",", $exclude);
         foreach ($products as $product) {
-            $output = dpsc_get_product_details($product->ID, $p_b_n, $direct_checkout, $affiliate_checkout);
-            if ($output) {
-                $attachment_images = &get_children('post_type=attachment&post_status=inherit&post_mime_type=image&post_parent=' . $product->ID);
-                $main_image = '';
-                foreach ($attachment_images as $image) {
-                    $main_image = $image->guid;
-                    break;
-                }
-                $prod_permalink = get_permalink($product->ID);
-                $content .= '<div class="dpsc_grid_product">';
-                $content .= '<div class="dpsc_grid_product_image">';
-                if ($main_image != '') {
-                    $content .= '<a href="' . $prod_permalink . '" title="' . $product->post_title . '"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $main_image . '&w=' . $dp_shopping_cart_settings['g_w'] . '&h=' . $dp_shopping_cart_settings['g_h'] . '&zc=1" ></a>';
-                }
-                $content .= '</div>';
-                $content .= '<div class="dpsc_grid_product_detail">';
-                $content .= '<p class="title"><a href="' . $prod_permalink . '" title="' . $product->post_title . '">' . __($product->post_title) . '</a></p>';
-                $content .= '<p class="detail">' . $product->post_excerpt . '</p>';
-                $content .= '<p class="price">' . $output['price'] . '</p>';
-                $content .= $output['start'];
-                $content .= $output['add_to_cart'];
-                $content .= $output['end'];
-                $content .= '</div>';
-                $content .= '</div>';
-                if ($count === intval($column)) {
-                    $content .= '<div class="clear"></div>';
-                    $count = 0;
-                }
-                $count++;
-                $all_count++;
-            }
+		
+			//Check if product ID is in array
+			if(!in_array($product->ID, $product_ids_exclude)){
+				$output = dpsc_get_product_details($product->ID, $p_b_n, $direct_checkout, $affiliate_checkout);
+				if ($output) {
+					$attachment_images = &get_children('post_type=attachment&post_status=inherit&post_mime_type=image&post_parent=' . $product->ID);
+					$main_image = '';
+					foreach ($attachment_images as $image) {
+						$main_image = $image->guid;
+						break;
+					}
+					$prod_permalink = get_permalink($product->ID);
+					$content .= '<div class="dpsc_grid_product">';
+					$content .= '<div class="dpsc_grid_product_image">';
+					if ($main_image != '') {
+						$content .= '<a href="' . $prod_permalink . '" title="' . $product->post_title . '"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $main_image . '&w=' . $dp_shopping_cart_settings['g_w'] . '&h=' . $dp_shopping_cart_settings['g_h'] . '&zc=1" ></a>';
+					}
+					$content .= '</div>';
+					$content .= '<div class="dpsc_grid_product_detail">';
+					$content .= '<p class="title"><a href="' . $prod_permalink . '" title="' . $product->post_title . '">' . __($product->post_title) . '</a></p>';
+					$content .= '<p class="detail">' . $product->post_excerpt . '</p>';
+					$content .= '<p class="price">' . $output['price'] . '</p>';
+					$content .= $output['start'];
+					$content .= $output['add_to_cart'];
+					$content .= $output['end'];
+					$content .= '</div>';
+					$content .= '</div>';
+					if ($count === intval($column)) {
+						$content .= '<div class="clear"></div>';
+						$count = 0;
+					}
+					$count++;
+					$all_count++;
+				}
+			}
         }
         $content .= '<div class="clear"></div>' . $page_links . '<div class="clear"></div>';
         $content .= '</div>';
