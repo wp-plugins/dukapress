@@ -327,7 +327,7 @@ function dpsc_register_style_js () {
            default:
                 break;
        }
-        $tim_url = DP_PLUGIN_URL . '/lib/timthumb.php?src=';
+        $tim_url = DP_PLUGIN_URL . '/lib/dp_image.php?src=';
         $tim_end = '&w=310&h=383&zc=1';
         $dpsc_site_url = get_bloginfo('url');
         wp_enqueue_script('dpsc_js_file');
@@ -2655,7 +2655,7 @@ if(!function_exists('dp_img_resize')){
 					'width' => $width,
 					'height'    => $height
 				);
-				return $dp_image;
+				return $dp_image['url'];
 			}
 			// $crop = false or no height set
 			if($crop == false OR !$height){
@@ -2670,7 +2670,7 @@ if(!function_exists('dp_img_resize')){
 						'width' => $proportional_size[0],
 						'height'    => $proportional_size[1]
 					);
-					return $dp_image;
+					return $dp_image['url'];
 				}
 			}
 			// check if image width is smaller than set width
