@@ -483,7 +483,7 @@ function dpsc_pnj_grid_display($atts, $content=null) {
 					$content .= '<div class="dpsc_grid_product">';
 					$content .= '<div class="dpsc_grid_product_image">';
 					if ($main_image != '') {
-						$content .= '<a href="' . $prod_permalink . '" title="' . $product->post_title . '"><img src="' . dp_img_resize('', $main_image, $dp_shopping_cart_settings['t_w'], $dp_shopping_cart_settings['t_h']). '" ></a>';
+						$content .= '<a href="' . $prod_permalink . '" title="' . $product->post_title . '"><img src="' . dp_img_resize('', $main_image, $dp_shopping_cart_settings['g_w'], $dp_shopping_cart_settings['g_h']). '" ></a>';
 					}
 					$content .= '</div>';
 					$content .= '<div class="dpsc_grid_product_detail">';
