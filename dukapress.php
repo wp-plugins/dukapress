@@ -3,7 +3,7 @@
 Plugin Name: DukaPress Shopping Cart
 Description: DukaPress Shopping Cart
 Version: 2.3.6
-Author: NetMadeEz and Nickel Pro
+Author: Rixeo and Nickel Pro
 Author URI: http://dukapress.org/
 Plugin URI: http://dukapress.org/
 */
