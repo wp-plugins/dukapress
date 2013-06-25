@@ -2557,7 +2557,7 @@ function dukapress_rss_dashboard_widget() {
 
 //Image resize
 if(!function_exists('dp_img_resize')){
-	function dp_img_resize($attach_id = null, $img_url = null, $width, $height, $crop = false){
+	function dp_img_resize($attach_id = null, $img_url = null, $width, $height, $crop = true){
 		$org_img = getimagesize($img_url);
 		if(empty($width)){
 			$width = $org_img[0];
