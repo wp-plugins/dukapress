@@ -346,7 +346,7 @@ class dpsc_show_product_widget extends WP_Widget {
                     }
                     if ($main_image != '') {
                         $widget_html .= '<div class="dp_widget_product_image">';
-                        $widget_html .= '<a href="' . $prod_permalink . '" title="' .$product->post_title . '"><img src="' . DP_PLUGIN_URL . '/lib/timthumb.php?src=' . $main_image . '&w=' . $instance['width'] . '&h=' . $instance['height'] . '&zc=1" ></a>';
+                        $widget_html .= '<a href="' . $prod_permalink . '" title="' .$product->post_title . '"><img src="' . dp_img_resize('', $main_image, $instance['width'], $instance['height']). '" ></a>';
                         $widget_html .= '</div>';
                     }
                 }
