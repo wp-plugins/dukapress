@@ -369,11 +369,11 @@ function dpsc_worldpay_payment($dpsc_total = FALSE, $dpsc_shipping_value = FALSE
     if ($dpsc_total) {
         $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
         if ($dp_shopping_cart_settings['worldpay_testmode'] === 'test') {
-            $dpsc_form_action = 'https://select-test.worldpay.com/wcc/purchase';
+            $dpsc_form_action = 'https://secure-test.worldpay.com/wcc/purchase';
             $testModeVal = '100';
             $name = 'AUTHORISED';
         } else {
-            $dpsc_form_action = 'https://select.worldpay.com/wcc/purchase';
+            $dpsc_form_action = 'https://secure.worldpay.com/wcc/purchase';
             $testModeVal = '0';
             $name = $bfname . ' ' . $blname;
         }

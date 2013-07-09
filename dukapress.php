@@ -2,13 +2,13 @@
 /*
 Plugin Name: DukaPress Shopping Cart
 Description: DukaPress Shopping Cart
-Version: 2.3.6
-Author: NetMadeEz and Nickel Pro
+Version: 2.3.7
+Author: Rixeo and Nickel Pro
 Author URI: http://dukapress.org/
 Plugin URI: http://dukapress.org/
 */
 
-$dp_version = 2.36;
+$dp_version = 2.37;
 
 require_once('php/dp-products.php');
 require_once('php/dp-cart.php');
@@ -2557,7 +2557,7 @@ function dukapress_rss_dashboard_widget() {
 
 //Image resize
 if(!function_exists('dp_img_resize')){
-	function dp_img_resize($attach_id = null, $img_url = null, $width, $height, $crop = false){
+	function dp_img_resize($attach_id = null, $img_url = null, $width, $height, $crop = true){
 		$org_img = getimagesize($img_url);
 		if(empty($width)){
 			$width = $org_img[0];
