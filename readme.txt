@@ -111,6 +111,9 @@ Please visit: [Our Forums](http://dukapress.org/forums/ "Our Forums")
 
 == Changelog ==
 
+= 2.3.7 =
+Removed timthumb
+
 = 2.3.6 =
 Security release - updating timthumb.php to the latest version.
 
