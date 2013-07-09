@@ -240,13 +240,13 @@ function dp_pnj_mz_effect($attachment_images, $product_id) {
         if ($count === 0) {
             $main_image = $image->guid;
         }
-        $output .= '<li><a class="dpsc_thumb_tab" id="' . $product_id . '" href="' . $image->guid . '"><img src="'.dp_img_resize('', $image->guid, $dp_shopping_cart_settings['t_w'], $dp_shopping_cart_settings['t_h']).'" ></a></li>';
+        $output .= '<li><a class="dpsc_thumb_tab" id="' . $product_id . '" href="' . $image->guid . '" onclick="return false;"><img src="'.dp_img_resize('', $image->guid, $dp_shopping_cart_settings['t_w'], $dp_shopping_cart_settings['t_h']).'" ></a></li>';
         $count++;
     }
     $output .= '</ul>';
     $output .= '</div>';
     $output .= '<div class="dpsc_main_image main_' . $product_id . '">';
-    $output .= '<a href="' . $main_image . '" class="MagicZoom" id="zoom1" rel="show-title: false; zoom-fade: true; zoom-position: inner; thumb-change: mouseover"><img src="' .dp_img_resize('', $main_image, $dp_shopping_cart_settings['m_w'], $dp_shopping_cart_settings['m_h']). '" ></a>';
+    $output .= '<a href="' . $main_image . '" class="MagicZoom" id="zoom1" rel="show-title: false; zoom-fade: true; zoom-position: inner; thumb-change: mouseover" onclick="return false;"><img src="' .dp_img_resize('', $main_image, $dp_shopping_cart_settings['m_w'], $dp_shopping_cart_settings['m_h']). '" ></a>';
     $output .= '</div>';
     $output .= '</div>';
     return $output;
@@ -262,13 +262,13 @@ function dp_pnj_jqzoom_effect($attachment_images, $product_id) {
         if ($count === 0) {
             $main_image = $image->guid;
         }
-        $output .= '<li><a class="dpsc_thumb_tab" id="' . $product_id . '" href="' . $image->guid . '"><img src="' .dp_img_resize('', $image->guid, $dp_shopping_cart_settings['t_w'], $dp_shopping_cart_settings['t_h']). '" ></a></li>';
+        $output .= '<li><a class="dpsc_thumb_tab" id="' . $product_id . '" href="' . $image->guid . '" onclick="return false;"><img src="' .dp_img_resize('', $image->guid, $dp_shopping_cart_settings['t_w'], $dp_shopping_cart_settings['t_h']). '" ></a></li>';
         $count++;
     }
     $output .= '</ul>';
     $output .= '</div>';
     $output .= '<div class="dpsc_main_image main_' . $product_id . '">';
-    $output .= '<a href="' . $main_image . '" title="image" class="dp_jqzoom" ><img src="' .dp_img_resize('', $main_image, $dp_shopping_cart_settings['m_w'], $dp_shopping_cart_settings['m_h']). '" ></a>';
+    $output .= '<a href="' . $main_image . '" title="image" class="dp_jqzoom" onclick="return false;"><img src="' .dp_img_resize('', $main_image, $dp_shopping_cart_settings['m_w'], $dp_shopping_cart_settings['m_h']). '" ></a>';
     $output .= '</div>';
     $output .= '</div>';
     return $output;
@@ -284,13 +284,13 @@ function dp_pnj_lightbox_effect($attachment_images, $product_id) {
         if ($count === 0) {
             $main_image = $image->guid;
         }
-        $output .= '<li><a class="dpsc_thumb_tab fancybox" id="' . $product_id . '" rel="imgGroup" href="' . $image->guid . '"><img src="' . dp_img_resize('', $image->guid, $dp_shopping_cart_settings['t_w'], $dp_shopping_cart_settings['t_h']). '" ></a></li>';
+        $output .= '<li><a class="dpsc_thumb_tab fancybox" id="' . $product_id . '" rel="imgGroup" href="' . $image->guid . '" onclick="return false;"><img src="' . dp_img_resize('', $image->guid, $dp_shopping_cart_settings['t_w'], $dp_shopping_cart_settings['t_h']). '" ></a></li>';
         $count++;
     }
     $output .= '</ul>';
     $output .= '</div>';
     $output .= '<div class="dpsc_main_image main_' . $product_id . '">';
-    $output .= '<a href="' . $main_image . '" class="fancybox theProdMedia theProdMedia_alt"  rel="imgGroup"><img src="' . dp_img_resize('', $main_image, $dp_shopping_cart_settings['m_w'], $dp_shopping_cart_settings['m_h']). '" ></a>';
+    $output .= '<a href="' . $main_image . '" class="fancybox theProdMedia theProdMedia_alt"  rel="imgGroup" onclick="return false;"><img src="' . dp_img_resize('', $main_image, $dp_shopping_cart_settings['m_w'], $dp_shopping_cart_settings['m_h']). '" ></a>';
     $output .= '</div>';
     $output .= '</div>';
     return $output;
@@ -306,7 +306,7 @@ function dp_pnj_no_effect($attachment_images, $product_id) {
         if ($count === 0) {
             $main_image = $image->guid;
         }
-        $output .= '<li><a class="dpsc_thumb_tab" id="' . $product_id . '" href="' . $image->guid . '"><img src="' . dp_img_resize('', $image->guid, $dp_shopping_cart_settings['t_w'], $dp_shopping_cart_settings['t_h']) . '" ></a></li>';
+        $output .= '<li><a class="dpsc_thumb_tab" id="' . $product_id . '" href="' . $image->guid . '" onclick="return false;"><img src="' . dp_img_resize('', $image->guid, $dp_shopping_cart_settings['t_w'], $dp_shopping_cart_settings['t_h']) . '" ></a></li>';
         $count++;
     }
     $output .= '</ul>';
