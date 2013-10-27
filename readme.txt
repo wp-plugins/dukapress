@@ -4,8 +4,8 @@ Donate link: http://dukapress.org/about/
 Tags: shopping cart, web shop, cart, shop, Worldpay, Paypal, Alertpay, paypal, e-commerce, ecommerce, MPESA, ZAP, yuCash, Mobile Payments,online duka, duka, online shop, JQZoom, Multiple Currencies
 
 Requires at least: 3.0
-Tested up to: 3.5.2
-Stable tag: 2.3.7
+Tested up to: 3.7
+Stable tag: 2.3.8
 
 DukaPress is an open source e-commerce solution built for Wordpress.
 
@@ -110,6 +110,9 @@ Please visit: [Our Forums](http://dukapress.org/forums/ "Our Forums")
 [View Screenshots](http://www.flickr.com/photos/moshthepitt/sets/72157624534741496/ "DukaPress screenshots")
 
 == Changelog ==
+
+= 2.3.8= 
+Fixed a bug with image resizing of images. Once you change a product image with an image having the same name, we noticed that the old image is still used
 
 = 2.3.7 =
 Removed timthumb for image resizing and using WordPress image resizing

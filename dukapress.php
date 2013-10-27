@@ -2,13 +2,13 @@
 /*
 Plugin Name: DukaPress Shopping Cart
 Description: DukaPress Shopping Cart
-Version: 2.3.7
+Version: 2.3.8
 Author: Rixeo and Nickel Pro
 Author URI: http://dukapress.org/
 Plugin URI: http://dukapress.org/
 */
 
-$dp_version = 2.37;
+$dp_version = 2.38;
 
 require_once('php/dp-products.php');
 require_once('php/dp-cart.php');
@@ -2604,6 +2604,10 @@ if(!function_exists('dp_img_resize')){
 		// the image path without the extension
 		$no_ext_path = $file_info['dirname'].'/'.$file_info['filename'];
 		$cropped_img_path = $no_ext_path.'-'.$width.'x'.$height.$extension;
+		if(file_exists($cropped_img_path))
+			if(time() - @filemtime(utf8_decode($cropped_img_path)) >= 2*24*60*60){
+				unlink($cropped_img_path);
+			}
 		// checking if the file size is larger than the target size
 		// if it is smaller or the same size, stop right here and return
 		if($image_src[1] > $width){
