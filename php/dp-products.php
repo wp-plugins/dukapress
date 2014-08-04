@@ -415,7 +415,7 @@ function dpsc_pnj_grid_display($atts, $content=null) {
                 'total' => '12',
                 'column' => '3',
                 'per_page' => '',
-                'type' => 'post',
+                'type' => 'duka',
                 'order' => 'DESC',
                 'direct' => '',
 				'affiliate' => '',
@@ -438,14 +438,20 @@ function dpsc_pnj_grid_display($atts, $content=null) {
     if (!empty($per_page)) {
         $pagenum = isset($_GET['dpage']) ? $_GET['dpage'] : 1;
         $count = count(get_posts('numberposts=' . $total . '&post_type=' . $type . '&meta_key=price&category=' . $category));
-        $page_links = paginate_links(array(
+		$pagination_array = array(
                     'base' => add_query_arg('dpage', '%#%'),
                     'format' => '',
                     'prev_text' => __('&laquo;'),
                     'next_text' => __('&raquo;'),
                     'total' => ceil($count / $per_page),
                     'current' => $pagenum
-                ));
+                );
+        $page_links = paginate_links($pagination_array);
+		$dp_paginate_links = dp_paginate_links($pagination_array);		
+		add_action( 'wp_head', function(){
+			echo "Here ".$dp_paginate_links;
+		});
+		
         $post_offset = ($pagenum - 1) * $per_page;
         $offset = '&offset=' . $post_offset;
         $page_links = '<div class="dpsc_grid_pagination">' . $page_links . '</div>';
@@ -508,6 +514,7 @@ function dpsc_pnj_grid_display($atts, $content=null) {
         $content .= '</div>';
         $content .= '<div class="clear"></div>';
     }
+	
     return $content;
 }
 
@@ -819,6 +826,15 @@ function dp_rm_varition_delete_data() {
 
 //Creates the DukaPress "Products" Post type 
 add_action('init', 'dp_create_post_type');
+add_action( 'admin_init' , 'dp_posts_column_init' );
+add_action('manage_posts_custom_column', 'dp_render_post_columns', 10, 2);
+
+function dp_posts_column_init(){
+	set_post_thumbnail_size( 150, 150, true );
+	add_filter('months_dropdown_results', '__return_empty_array');
+	add_filter('manage_duka_posts_columns', 'dp_create_post_column');
+}
+
 
 function dp_create_post_type() {
     register_post_type('duka', array(
@@ -849,9 +865,99 @@ function dp_create_post_type() {
         'menu_icon' => DP_PLUGIN_URL . '/images/dp_icon.png',
         'rewrite' => array('slug' => 'products', 'with_front' => false),
         'has_archive' => true,
-        'supports' => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments', 'custom-fields', 'posts', 'revisions', 'trackbacks')
+        'supports' => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments', 'custom-fields', 'revisions', 'trackbacks')
     ));
 }
+
+
+function dp_create_post_column($columns){
+	unset($columns['title']);
+	unset($columns['comments']);
+	
+	$new = array();
+	foreach($columns as $key => $title) {
+		if ($key=='author'){
+			$new['thumbnail'] = 'Thumbnail';
+			$new['product_name'] = 'Product';
+			$new['price'] = 'Price';
+			$new['new_price'] = 'New Price';
+		}
+		$new[$key] = $title;
+	}
+	return $new;
+}
+
+function dp_render_post_columns($column_name, $id){
+	switch ($column_name) {
+		case 'thumbnail':
+			echo get_the_post_thumbnail( $id, 'thumbnail');
+		break;
+		case 'product_name':
+			$prodname = get_the_title($id);
+			if(empty($prodname)){
+				$prodname = "Not Set";
+			}
+			?>
+			<span id="prodname_<?php echo $id; ?>" class="dp_editable" tabindex="<?php echo $count; ?>"><?php echo $prodname; ?></span>
+			<div class="row-actions">
+				<span class="edit">
+					<a title="Edit this item" href="<?php echo get_edit_post_link( $post->ID, true ); ?>"><?php _e('Edit'); ?></a> | 
+				</span>
+				<span class="view">
+					<a title="View this item" href="<?php echo get_permalink( $post->ID); ?>" target="_blank"><?php _e('View'); ?></a> | 
+				</span>
+				<span class="trash">
+					<a href="<?php echo get_delete_post_link( $post->ID ); ?>" title="Move this item to the Trash" class="submitdelete"><?php _e('Trash'); ?></a>
+				</span>
+			</div>
+			<?php
+			break;
+		case 'price':
+			// show widget set
+			$prod_price = get_post_meta( $id, 'price', TRUE);
+			if(empty($prod_price)){
+				$prod_price = "Not Set";
+			}
+			?>
+			<span id="prodprice_<?php echo $id; ?>" class="dp_editable" tabindex="<?php echo $count; ?>"><?php echo $prod_price; ?></span>
+			<?php
+			break;
+		case 'new_price':
+			// show widget set
+			$new_price = get_post_meta( $id, 'new_price', TRUE);
+			if(empty($new_price)){
+				$new_price = "Not Set";
+			}
+			?>
+			<span id="prodnewprice_<?php echo $id; ?>" class="dp_editable" tabindex="<?php echo $count; ?>"><?php echo $new_price; ?></span>
+			<?php               
+			break;
+		
+	}
+}
+
+add_action('pre_get_posts','dp_set_product_order');
+function dp_set_product_order( $query ){
+    if( 'duka' == $query->get('post_type') ){
+        if( $query->get('orderby') == '' )
+            $query->set('orderby','title');
+
+        if( $query->get('order') == '' )
+            $query->set('order','ASC');
+			
+		if( $query->get('orderby') == 'price' ){
+			$query->set('meta_key','price');
+			$query->set('orderby','meta_value_num');
+		}
+		
+		if( $query->get('orderby') == 'new_price' ){
+			$query->set('meta_key','new_price');
+			$query->set('orderby','meta_value_num');
+		}
+
+    }
+}
+
 
 //Ads shortcode for searchpage 
 add_shortcode('dp_search', 'dp_custom_search_fn');

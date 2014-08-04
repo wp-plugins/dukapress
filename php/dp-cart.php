@@ -806,7 +806,7 @@ function dpsc_on_payment_save($dpsc_total = FALSE, $dpsc_shipping_value = FALSE,
 
     $shop_name = $dp_shopping_cart_settings['shop_name'];
     $site_url = get_bloginfo('url');
-    $transaction_log =$site_url.'/wp-admin/admin.php?page=dukapress-shopping-cart-order-log&id='.$invoice;
+    $transaction_log = admin_url('edit.php?post_type=duka&page=dukapress-shopping-cart-order-log&id='.$invoice);
     $nme_dp_mail_option = get_option('dp_order_mail_options', true);
     $message = $nme_dp_mail_option['dp_order_send_mail_body'];
     $message = str_replace("\r", '<br>', $message);
@@ -831,7 +831,6 @@ function dpsc_on_payment_save($dpsc_total = FALSE, $dpsc_shipping_value = FALSE,
         }
 
         if (!$user_id && $payment_option != 'PayPal Buy Now') {
-//          require_once( ABSPATH . WPINC . '/registration.php');
             $user_pass = wp_generate_password();
             $user_id = wp_create_user($bemail, $user_pass, $bemail);
             update_user_option($user_id, 'default_password_nag', true, true);
@@ -1014,7 +1013,8 @@ function dpsc_pnj_calculate_cart_price($on_payment = FALSE) {
                     }
                 }
             }
-            if (get_post_meta(intval($dpsc_product['item_number']), 'digital_file', true) === '') {
+			$digital_file = get_post_meta(intval($dpsc_product['item_number']), 'digital_file', true);
+            if (empty($digital_file)) {
                 $count += $dpsc_product['quantity'];
             }
         }
@@ -1200,7 +1200,8 @@ function dpsc_pnj_is_digital_present($products = FALSE) {
             $is_digital = FALSE;
             $digital_id = array();
             foreach ($products as $product) {
-                if (get_post_meta(intval($product['id']), 'digital_file', true) != '') {
+				$digital_file = get_post_meta(intval($dpsc_product['item_number']), 'digital_file', true);
+                if (!empty($digital_file)) {
                     $is_digital = TRUE;
                     $digital_id[] = $product['id'];
                 }
