@@ -111,7 +111,16 @@ Please visit: [Our Forums](http://dukapress.org/forums/ "Our Forums")
 
 == Changelog ==
 
-= 2.3.8= 
+= 2.4 =
+* Changed the DukaPress Menu layout. We have put everything under one menu to reduce clatter.
+* Product List. We have added extra columns on the product list and removed some columns.
+* Plugin URLS. We have changed all the plugin URLS to match the new menu structure.
+* Image resizing. We have sorte issues with images not showing
+* Actions and Security fixes. We have worked on some actions and security fixes. More will come as we work on them. We want to allow custom solutions to be able to use the core as an extension.
+* MultiSite support. This will come after afew code rewrites which also includes new payment gateways such as Bitcoins and PesaPal.
+
+
+= 2.3.8 = 
 Fixed a bug with image resizing of images. Once you change a product image with an image having the same name, we noticed that the old image is still used
 
 = 2.3.7 =
