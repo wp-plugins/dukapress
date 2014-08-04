@@ -4,8 +4,8 @@ Donate link: http://dukapress.org/about/
 Tags: shopping cart, web shop, cart, shop, Worldpay, Paypal, Alertpay, paypal, e-commerce, ecommerce, MPESA, ZAP, yuCash, Mobile Payments,online duka, duka, online shop, JQZoom, Multiple Currencies
 
 Requires at least: 3.0
-Tested up to: 3.7
-Stable tag: 2.3.8
+Tested up to: 3.9.1
+Stable tag: 2.4
 
 DukaPress is an open source e-commerce solution built for Wordpress.
 
