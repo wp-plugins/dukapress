@@ -2,25 +2,30 @@
 /*
 Plugin Name: DukaPress Shopping Cart
 Description: DukaPress Shopping Cart
-Version: 2.3.6
-Author: NetMadeEz and Nickel Pro
+Version: 2.5
+Author: Rixeo and Nickel Pro
 Author URI: http://dukapress.org/
 Plugin URI: http://dukapress.org/
 */
 
-$dp_version = 2.36;
-
-require_once('php/dp-products.php');
-require_once('php/dp-cart.php');
-require_once('php/dp-widgets.php');
-require_once('php/dp-payment.php');
-require_once('lib/currency_convertor.php');
+$dp_version = 2.5;
 
 session_start();
 define('DP_PLUGIN_URL', WP_PLUGIN_URL.'/'.dirname(plugin_basename(__FILE__)));
 define('DP_PLUGIN_DIR', WP_PLUGIN_DIR.'/'.dirname(plugin_basename(__FILE__)));
 define('DP_DOWNLOAD_FILES_DIR', WP_CONTENT_DIR. '/uploads/dpsc_download_files/' );
 define('DP_DOWNLOAD_FILES_DIR_TEMP', WP_CONTENT_DIR. '/uploads/dpsc_temp_download_files/' );
+
+
+require_once(DP_PLUGIN_DIR.'/php/dp-functions.php');
+require_once(DP_PLUGIN_DIR.'/php/dp-products.php');
+require_once(DP_PLUGIN_DIR.'/php/dp-cart.php');
+require_once(DP_PLUGIN_DIR.'/php/dp-widgets.php');
+require_once(DP_PLUGIN_DIR.'/php/dp-payment.php');
+require_once(DP_PLUGIN_DIR.'/php/dp-pdf.php');
+require_once(DP_PLUGIN_DIR.'/lib/currency_convertor.php');
+
+
 
 $dpsc_user_invoice_number = 'dp_user_invoice_number';
 $dpsc_country_code_name = array("AF" => "AFGHANISTAN", "AL" => "ALBANIA", "DZ" => "ALGERIA", "AS" => "AMERICAN SAMOA", "AD" => "ANDORRA", "AO" => "ANGOLA", "AI" => "ANGUILLA", "AQ" => "ANTARCTICA", "AG" => "ANTIGUA AND BARBUDA", "AR" => "ARGENTINA", "AM" => "ARMENIA", "AW" => "ARUBA", "AU" => "AUSTRALIA", "AT" => "AUSTRIA", "AZ" => "AZERBAIJAN", "BS" => "BAHAMAS", "BH" => "BAHRAIN", "BD" => "BANGLADESH", "BB" => "BARBADOS", "BY" => "BELARUS", "BE" => "BELGIUM", "BZ" => "BELIZE", "BJ" => "BENIN", "BM" => "BERMUDA", "BT" => "BHUTAN", "BO" => "BOLIVIA", "BA" => "BOSNIA AND HERZEGOVINA", "BW" => "BOTSWANA", "BV" => "BOUVET ISLAND", "BR" => "BRAZIL", "IO" => "BRITISH INDIAN OCEAN TERRITORY", "BN" => "BRUNEI DARUSSALAM", "BG" => "BULGARIA", "BF" => "BURKINA FASO", "BI" => "BURUNDI", "KH" => "CAMBODIA", "CM" => "CAMEROON", "CA" => "CANADA", "CV" => "CAPE VERDE", "KY" => "CAYMAN ISLANDS", "CF" => "CENTRAL AFRICAN REPUBLIC", "TD" => "CHAD", "CL" => "CHILE", "CN" => "CHINA", "CX" => "CHRISTMAS ISLAND", "CC" => "COCOS (KEELING) ISLANDS", "CO" => "COLOMBIA", "KM" => "COMOROS", "CG" => "CONGO", "CD" => "CONGO, THE DEMOCRATIC REPUBLIC OF THE", "CK" => "COOK ISLANDS", "CR" => "COSTA RICA", "CI" => "COTE D?IVOIRE", "HR" => "CROATIA", "CU" => "CUBA", "CY" => "CYPRUS", "CZ" => "CZECH REPUBLIC", "DK" => "DENMARK", "DJ" => "DJIBOUTI", "DM" => "DOMINICA", "DO" => "DOMINICAN REPUBLIC", "EC" => "ECUADOR", "EG" => "EGYPT", "SV" => "EL SALVADOR", "GQ" => "EQUATORIAL GUINEA", "ER" => "ERITREA", "EE" => "ESTONIA", "ET" => "ETHIOPIA", "FK" => "FALKLAND ISLANDS (MALVINAS)", "FO" => "FAROE ISLANDS", "FJ" => "FIJI", "FI" => "FINLAND", "FR" => "FRANCE", "GF" => "FRENCH GUIANA", "PF" => "FRENCH POLYNESIA", "TF" => "FRENCH SOUTHERN TERRITORIES", "GA" => "GABON", "GM" => "GAMBIA", "GE" => "GEORGIA", "DE" => "GERMANY", "GH" => "GHANA", "GI" => "GIBRALTAR", "GR" => "GREECE", "GL" => "GREENLAND", "GD" => "GRENADA", "GP" => "GUADELOUPE", "GU" => "GUAM", "GT" => "GUATEMALA", "GG" => "GUERNSEY", "GN" => "GUINEA", "GW" => "GUINEA-BISSAU", "GY" => "GUYANA", "HT" => "HAITI", "HM" => "HEARD ISLAND AND MCDONALD ISLANDS", "VA" => "HOLY SEE (VATICAN CITY STATE)", "HN" => "HONDURAS", "HK" => "HONG KONG", "HU" => "HUNGARY", "IS" => "ICELAND", "IN" => "INDIA", "ID" => "INDONESIA", "IR" => "IRAN, ISLAMIC REPUBLIC OF", "IQ" => "IRAQ", "IE" => "IRELAND", "IM" => "ISLE OF MAN", "IL" => "ISRAEL", "IT" => "ITALY", "JM" => "JAMAICA", "JP" => "JAPAN", "JE" => "JERSEY", "JO" => "JORDAN", "KZ" => "KAZAKHSTAN", "KE" => "KENYA", "KI" => "KIRIBATI", "KP" => "KOREA, DEMOCRATIC PEOPLE\'S REPUBLIC OF", "KR" => "KOREA, REPUBLIC OF", "KW" => "KUWAIT", "KG" => "KYRGYZSTAN", "LA" => "LAO PEOPLE\'S DEMOCRATIC REPUBLIC", "LV" => "LATVIA", "LB" => "LEBANON", "LS" => "LESOTHO", "LR" => "LIBERIA", "LY" => "LIBYAN ARAB JAMAHIRIYA", "LI" => "LIECHTENSTEIN", "LT" => "LITHUANIA", "LU" => "LUXEMBOURG", "MO" => "MACAO", "MK" => "MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF", "MG" => "MADAGASCAR", "MW" => "MALAWI", "MY" => "MALAYSIA", "MV" => "MALDIVES", "ML" => "MALI", "MT" => "MALTA", "MH" => "MARSHALL ISLANDS", "MQ" => "MARTINIQUE", "MR" => "MAURITANIA", "MU" => "MAURITIUS", "YT" => "MAYOTTE", "MX" => "MEXICO", "FM" => "MICRONESIA, FEDERATED STATES OF", "MD" => "MOLDOVA, REPUBLIC OF", "MC" => "MONACO", "MN" => "MONGOLIA", "MS" => "MONTSERRAT", "MA" => "MOROCCO", "MZ" => "MOZAMBIQUE", "MM" => "MYANMAR", "NA" => "NAMIBIA", "NR" => "NAURU", "NP" => "NEPAL", "NL" => "NETHERLANDS", "AN" => "NETHERLANDS ANTILLES", "NC" => "NEW CALEDONIA", "NZ" => "NEW ZEALAND", "NI" => "NICARAGUA", "NE" => "NIGER", "NG" => "NIGERIA", "NU" => "NIUE", "NF" => "NORFOLK ISLAND", "MP" => "NORTHERN MARIANA ISLANDS", "NO" => "NORWAY", "OM" => "OMAN", "PK" => "PAKISTAN", "PW" => "PALAU", "PS" => "PALESTINIAN TERRITORY, OCCUPIED", "PA" => "PANAMA", "PG" => "PAPUA NEW GUINEA", "PY" => "PARAGUAY", "PE" => "PERU", "PH" => "PHILIPPINES", "PN" => "PITCAIRN", "PL" => "POLAND", "PT" => "PORTUGAL", "PR" => "PUERTO RICO", "QA" => "QATAR", "RE" => "REUNION", "RO" => "ROMANIA", "RU" => "RUSSIAN FEDERATION", "RW" => "RWANDA", "SH" => "SAINT HELENA", "KN" => "SAINT KITTS AND NEVIS", "LC" => "SAINT LUCIA", "PM" => "SAINT PIERRE AND MIQUELON", "VC" => "SAINT VINCENT AND THE GRENADINES", "WS" => "SAMOA", "SM" => "SAN MARINO", "ST" => "SAO TOME AND PRINCIPE", "SA" => "SAUDI ARABIA", "SN" => "SENEGAL", "CS" => "SERBIA AND MONTENEGRO", "SC" => "SEYCHELLES", "SL" => "SIERRA LEONE", "SG" => "SINGAPORE", "SK" => "SLOVAKIA", "SI" => "SLOVENIA", "SB" => "SOLOMON ISLANDS", "SO" => "SOMALIA", "ZA" => "SOUTH AFRICA", "GS" => "SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS", "ES" => "SPAIN", "LK" => "SRI LANKA", "SD" => "SUDAN", "SR" => "SURINAME", "SJ" => "SVALBARD AND JAN MAYEN", "SZ" => "SWAZILAND", "SE" => "SWEDEN", "CH" => "SWITZERLAND", "SY" => "SYRIAN ARAB REPUBLIC", "TW" => "TAIWAN, PROVINCE OF CHINA", "TJ" => "TAJIKISTAN", "TZ" => "TANZANIA, UNITED REPUBLIC OF", "TH" => "THAILAND", "TL" => "TIMOR-LESTE  ", "TG" => "TOGO", "TK" => "TOKELAU", "TO" => "TONGA", "TT" => "TRINIDAD AND TOBAGO", "TN" => "TUNISIA", "TR" => "TURKEY", "TM" => "TURKMENISTAN", "TC" => "TURKS AND CAICOS ISLANDS", "TV" => "TUVALU", "UG" => "UGANDA", "UA" => "UKRAINE", "AE" => "UNITED ARAB EMIRATES", "GB" => "UNITED KINGDOM", "UM" => "UNITED STATES MINOR OUTLYING ISLANDS", "US" => "UNITED STATES OF AMERICA", "UY" => "URUGUAY", "UZ" => "UZBEKISTAN", "VU" => "VANUATU", "VE" => "VENEZUELA", "VN" => "VIET NAM", "VG" => "VIRGIN ISLANDS, BRITISH", "VI" => "VIRGIN ISLANDS, U.S.", "WF" => "WALLIS AND FUTUNA", "EH" => "WESTERN SAHARA", "YE" => "YEMEN", "ZM" => "ZAMBIA", "ZW" => "ZIMBABWE");
@@ -61,9 +66,9 @@ function dpsc_admin_bar_menu() {
        return;
        }
        $wp_admin_bar->add_menu( array( 'id' => 'dukapress', 'title' => 'DukaPress', 'href' => FALSE ) );
-       $wp_admin_bar->add_menu( array( 'parent' => 'dukapress', 'title' => __('Order Log', 'dukapress'), 'href' => admin_url( 'admin.php?page=dukapress-shopping-cart-order-log' ) ) );
-       $wp_admin_bar->add_menu( array( 'parent' => 'dukapress', 'title' => __('Customer Log', 'dukapress'), 'href' => admin_url( 'admin.php?page=dukapress-shopping-cart-customer-log' ) ) );
-       $wp_admin_bar->add_menu( array( 'parent' => 'dukapress', 'title' => __('Settings', 'dukapress'), 'href' => admin_url( 'admin.php?page=dukapress-shopping-cart-settings' ) ) );
+       $wp_admin_bar->add_menu( array( 'parent' => 'dukapress', 'title' => __('Order Log', 'dukapress'), 'href' => admin_url( 'edit.php?post_type=duka&page=dukapress-shopping-cart-order-log' ) ) );
+       $wp_admin_bar->add_menu( array( 'parent' => 'dukapress', 'title' => __('Customer Log', 'dukapress'), 'href' => admin_url( 'edit.php?post_type=duka&page=dukapress-shopping-cart-customer-log' ) ) );
+       $wp_admin_bar->add_menu( array( 'parent' => 'dukapress', 'title' => __('Settings', 'dukapress'), 'href' => admin_url( 'edit.php?post_type=duka&page=dukapress-shopping-cart-settings' ) ) );
        $wp_admin_bar->add_menu( array( 'parent' => 'dukapress', 'title' => __('Products', 'dukapress'), 'href' => admin_url( 'edit.php?post_type=duka' ) ) );
        $wp_admin_bar->add_menu( array( 'parent' => 'dukapress', 'title' => __('Add New Product', 'dukapress'), 'href' => admin_url( 'post-new.php?post_type=duka' ) ) );
 }
@@ -116,14 +121,13 @@ function dp_dashboard_transactions() {
 add_action('admin_menu', 'dp_pnj_create_admin_menu');
 function dp_pnj_create_admin_menu() {
     $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
-    add_object_page('DukaPress', 'DukaPress', 'edit_others_posts', 'dukapress-shopping-cart-order-log', '', DP_PLUGIN_URL . '/images/dp_icon.png');
-    add_submenu_page('dukapress-shopping-cart-order-log', 'DukaPress Order Log', 'Order Log', 'edit_others_posts', 'dukapress-shopping-cart-order-log', 'dukapress_shopping_cart_order_log');
+    add_submenu_page('edit.php?post_type=duka', __('DukaPress Order Log', 'dp-lang'), __('Order Log', 'dp-lang'), 'edit_others_posts', 'dukapress-shopping-cart-order-log', 'dukapress_shopping_cart_order_log');
+	
     if ($dp_shopping_cart_settings['dp_shop_user_registration'] === 'checked') {
-        add_submenu_page('dukapress-shopping-cart-order-log', 'DukaPress Customer Log', 'Customer Log', 'manage_options', 'dukapress-shopping-cart-customer-log', 'dukapress_shopping_cart_customer_log');
+		add_submenu_page('edit.php?post_type=duka', __('DukaPress Customer Log', 'dp-lang'), __('Customer Log', 'dp-lang'), 'edit_others_posts', 'dukapress-shopping-cart-customer-log', 'dukapress_shopping_cart_customer_log');
     }
-    add_submenu_page('dukapress-shopping-cart-order-log', 'DukaPress Settings', 'Settings', 'edit_others_posts', 'dukapress-shopping-cart-settings', 'dukapress_shopping_cart_setting');
+	add_submenu_page('edit.php?post_type=duka', __('DukaPress Settings', 'dp-lang'), __('Settings', 'dp-lang'), 'edit_others_posts', 'dukapress-shopping-cart-settings', 'dukapress_shopping_cart_setting');
 }
-
 function dukapress_shopping_cart_customer_log() {
     global $dpsc_user_invoice_number, $wpdb;
     $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
@@ -231,7 +235,8 @@ function dp_get_invoices_for_customer($customer_id, $page_number = 1) {
     $invoice_numbers = array_splice($invoice_numbers, $offset, $per_page);
     $output .= '<ol>';
     foreach ($invoice_numbers as $invoice) {
-        $output .= '<li><a href="?page=dukapress-shopping-cart-order-log&id=' . $invoice . '">' . $invoice . '</a></li>';
+		
+        $output .= '<li><a href="'. admin_url('edit.php?post_type=duka&page=dukapress-shopping-cart-order-log&id='.$invoice) . '">' . $invoice . '</a></li>';
     }
     $output .= '</ol>';
     if ($total > 1) {
@@ -331,7 +336,17 @@ function dpsc_register_style_js () {
         $tim_end = '&w=310&h=383&zc=1';
         $dpsc_site_url = get_bloginfo('url');
         wp_enqueue_script('dpsc_js_file');
-        wp_localize_script( 'dpsc_js_file', 'dpsc_js', array( 'tim_url' => $tim_url, 'tim_end' => $tim_end, 'dpsc_url' => $dpsc_site_url, 'width' => $dp_shopping_cart_settings['m_w'], 'height' => $dp_shopping_cart_settings['m_h'], 'ajaxurl' => admin_url('admin-ajax.php')) );
+        wp_localize_script( 'dpsc_js_file', 'dpsc_js', array( 
+			'tim_url' => $tim_url, 
+			'tim_end' => $tim_end, 
+			'dpsc_url' => $dpsc_site_url, 
+			'width' => $dp_shopping_cart_settings['m_w'], 
+			'height' => $dp_shopping_cart_settings['m_h'], 
+			'ajaxurl' => admin_url('admin-ajax.php'),
+			'text_error' => __("Please write only text here", "dp-lang"),
+			'numbers_error' => __("Please write only numbers here", "dp-lang"),
+			'email_error' => __("Please put the right email id", "dp-lang")
+			) );
         wp_enqueue_script('dpsc_livequery');
     }
 }
@@ -357,11 +372,17 @@ function dp_delete_transaction () {
  */
 function dukapress_shopping_cart_order_log() {
     global $wpdb;
-    echo '<h2>'.__("DukaPress Shop Order Log","dp-lang").'</h2>';
-//    echo '<h2>DukaPress Shop Order Log</h2>';
+	if (!current_user_can('manage_options') && !current_user_can('edit_others_posts')){
+		wp_die(__("You are not allowed to view this page", "dp-lang"));
+	}
+	?>
+	<div class="wrap">
+		<h2><?php _e("DukaPress Shop Order Log","dp-lang"); ?></h2>
+	<?php
     $table_name = $wpdb->prefix . "dpsc_transactions";
     if (!isset($_GET['id'])) {
-        echo '<a class="button add-new-h2" href="' . get_bloginfo('wpurl') . '/wp-admin/admin.php?page=dukapress-shopping-cart-order-log&delete_all=true">Delete All</a>';
+        ?><a class="button add-new-h2" href="<?php admin_url('edit.php?post_type=duka&page=dukapress-shopping-cart-order-log&delete_all=true'); ?>"><?php _e('Delete All','dp-lang'); ?></a><br/>
+		<?php
         if ($_GET['delete_all'] === 'true') {
             $wpdb->query("DELETE FROM `{$table_name}`");
         }
@@ -421,14 +442,12 @@ function dukapress_shopping_cart_order_log() {
                     <tr>
                         <td><?php printf(__("%d"),$count);?></td>
                         <!--<td><?php// echo $count;?></td> -->
-                        <td><a href="?page=dukapress-shopping-cart-order-log&id=<?php echo $result->invoice; ?>"><?php echo $result->invoice;?></a>
+                        <td>
+							<a href="<?php echo admin_url("edit.php?post_type=duka&page=dukapress-shopping-cart-order-log&id=$result->invoice"); ?>"><?php echo $result->invoice;?></a>
                             <p><a class="deletethis"style="cursor:pointer" rel="<?php echo $result->invoice ?>"><?php _e("Delete","dp-lang");?></a></p>
                         </td>
-                        <!--<td><a href="?page=dukapress-shopping-cart-order-log&id=<?php// echo $result->id; ?>"><?php// echo $result->invoice;?></a></td> -->
                         <td><?php printf(__("%s %s"),$result->billing_first_name, $result->billing_last_name);?></td>
                         <td><?php printf(__("%s"),$result->date);?></td>
-                        <!--<td><?php// echo $result->billing_first_name . ' ' . $result->billing_last_name;?></td>
-                        <td><?php// echo $result->date;?></td>-->
                         <td><?php
                         $total = $result->total;
                         $shipping = $result->shipping;
@@ -452,8 +471,6 @@ function dukapress_shopping_cart_order_log() {
                         ?></td>
                         <td><?php printf(__("%s"),$result->payment_option);?></td>
                         <td id="dpsc_order_status_<?php echo $result->id; ?>"><input type="submit" value="<?php echo $result->payment_status;?>" onclick="dpsc_pnj_change_status('<?php echo $result->payment_status; ?>', <?php echo $result->id; ?>)" /></td>
-                        <!--<td><?php// echo $result->payment_option;?></td>
-                        <td id="dpsc_order_status_<?php// echo $result->id; ?>"><input type="submit" value="<?php echo $result->payment_status;?>" onclick="dpsc_pnj_change_status('<?php// echo $result->payment_status; ?>', <?php// echo $result->id; ?>)" /></td>-->
                     </tr>
                     <?php
                     $count++;
@@ -525,29 +542,7 @@ if ($page_links) {
                             }
                         }
                     }
-//                    $message = 'Hi ' . $result->billing_first_name .',<br/>
-//                                We have received the payment for Invoice No.: '. $result->invoice . '.<br/>
-//                                We will start processing your order soon.<br/>' . $digital_message . '
-//                                Thanks,<br/>
-//                                '. $dp_shopping_cart_settings['shop_name'];
-//
-//                    $subject = 'Payment Received For Invoice No: ' . $result->invoice;
-//                }
-//                elseif ($result->payment_status === 'Canceled') {
-//                    $subject = 'Payment Canceled For Invoice No.:' . $result->invoice;
-//                    $message = 'Hi ' . $result->billing_first_name .',<br/>
-//                                The payment for Invoice No.: '. $result->invoice . ' was canceled. Kindly make the payment, so that we can proceed with the order.<br/>
-//                                <br/>
-//                                Thanks,<br/>
-//                                '. $dp_shopping_cart_settings['shop_name'];
-//                }
-//                else {
-//                    $subject = 'Payment Pending For Invoice No.:' . $result->invoice;
-//                    $message = 'Hi ' . $result->billing_first_name .',<br/>
-//                                The payment for Invoice No.: '. $result->invoice . ' is still pending. Kindly make the payment, so that we can proceed with the order.<br/>
-//                                <br/>
-//                                Thanks,<br/>
-//                                '. $dp_shopping_cart_settings['shop_name'];
+
                 }
 
                 $to = $result->billing_email;
@@ -654,7 +649,7 @@ if ($dp_shopping_cart_settings['dp_shop_pdf_generation'] === 'checked') {
 <?php
 }
 ?>
-<p><a href="?page=dukapress-shopping-cart-order-log&id=<?php echo $result->invoice; ?>&status=send"><?php _e("Send Payment Notification.","dp-lang")?></a></p>
+<p><a href="<?php echo admin_url("edit.php?post_type=duka&page=dukapress-shopping-cart-order-log&id=$result->invoice&status=send"); ?><?php _e("Send Payment Notification.","dp-lang")?></a></p>
 
 	<?php 
 		$shipping = empty($result->shipping_first_name);
@@ -718,6 +713,7 @@ if ($dp_shopping_cart_settings['dp_shop_pdf_generation'] === 'checked') {
             <?php
         }
     }
+	?></div><?php
 }
 
 /**
@@ -793,8 +789,8 @@ function dpsc_change_order_status() {
  */
 function dukapress_shopping_cart_setting() {
     global $dpsc_country_code_name;
-    echo '<h2>DukaPress Shop Settings</h2>';
-    if (isset($_POST['dp_submit'])) {
+	wp_nonce_field( plugin_basename( __FILE__ ), 'dukapress_noncename' );
+    if (isset($_POST['dp_submit']) && check_admin_referer('dukapress_settings','dukapress_noncename')) {
         $dp_mobile_name = $_POST['mobile_payment_name'];
         $dp_mobile_number = $_POST['mobile_payment_number'];
         $dp_shop_mode = $_POST['dp_shop_mode'];
@@ -947,7 +943,9 @@ function dukapress_shopping_cart_setting() {
         $dp_usr_payment_mail = array('dp_usr_payment_mail_title' => $_POST['dp_usr_payment_mail_title'], 'dp_usr_payment_mail_body' => $_POST['dp_usr_payment_mail_body']);
         update_option('dp_usr_payment_mail', $dp_usr_payment_mail);
         ?>
-        <h4><?php _e('Settings Saved',"dp-lang");?></h4>
+		<div id="message" class="updated fade">
+			<h3><?php _e('Settings Saved',"dp-lang");?></h3>
+		</div>
         <?php
     }
     $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
@@ -963,9 +961,11 @@ function dukapress_shopping_cart_setting() {
     $worldpay_supported_currency = array('ARS', 'AUD', 'BRL', 'CAD', 'CHF', 'CLP', 'CNY', 'COP', 'CZK', 'DKK', 'EUR', 'GBP', 'HKD', 'HUF', 'IDR', 'ISK', 'JPY', 'KES', 'KRW', 'MXP', 'MYR', 'NOK', 'NZD', 'PLN', 'PTE', 'SEK', 'SGD', 'SKK', 'THB', 'TWD', 'USD', 'VND', 'ZAR');
     $authorize_supported_currency = array('USD');
     ?>
-<div class="wrap">
-<form action="" method="post" enctype="multipart/form-data">
-<div id="dp_settings" class="dukapress-settings">
+	<div class="wrap">
+	<h2><?php _e('DukaPress Shop Settings','dp-lang'); ?></h2>
+	<form action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>" method="post" enctype="multipart/form-data">
+		<?php wp_nonce_field('dukapress_settings','dukapress_noncename'); ?>
+		<div id="dp_settings" class="dukapress-settings">
 
         <h3><a href="#"><?php _e("Basic Shop Settings","dp-lang");?></a></h3>
         <div>
@@ -2095,7 +2095,7 @@ function dpsc_pnj_update_download_table($temp_name, $file_name) {
 function dpsc_pnj_send_mail($to, $from, $name, $subject, $msg, $attachment = FALSE) {
     global $wpdb;
     $headers  = 'MIME-Version: 1.0' . "\r\n";
-    $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+    $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
     $headers .= 'From: ' . $name . ' <' . $from . '>' . "\r\n";
     if ($attachment) {
         if ($dp_shopping_cart_settings['dp_shop_pdf_generation'] === 'checked') {
@@ -2111,278 +2111,7 @@ function dpsc_pnj_send_mail($to, $from, $name, $subject, $msg, $attachment = FAL
     }
 }
 
-/**
- * This function generates PDF
- *
- */
-function make_pdf($invoice, $dpsc_discount_value, $tax, $dpsc_shipping_value, $dpsc_total, $bfname, $blname, $bcity, $baddress, $bstate, $bzip, $bcountry, $phone, $option='bill', $test=0) {
-    global $dpsc_country_code_name;
-    $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
-    define('FPDF_FONTPATH', 'font/');
-    require_once('lib/fpdf16/fpdf.php');
 
-
-    if ($option == 'bill') {
-
-        class PDF extends FPDF {
-
-            //Page header
-            function Header() {
-                $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
-                $ad = array();
-                $ad[f_name] = $dp_shopping_cart_settings['shop_name'];
-                $ad[street] = $dp_shopping_cart_settings['shop_address'];
-                $ad[zip] = $dp_shopping_cart_settings['shop_zip'];
-                $ad[town] = $dp_shopping_cart_settings['shop_city'];
-                $ad[state] = $dp_shopping_cart_settings['shop_state'];
-
-
-                $biz_ad = implode("<br/>", $ad);
-                $biz = str_replace("<br/>", "\n", $biz_ad);
-                $biz = pdf_encode($biz);
-
-                $this->SetFont('Arial', 'B', 12);
-
-                //$url  = get_option('siteurl');
-                $path = DP_PLUGIN_DIR . '/images/pdf-logo-1.jpg';
-                $this->Image($path);
-                $this->SetXY(90, 7);
-                $this->MultiCell(0, 7, "$biz", 0, 'L');
-            }
-
-            //Page footer
-            function Footer() {
-                $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
-                //Position at xy mm from bottom
-                $this->SetY(-25);
-                //Arial italic 6
-                $this->SetFont('Arial', '', 6);
-
-                if (FALSE) {
-                    $vat_id = ' - ' . get_option('wps_vat_id_label') . ': ' . get_option('wps_vat_id');
-                } else {$vat_id = NULL;        }
-
-                $footer_text = $dp_shopping_cart_settings['shop_name'] . $vat_id;
-                $this->Cell(0, 10, "$footer_text", 1, 0, 'C');
-            }
-
-        }
-
-        //Instanciation of inherited class
-        $pdf = new PDF;
-        $pdf->SetLeftMargin(10);
-        $pdf->SetRightMargin(10);
-        $pdf->SetTopMargin(5);
-
-        // widths of columns
-        $w1 = 20;
-        $w2 = 64;
-        $w3 = 30;
-        $w4 = 38;
-        $w5 = 38;
-
-        $h2 = 3;
-
-
-        $pdf->AddPage();
-        $pdf->Ln(20);
-        $pdf->SetFont('Arial', '', 10);
-        // data for address
-        $order = array();
-        $order[f_name] = $bfname . ' ' . $blname;
-//        $order[l_name] = $blname;
-        $order[street] = $baddress;
-        $order[town] = $bcity;
-        $order[state] = $bstate;
-        $order[zip] = $bzip;
-
-        $order[country] = $dpsc_country_code_name[$bcountry];
-
-        address_format($order, 'pdf_cust_address', $pdf);
-
-
-        $pdf->Ln(20);
-        $pdf->SetFont('Arial', 'B', 10);
-        $phone_no = pdf_encode('Contact No. : ' . $phone);
-        $pdf->Cell(0, 6, $phone_no, 0, 1);
-        $bill_no = pdf_encode('Bill No. : ' . $invoice);
-        $pdf->Cell(0, 6, $bill_no, 0, 1);
-
-        $pdf->SetFont('Arial', '', 8);
-        $pdf->Cell(0, 4, date(get_option('date_format')), 0, 1, 'R');
-
-        $pdf->Ln(5);
-        $pdf->SetFont('Arial', 'B', 9);
-        $pdf->Cell($w1, 6, pdf_encode('Sr. No.'), 1, 0);
-        $pdf->Cell($w2, 6, pdf_encode('Product Name'), 1, 0);
-        $pdf->Cell($w3, 6, pdf_encode('Quantity'), 1, 0);
-        $pdf->Cell($w4, 6, pdf_encode('Product Price'), 1, 0);
-        $pdf->Cell($w5, 6, pdf_encode('Total'), 1, 1);
-        $pdf->SetFont('Arial', '', 9);
-
-
-        // get the cart content again
-        $dpsc_products = $_SESSION['dpsc_products'];
-        $dpsc_total = 0.00;
-        $count = 1;
-        foreach ($dpsc_products as $dpsc_product) {
-            $dpsc_var = '';
-            if (!empty($dpsc_product['var'])) {
-                $dpsc_var = ' (' . $dpsc_product['var'] . ')';
-            }
-            $dpsc_total += floatval($dpsc_product['price'] * $dpsc_product['quantity']);
-            $dis_price = number_format($dpsc_product['price'], 2);
-            $dis_price_total = number_format($dpsc_product['price'] * $dpsc_product['quantity'], 2);
-            $details = explode("|", $v);
-
-            $pdf->SetFont('Arial', 'B', 9);
-
-            $pdf->Cell($w1, 6, pdf_encode("$details[5]"), 'LTR', 0); // Art-no
-            $pdf->Cell($w2, 6, pdf_encode("$details[2]"), 'LTR', 0); // Art-name
-            $pdf->Cell($w3, 6, pdf_encode("$details[1]"), 'LTR', 0); // Amount
-            $pdf->Cell($w4, 6, pdf_encode("$details[3]"), 'LTR', 0); // U - Price
-            $pdf->Cell($w5, 6, pdf_encode("$details[4]"), 'LTR', 1); // Total price
-            // any attributes?
-            $pdf->SetFont('Arial', '', 7);
-
-        //				foreach($ad as $v){
-        //
-        //					if(WPLANG == 'de_DE'){$v = utf8_decode($v);}
-        //					pdf_encode($v);
-
-            $pdf->Cell($w1, $h2, $count, 'LR', 0); // Art-no
-            $pdf->Cell($w2, $h2, $dpsc_product['name'] . $dpsc_var, 'LR', 0); // Art-name
-            $pdf->Cell($w3, $h2, $dpsc_product['quantity'], 'LR', 0); // Amount
-            $pdf->Cell($w4, $h2, pdf_encode($dp_shopping_cart_settings['dp_currency_symbol'] . $dis_price), 'LR', 0); // U - Price
-            $pdf->Cell($w5, $h2, pdf_encode($dp_shopping_cart_settings['dp_currency_symbol'] . $dis_price_total), 'LR', 1); // Total price
-            //}
-            // ending line of article row
-            $pdf->Cell($w1, 1, "", 'LBR', 0); // Art-no
-            $pdf->Cell($w2, 1, "", 'LBR', 0); // Art-name
-            $pdf->Cell($w3, 1, "", 'LBR', 0); // Amount
-            $pdf->Cell($w4, 1, "", 'LBR', 0); // U - Price
-            $pdf->Cell($w5, 1, "", 'LBR', 1); // Total price
-        }
-        $pdf->SetFont('Arial', '', 9);
-
-        // cart net sum
-//        if ($discount > 0) {
-//    $total_discount = $total*$discount/100;
-//}
-//else {
-//    $total_discount = 0;
-//}
-//if ($tax > 0) {
-//    $total_tax = ($total-$total_discount)*$tax/100;
-//}
-//else {
-//    $total_tax = 0;
-//}
-//$amount = number_format($total+$shipping+$total_tax-$total_discount,2);
-        $total = $dpsc_total;
-
-        if ($dpsc_discount_value > 0) {
-            $total_discount = $total * $dpsc_discount_value / 100;
-        } else {
-            $total_discount = 0.00;
-        }
-        if ($tax > 0) {
-            $total_tax = ($total - $total_discount) * $tax / 100;
-        } else {
-            $total_tax = 0.00;
-        }
-        $shipping = $dpsc_shipping_value;
-        $amount = number_format($total + $shipping + $total_tax - $total_discount, 2);
-        $netsum_str = 'Subtotal:' . ' ' . $dp_shopping_cart_settings['dp_currency_symbol'] . number_format($total,2) . ' ' . $dp_shopping_cart_settings['dp_shop_currency'];
-        $pdf->Cell(0, 6, pdf_encode($netsum_str), 0, 1, 'R');
-
-        // discount
-        $disf_str = pdf_encode('- Discount:') . ' ' . $dp_shopping_cart_settings['dp_currency_symbol'] . number_format($total_discount,2) . ' ' . $dp_shopping_cart_settings['dp_shop_currency'];
-        $pdf->Cell(0, 6, pdf_encode($disf_str), 0, 1, 'R');
-        // discount
-        $taxf_str = pdf_encode('+ Tax:') . ' ' . $dp_shopping_cart_settings['dp_currency_symbol'] . number_format($total_tax,2) . ' ' . $dp_shopping_cart_settings['dp_shop_currency'];
-        $pdf->Cell(0, 6, pdf_encode($taxf_str), 0, 1, 'R');
-        // shipping fee
-        $shipf_str = pdf_encode('+ Shipping fee:') . ' ' . $dp_shopping_cart_settings['dp_currency_symbol'] . number_format($shipping,2) . ' ' . $dp_shopping_cart_settings['dp_shop_currency'];
-        $pdf->Cell(0, 6, pdf_encode($shipf_str), 0, 1, 'R');
-
-
-        $pdf->SetFont('Arial', 'B', 9);
-        $totf_str = pdf_encode('Total:') . ' ' . $dp_shopping_cart_settings['dp_currency_symbol'] . $amount . ' ' . $dp_shopping_cart_settings['dp_shop_currency'];
-        $pdf->Cell(00, 6, pdf_encode($totf_str), 0, 1, 'R');
-    } else {
-
-    }
-
-    $file_name = 'invoice_' . $invoice . '.pdf';
-    $pdf->SetDisplayMode(100);
-    $output_path = DP_PLUGIN_DIR . '/pdf/' . $file_name;
-    //$output_path_test	= PDF_PLUGIN_URL.'pdfinner/bills/test.pdf';
-
-    if ($test == 0) {
-        $pdf->Output($output_path, 'F');
-    } else {
-        $pdf->Output($output_path_test, 'F');
-    }
-}
-
-function pdf_encode($data) {
-
-$data = mb_convert_encoding($data, "iso-8859-1", "auto");
-// utf8_decode() might be also interesting...
-
-return $data;
-}
-
-function address_format($ad, $option='html', $pdf=0) {
-
-$address = NULL;
-$name = $ad[f_name];
-if (strpos($address, 'NAME') !== false) {
-$address = str_replace("NAME", strtoupper($name), $address);
-}
-if (strpos($address, 'name') !== false) {
-$address = str_replace("name", $name, $address);
-}
-
-$address = address_token_replacer($address, 'STREET', $ad);
-$address = address_token_replacer($address, 'HSNO', $ad);
-$address = address_token_replacer($address, 'STRNO', $ad);
-$address = address_token_replacer($address, 'STRNAM', $ad);
-$address = address_token_replacer($address, 'PB', $ad);
-$address = address_token_replacer($address, 'PO', $ad);
-$address = address_token_replacer($address, 'PZONE', $ad);
-$address = address_token_replacer($address, 'CROSSSTR', $ad);
-$address = address_token_replacer($address, 'COLONYN', $ad);
-$address = address_token_replacer($address, 'DISTRICT', $ad);
-$address = address_token_replacer($address, 'REGION', $ad);
-$address = address_token_replacer($address, 'PLACE', $ad);
-$address = address_token_replacer($address, 'STATE', $ad);
-$address = address_token_replacer($address, 'ZIP', $ad);
-$address = address_token_replacer($address, 'COUNTRY', $ad);
-
-foreach ($ad as $p) {
-$pdf->Cell(0, 6, utf8_decode($p), 0, 1);
-}
-return $address;
-}
-
-function address_token_replacer($address, $needle, $replace) {
-$needle_lower = strtolower($needle);
-$key = $needle_lower;
-if (($needle == 'PLACE') || ( $needle == 'place')) {
-$key = 'town';
-}
-
-if (stripos($address, $needle) !== false) {
-if (strpos($address, $needle) !== false) {
-    $address = str_replace($needle, mb_strtoupper($replace["$key"]), $address);
-} else {
-    $address = str_replace($needle_lower, $replace["$key"], $address);
-}
-}
-return $address;
-}
 
 /**
  * This function creates database table, schedules tasks for wp-cron and creates folder for download file and temporary files
@@ -2555,111 +2284,4 @@ function dukapress_rss_dashboard_widget() {
     echo "</div>";
 }
 
-//Image resize
-if(!function_exists('dp_img_resize')){
-	function dp_img_resize($attach_id = null, $img_url = null, $width, $height, $crop = false){
-		$org_img = getimagesize($img_url);
-		if(empty($width)){
-			$width = $org_img[0];
-		}
-		if(empty($height)){
-			$height = $org_img[1];
-		}
-		if($attach_id){
-			// this is an attachment, so we have the ID
-			$image_src = wp_get_attachment_image_src($attach_id, 'full');
-			$file_path = get_attached_file($attach_id);
-		} elseif($img_url){
-			// this is not an attachment, let's use the image url
-			$file_path = parse_url($img_url);
-			$file_path = $_SERVER['DOCUMENT_ROOT'].$file_path['path'];
-			// Look for Multisite Path
-			if(file_exists($file_path) === false){
-				global $blog_id;
-				$file_path = parse_url($img_url);
-				if(preg_match('/files/', $file_path['path'])){
-					$path = explode('/', $file_path['path']);
-					foreach($path as $k => $v){
-						if($v == 'files'){
-							$path[$k-1] = 'wp-content/blogs.dir/'.$blog_id;
-						}
-					}
-					$path = implode('/', $path);
-				}
-				$file_path = $_SERVER['DOCUMENT_ROOT'].$path;
-			}
-			//$file_path = ltrim( $file_path['path'], '/' );
-			//$file_path = rtrim( ABSPATH, '/' ).$file_path['path'];
-			$orig_size = getimagesize($file_path);
-			$image_src[0] = $img_url;
-			$image_src[1] = $orig_size[0];
-			$image_src[2] = $orig_size[1];
-		}
-		$file_info = pathinfo($file_path);
-		// check if file exists
-		$base_file = $file_info['dirname'].'/'.$file_info['filename'].'.'.$file_info['extension'];
-		if(!file_exists($base_file))
-		return;
-		$extension = '.'. $file_info['extension'];
-		// the image path without the extension
-		$no_ext_path = $file_info['dirname'].'/'.$file_info['filename'];
-		$cropped_img_path = $no_ext_path.'-'.$width.'x'.$height.$extension;
-		// checking if the file size is larger than the target size
-		// if it is smaller or the same size, stop right here and return
-		if($image_src[1] > $width){
-			// the file is larger, check if the resized version already exists (for $crop = true but will also work for $crop = false if the sizes match)
-			if(file_exists($cropped_img_path)){
-				$cropped_img_url = str_replace(basename($image_src[0]), basename($cropped_img_path), $image_src[0]);
-				$dp_image = array(
-					'url'   => $cropped_img_url,
-					'width' => $width,
-					'height'    => $height
-				);
-				return $dp_image['url'];
-			}
-			// $crop = false or no height set
-			if($crop == false OR !$height){
-				// calculate the size proportionaly
-				$proportional_size = wp_constrain_dimensions($image_src[1], $image_src[2], $width, $height);
-				$resized_img_path = $no_ext_path.'-'.$proportional_size[0].'x'.$proportional_size[1].$extension;
-				// checking if the file already exists
-				if(file_exists($resized_img_path)){
-					$resized_img_url = str_replace(basename($image_src[0]), basename($resized_img_path), $image_src[0]);
-					$dp_image = array(
-						'url'   => $resized_img_url,
-						'width' => $proportional_size[0],
-						'height'    => $proportional_size[1]
-					);
-					return $dp_image['url'];
-				}
-			}
-			// check if image width is smaller than set width
-			$img_size = getimagesize($file_path);
-			if($img_size[0] <= $width) $width = $img_size[0];
-				// Check if GD Library installed
-				if(!function_exists('imagecreatetruecolor')){
-					echo 'GD Library Error: imagecreatetruecolor does not exist - please contact your webhost and ask them to install the GD library';
-					return;
-				}
-				// no cache files - let's finally resize it
-				$new_img_path = image_resize($file_path, $width.'px', $height.'px', $crop);
-				$new_img_size = getimagesize($new_img_path);
-				$new_img = str_replace(basename($image_src[0]), basename($new_img_path), $image_src[0]);
-				// resized output
-				$dp_image = array(
-					'url'   => $new_img,
-					'width' => $new_img_size[0],
-					'height'    => $new_img_size[1]
-				);
-				return $dp_image['url'];
-		}
-		// default output - without resizing
-		$dp_image = array(
-			'url'   => $image_src[0],
-			'width' => $width,
-			'height'    => $height
-		);
-		return $dp_image['url'];
-	}
-}
 ?>

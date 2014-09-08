@@ -246,33 +246,33 @@ jQuery(document).ready(function () {
         var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 
         if(!regexLetter.test(dpsc_b_fname)){
-            jQuery('#firstNameError').html("Please write only text here");
+            jQuery('#firstNameError').html(dpsc_js.text_error);
             dpsc_b_fname=null;
         }
         if(!regexLetter.test(dpsc_b_lname)){
-            jQuery('#lastNameError').html("Please write only text here");
+            jQuery('#lastNameError').html(dpsc_js.text_error);
             dpsc_b_lname=null;
         }
          if (dpsc_diff_ship) {
             if(!regexLetter.test(dpsc_s_fname)){
                 jQuery('#shipFNameError').show();
-                jQuery('#shipFNameError').html("Please write only text here");
+                jQuery('#shipFNameError').html(dpsc_js.text_error);
                 dpsc_s_fname=null;
             }
             if(!regexLetter.test(dpsc_s_lname)){
                 jQuery('#shipLNameError').show();
-                jQuery('#shipLNameError').html("Please write only text here");
+                jQuery('#shipLNameError').html(dpsc_js.text_error);
                   dpsc_s_lname=null;
             }
          }
         if(!regexNum.test(dpsc_b_phone)){
-            jQuery('#phoneError').html("Please write only numbers here");
+            jQuery('#phoneError').html(dpsc_js.numbers_error);
             dpsc_b_phone=null;
         }
 
         if(!emailReg.test(dpsc_b_email))
             {
-                jQuery('#emailError').html("Please put the right email id");
+                jQuery('#emailError').html(dpsc_js.email_error);
                 dpsc_b_email=null;
             }
         if(!dpsc_b_fname)
