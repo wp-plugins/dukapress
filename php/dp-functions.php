@@ -82,30 +82,28 @@ if(!function_exists('dp_img_resize')){
 				// check if image width is smaller than set width
 				$img_size = getimagesize($file_path);
 				if($img_size[0] <= $width) $width = $img_size[0];
-					// Check if GD Library installed
-					if(!function_exists('imagecreatetruecolor')){
-						echo 'GD Library Error: imagecreatetruecolor does not exist - please contact your webhost and ask them to install the GD library';
-						return;
-					}
+				// Check if GD Library installed
+				if(!function_exists('imagecreatetruecolor')){
+					echo 'GD Library Error: imagecreatetruecolor does not exist - please contact your webhost and ask them to install the GD library';
+					return;
+				}
+				
+				$new_img_path = wp_get_image_editor($file_path);
+				if ( ! is_wp_error( $new_img_path ) ) {
+					$new_img_path->resize( $width, $height, true );
+					$filename = $new_img_path->generate_filename();
+					$new_img_path->save($filename);
+					
 					// no cache files - let's finally resize it
 					$new_img_path = image_resize($file_path, $width.'px', $height.'px', $crop);
-					$new_img_size = getimagesize($new_img_path);
-					$new_img = str_replace(basename($image_src[0]), basename($new_img_path), $image_src[0]);
-					// resized output
-					$dp_image = array(
-						'url'   => $new_img,
-						'width' => $new_img_size[0],
-						'height'    => $new_img_size[1]
-					);
-					return $dp_image['url'];
+					$new_img = str_replace(basename($image_src[0]), basename($filename), $image_src[0]);
+
+					return $new_img;
+				}else{
+					return $img_url;;
+				}	
 			}
-			// default output - without resizing
-			$dp_image = array(
-				'url'   => $image_src[0],
-				'width' => $width,
-				'height'    => $height
-			);
-			return $dp_image['url'];
+			return $image_src[0];
 		}else{
 			return $img_url;
 		}
