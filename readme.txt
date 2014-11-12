@@ -1,11 +1,11 @@
 === DukaPress ===
-Contributors: moshthepitt
+Contributors: moshthepitt, rixeo
 Donate link: http://dukapress.org/about/
 Tags: shopping cart, web shop, cart, shop, Worldpay, Paypal, Alertpay, paypal, e-commerce, ecommerce, MPESA, ZAP, yuCash, Mobile Payments,online duka, duka, online shop, JQZoom, Multiple Currencies
 
 Requires at least: 3.0
 Tested up to: 4.0
-Stable tag: 2.5
+Stable tag: 2.5.4
 
 DukaPress is an open source e-commerce solution built for Wordpress.
 
@@ -110,6 +110,19 @@ Please visit: [Our Forums](http://dukapress.org/forums/ "Our Forums")
 [View Screenshots](http://www.flickr.com/photos/moshthepitt/sets/72157624534741496/ "DukaPress screenshots")
 
 == Changelog ==
+
+= 2.5.4 =
+* Image resizer security fix.
+
+= 2.5.3 =
+* Security fix on image resize function. 
+* Fix on shipping on digital products
+
+= 2.5.2 =
+Fix for sites running on ssl for the plugin url
+
+= 2.5.1 =
+* Bug fix
 
 = 2.5 =
 * Javascript internationalization

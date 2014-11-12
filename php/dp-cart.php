@@ -1014,7 +1014,8 @@ function dpsc_pnj_calculate_cart_price($on_payment = FALSE) {
                 }
             }
 			$digital_file = get_post_meta(intval($dpsc_product['item_number']), 'digital_file', true);
-            if (empty($digital_file)) {
+			$digital_file = trim($digital_file);
+             if(!isset($digital_file) === true && $digital_file != '') {
                 $count += $dpsc_product['quantity'];
             }
         }
@@ -1033,6 +1034,9 @@ remove_action ('dp_more_payment_option', 'dp_add_mercadopago_payment');
 function dpsc_pnj_calculate_shipping_price($shipping_weight = FALSE, $sub_total_price = FALSE, $number_of_items_in_cart = FALSE) {
     $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
     $shipping_method = $dp_shopping_cart_settings['dp_shipping_calc_method'];
+	if($number_of_items_in_cart === 0){
+		$shipping_method = 'free';
+	}
     switch ($shipping_method) {
         case 'free':
             $shipping_price = 0.00;
