@@ -2,13 +2,13 @@
 /*
 Plugin Name: DukaPress Shopping Cart
 Description: DukaPress Shopping Cart
-Version: 2.5.5
+Version: 2.5.6
 Author: Rixeo and Nickel Pro
 Author URI: http://dukapress.org/
 Plugin URI: http://dukapress.org/
 */
 
-$dp_version = 2.55;
+$dp_version = 2.56;
 
 session_start();
 define('DP_PLUGIN_URL', plugin_dir_url(__FILE__));
