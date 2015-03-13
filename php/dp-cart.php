@@ -286,6 +286,7 @@ function dpsc_print_checkout_table_html($dpsc_discount_value = 0) {
         }
         $dpsc_total = 0.00;
         $dpsc_tax_rate = !empty($dp_shopping_cart_settings['tax']) ? $dp_shopping_cart_settings['tax'] : 0;
+		
         $dpsc_total_discount = 0.00;
         $dpsc_total_shipping = 0.00;
         $dpsc_total_tax = 0.00;
@@ -362,16 +363,15 @@ function dpsc_print_checkout_table_html($dpsc_discount_value = 0) {
             }
             $dpsc_tax_total_at_end = '';
             if (isset($dp_shopping_cart_settings['tax']) && $dp_shopping_cart_settings['tax'] > 0) {
-                $dpsc_total_tax = ($dpsc_total - $dpsc_total_discount) * $dp_shopping_cart_settings['tax'] / 100;
-                $dpsc_tax_total_at_end = '<tr id="dpsc-checkout-total-tax"><th>Tax:</th><td>+' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span id="tax_total_price">' . number_format($dpsc_total_tax, 2) . '</span></td></tr>';
+				$dpsc_total_tax = ($dpsc_total - $dpsc_total_discount) * $dp_shopping_cart_settings['tax'] / 100;
+				$dpsc_tax_total_at_end = '<tr id="dpsc-checkout-total-tax"><th>Tax:</th><td>+' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span id="tax_total_price">' . number_format($dpsc_total_tax, 2) . '</span></td></tr>';
             }
-
             list($dpsc_total, $dpsc_shipping_weight, $products, $number_of_items_in_cart) = dpsc_pnj_calculate_cart_price();
             $dpsc_shipping_value = dpsc_pnj_calculate_shipping_price($dpsc_shipping_weight, $dpsc_total, $number_of_items_in_cart);
             $dp_shipping_price_html = '<span id="shipping_total_price">0.00</span> ';
             $dp_shipping_calculate_html = '';
             //Get shhipping value from session variable
-            if (is_numeric($dpsc_shipping_value) || (isset($_SESSION['dpsc_shiping_price']) && is_numeric($_SESSION['dpsc_shiping_price']))) {
+            if (is_numeric($dpsc_shipping_value)) {
                 $dpsc_shipping_value_1 = is_numeric($dpsc_shipping_value) ? $dpsc_shipping_value : $_SESSION['dpsc_shiping_price'];
                 $dp_shipping_price = $dpsc_shipping_value_1;
                 $dp_shipping_price_html = '<span id="shipping_total_price">' . number_format($dp_shipping_price, 2) . '</span> ';
@@ -715,7 +715,7 @@ function dpsc_on_payment_save($dpsc_total = FALSE, $dpsc_shipping_value = FALSE,
     $tax = $dp_shopping_cart_settings['tax'];
     if (!$tax) {
         $tax = 0;
-    }
+	}
     if (!$dpsc_shipping_value || !is_numeric($dpsc_shipping_value)) {
         $dpsc_shipping_value = 0.00;
     }
@@ -1014,7 +1014,8 @@ function dpsc_pnj_calculate_cart_price($on_payment = FALSE) {
                 }
             }
 			$digital_file = get_post_meta(intval($dpsc_product['item_number']), 'digital_file', true);
-            if (empty($digital_file)) {
+			$digital_file = trim($digital_file);
+             if(empty($digital_file)) {
                 $count += $dpsc_product['quantity'];
             }
         }
@@ -1033,6 +1034,9 @@ remove_action ('dp_more_payment_option', 'dp_add_mercadopago_payment');
 function dpsc_pnj_calculate_shipping_price($shipping_weight = FALSE, $sub_total_price = FALSE, $number_of_items_in_cart = FALSE) {
     $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
     $shipping_method = $dp_shopping_cart_settings['dp_shipping_calc_method'];
+	if($number_of_items_in_cart === 0){
+		$shipping_method = 'free';
+	}
     switch ($shipping_method) {
         case 'free':
             $shipping_price = 0.00;
@@ -1102,7 +1106,11 @@ function dpsc_pnj_calculate_shipping_price($shipping_weight = FALSE, $sub_total_
             $per_item_rate = $dp_shopping_cart_settings['dp_shipping_per_item_rate'];
             $shipping_price = $per_item_rate * $number_of_items_in_cart;
             break;
-
+			
+		case 'item_numbers':
+			$shipping_price = 0.00;
+            break;
+			
         case 'ship_pro':
             $shipping_price = 'ship_pro';
             break;

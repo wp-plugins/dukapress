@@ -5,13 +5,13 @@
  * We want to resize images using WordPress image resize function
  */
 if(!function_exists('dp_img_resize')){
-	function dp_img_resize($attach_id = null, $img_url = null, $width, $height, $crop = true){
+	function dp_img_resize($attach_id = null, $img_url = null, $width = false, $height = false, $crop = true){
 		if($width && $height){
 			if($attach_id){
 				// this is an attachment, so we have the ID
 				$image_src = wp_get_attachment_image_src($attach_id, 'full');
 				$file_path = get_attached_file($attach_id);
-			} elseif($img_url){
+			} else if($img_url){
 				// this is not an attachment, let's use the image url
 				$file_path = parse_url($img_url);
 				$file_path = $_SERVER['DOCUMENT_ROOT'].$file_path['path'];
@@ -37,77 +37,91 @@ if(!function_exists('dp_img_resize')){
 				$image_src[1] = $orig_size[0];
 				$image_src[2] = $orig_size[1];
 			}
-			$file_info = pathinfo($file_path);
-			// check if file exists
-			$base_file = $file_info['dirname'].'/'.$file_info['filename'].'.'.$file_info['extension'];
-			if(!file_exists($base_file))
-			return;
-			$extension = '.'. $file_info['extension'];
-			// the image path without the extension
-			$no_ext_path = $file_info['dirname'].'/'.$file_info['filename'];
-			$cropped_img_path = $no_ext_path.'-'.$width.'x'.$height.$extension;
-			if(file_exists($cropped_img_path))
-				if(time() - @filemtime(utf8_decode($cropped_img_path)) >= 2*24*60*60){
-					unlink($cropped_img_path);
-				}
-			// checking if the file size is larger than the target size
-			// if it is smaller or the same size, stop right here and return
-			if($image_src[1] > $width){
-				// the file is larger, check if the resized version already exists (for $crop = true but will also work for $crop = false if the sizes match)
-				if(file_exists($cropped_img_path)){
-					$cropped_img_url = str_replace(basename($image_src[0]), basename($cropped_img_path), $image_src[0]);
-					$dp_image = array(
-						'url'   => $cropped_img_url,
-						'width' => $width,
-						'height'    => $height
-					);
-					return $dp_image['url'];
-				}
-				// $crop = false or no height set
-				if($crop == false OR !$height){
-					// calculate the size proportionaly
-					$proportional_size = wp_constrain_dimensions($image_src[1], $image_src[2], $width, $height);
-					$resized_img_path = $no_ext_path.'-'.$proportional_size[0].'x'.$proportional_size[1].$extension;
-					// checking if the file already exists
-					if(file_exists($resized_img_path)){
-						$resized_img_url = str_replace(basename($image_src[0]), basename($resized_img_path), $image_src[0]);
+			if(dp_is_image($file_path)){
+				$file_info = pathinfo($file_path);
+				// check if file exists
+				$base_file = $file_info['dirname'].'/'.$file_info['filename'].'.'.$file_info['extension'];
+				if(!file_exists($base_file))
+				return;
+				$extension = '.'. $file_info['extension'];
+				// the image path without the extension
+				$no_ext_path = $file_info['dirname'].'/'.$file_info['filename'];
+				$cropped_img_path = $no_ext_path.'-'.$width.'x'.$height.$extension;
+				if(file_exists($cropped_img_path))
+					if(time() - @filemtime(utf8_decode($cropped_img_path)) >= 2*24*60*60){
+						unlink($cropped_img_path);
+					}
+				// checking if the file size is larger than the target size
+				// if it is smaller or the same size, stop right here and return
+				if($image_src[1] > $width){
+					// the file is larger, check if the resized version already exists (for $crop = true but will also work for $crop = false if the sizes match)
+					if(file_exists($cropped_img_path)){
+						$cropped_img_url = str_replace(basename($image_src[0]), basename($cropped_img_path), $image_src[0]);
 						$dp_image = array(
-							'url'   => $resized_img_url,
-							'width' => $proportional_size[0],
-							'height'    => $proportional_size[1]
+							'url'   => $cropped_img_url,
+							'width' => $width,
+							'height'    => $height
 						);
 						return $dp_image['url'];
 					}
-				}
-				// check if image width is smaller than set width
-				$img_size = getimagesize($file_path);
-				if($img_size[0] <= $width) $width = $img_size[0];
-				// Check if GD Library installed
-				if(!function_exists('imagecreatetruecolor')){
-					echo 'GD Library Error: imagecreatetruecolor does not exist - please contact your webhost and ask them to install the GD library';
-					return;
-				}
-				
-				$new_img_path = wp_get_image_editor($file_path);
-				if ( ! is_wp_error( $new_img_path ) ) {
-					$new_img_path->resize( $width, $height, true );
-					$filename = $new_img_path->generate_filename();
-					$new_img_path->save($filename);
+					// $crop = false or no height set
+					if($crop == false OR !$height){
+						// calculate the size proportionaly
+						$proportional_size = wp_constrain_dimensions($image_src[1], $image_src[2], $width, $height);
+						$resized_img_path = $no_ext_path.'-'.$proportional_size[0].'x'.$proportional_size[1].$extension;
+						// checking if the file already exists
+						if(file_exists($resized_img_path)){
+							$resized_img_url = str_replace(basename($image_src[0]), basename($resized_img_path), $image_src[0]);
+							$dp_image = array(
+								'url'   => $resized_img_url,
+								'width' => $proportional_size[0],
+								'height'    => $proportional_size[1]
+							);
+							return $dp_image['url'];
+						}
+					}
+					// check if image width is smaller than set width
+					$img_size = getimagesize($file_path);
+					if($img_size[0] <= $width) $width = $img_size[0];
+					// Check if GD Library installed
+					if(!function_exists('imagecreatetruecolor')){
+						echo 'GD Library Error: imagecreatetruecolor does not exist - please contact your webhost and ask them to install the GD library';
+						return;
+					}
 					
-					// no cache files - let's finally resize it
-					$new_img_path = image_resize($file_path, $width.'px', $height.'px', $crop);
-					$new_img = str_replace(basename($image_src[0]), basename($filename), $image_src[0]);
+					$new_img_path = wp_get_image_editor($file_path);
+					if ( ! is_wp_error( $new_img_path ) ) {
+						$new_img_path->resize( $width, $height, true );
+						$filename = $new_img_path->generate_filename();
+						$new_img_path->save($filename);
+						
+						// no cache files - let's finally resize it
+						$new_img_path = image_resize($file_path, $width.'px', $height.'px', $crop);
+						$new_img = str_replace(basename($image_src[0]), basename($filename), $image_src[0]);
 
-					return $new_img;
-				}else{
-					return $img_url;;
-				}	
+						return $new_img;
+					}else{
+						return $img_url;;
+					}	
+				}
+				return $image_src[0];
 			}
-			return $image_src[0];
 		}else{
-			return $img_url;
+			return false;
 		}
 		
+	}
+}
+if(!function_exists('dp_is_image')){
+	function dp_is_image($path){
+		$a = getimagesize($path);
+		$image_type = $a[2];
+		 
+		if(in_array($image_type , array(IMAGETYPE_GIF , IMAGETYPE_JPEG ,IMAGETYPE_PNG , IMAGETYPE_BMP)))
+		{
+			return true;
+		}
+		return false;
 	}
 }
 
