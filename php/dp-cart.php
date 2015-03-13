@@ -382,11 +382,11 @@ function dpsc_print_checkout_table_html($dpsc_discount_value = 0) {
 			}
 
             list($dpsc_total, $dpsc_shipping_weight, $products, $number_of_items_in_cart) = dpsc_pnj_calculate_cart_price();
-            $dpsc_shipping_value = dpsc_pnj_calculate_shipping_price($dpsc_shipping_weight, $dpsc_total, $number_of_items_in_cart);
+            $dpsc_shipping_value = dpsc_pnj_calculate_shipping_price($dpsc_shipping_weight, number_format($dpsc_total, 2), $number_of_items_in_cart);
             $dp_shipping_price_html = '<span id="shipping_total_price">0.00</span> ';
             $dp_shipping_calculate_html = '';
             //Get shhipping value from session variable
-            if (is_numeric($dpsc_shipping_value) || (isset($_SESSION['dpsc_shiping_price']) && is_numeric($_SESSION['dpsc_shiping_price']))) {
+            if (is_numeric($dpsc_shipping_value)) {
                 $dpsc_shipping_value_1 = is_numeric($dpsc_shipping_value) ? $dpsc_shipping_value : $_SESSION['dpsc_shiping_price'];
                 $dp_shipping_price = $dpsc_shipping_value_1;
                 $dp_shipping_price_html = '<span id="shipping_total_price">' . number_format($dp_shipping_price, 2) . '</span> ';
