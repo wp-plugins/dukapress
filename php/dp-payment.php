@@ -86,9 +86,7 @@ function dps_zero_price_check($total,$discount,$shipping){
 	
 	$dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
     $tax = $dp_shopping_cart_settings['tax'];
-	if ( is_plugin_active( 'dukapress-shipping/dukapress_shipping.php' ) ) {
-		$tax = dpsc_shipping_state_tax();
-	}
+
 	if ($discount > 0) {
 		$total_discount = $total*$discount/100;
 	}
@@ -257,9 +255,7 @@ function dpsc_paypal_payment($dpsc_total = FALSE, $dpsc_shipping_value = FALSE, 
         if ($dp_shopping_cart_settings['tax'] > 0) {
             $tax_rate = $dp_shopping_cart_settings['tax'];
         }
-		if ( is_plugin_active( 'dukapress-shipping/dukapress_shipping.php' ) ) {
-			$tax_rate = dpsc_shipping_state_tax();
-		}
+		
         foreach ($dpsc_products as $dpsc_product) {
             $dpsc_var = '';
             $var_paypal_field = '';
@@ -309,16 +305,9 @@ function dpsc_authorize_payment($dpsc_total = FALSE, $dpsc_shipping_value = FALS
         }
         if ($dp_shopping_cart_settings['tax'] > 0) {
             $tax_rate = $dp_shopping_cart_settings['tax'];
-			if ( is_plugin_active( 'dukapress-shipping/dukapress_shipping.php' ) ) {
-				$tax_rate = dpsc_shipping_state_tax();
-			}
+			
             $total_tax = ($dpsc_total - $total_discount) * $tax_rate / 100;
-        }else{
-			if ( is_plugin_active( 'dukapress-shipping/dukapress_shipping.php' ) ) {
-				$tax_rate = dpsc_shipping_state_tax();
-				$total_tax = ($dpsc_total - $total_discount) * $tax_rate / 100;
-			}
-		}
+        }
         if ($dpsc_shipping_value) {
             $total_shipping = $dpsc_shipping_value;
         }
@@ -399,14 +388,9 @@ function dpsc_worldpay_payment($dpsc_total = FALSE, $dpsc_shipping_value = FALSE
         }
         if ($dp_shopping_cart_settings['tax'] > 0) {
             $tax_rate = $dp_shopping_cart_settings['tax'];
-			if ( is_plugin_active( 'dukapress-shipping/dukapress_shipping.php' ) ) {
-				$tax_rate = dpsc_shipping_state_tax();
-			}
+	
             $total_tax = ($dpsc_total - $total_discount) * $tax_rate / 100;
-        }else if ( is_plugin_active( 'dukapress-shipping/dukapress_shipping.php' ) ) {
-			$tax_rate = dpsc_shipping_state_tax();
-			$total_tax = ($dpsc_total - $total_discount) * $tax_rate / 100;
-		}
+        }
         if ($dpsc_shipping_value) {
             $total_shipping = $dpsc_shipping_value;
         }
@@ -462,14 +446,9 @@ function dpsc_alertpay_payment($dpsc_total = FALSE, $dpsc_shipping_value = FALSE
         }
         if ($dp_shopping_cart_settings['tax'] > 0) {
             $tax_rate = $dp_shopping_cart_settings['tax'];
-			if ( is_plugin_active( 'dukapress-shipping/dukapress_shipping.php' ) ) {
-				$tax_rate = dpsc_shipping_state_tax();
-			}
+
             $total_tax = ($dpsc_total - $total_discount) * $tax_rate / 100;
-        }else if ( is_plugin_active( 'dukapress-shipping/dukapress_shipping.php' ) ) {
-			$tax_rate = dpsc_shipping_state_tax();
-			$total_tax = ($dpsc_total - $total_discount) * $tax_rate / 100;
-		}
+        }
         if ($dpsc_shipping_value) {
             $total_shipping = $dpsc_shipping_value;
         }

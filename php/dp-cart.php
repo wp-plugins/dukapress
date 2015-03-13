@@ -286,9 +286,7 @@ function dpsc_print_checkout_table_html($dpsc_discount_value = 0) {
         }
         $dpsc_total = 0.00;
         $dpsc_tax_rate = !empty($dp_shopping_cart_settings['tax']) ? $dp_shopping_cart_settings['tax'] : 0;
-		if ( is_plugin_active( 'dukapress-shipping/dukapress_shipping.php' ) ) {
-			$dpsc_tax_rate = dpsc_shipping_state_tax();
-		}
+		
         $dpsc_total_discount = 0.00;
         $dpsc_total_shipping = 0.00;
         $dpsc_total_tax = 0.00;
@@ -365,24 +363,11 @@ function dpsc_print_checkout_table_html($dpsc_discount_value = 0) {
             }
             $dpsc_tax_total_at_end = '';
             if (isset($dp_shopping_cart_settings['tax']) && $dp_shopping_cart_settings['tax'] > 0) {
-				if ( is_plugin_active( 'dukapress-shipping/dukapress_shipping.php' ) ) {
-					$dpsc_tax_rate = dpsc_shipping_state_tax();
-					$dpsc_total_tax = ($dpsc_total - $dpsc_total_discount) * $dpsc_tax_rate / 100;
-					$dpsc_tax_total_at_end = '<tr id="dpsc-checkout-total-tax"><th>Tax:</th><td>+' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span id="tax_total_price">' . number_format($dpsc_total_tax, 2) . '</span></td></tr>';
-				}else{
-					$dpsc_total_tax = ($dpsc_total - $dpsc_total_discount) * $dp_shopping_cart_settings['tax'] / 100;
-					$dpsc_tax_total_at_end = '<tr id="dpsc-checkout-total-tax"><th>Tax:</th><td>+' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span id="tax_total_price">' . number_format($dpsc_total_tax, 2) . '</span></td></tr>';
-				}
-            }else{
-				if ( is_plugin_active( 'dukapress-shipping/dukapress_shipping.php' ) ) {
-					$dpsc_tax_rate = dpsc_shipping_state_tax();
-					$dpsc_total_tax = ($dpsc_total - $dpsc_total_discount) * $dpsc_tax_rate / 100;
-					$dpsc_tax_total_at_end = '<tr id="dpsc-checkout-total-tax"><th>Tax:</th><td>+' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span id="tax_total_price">' . number_format($dpsc_total_tax, 2) . '</span></td></tr>';
-				}
-			}
-
+				$dpsc_total_tax = ($dpsc_total - $dpsc_total_discount) * $dp_shopping_cart_settings['tax'] / 100;
+				$dpsc_tax_total_at_end = '<tr id="dpsc-checkout-total-tax"><th>Tax:</th><td>+' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span id="tax_total_price">' . number_format($dpsc_total_tax, 2) . '</span></td></tr>';
+            }
             list($dpsc_total, $dpsc_shipping_weight, $products, $number_of_items_in_cart) = dpsc_pnj_calculate_cart_price();
-            $dpsc_shipping_value = dpsc_pnj_calculate_shipping_price($dpsc_shipping_weight, number_format($dpsc_total, 2), $number_of_items_in_cart);
+            $dpsc_shipping_value = dpsc_pnj_calculate_shipping_price($dpsc_shipping_weight, $dpsc_total, $number_of_items_in_cart);
             $dp_shipping_price_html = '<span id="shipping_total_price">0.00</span> ';
             $dp_shipping_calculate_html = '';
             //Get shhipping value from session variable
@@ -730,8 +715,6 @@ function dpsc_on_payment_save($dpsc_total = FALSE, $dpsc_shipping_value = FALSE,
     $tax = $dp_shopping_cart_settings['tax'];
     if (!$tax) {
         $tax = 0;
-	} else if ( is_plugin_active( 'dukapress-shipping/dukapress_shipping.php' ) ) {
-		$tax = dpsc_shipping_state_tax();
 	}
     if (!$dpsc_shipping_value || !is_numeric($dpsc_shipping_value)) {
         $dpsc_shipping_value = 0.00;
@@ -1032,7 +1015,7 @@ function dpsc_pnj_calculate_cart_price($on_payment = FALSE) {
             }
 			$digital_file = get_post_meta(intval($dpsc_product['item_number']), 'digital_file', true);
 			$digital_file = trim($digital_file);
-             if(!isset($digital_file) === true && $digital_file != '') {
+             if(empty($digital_file)) {
                 $count += $dpsc_product['quantity'];
             }
         }
@@ -1125,11 +1108,7 @@ function dpsc_pnj_calculate_shipping_price($shipping_weight = FALSE, $sub_total_
             break;
 			
 		case 'item_numbers':
-			if ( is_plugin_active( 'dukapress-shipping/dukapress_shipping.php' ) ) {
-				$shipping_price = dpsc_shipping_item_cost($number_of_items_in_cart);
-			}else{
-				$shipping_price = 0.00;
-			}
+			$shipping_price = 0.00;
             break;
 			
         case 'ship_pro':
