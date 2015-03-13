@@ -444,7 +444,8 @@ function dpsc_pnj_grid_display($atts, $content=null) {
                     'prev_text' => __('&laquo;'),
                     'next_text' => __('&raquo;'),
                     'total' => ceil($count / $per_page),
-                    'current' => $pagenum
+                    'current' => $pagenum,
+					'add_args' => false
                 );
         $page_links = paginate_links($pagination_array);
 

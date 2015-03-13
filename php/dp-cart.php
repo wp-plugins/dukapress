@@ -286,6 +286,9 @@ function dpsc_print_checkout_table_html($dpsc_discount_value = 0) {
         }
         $dpsc_total = 0.00;
         $dpsc_tax_rate = !empty($dp_shopping_cart_settings['tax']) ? $dp_shopping_cart_settings['tax'] : 0;
+		if ( is_plugin_active( 'dukapress-shipping/dukapress_shipping.php' ) ) {
+			$dpsc_tax_rate = dpsc_shipping_state_tax();
+		}
         $dpsc_total_discount = 0.00;
         $dpsc_total_shipping = 0.00;
         $dpsc_total_tax = 0.00;
@@ -362,9 +365,21 @@ function dpsc_print_checkout_table_html($dpsc_discount_value = 0) {
             }
             $dpsc_tax_total_at_end = '';
             if (isset($dp_shopping_cart_settings['tax']) && $dp_shopping_cart_settings['tax'] > 0) {
-                $dpsc_total_tax = ($dpsc_total - $dpsc_total_discount) * $dp_shopping_cart_settings['tax'] / 100;
-                $dpsc_tax_total_at_end = '<tr id="dpsc-checkout-total-tax"><th>Tax:</th><td>+' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span id="tax_total_price">' . number_format($dpsc_total_tax, 2) . '</span></td></tr>';
-            }
+				if ( is_plugin_active( 'dukapress-shipping/dukapress_shipping.php' ) ) {
+					$dpsc_tax_rate = dpsc_shipping_state_tax();
+					$dpsc_total_tax = ($dpsc_total - $dpsc_total_discount) * $dpsc_tax_rate / 100;
+					$dpsc_tax_total_at_end = '<tr id="dpsc-checkout-total-tax"><th>Tax:</th><td>+' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span id="tax_total_price">' . number_format($dpsc_total_tax, 2) . '</span></td></tr>';
+				}else{
+					$dpsc_total_tax = ($dpsc_total - $dpsc_total_discount) * $dp_shopping_cart_settings['tax'] / 100;
+					$dpsc_tax_total_at_end = '<tr id="dpsc-checkout-total-tax"><th>Tax:</th><td>+' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span id="tax_total_price">' . number_format($dpsc_total_tax, 2) . '</span></td></tr>';
+				}
+            }else{
+				if ( is_plugin_active( 'dukapress-shipping/dukapress_shipping.php' ) ) {
+					$dpsc_tax_rate = dpsc_shipping_state_tax();
+					$dpsc_total_tax = ($dpsc_total - $dpsc_total_discount) * $dpsc_tax_rate / 100;
+					$dpsc_tax_total_at_end = '<tr id="dpsc-checkout-total-tax"><th>Tax:</th><td>+' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span id="tax_total_price">' . number_format($dpsc_total_tax, 2) . '</span></td></tr>';
+				}
+			}
 
             list($dpsc_total, $dpsc_shipping_weight, $products, $number_of_items_in_cart) = dpsc_pnj_calculate_cart_price();
             $dpsc_shipping_value = dpsc_pnj_calculate_shipping_price($dpsc_shipping_weight, $dpsc_total, $number_of_items_in_cart);
@@ -715,7 +730,9 @@ function dpsc_on_payment_save($dpsc_total = FALSE, $dpsc_shipping_value = FALSE,
     $tax = $dp_shopping_cart_settings['tax'];
     if (!$tax) {
         $tax = 0;
-    }
+	} else if ( is_plugin_active( 'dukapress-shipping/dukapress_shipping.php' ) ) {
+		$tax = dpsc_shipping_state_tax();
+	}
     if (!$dpsc_shipping_value || !is_numeric($dpsc_shipping_value)) {
         $dpsc_shipping_value = 0.00;
     }
@@ -1106,7 +1123,15 @@ function dpsc_pnj_calculate_shipping_price($shipping_weight = FALSE, $sub_total_
             $per_item_rate = $dp_shopping_cart_settings['dp_shipping_per_item_rate'];
             $shipping_price = $per_item_rate * $number_of_items_in_cart;
             break;
-
+			
+		case 'item_numbers':
+			if ( is_plugin_active( 'dukapress-shipping/dukapress_shipping.php' ) ) {
+				$shipping_price = dpsc_shipping_item_cost($number_of_items_in_cart);
+			}else{
+				$shipping_price = 0.00;
+			}
+            break;
+			
         case 'ship_pro':
             $shipping_price = 'ship_pro';
             break;
