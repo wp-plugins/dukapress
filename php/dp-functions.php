@@ -5,7 +5,7 @@
  * We want to resize images using WordPress image resize function
  */
 if(!function_exists('dp_img_resize')){
-	function dp_img_resize($attach_id = null, $img_url = null, $width = false, $height = false, $crop = true){
+	function dp_img_resize($attach_id = null, $img_url = null, $width = false, $height = false, $crop = false){
 		if($width && $height){
 			if($attach_id){
 				// this is an attachment, so we have the ID

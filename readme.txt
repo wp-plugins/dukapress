@@ -5,7 +5,7 @@ Tags: shopping cart, web shop, cart, shop, Worldpay, Paypal, Alertpay, paypal, e
 
 Requires at least: 3.0
 Tested up to: 4.1.1
-Stable tag: 2.5.6
+Stable tag: 2.5.7
 
 DukaPress is an open source e-commerce solution built for Wordpress.
 
@@ -111,6 +111,10 @@ Please visit: [Our Forums](http://dukapress.org/forums/ "Our Forums")
 
 == Changelog ==
 
+= 2.5.7 =
+* Fix in currency converter
+* Added Turkish Lira PayPal Support
+* Default image handling will now not crop images
 
 = 2.5.6 =
 * Added terms and condition link for checkout page. This can be set up in the Dukapress ettings page
