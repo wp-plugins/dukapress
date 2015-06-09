@@ -131,6 +131,7 @@ jQuery(document).ready(function () {
         jQuery('#shipLNameError').hide();
         jQuery('#shipFNameError').hide();
         jQuery('#shipCityError').hide();
+		jQuery('#termsError').hide();
 
         var check_other_shipping = jQuery('input[name=other_shipping_present]').val();
 
@@ -199,6 +200,10 @@ jQuery(document).ready(function () {
         dpsc_s_state =jQuery('#s_state').val();
         var dpsc_s_zipcode =null;
         dpsc_s_zipcode =jQuery('#s_zipcode').val();
+		
+		var dpsc_terms_input_present = jQuery( "#dpsc_terms_input" ).length;
+		
+		var dpsc_terms = true;
 
         var dpsc_diff_ship = jQuery('input[name=dpsc_contact_different_ship_address]').is(':checked');
 
@@ -207,6 +212,10 @@ jQuery(document).ready(function () {
         }
         else {
             var diff_ship = 'false';
+        }
+		
+		if (dpsc_terms_input_present) {
+            dpsc_terms = jQuery('input[name=dpsc_terms]').is(':checked');
         }
 
 
@@ -324,6 +333,11 @@ jQuery(document).ready(function () {
             jQuery('#phoneError').show();
 
         }
+		if(!dpsc_terms)
+        {
+            jQuery('#termsError').show();
+
+        }
 
         if (dpsc_diff_ship) {
             if(!dpsc_b_phone || !dpsc_b_email || !dpsc_b_zipcode || !dpsc_b_state || !dpsc_b_city || !dpsc_b_address || !dpsc_b_country || !dpsc_b_lname || !dpsc_b_fname  || !dpsc_s_fname || !dpsc_s_lname || !dpsc_s_address || !dpsc_s_city || !dpsc_s_state || !dpsc_s_zipcode || !dpsc_s_country )
@@ -331,7 +345,7 @@ jQuery(document).ready(function () {
                 return;
             }
         }
-        if(!dpsc_b_phone || !dpsc_b_email || !dpsc_b_zipcode || !dpsc_b_state || !dpsc_b_city || !dpsc_b_address || !dpsc_b_country || !dpsc_b_lname || !dpsc_b_fname)
+        if(!dpsc_b_phone || !dpsc_b_email || !dpsc_b_zipcode || !dpsc_b_state || !dpsc_b_city || !dpsc_b_address || !dpsc_b_country || !dpsc_b_lname || !dpsc_b_fname || !dpsc_terms)
         {
             return ;
         }

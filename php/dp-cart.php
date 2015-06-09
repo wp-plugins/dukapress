@@ -128,14 +128,7 @@ add_action('wp_ajax_dpsc_empty_your_cart', 'dpsc_empty_cart');
 add_action('wp_ajax_nopriv_dpsc_empty_your_cart', 'dpsc_empty_cart');
 
 function dpsc_empty_cart() {
-    unset($_SESSION['dpsc_shiping_price']);
-    $products = $_SESSION['dpsc_products'];
-    if (is_array($products)) {
-        foreach ($products as $key => $item) {
-            unset($products[$key]);
-        }
-    }
-    $_SESSION['dpsc_products'] = $products;
+    dpsc_clear_cart();
     ob_start();
     echo dpsc_print_cart_html();
     $output = ob_get_contents();
@@ -148,6 +141,18 @@ function dpsc_empty_cart() {
     echo "jQuery('form.product_form').removeClass('product_in_cart');";
     echo "jQuery('span.dpsc_in_cart').html('&nbsp;');";
     die();
+}
+
+//Clear cart
+function dpsc_clear_cart() {
+	unset($_SESSION['dpsc_shiping_price']);
+    $products = $_SESSION['dpsc_products'];
+    if (is_array($products)) {
+        foreach ($products as $key => $item) {
+            unset($products[$key]);
+        }
+    }
+    $_SESSION['dpsc_products'] = $products;
 }
 
 /**
@@ -235,7 +240,9 @@ function dpsc_update_quantity() {
 add_shortcode('dpsc_checkout', 'dpsc_checkout_shortcode');
 
 function dpsc_checkout_shortcode($atts, $content=NULL) {
-    $content .= '<div class="dpsc-checkout">' . dpsc_print_checkout_html() . '</div>';
+	extract(shortcode_atts(array(
+				'layout' => 'flat'), $atts));
+    $content .= '<div class="dpsc-checkout">' . dpsc_print_checkout_html($layout) . '</div>';
     return $content;
 }
 
@@ -243,7 +250,7 @@ function dpsc_checkout_shortcode($atts, $content=NULL) {
  * Returns the HTML for checkout
  *
  */
-function dpsc_print_checkout_html() {
+function dpsc_print_checkout_html($layout = 'flat') {
     global $wpdb;
     $output = '';
     $dpsc_products = $_SESSION['dpsc_products'];
@@ -257,8 +264,16 @@ function dpsc_print_checkout_html() {
                 $output .= '<div class="clear"></div>' . dpsc_print_checkout_discount_form();
             }
             $output .= $dp_shipping_calculate_html;
-            $output .= dpsc_pnj_show_contact_information();
+            $output .= dpsc_pnj_show_contact_information($layout);
             if (count($dp_shopping_cart_settings['dp_po']) > 0) {
+				if(!empty($dp_shopping_cart_settings['terms_url'])){
+					$output .= '<div class="clear"></div>';
+					$output .= '<div id="dpsc_terms_accept">';
+					$output .= '<label for="dpsc_terms_input"><input type="checkbox"  name="dpsc_terms_input"/> 
+								 <a href="'.$dp_shopping_cart_settings['terms_url'].'" target="_blank">' . __('I Accept Terms and Conditions', "dp-lang") . '</a></label><span class="dpsc_error_msg" id="termsError">';
+					$output .= '</div>';
+					
+				}
                 $output .= '<div class="clear"></div>' . dpsc_print_checkout_payment_form();
             }
         } else {
@@ -286,6 +301,7 @@ function dpsc_print_checkout_table_html($dpsc_discount_value = 0) {
         }
         $dpsc_total = 0.00;
         $dpsc_tax_rate = !empty($dp_shopping_cart_settings['tax']) ? $dp_shopping_cart_settings['tax'] : 0;
+		
         $dpsc_total_discount = 0.00;
         $dpsc_total_shipping = 0.00;
         $dpsc_total_tax = 0.00;
@@ -362,16 +378,15 @@ function dpsc_print_checkout_table_html($dpsc_discount_value = 0) {
             }
             $dpsc_tax_total_at_end = '';
             if (isset($dp_shopping_cart_settings['tax']) && $dp_shopping_cart_settings['tax'] > 0) {
-                $dpsc_total_tax = ($dpsc_total - $dpsc_total_discount) * $dp_shopping_cart_settings['tax'] / 100;
-                $dpsc_tax_total_at_end = '<tr id="dpsc-checkout-total-tax"><th>Tax:</th><td>+' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span id="tax_total_price">' . number_format($dpsc_total_tax, 2) . '</span></td></tr>';
+				$dpsc_total_tax = ($dpsc_total - $dpsc_total_discount) * $dp_shopping_cart_settings['tax'] / 100;
+				$dpsc_tax_total_at_end = '<tr id="dpsc-checkout-total-tax"><th>Tax:</th><td>+' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span id="tax_total_price">' . number_format($dpsc_total_tax, 2) . '</span></td></tr>';
             }
-
             list($dpsc_total, $dpsc_shipping_weight, $products, $number_of_items_in_cart) = dpsc_pnj_calculate_cart_price();
             $dpsc_shipping_value = dpsc_pnj_calculate_shipping_price($dpsc_shipping_weight, $dpsc_total, $number_of_items_in_cart);
             $dp_shipping_price_html = '<span id="shipping_total_price">0.00</span> ';
             $dp_shipping_calculate_html = '';
             //Get shhipping value from session variable
-            if (is_numeric($dpsc_shipping_value) || (isset($_SESSION['dpsc_shiping_price']) && is_numeric($_SESSION['dpsc_shiping_price']))) {
+            if (is_numeric($dpsc_shipping_value)) {
                 $dpsc_shipping_value_1 = is_numeric($dpsc_shipping_value) ? $dpsc_shipping_value : $_SESSION['dpsc_shiping_price'];
                 $dp_shipping_price = $dpsc_shipping_value_1;
                 $dp_shipping_price_html = '<span id="shipping_total_price">' . number_format($dp_shipping_price, 2) . '</span> ';
@@ -396,7 +411,8 @@ function dpsc_print_checkout_table_html($dpsc_discount_value = 0) {
             $dpsc_shipping_total_at_end = '';
             $dpsc_shipping_total_at_end = '<tr id="dpsc-checkout-shipping-price"><th>' . __("Shipping:", "dp-lang") . '</th><td>+' . $dp_shopping_cart_settings['dp_currency_symbol'] . $dp_shipping_price_html . '</td></tr>';
             $dpsc_product_price_at_end = '<tr id="dpsc-checkout-your-price"><th>' . __("Price:", "dp-lang") . '</th><td>' . $dp_shopping_cart_settings['dp_currency_symbol'] . number_format($dpsc_total, 2) . '</td></tr>';
-            $dpsc_total_price_at_the_end = '<tr id="dpsc-checkout-total-price"><th>' . __("Total:", "dp-lang") . '</th><td><strong>' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span id="total_dpsc_price">' . number_format($dpsc_total + $dp_shipping_price + $dpsc_total_tax - $dpsc_total_discount, 2) . '</span></strong></td></tr>';
+			$total_price = $dpsc_total + $dp_shipping_price + $dpsc_total_tax - $dpsc_total_discount;
+            $dpsc_total_price_at_the_end = '<tr id="dpsc-checkout-total-price"><th>' . __("Total:", "dp-lang") . '</th><td><strong>' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span id="total_dpsc_price">' . floor($total_price*100)/100 . '</span></strong></td></tr>';
             $content .= '<input type="hidden" name="dpsc_total_hidden_value" value="' . $dpsc_total . '" />';
             if (!is_numeric($dpsc_shipping_value)) {
                 $total_for_shipping = $dpsc_total + $dpsc_total_tax - $dpsc_total_discount;
@@ -715,7 +731,7 @@ function dpsc_on_payment_save($dpsc_total = FALSE, $dpsc_shipping_value = FALSE,
     $tax = $dp_shopping_cart_settings['tax'];
     if (!$tax) {
         $tax = 0;
-    }
+	}
     if (!$dpsc_shipping_value || !is_numeric($dpsc_shipping_value)) {
         $dpsc_shipping_value = 0.00;
     }
@@ -1014,7 +1030,8 @@ function dpsc_pnj_calculate_cart_price($on_payment = FALSE) {
                 }
             }
 			$digital_file = get_post_meta(intval($dpsc_product['item_number']), 'digital_file', true);
-            if (empty($digital_file)) {
+			$digital_file = trim($digital_file);
+             if(empty($digital_file)) {
                 $count += $dpsc_product['quantity'];
             }
         }
@@ -1033,6 +1050,9 @@ remove_action ('dp_more_payment_option', 'dp_add_mercadopago_payment');
 function dpsc_pnj_calculate_shipping_price($shipping_weight = FALSE, $sub_total_price = FALSE, $number_of_items_in_cart = FALSE) {
     $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
     $shipping_method = $dp_shopping_cart_settings['dp_shipping_calc_method'];
+	if($number_of_items_in_cart === 0){
+		$shipping_method = 'free';
+	}
     switch ($shipping_method) {
         case 'free':
             $shipping_price = 0.00;
@@ -1102,7 +1122,11 @@ function dpsc_pnj_calculate_shipping_price($shipping_weight = FALSE, $sub_total_
             $per_item_rate = $dp_shopping_cart_settings['dp_shipping_per_item_rate'];
             $shipping_price = $per_item_rate * $number_of_items_in_cart;
             break;
-
+			
+		case 'item_numbers':
+			$shipping_price = 0.00;
+            break;
+			
         case 'ship_pro':
             $shipping_price = 'ship_pro';
             break;
@@ -1118,7 +1142,7 @@ function dpsc_pnj_calculate_shipping_price($shipping_weight = FALSE, $sub_total_
  * This function generates the HTML for contact form
  *
  */
-function dpsc_pnj_show_contact_information() {
+function dpsc_pnj_show_contact_information($layout = 'flat') {
     global $dpsc_country_code_name;
     $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
     if (is_user_logged_in () && $dp_shopping_cart_settings['dp_shop_user_registration'] === 'checked') {
@@ -1130,59 +1154,118 @@ function dpsc_pnj_show_contact_information() {
     }
     $output = '<div id="dpsc_contact_information">';
     $output .= '<div id="dpsc_billing_details">';
-    $output .= '<h4>' . __('Billing Address', "dp-lang") . '</h4>';
-    $output .= '<label for="b_firstname">' . __('First Name', "dp-lang") . '</label>
-                <input id="b_firstname" name="b_f_name" value="' . __($first_name, "dp-lang") . '" type="text" /><span class="dpsc_error_msg" id="firstNameError">' . __('Please enter the First Name', "dp-lang") . '</span><br />';
-    $output .= '<label for="b_lastname">' . __('Last Name', "dp-lang") . '</label>
-                <input id="b_lastname" name="b_l_name" value="' . __($last_name, "dp-lang") . '" type="text" /><span class="dpsc_error_msg" id="lastNameError">' . __('Please enter the Last Name', "dp-lang") . '</span><br />';
-    $output .= '<label for="b_address">' . __('Address', "dp-lang") . '</label>
-                <input type="text" id="b_address" name="b_address" value="' . __($user_info['address'], "dp-lang") . '" /><span class="dpsc_error_msg" id="addressError">' . __('Please enter the Address', "dp-lang") . '</span><br />';
-    $output .= '<label for="b_city">' . __('City', "dp-lang") . '</label>
-                <input type="text" id="b_city" name="b_city" value="' . __($user_info['city'], "dp-lang") . '" /><span class="dpsc_error_msg" id="cityError">' . __('Please enter the City', "dp-lang", "dp-lang") . '</span><br />';
-    $output .= '<label for="b_state">' . __('Province / State', "dp-lang") . '</label>
-                <input type="text" id="b_state" name="b_state" value="' . __($user_info['state'], "dp-lang") . '" /><span class="dpsc_error_msg" id="stateError">' . __('Please enter the State', "dp-lang") . '</span><br />';
-    $output .= '<label for="b_zipcode">' . __('Postal Code', "dp-lang") . '</label>
-                <input type="text" id="b_zipcode" name="b_zipcode" value="' . __($user_info['zip'], "dp-lang") . '" /><span class="dpsc_error_msg" id="postelError">' . __('Please enter the Postal Code', "dp-lang") . '</span><br />';
-    $output .= '<label for="b_country">' . __('Country', "dp-lang") . '</label>
-                <select name="b_country" id="b_country">';
-    foreach ($dpsc_country_code_name as $country_code => $country_name) {
-        $selected = '';
-        if ($country_code === $user_info['country']) {
-            $selected = 'selected="selected"';
-        }
-        $output .= '<option ' . $selected . ' value="' . $country_code . '" >' . __($country_name, "dp-lang") . '</option>';
-    }
-    $output .= '</select><br />';
-    $output .= '<label for="b_email">' . __('Email', "dp-lang") . '</label>
-                <input type="text" id="b_email" name="b_email" value="' . __($email, "dp-lang") . '" /><span class="dpsc_error_msg" id="emailError">' . __('Please enter the Email', "dp-lang") . '</span><br />';
-    $output .= '<label for="b_phone">' . __('Phone Number', "dp-lang") . '</label>
-                <input type="text" id="b_phone" name="b_phone" value="' . __($user_info['phone'], "dp-lang") . '" /><span class="dpsc_error_msg" id="phoneError">' . __('Please enter the Phone', "dp-lang") . '</span><br />';
+	$output .= '<h4>' . __('Billing Address', "dp-lang") . '</h4>';
+	if($layout === 'flat'){
+		$output .= '<label for="b_firstname">' . __('First Name', "dp-lang") . '</label>
+					<input id="b_firstname" name="b_f_name" value="' . __($first_name, "dp-lang") . '" type="text" /><span class="dpsc_error_msg" id="firstNameError">' . __('Please enter the First Name', "dp-lang") . '</span><br />';
+		$output .= '<label for="b_lastname">' . __('Last Name', "dp-lang") . '</label>
+					<input id="b_lastname" name="b_l_name" value="' . __($last_name, "dp-lang") . '" type="text" /><span class="dpsc_error_msg" id="lastNameError">' . __('Please enter the Last Name', "dp-lang") . '</span><br />';
+		$output .= '<label for="b_address">' . __('Address', "dp-lang") . '</label>
+					<input type="text" id="b_address" name="b_address" value="' . __($user_info['address'], "dp-lang") . '" /><span class="dpsc_error_msg" id="addressError">' . __('Please enter the Address', "dp-lang") . '</span><br />';
+		$output .= '<label for="b_city">' . __('City', "dp-lang") . '</label>
+					<input type="text" id="b_city" name="b_city" value="' . __($user_info['city'], "dp-lang") . '" /><span class="dpsc_error_msg" id="cityError">' . __('Please enter the City', "dp-lang", "dp-lang") . '</span><br />';
+		$output .= '<label for="b_state">' . __('Province / State', "dp-lang") . '</label>
+					<input type="text" id="b_state" name="b_state" value="' . __($user_info['state'], "dp-lang") . '" /><span class="dpsc_error_msg" id="stateError">' . __('Please enter the State', "dp-lang") . '</span><br />';
+		$output .= '<label for="b_zipcode">' . __('Postal Code', "dp-lang") . '</label>
+					<input type="text" id="b_zipcode" name="b_zipcode" value="' . __($user_info['zip'], "dp-lang") . '" /><span class="dpsc_error_msg" id="postelError">' . __('Please enter the Postal Code', "dp-lang") . '</span><br />';
+		$output .= '<label for="b_country">' . __('Country', "dp-lang") . '</label>
+					<select name="b_country" id="b_country">';
+		foreach ($dpsc_country_code_name as $country_code => $country_name) {
+			$selected = '';
+			if ($country_code === $user_info['country']) {
+				$selected = 'selected="selected"';
+			}
+			$output .= '<option ' . $selected . ' value="' . $country_code . '" >' . __($country_name, "dp-lang") . '</option>';
+		}
+		$output .= '</select><br />';
+		$output .= '<label for="b_email">' . __('Email', "dp-lang") . '</label>
+					<input type="text" id="b_email" name="b_email" value="' . __($email, "dp-lang") . '" /><span class="dpsc_error_msg" id="emailError">' . __('Please enter the Email', "dp-lang") . '</span><br />';
+		$output .= '<label for="b_phone">' . __('Phone Number', "dp-lang") . '</label>
+					<input type="text" id="b_phone" name="b_phone" value="' . __($user_info['phone'], "dp-lang") . '" /><span class="dpsc_error_msg" id="phoneError">' . __('Please enter the Phone', "dp-lang") . '</span><br />';
+	}else{
+		$output .= '<table class="dpsc_billing_details">';
+		$output .= '<tr><td><label for="b_firstname">' . __('First Name', "dp-lang") . '</label></td><td>
+					<input id="b_firstname" name="b_f_name" value="' . __($first_name, "dp-lang") . '" type="text" /><span class="dpsc_error_msg" id="firstNameError">' . __('Please enter the First Name', "dp-lang") . '</span></td></tr>';
+		$output .= '<tr><td><label for="b_lastname">' . __('Last Name', "dp-lang") . '</label></td><td>
+					<input id="b_lastname" name="b_l_name" value="' . __($last_name, "dp-lang") . '" type="text" /><span class="dpsc_error_msg" id="lastNameError">' . __('Please enter the Last Name', "dp-lang") . '</span></td></tr>';
+		$output .= '<tr><td><label for="b_address">' . __('Address', "dp-lang") . '</label></td><td>
+					<input type="text" id="b_address" name="b_address" value="' . __($user_info['address'], "dp-lang") . '" /><span class="dpsc_error_msg" id="addressError">' . __('Please enter the Address', "dp-lang") . '</span></td></tr>';
+		$output .= '<tr><td><label for="b_city">' . __('City', "dp-lang") . '</label></td><td>
+					<input type="text" id="b_city" name="b_city" value="' . __($user_info['city'], "dp-lang") . '" /><span class="dpsc_error_msg" id="cityError">' . __('Please enter the City', "dp-lang", "dp-lang") . '</span></td></tr>';
+		$output .= '<tr><td><label for="b_state">' . __('Province / State', "dp-lang") . '</label></td><td>
+					<input type="text" id="b_state" name="b_state" value="' . __($user_info['state'], "dp-lang") . '" /><span class="dpsc_error_msg" id="stateError">' . __('Please enter the State', "dp-lang") . '</span></td></tr>';
+		$output .= '<tr><td><label for="b_zipcode">' . __('Postal Code', "dp-lang") . '</label></td><td>
+					<input type="text" id="b_zipcode" name="b_zipcode" value="' . __($user_info['zip'], "dp-lang") . '" /><span class="dpsc_error_msg" id="postelError">' . __('Please enter the Postal Code', "dp-lang") . '</span></td></tr>';
+		$output .= '<tr><td><label for="b_country">' . __('Country', "dp-lang") . '</label></td><td>
+					<select name="b_country" id="b_country">';
+		foreach ($dpsc_country_code_name as $country_code => $country_name) {
+			$selected = '';
+			if ($country_code === $user_info['country']) {
+				$selected = 'selected="selected"';
+			}
+			$output .= '<option ' . $selected . ' value="' . $country_code . '" >' . __($country_name, "dp-lang") . '</option>';
+		}
+		$output .= '</select></td></tr>';
+		$output .= '<tr><td><label for="b_email">' . __('Email', "dp-lang") . '</label></td><td>
+					<input type="text" id="b_email" name="b_email" value="' . __($email, "dp-lang") . '" /><span class="dpsc_error_msg" id="emailError">' . __('Please enter the Email', "dp-lang") . '</span></td></tr>';
+		$output .= '<tr><td><label for="b_phone">' . __('Phone Number', "dp-lang") . '</label></td><td>
+					<input type="text" id="b_phone" name="b_phone" value="' . __($user_info['phone'], "dp-lang") . '" /><span class="dpsc_error_msg" id="phoneError">' . __('Please enter the Phone', "dp-lang") . '</span></td></tr>';
+		$output .= '</table>';
+	}
     $output .= '</div>';
     $output .= '<div id="dpsc_shipping_details" style="display: none">';
     $output .= '<h4>' . __('Shipping Address', "dp-lang") . '</h4>';
-    $output .= '<label for="s_firstname">' . __('First Name', "dp-lang") . '</label>
-                <input id="s_firstname" name="s_f_name" value="' . __($user_info['sfirst'], "dp-lang") . '" type="text" /><span class="dpsc_error_msg" id="shipFNameError">' . __('Please enter the First Name', "dp-lang") . '</span><br />';
-    $output .= '<label for="s_lastname">' . __('Last Name', "dp-lang") . '</label>
-                <input id="s_lastname" name="s_l_name" value="' . __($user_info['slast'], "dp-lang") . '" type="text" /><span class="dpsc_error_msg" id="shipLNameError">' . __('Please enter the Last Name', "dp-lang") . '</span><br />';
-    $output .= '<label for="s_address">' . __('Address', "dp-lang") . '</label>
-                <input type="text" id="s_address" name="s_address" value="' . __($user_info['saddress'], "dp-lang") . '" /><span class="dpsc_error_msg"  id="shipAddressError">' . __('Please enter the Address', "dp-lang") . '</span><br />';
-    $output .= '<label for="s_city">' . __('City', "dp-lang") . '</label>
-                <input type="text" id="s_city" name="s_city" value="' . __($user_info['scity'], "dp-lang") . '" /><span class="dpsc_error_msg" id="shipCityError">' . __('Please enter the City', "dp-lang") . '</span><br />';
-    $output .= '<label for="s_state">' . __('Province / State', "dp-lang") . '</label>
-                <input type="text" id="s_state" name="s_state" value="' . __($user_info['sstate'], "dp-lang") . '" /><span class="dpsc_error_msg" id="shipStateError">' . __('Please enter the State', "dp-lang") . '</span><br />';
-    $output .= '<label for="s_zipcode">' . __('Postal Code', "dp-lang") . '</label>
-                <input type="text" id="s_zipcode" name="s_zipcode" value="' . __($user_info['szip'], "dp-lang") . '" /><span class="dpsc_error_msg" id="shipPostalError">' . __('Please enter the Postal Code', "dp-lang") . '</span><br />';
-    $output .= '<label for="s_country">' . __('Country', "dp-lang") . '</label>
-                <select name="s_country" id="s_country">';
+	if($layout === 'flat'){
+		$output .= '<label for="s_firstname">' . __('First Name', "dp-lang") . '</label>
+					<input id="s_firstname" name="s_f_name" value="' . __($user_info['sfirst'], "dp-lang") . '" type="text" /><span class="dpsc_error_msg" id="shipFNameError">' . __('Please enter the First Name', "dp-lang") . '</span><br />';
+		$output .= '<label for="s_lastname">' . __('Last Name', "dp-lang") . '</label>
+					<input id="s_lastname" name="s_l_name" value="' . __($user_info['slast'], "dp-lang") . '" type="text" /><span class="dpsc_error_msg" id="shipLNameError">' . __('Please enter the Last Name', "dp-lang") . '</span><br />';
+		$output .= '<label for="s_address">' . __('Address', "dp-lang") . '</label>
+					<input type="text" id="s_address" name="s_address" value="' . __($user_info['saddress'], "dp-lang") . '" /><span class="dpsc_error_msg"  id="shipAddressError">' . __('Please enter the Address', "dp-lang") . '</span><br />';
+		$output .= '<label for="s_city">' . __('City', "dp-lang") . '</label>
+					<input type="text" id="s_city" name="s_city" value="' . __($user_info['scity'], "dp-lang") . '" /><span class="dpsc_error_msg" id="shipCityError">' . __('Please enter the City', "dp-lang") . '</span><br />';
+		$output .= '<label for="s_state">' . __('Province / State', "dp-lang") . '</label>
+					<input type="text" id="s_state" name="s_state" value="' . __($user_info['sstate'], "dp-lang") . '" /><span class="dpsc_error_msg" id="shipStateError">' . __('Please enter the State', "dp-lang") . '</span><br />';
+		$output .= '<label for="s_zipcode">' . __('Postal Code', "dp-lang") . '</label>
+					<input type="text" id="s_zipcode" name="s_zipcode" value="' . __($user_info['szip'], "dp-lang") . '" /><span class="dpsc_error_msg" id="shipPostalError">' . __('Please enter the Postal Code', "dp-lang") . '</span><br />';
+		$output .= '<label for="s_country">' . __('Country', "dp-lang") . '</label>
+					<select name="s_country" id="s_country">';
 
-    foreach ($dpsc_country_code_name as $country_code => $country_name) {
-        $selected = '';
-        if ($country_code === $user_info['scountry']) {
-            $selected = 'selected="selected"';
-        }
-        $output .= '<option ' . $selected . ' value="' . $country_code . '" >' . __($country_name, "dp-lang") . '</option>';
-    }
-    $output .= '</select><br />';
+		foreach ($dpsc_country_code_name as $country_code => $country_name) {
+			$selected = '';
+			if ($country_code === $user_info['scountry']) {
+				$selected = 'selected="selected"';
+			}
+			$output .= '<option ' . $selected . ' value="' . $country_code . '" >' . __($country_name, "dp-lang") . '</option>';
+		}
+		$output .= '</select><br />';
+	}else{
+		$output .= '<table class="dpsc_billing_details">';
+		$output .= '<tr><td><label for="s_firstname">' . __('First Name', "dp-lang") . '</label></td><td>
+					<input id="s_firstname" name="s_f_name" value="' . __($user_info['sfirst'], "dp-lang") . '" type="text" /><span class="dpsc_error_msg" id="shipFNameError">' . __('Please enter the First Name', "dp-lang") . '</span></td></tr>';
+		$output .= '<tr><td><label for="s_lastname">' . __('Last Name', "dp-lang") . '</label></td><td>
+					<input id="s_lastname" name="s_l_name" value="' . __($user_info['slast'], "dp-lang") . '" type="text" /><span class="dpsc_error_msg" id="shipLNameError">' . __('Please enter the Last Name', "dp-lang") . '</span></td></tr>';
+		$output .= '<tr><td><label for="s_address">' . __('Address', "dp-lang") . '</label></td><td>
+					<input type="text" id="s_address" name="s_address" value="' . __($user_info['saddress'], "dp-lang") . '" /><span class="dpsc_error_msg"  id="shipAddressError">' . __('Please enter the Address', "dp-lang") . '</span></td></tr>';
+		$output .= '<tr><td><label for="s_city">' . __('City', "dp-lang") . '</label></td><td>
+					<input type="text" id="s_city" name="s_city" value="' . __($user_info['scity'], "dp-lang") . '" /><span class="dpsc_error_msg" id="shipCityError">' . __('Please enter the City', "dp-lang") . '</span></td></tr>';
+		$output .= '<tr><td><label for="s_state">' . __('Province / State', "dp-lang") . '</label></td><td>
+					<input type="text" id="s_state" name="s_state" value="' . __($user_info['sstate'], "dp-lang") . '" /><span class="dpsc_error_msg" id="shipStateError">' . __('Please enter the State', "dp-lang") . '</span></td></tr>';
+		$output .= '<tr><td><label for="s_zipcode">' . __('Postal Code', "dp-lang") . '</label></td><td>
+					<input type="text" id="s_zipcode" name="s_zipcode" value="' . __($user_info['szip'], "dp-lang") . '" /><span class="dpsc_error_msg" id="shipPostalError">' . __('Please enter the Postal Code', "dp-lang") . '</span></td></tr>';
+		$output .= '<tr><td><label for="s_country">' . __('Country', "dp-lang") . '</label></td><td>
+					<select name="s_country" id="s_country">';
+
+		foreach ($dpsc_country_code_name as $country_code => $country_name) {
+			$selected = '';
+			if ($country_code === $user_info['scountry']) {
+				$selected = 'selected="selected"';
+			}
+			$output .= '<option ' . $selected . ' value="' . $country_code . '" >' . __($country_name, "dp-lang") . '</option>';
+		}
+		$output .= '</select></td></tr>';
+		$output .= '</table>';
+	}
     $output .= '</div>';
     $output .= '<input type="checkbox" name="dpsc_contact_different_ship_address" id="dpsc_contact_different_ship_address" value="checked">&nbsp;' . __('I have a different Shipping Address.');
     $output .= '</div>';
@@ -1426,6 +1509,7 @@ function dpsc_pnj_thank_you_page() {
 
 			//email required to assign discount code and maybe email the code to the user
             dpsc_pnj_send_mail($to_email, $from_email, $dp_shopping_cart_settings['shop_name'], $subject, $message, $invoice);
+			dpsc_clear_cart();
             return $output.thank_you_page_order_detail($to_email);
         }
     } else {
@@ -1482,7 +1566,8 @@ function thank_you_page_order_detail($email = ''){
 		} else {
 			$total_tax = 0;
 		}
-		$amount = number_format($total + $shipping + $total_tax - $total_discount, 2);
+	/*	$amount = number_format($total + $shipping + $total_tax - $total_discount, 2); */
+        $amount = $total + $shipping + $total_tax - $total_discount;
 		$product_details = unserialize($result->products);
 		foreach ($product_details as $product) {
 			$price = number_format((float) $product['price'], 2, '.', '');
