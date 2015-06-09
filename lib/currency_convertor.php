@@ -37,10 +37,10 @@ Class DP_CURRENCYCONVERTER {
         } else {
 			$data = '';
             //$file="/conversiontool2.asp";
-            $file = "/ucc/convert/";
+            $file = "/currencyconverter/convert/";
             //$str = "?amount=".$this->_amt."&ConvertFrom=".$this->_from."&ConvertTo=".$this->_to;
             //$str = "?Amount=" . $this->_amt . "&From=" . $this->_from . "&To=" . $this->_to;
-			$str = "?Amount=" . $this->_amt . "&To=" . $this->_from . "&From=" . $this->_to; //Reverse to make it work
+			$str = "?Amount=" . $this->_amt . "&To=" . $this->_to . "&From=" . $this->_from; //Reverse to make it work
             $out = "GET " . $file . $str . " HTTP/1.0\r\n";
             $out .= "Host: $host\r\n";
             $out .= "Connection: Close\r\n\r\n";
