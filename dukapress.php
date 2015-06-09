@@ -10,6 +10,12 @@ Plugin URI: http://dukapress.org/
 
 $dp_version = 2.57;
 
+// server should keep session data for AT LEAST 1 hour
+ini_set('session.gc_maxlifetime', 3600);
+
+// each client should remember their session id for EXACTLY 1 hour
+session_set_cookie_params(3600);
+
 session_start();
 define('DP_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('DP_PLUGIN_DIR', WP_PLUGIN_DIR.'/'.dirname(plugin_basename(__FILE__)));

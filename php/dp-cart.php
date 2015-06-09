@@ -128,14 +128,7 @@ add_action('wp_ajax_dpsc_empty_your_cart', 'dpsc_empty_cart');
 add_action('wp_ajax_nopriv_dpsc_empty_your_cart', 'dpsc_empty_cart');
 
 function dpsc_empty_cart() {
-    unset($_SESSION['dpsc_shiping_price']);
-    $products = $_SESSION['dpsc_products'];
-    if (is_array($products)) {
-        foreach ($products as $key => $item) {
-            unset($products[$key]);
-        }
-    }
-    $_SESSION['dpsc_products'] = $products;
+    dpsc_clear_cart();
     ob_start();
     echo dpsc_print_cart_html();
     $output = ob_get_contents();
@@ -148,6 +141,18 @@ function dpsc_empty_cart() {
     echo "jQuery('form.product_form').removeClass('product_in_cart');";
     echo "jQuery('span.dpsc_in_cart').html('&nbsp;');";
     die();
+}
+
+//Clear cart
+function dpsc_clear_cart() {
+	unset($_SESSION['dpsc_shiping_price']);
+    $products = $_SESSION['dpsc_products'];
+    if (is_array($products)) {
+        foreach ($products as $key => $item) {
+            unset($products[$key]);
+        }
+    }
+    $_SESSION['dpsc_products'] = $products;
 }
 
 /**
@@ -406,7 +411,8 @@ function dpsc_print_checkout_table_html($dpsc_discount_value = 0) {
             $dpsc_shipping_total_at_end = '';
             $dpsc_shipping_total_at_end = '<tr id="dpsc-checkout-shipping-price"><th>' . __("Shipping:", "dp-lang") . '</th><td>+' . $dp_shopping_cart_settings['dp_currency_symbol'] . $dp_shipping_price_html . '</td></tr>';
             $dpsc_product_price_at_end = '<tr id="dpsc-checkout-your-price"><th>' . __("Price:", "dp-lang") . '</th><td>' . $dp_shopping_cart_settings['dp_currency_symbol'] . number_format($dpsc_total, 2) . '</td></tr>';
-            $dpsc_total_price_at_the_end = '<tr id="dpsc-checkout-total-price"><th>' . __("Total:", "dp-lang") . '</th><td><strong>' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span id="total_dpsc_price">' . number_format($dpsc_total + $dp_shipping_price + $dpsc_total_tax - $dpsc_total_discount, 2) . '</span></strong></td></tr>';
+			$total_price = $dpsc_total + $dp_shipping_price + $dpsc_total_tax - $dpsc_total_discount;
+            $dpsc_total_price_at_the_end = '<tr id="dpsc-checkout-total-price"><th>' . __("Total:", "dp-lang") . '</th><td><strong>' . $dp_shopping_cart_settings['dp_currency_symbol'] . '<span id="total_dpsc_price">' . floor($total_price*100)/100 . '</span></strong></td></tr>';
             $content .= '<input type="hidden" name="dpsc_total_hidden_value" value="' . $dpsc_total . '" />';
             if (!is_numeric($dpsc_shipping_value)) {
                 $total_for_shipping = $dpsc_total + $dpsc_total_tax - $dpsc_total_discount;
@@ -1503,6 +1509,7 @@ function dpsc_pnj_thank_you_page() {
 
 			//email required to assign discount code and maybe email the code to the user
             dpsc_pnj_send_mail($to_email, $from_email, $dp_shopping_cart_settings['shop_name'], $subject, $message, $invoice);
+			dpsc_clear_cart();
             return $output.thank_you_page_order_detail($to_email);
         }
     } else {
@@ -1559,7 +1566,8 @@ function thank_you_page_order_detail($email = ''){
 		} else {
 			$total_tax = 0;
 		}
-		$amount = number_format($total + $shipping + $total_tax - $total_discount, 2);
+	/*	$amount = number_format($total + $shipping + $total_tax - $total_discount, 2); */
+        $amount = $total + $shipping + $total_tax - $total_discount;
 		$product_details = unserialize($result->products);
 		foreach ($product_details as $product) {
 			$price = number_format((float) $product['price'], 2, '.', '');
