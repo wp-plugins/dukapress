@@ -4,8 +4,8 @@ Donate link: http://dukapress.org/about/
 Tags: shopping cart, web shop, cart, shop, Worldpay, Paypal, Alertpay, paypal, e-commerce, ecommerce, MPESA, ZAP, yuCash, Mobile Payments,online duka, duka, online shop, JQZoom, Multiple Currencies
 
 Requires at least: 3.0
-Tested up to: 4.1.1
-Stable tag: 2.5.7
+Tested up to: 4.3
+Stable tag: 2.6
 
 DukaPress is an open source e-commerce solution built for Wordpress.
 
@@ -87,7 +87,7 @@ You currently HAVE to have at least one custom field per prodct in order for tho
 
 = Why am I getting multiple/many emails when an order is placed? =
 
-If you are getting many emails with the subject “Receipt of Order No: xxxxx“, then it may be because you have PayPal IPN settings turned on. Please turn them off.
+If you are getting many emails with the subject ï¿½Receipt of Order No: xxxxxï¿½, then it may be because you have PayPal IPN settings turned on. Please turn them off.
 
 = Why isn't the "Inquiry"/"Catalogue mode" working properly? =
 
@@ -181,8 +181,8 @@ Fixing extremely small bug (just one line of code)
 
 = 2.3 =
 * Enhanced DukaPress security greatly by making it impossible for people to order items that are out of stock or to order more items than the inventory quantity.
-* Introduced a “Buy Now” button that redirects directly to PayPal instead of taking you to the checkout page. 
-* Introduced a “Buy Now” button that redirects directly to PayPal instead of taking you to the checkout page. 
+* Introduced a ï¿½Buy Nowï¿½ button that redirects directly to PayPal instead of taking you to the checkout page. 
+* Introduced a ï¿½Buy Nowï¿½ button that redirects directly to PayPal instead of taking you to the checkout page. 
 * Added new shortcodes. 
 * Added the ability for shop admins to edit the content of emails sent out to customers from within DukaPress settings. 
 * Updated timthumb.php to fix numerous security vulnerabilities associated with it.
