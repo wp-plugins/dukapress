@@ -33,11 +33,15 @@ jQuery(document).ready(function($) {
 
     function dp_addVariation() {
         current++;
-        var strToAdd = '<p><label for="vname'+current+'">'+dpsc_admin_js.variation_name+'</label><input id="vname'+current+'" name="vname'+current+'" size="15" />';
-    
-        strToAdd += '<p><label for="vprice'+current+'">'+dpsc_admin_js.variation_price+'</label>\n\
-        <input id="vprice'+current+'" name="vprice'+current+'" size="15" /></p>';
-        $('#dp_var_fields').append(strToAdd);
+        var clone = $("table#variation_appends tr.variation_name").clone();
+        clone = clone.removeClass('variation_name');
+        clone = clone.html().replace("vname1","vname"+current);
+        $('table#variation_appends').append("<tr>"+clone+"</tr>");
+        
+        clone = $("table#variation_appends tr.variation_price").clone();
+        clone = clone.removeClass('variation_name');
+        clone = clone.html().replace("vprice1","vprice"+current);
+        $('table#variation_appends').append("<tr>"+clone+"</tr>");
         return current;
     
     }
@@ -104,7 +108,13 @@ jQuery(document).ready(function($) {
                 data:'action=save_variationdata&'+actionstring+'&postid='+postid,
                 success:function(msg)
                 {
-                    $('#dp_var_fields').html('');
+                    $("table#variation_appends tr").each(function(){
+                        if($(this).hasClass('variation_name') || $(this).hasClass('variation_price')){
+                            
+                        }else{
+                            $(this).remove();
+                        }
+                    });
                     $('#optionname').val('');
                     $('#vname1').val('');
                     $('#vprice1').val('');

@@ -1505,23 +1505,26 @@ if(!class_exists('DukaPress')) {
 						<input type="text" id="optionname" name="optionname" size="15" />
 					</td>
 				</tr>
-				<tr>
+			</table>
+			<table class="widefat" id="variation_appends">
+				<tr class="variation_name">
 					<td><?php _e('Variation Name', "dp-lang"); ?> :</td>
 					<td>
 						<input type="text" id="vname1" name="vname1" size="15" />
 					</td>
 				</tr>
-				<tr>
+				<tr class="variation_price">
 					<td><?php _e('Variation Price', "dp-lang"); ?> :</td>
 					<td>
 						<input type="text" id="vprice1" name="vprice1" size="15" />
 					</td>
 				</tr>
+			</table>
+			<table class="widefat">
 				<tr>
-					<td colspan="2"><div id="dp_var_fields"></div></td>
-				</tr>
-				<tr>
-					<td></td>
+					<td>
+						<input type="button" id="dp_addVariation" value="+"/>
+					</td>
 					<td>
 						<input type="hidden" name="varitaionnumber" id="varitaionnumber" value="1" />
 						<input type="button" id="dp_save" value="<?php _e('Save', "dp-lang"); ?>"/>
@@ -1545,22 +1548,24 @@ if(!class_exists('DukaPress')) {
 		        foreach ($optionnames as $optionname) {
 		            $j++;
 		            $optionname1 = explode("|", $optionname);
-		            $show_state_result.=' <div style="border:1px solid;clear:both;width:250px;word-wrap: break-word">';
+		            $show_state_result.='<div style="border:1px solid;clear:both;width:100%;word-wrap: break-word">';
 		            $show_state_result.= '<p><b>' . ($optionname1[0]) . '</b></p>';
 		            for ($i = 1; $optionname1[$i]; $i++) {
-		                $show_state_result.='<div style="float:left;width:200px;clear:both">';
+		                $show_state_result.='<table class="widefat"><tr>';
 		                $optionname2 = explode(";", $optionname1[$i]);
 		                foreach ($optionname2 as $value) {
-		                    $show_state_result.= '<div style="width:90px;float:left">' . $value . '</div>';
+		                    $show_state_result.= '<td>' . $value . '</td>';
 		                }
-		                $show_state_result.='</div>';
+		                $show_state_result.='</tr></table>';
 		            }
 		
 		            $show_state_result.='
-		                    <div id="dp_deletestring"><a href="#" id="' . $j . '">Delete</a>
+		                    <div id="dp_deletestring">
+								<a href="javascript:void()" id="' . $j . '">Delete</a>
 		                        <input id="delete' . $j . '" name="delete' . $j . '" type="hidden" value="' . $optionname . '" />
-		                      </div>
-		                    <div style="clear:both"></div></div>';
+		                     </div>
+							 <div style="clear:both"></div>
+							 </div>';
 		        }
 		    }
 		    return $show_state_result;
