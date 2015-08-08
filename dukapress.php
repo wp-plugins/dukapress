@@ -2,16 +2,22 @@
 /*
 Plugin Name: DukaPress Shopping Cart
 Description: DukaPress Shopping Cart
-Version: 2.5
+Version: 2.5.9.1
 Author: Rixeo and Nickel Pro
 Author URI: http://dukapress.org/
 Plugin URI: http://dukapress.org/
 */
 
-$dp_version = 2.5;
+$dp_version = 2.591;
+
+// server should keep session data for AT LEAST 1 hour
+ini_set('session.gc_maxlifetime', 3600);
+
+// each client should remember their session id for EXACTLY 1 hour
+session_set_cookie_params(3600);
 
 session_start();
-define('DP_PLUGIN_URL', WP_PLUGIN_URL.'/'.dirname(plugin_basename(__FILE__)));
+define('DP_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('DP_PLUGIN_DIR', WP_PLUGIN_DIR.'/'.dirname(plugin_basename(__FILE__)));
 define('DP_DOWNLOAD_FILES_DIR', WP_CONTENT_DIR. '/uploads/dpsc_download_files/' );
 define('DP_DOWNLOAD_FILES_DIR_TEMP', WP_CONTENT_DIR. '/uploads/dpsc_temp_download_files/' );
@@ -85,8 +91,8 @@ function dp_dashboard_transactions() {
     global $wpdb;
     $table_name = $wpdb->prefix . "dpsc_transactions";
     $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
-    $query = "SELECT `total`, `shipping`, `tax`, `discount` FROM {$table_name} WHERE `payment_status`='Paid'";
-    $results = $wpdb->get_results($query);
+    $query = "SELECT `total`, `shipping`, `tax`, `discount` FROM {$table_name} WHERE `payment_status`= %s";
+    $results = $wpdb->get_results($wpdb->prepare($query,'Paid'));
     $all_total = 0.00;
     $count = 0;
     foreach ($results as $result) {
@@ -136,7 +142,7 @@ function dukapress_shopping_cart_customer_log() {
         <h2><?php _e("DukaPress Customer Log","dp-lang");?></h2>
         <?php
         if ($dp_shopping_cart_settings['dp_shop_user_registration'] === 'checked') {
-            $sql = "SELECT `user_id` FROM {$wpdb->usermeta} WHERE `meta_key`='{$dpsc_user_invoice_number}'";
+            $sql = "SELECT `user_id` FROM {$wpdb->usermeta} WHERE `meta_key`= %s";
             $pagenum = isset($_GET['paged']) ? $_GET['paged'] : 1;
             $per_page = 20;
             $action_count = count($wpdb->get_results($sql));
@@ -151,7 +157,7 @@ function dukapress_shopping_cart_customer_log() {
                     'current' => $pagenum
             ));
             $sql .= " LIMIT {$action_offset}, {$per_page}";
-            $customer_ids = $wpdb->get_col($sql);
+            $customer_ids = $wpdb->get_col($wpdb->prepare($sql,$dpsc_user_invoice_number));
             if (!empty($customer_ids)) {
                 if ($page_links) {
                     ?>
@@ -357,7 +363,7 @@ function dp_delete_transaction () {
     $invoice = $_POST['invoice'];
     global $wpdb;
     $table_name = $wpdb->prefix . "dpsc_transactions";
-    $res = $wpdb->query("DELETE FROM {$table_name} WHERE `invoice` = '$invoice'");
+    $res = $wpdb->query($wpdb->prepare("DELETE FROM {$table_name} WHERE `invoice` = %s"),$invoice);
     if($res)
         echo 'true';
     else
@@ -518,8 +524,8 @@ if ($page_links) {
     }
     else {
         $order_id = $_GET['id'];
-        $query = "SELECT * FROM {$table_name} WHERE `invoice`='{$order_id}'";
-        $result = $wpdb->get_row($query);
+        $query = "SELECT * FROM {$table_name} WHERE `invoice`='%d";
+        $result = $wpdb->get_row($wpdb->prepare($query,$order_id));
         $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
         if ($result) {
             if (isset($_GET['status']) && $_GET['status'] === 'send') {
@@ -738,13 +744,13 @@ function dpsc_change_order_status() {
         global $wpdb;
         $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
         $table_name = $wpdb->prefix . "dpsc_transactions";
-        $query = "UPDATE {$table_name} SET `payment_status`='{$updated_status}' WHERE `id`={$order_id}";
-        $wpdb->query($query);
+        $query = "UPDATE {$table_name} SET `payment_status`='{$updated_status}' WHERE `id`= %d";
+        $wpdb->query($wpdb->prepare($query,$order_id));
         if ($updated_status === 'Canceled') {
         $message = '';
         $digital_message = '';
-        $check_query = "SELECT * FROM {$table_name} WHERE `id`={$order_id}";
-        $result = $wpdb->get_row($check_query);
+        $check_query = "SELECT * FROM {$table_name} WHERE `id`= %d";
+        $result = $wpdb->get_row($wpdb->prepare($check_query,$order_id));
         $email_fname = $result->billing_first_name ;
         $email_lname = $result->billing_last_name ;
         $invoice =$result->invoice;
@@ -801,6 +807,7 @@ function dukapress_shopping_cart_setting() {
         $dp_checkout_url = $_POST['dp_checkout_url'];
         $dp_thank_you_url = $_POST['dp_thank_you_url'];
 		$dp_affiliate_url = $_POST['dp_affiliate_url'];
+		$dp_terms_url = $_POST['dp_terms_url'];
         $dp_tax = $_POST['dp_tax'];
         $dp_shop_paypal_id = $_POST['dp_shop_paypal_id'];
         $dp_shop_paypal_pdt = $_POST['dp_shop_paypal_pdt'];
@@ -905,6 +912,7 @@ function dukapress_shopping_cart_setting() {
         $dp_shopping_cart_settings['checkout'] = $dp_checkout_url;
         $dp_shopping_cart_settings['thank_you'] = $dp_thank_you_url;
 		$dp_shopping_cart_settings['affiliate_url'] = $dp_affiliate_url;
+		$dp_shopping_cart_settings['terms_url'] = $dp_terms_url;
         $dp_shopping_cart_settings['tax'] = $dp_tax;
         $dp_shopping_cart_settings['dp_shop_country'] = $dp_shop_country;
         $dp_shopping_cart_settings['dp_shop_currency'] = $dp_shop_currency;
@@ -956,7 +964,7 @@ function dukapress_shopping_cart_setting() {
     if (!is_numeric($dp_digital_time)) {
         $dp_digital_time = 48;
     }
-    $paypal_supported_currency = array('AUD', 'BRL', 'CAD', 'CHF', 'CZK', 'DKK', 'EUR', 'GBP', 'HKD', 'HUF', 'ILS', 'JPY', 'MXN', 'MYR', 'NOK', 'NZD', 'PHP', 'PLN', 'SEK', 'SGD', 'THB', 'TWD', 'USD');
+    $paypal_supported_currency = array('AUD', 'BRL', 'CAD', 'CHF', 'CZK', 'DKK', 'EUR', 'GBP', 'HKD', 'HUF', 'ILS', 'JPY', 'MXN', 'MYR', 'NOK', 'NZD', 'PHP', 'PLN', 'SEK', 'SGD', 'THB', 'TRY','TWD', 'USD');
     $alertpay_supported_currency = array('AUD', 'BGN', 'CAD', 'CHF', 'CZK', 'DKK', 'EKK', 'EUR', 'GBP', 'HKD', 'HUF', 'INR', 'LTL', 'MYR', 'MKD', 'NOK', 'NZD', 'PLN', 'RON', 'SEK', 'SGD', 'USD', 'ZAR');
     $worldpay_supported_currency = array('ARS', 'AUD', 'BRL', 'CAD', 'CHF', 'CLP', 'CNY', 'COP', 'CZK', 'DKK', 'EUR', 'GBP', 'HKD', 'HUF', 'IDR', 'ISK', 'JPY', 'KES', 'KRW', 'MXP', 'MYR', 'NOK', 'NZD', 'PLN', 'PTE', 'SEK', 'SGD', 'SKK', 'THB', 'TWD', 'USD', 'VND', 'ZAR');
     $authorize_supported_currency = array('USD');
@@ -1133,6 +1141,12 @@ function dukapress_shopping_cart_setting() {
                         <th scope="row"><?php _e("Affiliate URL","dp-lang");?></th>
                         <td>
                             <input size="50" type="text" value="<?php if(isset($dp_shopping_cart_settings['affiliate_url'])) {echo $dp_shopping_cart_settings['affiliate_url'];}?>" name="dp_affiliate_url">
+                        </td>
+                    </tr>
+					<tr>
+                        <th scope="row"><?php _e("Terms and Conditions URL","dp-lang");?></th>
+                        <td>
+                            <input size="50" type="text" value="<?php if(isset($dp_shopping_cart_settings['terms_url'])) {echo $dp_shopping_cart_settings['terms_url'];}?>" name="dp_terms_url">
                         </td>
                     </tr>
                     <tr>

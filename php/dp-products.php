@@ -444,14 +444,11 @@ function dpsc_pnj_grid_display($atts, $content=null) {
                     'prev_text' => __('&laquo;'),
                     'next_text' => __('&raquo;'),
                     'total' => ceil($count / $per_page),
-                    'current' => $pagenum
+                    'current' => $pagenum,
+					'add_args' => false
                 );
         $page_links = paginate_links($pagination_array);
-		$dp_paginate_links = dp_paginate_links($pagination_array);		
-		add_action( 'wp_head', function(){
-			echo "Here ".$dp_paginate_links;
-		});
-		
+
         $post_offset = ($pagenum - 1) * $per_page;
         $offset = '&offset=' . $post_offset;
         $page_links = '<div class="dpsc_grid_pagination">' . $page_links . '</div>';
