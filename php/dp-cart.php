@@ -781,10 +781,8 @@ function dpsc_on_payment_save($dpsc_total = FALSE, $dpsc_shipping_value = FALSE,
     $query = "INSERT INTO {$table_name} (`invoice`, `date`, `order_time`, `billing_first_name`, `billing_last_name`, `billing_country`,
     `billing_address`, `billing_city`, `billing_state`, `billing_zipcode`, `billing_email`, `phone`, `shipping_first_name`, `shipping_last_name`,
     `shipping_country`, `shipping_address`, `shipping_city`, `shipping_state`, `shipping_zipcode`, `products`, `payment_option`, `discount`,
-    `tax`, `shipping`, `total`, `payment_status`) VALUES ('{$invoice}', NOW(), {$order_time}, '{$bfname}', '{$blname}', '{$bcountry}', '{$baddress}',
-    '{$bcity}', '{$bstate}', '{$bzip}', '{$bemail}', '{$phone}', '{$sfname}', '{$slname}', '{$scountry}', '{$saddress}', '{$scity}', '{$sstate}', '{$szip}',
-    '{$products}', '{$payment_option}', {$dpsc_discount_value}, {$tax}, {$dpsc_shipping_value}, {$dpsc_total}, 'Pending')";
-    $wpdb->query($query);
+    `tax`, `shipping`, `total`, `payment_status`) VALUES (%s, NOW(), %d, %s, %s, %s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %d, %d, %d, %d, 'Pending')";
+    $wpdb->query($wpdb->prepare($query,$invoice,$order_time,$bfname,$blname,$bcountry,$baddress,$bcity,$bstate,$bzip,$bemail,$phone,$sfname,$slname,$scountry,$saddress,$scity,$sstate,$szip,$products,$payment_option,$dpsc_discount_value,$tax,$dpsc_shipping_value,$dpsc_total));
     if (isset($_SESSION['dpsc_discount'])) {
         $dpsc_discount_codes = get_option('dpsc_discount_codes');
         $discount_code = $_SESSION['dpsc_discount'];

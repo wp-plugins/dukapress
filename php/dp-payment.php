@@ -105,8 +105,8 @@ function dpsc_custom_payment_process($invoice,$payer_email){
     $payment_status = 'Paid';
     
     $table_name = $wpdb->prefix . "dpsc_transactions";
-    $update_query = "UPDATE {$table_name} SET `payer_email`='{$payer_email}', `payment_status`='{$payment_status}'WHERE `invoice`='{$invoice}'";
-    $wpdb->query($update_query);
+    $update_query = "UPDATE {$table_name} SET `payer_email`=%s, `payment_status`=%s WHERE `invoice`= %s";
+    $wpdb->query($wpdb->prepare($update_query,$payer_email,$payment_status,$invoice));
     $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
 	$message = '';
 	$digital_message = '';
@@ -556,8 +556,8 @@ function dpsc_paypal_ipn() {
                     break;
             }
             $table_name = $wpdb->prefix . "dpsc_transactions";
-            $update_query = "UPDATE {$table_name} SET `tx_id`='{$tx_id}', `payer_email`='{$payer_email}', `payment_status`='{$updated_status}' WHERE `invoice`='{$invoice}'";
-            $wpdb->query($update_query);
+            $update_query = "UPDATE {$table_name} SET `tx_id`= %s, `payer_email`= %s, `payment_status`= %s WHERE `invoice`= %s";
+            $wpdb->query($wpdb->prepare($update_query,$tx_id,$payer_email,$updated_status,$invoice));
             if ($payment_status === 'Processed' || $payment_status === 'Completed') {
                 $message = '';
                 $digital_message = '';
@@ -567,17 +567,19 @@ function dpsc_paypal_ipn() {
                 if ($dp_shopping_cart_settings['dp_shop_user_registration'] === 'checked') {
                     if ($pay_option == 'PayPal Buy Now') {
                         $user_id = email_exists($payer_email);
+						$firstname = $_POST['first_name'];
+						$last_name = $_POST['last_name'];
                         if (!$user_id) {
 //                            require_once( ABSPATH . WPINC . '/registration.php');
                             $user_pass = wp_generate_password();
                             $user_id = wp_create_user($payer_email, $user_pass, $payer_email);
                             update_user_option($user_id, 'default_password_nag', true, true);
                             dp_new_user_notification($user_id, $user_pass);
-                            update_user_meta($user_id, 'first_name', $_POST['first_name']);
-                            update_user_meta($user_id, 'last_name', $_POST['last_name']);
+                            update_user_meta($user_id, 'first_name', $firstname);
+                            update_user_meta($user_id, 'last_name', $last_name);
                         }
-                        $update_query = "UPDATE {$table_name} SET `billing_first_name`='{$_POST['first_name']}', `billing_last_name`='{$_POST['last_name']}', `billing_email`='{$payer_email}' WHERE `invoice`='{$invoice}'";
-                        $wpdb->query($update_query);
+                        $update_query = "UPDATE {$table_name} SET `billing_first_name`= %s, `billing_last_name`= %s, `billing_email`= %s WHERE `invoice`= %s";
+                        $wpdb->query($wpdb->prepare($update_query,$firstname,$last_name,$payer_email,$invoice));
                         $user_invoice = get_user_meta($user_id, 'dp_user_invoice_number', TRUE);
                         if ($user_invoice === '') {
                             $user_invoice = array();
@@ -715,8 +717,8 @@ function dpsc_auth_ipn() {
             break;
     }
     $table_name = $wpdb->prefix . "dpsc_transactions";
-    $update_query = "UPDATE {$table_name} SET `payer_email`='{$payer_email}', `payment_status`='{$updated_status}'WHERE `invoice`='{$invoice}'";
-    $wpdb->query($update_query);
+    $update_query = "UPDATE {$table_name} SET `payer_email`= %s, `payment_status`= %s WHERE `invoice`=%s";
+    $wpdb->query($wpdb->prepare($update_query,$payer_email,$updated_status,$invoice));
     $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
     if ($payment_status === 1) {
         $message = '';
@@ -784,8 +786,8 @@ function dpsc_auth_ipn() {
     if ($updated_status === 'Canceled') {
         $message = '';
         $digital_message = '';
-        $check_query = "SELECT * FROM {$table_name} WHERE `invoice`='{$invoice}'";
-        $result = $wpdb->get_row($check_query);
+        $check_query = "SELECT * FROM {$table_name} WHERE `invoice`= %s";
+        $result = $wpdb->get_row($wpdb->prepare($check_query,$invoice));
 
         $email_fname = $result->billing_first_name ;
         $email_shop_name = $dp_shopping_cart_settings['shop_name'];

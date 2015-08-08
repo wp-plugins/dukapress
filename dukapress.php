@@ -2,13 +2,13 @@
 /*
 Plugin Name: DukaPress Shopping Cart
 Description: DukaPress Shopping Cart
-Version: 2.5.9
+Version: 2.5.9.1
 Author: Rixeo and Nickel Pro
 Author URI: http://dukapress.org/
 Plugin URI: http://dukapress.org/
 */
 
-$dp_version = 2.59;
+$dp_version = 2.591;
 
 // server should keep session data for AT LEAST 1 hour
 ini_set('session.gc_maxlifetime', 3600);
@@ -91,8 +91,8 @@ function dp_dashboard_transactions() {
     global $wpdb;
     $table_name = $wpdb->prefix . "dpsc_transactions";
     $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
-    $query = "SELECT `total`, `shipping`, `tax`, `discount` FROM {$table_name} WHERE `payment_status`='Paid'";
-    $results = $wpdb->get_results($query);
+    $query = "SELECT `total`, `shipping`, `tax`, `discount` FROM {$table_name} WHERE `payment_status`= %s";
+    $results = $wpdb->get_results($wpdb->prepare($query,'Paid'));
     $all_total = 0.00;
     $count = 0;
     foreach ($results as $result) {
@@ -142,7 +142,7 @@ function dukapress_shopping_cart_customer_log() {
         <h2><?php _e("DukaPress Customer Log","dp-lang");?></h2>
         <?php
         if ($dp_shopping_cart_settings['dp_shop_user_registration'] === 'checked') {
-            $sql = "SELECT `user_id` FROM {$wpdb->usermeta} WHERE `meta_key`='{$dpsc_user_invoice_number}'";
+            $sql = "SELECT `user_id` FROM {$wpdb->usermeta} WHERE `meta_key`= %s";
             $pagenum = isset($_GET['paged']) ? $_GET['paged'] : 1;
             $per_page = 20;
             $action_count = count($wpdb->get_results($sql));
@@ -157,7 +157,7 @@ function dukapress_shopping_cart_customer_log() {
                     'current' => $pagenum
             ));
             $sql .= " LIMIT {$action_offset}, {$per_page}";
-            $customer_ids = $wpdb->get_col($sql);
+            $customer_ids = $wpdb->get_col($wpdb->prepare($sql,$dpsc_user_invoice_number));
             if (!empty($customer_ids)) {
                 if ($page_links) {
                     ?>
@@ -363,7 +363,7 @@ function dp_delete_transaction () {
     $invoice = $_POST['invoice'];
     global $wpdb;
     $table_name = $wpdb->prefix . "dpsc_transactions";
-    $res = $wpdb->query("DELETE FROM {$table_name} WHERE `invoice` = '$invoice'");
+    $res = $wpdb->query($wpdb->prepare("DELETE FROM {$table_name} WHERE `invoice` = %s"),$invoice);
     if($res)
         echo 'true';
     else
@@ -524,8 +524,8 @@ if ($page_links) {
     }
     else {
         $order_id = $_GET['id'];
-        $query = "SELECT * FROM {$table_name} WHERE `invoice`='{$order_id}'";
-        $result = $wpdb->get_row($query);
+        $query = "SELECT * FROM {$table_name} WHERE `invoice`='%d";
+        $result = $wpdb->get_row($wpdb->prepare($query,$order_id));
         $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
         if ($result) {
             if (isset($_GET['status']) && $_GET['status'] === 'send') {
@@ -744,13 +744,13 @@ function dpsc_change_order_status() {
         global $wpdb;
         $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
         $table_name = $wpdb->prefix . "dpsc_transactions";
-        $query = "UPDATE {$table_name} SET `payment_status`='{$updated_status}' WHERE `id`={$order_id}";
-        $wpdb->query($query);
+        $query = "UPDATE {$table_name} SET `payment_status`='{$updated_status}' WHERE `id`= %d";
+        $wpdb->query($wpdb->prepare($query,$order_id));
         if ($updated_status === 'Canceled') {
         $message = '';
         $digital_message = '';
-        $check_query = "SELECT * FROM {$table_name} WHERE `id`={$order_id}";
-        $result = $wpdb->get_row($check_query);
+        $check_query = "SELECT * FROM {$table_name} WHERE `id`= %d";
+        $result = $wpdb->get_row($wpdb->prepare($check_query,$order_id));
         $email_fname = $result->billing_first_name ;
         $email_lname = $result->billing_last_name ;
         $invoice =$result->invoice;
