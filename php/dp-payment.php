@@ -68,12 +68,6 @@ function dpsc_payment_option() {
     $output = str_replace(Array("\n", "\r"), Array("\\n", "\\r"), addslashes($output));
     echo "jQuery('div#dpsc_hidden_payment_form').html('$output');";
     dpsc_pnj_calculate_cart_price(TRUE);
-    $products = $_SESSION['dpsc_products'];
-    foreach ($products as $key => $item) {
-       unset($products[$key]);
-    }
-    $_SESSION['dpsc_products'] = $products;
-    unset($_SESSION['dpsc_shiping_price']);
     echo "jQuery('#dpsc_payment_form').submit();";
     exit ();
 }
@@ -86,6 +80,7 @@ function dps_zero_price_check($total,$discount,$shipping){
 	
 	$dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
     $tax = $dp_shopping_cart_settings['tax'];
+
 	if ($discount > 0) {
 		$total_discount = $total*$discount/100;
 	}
@@ -254,6 +249,7 @@ function dpsc_paypal_payment($dpsc_total = FALSE, $dpsc_shipping_value = FALSE, 
         if ($dp_shopping_cart_settings['tax'] > 0) {
             $tax_rate = $dp_shopping_cart_settings['tax'];
         }
+		
         foreach ($dpsc_products as $dpsc_product) {
             $dpsc_var = '';
             $var_paypal_field = '';
@@ -303,6 +299,7 @@ function dpsc_authorize_payment($dpsc_total = FALSE, $dpsc_shipping_value = FALS
         }
         if ($dp_shopping_cart_settings['tax'] > 0) {
             $tax_rate = $dp_shopping_cart_settings['tax'];
+			
             $total_tax = ($dpsc_total - $total_discount) * $tax_rate / 100;
         }
         if ($dpsc_shipping_value) {
@@ -385,6 +382,7 @@ function dpsc_worldpay_payment($dpsc_total = FALSE, $dpsc_shipping_value = FALSE
         }
         if ($dp_shopping_cart_settings['tax'] > 0) {
             $tax_rate = $dp_shopping_cart_settings['tax'];
+	
             $total_tax = ($dpsc_total - $total_discount) * $tax_rate / 100;
         }
         if ($dpsc_shipping_value) {
@@ -442,6 +440,7 @@ function dpsc_alertpay_payment($dpsc_total = FALSE, $dpsc_shipping_value = FALSE
         }
         if ($dp_shopping_cart_settings['tax'] > 0) {
             $tax_rate = $dp_shopping_cart_settings['tax'];
+
             $total_tax = ($dpsc_total - $total_discount) * $tax_rate / 100;
         }
         if ($dpsc_shipping_value) {
@@ -635,6 +634,8 @@ function dpsc_paypal_ipn() {
 //email to admin
                 update_option('debug_digital_mail_admin', $message);
                 dpsc_pnj_send_mail($from, $to, $dp_shopping_cart_settings['shop_name'], $subject, $message);
+				
+				dpsc_clear_cart();
             }
             
 //          Mail for Cancelled Order
@@ -777,6 +778,8 @@ function dpsc_auth_ipn() {
         $message = str_replace($find_tag, $rep_tag, $message);
         //email to admin
         dpsc_pnj_send_mail($from, $to, $dp_shopping_cart_settings['shop_name'], $subject, $message);
+		
+		dpsc_clear_cart();
     }
     if ($updated_status === 'Canceled') {
         $message = '';

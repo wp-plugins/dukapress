@@ -10,7 +10,7 @@
  */
 add_action('widgets_init', create_function('', 'return register_widget("dpsc_detailed_shopping_cart_widget");'));
 class dpsc_detailed_shopping_cart_widget extends WP_Widget {
-    function dpsc_detailed_shopping_cart_widget() {
+    function __construct() {
         $widget_ops = array('description' => __('Displays DukaPress Shopping Cart',"dp-lang"));
         $control_ops = array('width' => 100, 'height' => 300);
         parent::WP_Widget(false,$name= __('DukaPress Shopping Cart',"dp-lang"),$widget_ops,$control_ops);
@@ -54,7 +54,7 @@ class dpsc_detailed_shopping_cart_widget extends WP_Widget {
  */
 add_action('widgets_init', create_function('', 'return register_widget("dpsc_show_checkout_link_widget");'));
 class dpsc_show_checkout_link_widget extends WP_Widget {
-    function dpsc_show_checkout_link_widget() {
+    function __construct() {
         $widget_ops = array('description' => __('Displays DukaPress Checkout Link',"dp-lang"));
         $control_ops = array('width' => 100, 'height' => 300);
         parent::WP_Widget(false,$name=__('DukaPress Checkout',"dp-lang"),$widget_ops,$control_ops);
@@ -100,7 +100,7 @@ class dpsc_show_checkout_link_widget extends WP_Widget {
 add_action('widgets_init', create_function('', 'return register_widget("dpsc_mini_shopping_cart_widget");'));
 
 class dpsc_mini_shopping_cart_widget extends WP_Widget {
-    function dpsc_mini_shopping_cart_widget() {
+    function __construct() {
         $widget_ops = array('description' => __('Displays Mini DukaPress Shopping Cart',"dp-lang"));
         $control_ops = array('width' => 100, 'height' => 300);
         parent::WP_Widget(false,$name=__('Mini DukaPress Shopping Cart',"dp-lang"),$widget_ops,$control_ops);
@@ -237,7 +237,7 @@ function dpsc_print_cart_html($mini=FALSE, $product_name = FALSE) {
  */
 add_action('widgets_init', create_function('', 'return register_widget("dpsc_show_product_widget");'));
 class dpsc_show_product_widget extends WP_Widget {
-    function dpsc_show_product_widget() {
+    function __construct() {
         $widget_ops = array('description' => __('Product Display',"dp-lang"));
 //        $control_ops = array('width' => 100, 'height' => 300);
         parent::WP_Widget(false,$name=__('DukaPress Product Display',"dp-lang"),$widget_ops);
@@ -369,7 +369,7 @@ class dpsc_show_product_widget extends WP_Widget {
 
 add_action('widgets_init', create_function('', 'return register_widget("dpsc_custom_search_widget");'));
 class dpsc_custom_search_widget extends WP_Widget {
-    function dpsc_custom_search_widget() {
+    function __construct() {
         $widget_ops = array('description' => __('Search Widget For DukaPress',"dp-lang"));
         $control_ops = array('width' => 100, 'height' => 300);
         parent::WP_Widget(false,$name= __('DukaPress Search Widget',"dp-lang"),$widget_ops,$control_ops);
