@@ -2,13 +2,13 @@
 /*
 Plugin Name: DukaPress Shopping Cart
 Description: DukaPress Shopping Cart
-Version: 2.5.8
+Version: 2.5.9
 Author: Rixeo and Nickel Pro
 Author URI: http://dukapress.org/
 Plugin URI: http://dukapress.org/
 */
 
-$dp_version = 2.58;
+$dp_version = 2.59;
 
 // server should keep session data for AT LEAST 1 hour
 ini_set('session.gc_maxlifetime', 3600);

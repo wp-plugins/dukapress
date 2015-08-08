@@ -6,8 +6,9 @@ if (!function_exists('add_action')) {
 
 global $wpdb;
 $table_name2 = $wpdb->prefix . "dpsc_temp_file_log";
-$sql = "SELECT saved_name, real_name, count, TIMESTAMPDIFF(SECOND,sent_time,NOW()) as time_diff FROM `{$table_name2}` WHERE saved_name='{$_GET['id']}'";
-$row = $wpdb->get_row($sql);
+$id = sanitize_text_field($_GET['id']);
+$sql = "SELECT saved_name, real_name, count, TIMESTAMPDIFF(SECOND,sent_time,NOW()) as time_diff FROM `{$table_name2}` WHERE saved_name = %s";
+$row = $wpdb->get_row($wpdb->prepare($sql,$id));
 $dp_expire_hour = intval(get_option('dp_dl_link_expiration_time'));
 $dp_expiration_time = $dp_expire_hour*60*60;
 $dp_sent_time = $row->time_diff;
@@ -23,7 +24,8 @@ if ($dp_sent_time > $dp_expiration_time) {
 }
 else {
     $download_count++;
-    $wpdb->query("UPDATE {$table_name2} SET count={$download_count} WHERE saved_name='{$_GET['id']}'");
+	$sql = "UPDATE {$table_name2} SET count={$download_count} WHERE saved_name = %s";
+    $wpdb->query($wpdb->prepare($sql,$id));
     if (!file_exists($newfile_path)) {
         $msg = '<br />Invalid link or outdated link<br />';
         echo $msg;
