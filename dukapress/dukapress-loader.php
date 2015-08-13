@@ -469,9 +469,9 @@ if(!class_exists('DukaPress')) {
 				case "thumbnail":
 					echo '<a href="' . get_edit_post_link() . '" title="' . __( 'Edit &raquo;' ) . '">';
 					if ( has_post_thumbnail() ) {
-						the_post_thumbnail( array( 50, 50 ), array( 'title' => '' ) );
+						the_post_thumbnail( array( 70, 70 ), array( 'title' => '' ) );
 					} else {
-						echo '<img width="50" height="50" src="' . DPSC_DUKAPRESS_RESOURCEURL . '/img/default_product_small.jpg">';
+						echo '<img width="70" height="70" src="' . DPSC_DUKAPRESS_RESOURCEURL . '/img/default_product_small.jpg">';
 					}
 					echo '</a>';
 					break;
@@ -506,8 +506,8 @@ if(!class_exists('DukaPress')) {
 					break;
 	
 				case "stock":
-					if ( isset( $meta[ "duka_track_inventory" ] ) && $meta[ "duka_track_inventory" ] ) {
-						foreach ( (array) $meta[ "duka_inventory" ] as $value ) {
+					if ( isset( $meta[ "currently_in_stock" ] ) && $meta[ "currently_in_stock" ] ) {
+						foreach ( (array) $meta[ "currently_in_stock" ] as $value ) {
 							$inventory	 = ($value) ? $value : 0;
 							if ( $inventory == 0 )
 								$class		 = 'duka-inv-out';
@@ -792,19 +792,16 @@ if(!class_exists('DukaPress')) {
 		 * Load Admin CSS
 		 */
 		function admin_css(){
-			
+			wp_enqueue_style('dg_admin_css', DPSC_DUKAPRESS_RESOURCEURL.'/css/dp-admin.css');
 		}
 		
+		/**
+		 * Javascript for the Edit product screen
+		 */
 		function admin_script_post(){
 			global $current_screen;
 			if ( $current_screen->id == 'duka' )
 				wp_enqueue_script( 'duka-post', DPSC_DUKAPRESS_RESOURCEURL . '/js/post-screen.js', array( 'jquery' ), $this->version );
-			wp_enqueue_script('dpsc_admin_js_file');
-	        wp_localize_script( 'dpsc_admin_js_file', 'dpsc_admin_js', array( 
-				'variation_name' => __("Variation Name","dp-lang"),
-				'variation_price' => __("Variation Price","dp-lang"),
-				'confirm_action' => __("Do You really want to perform this action","dp-lang")
-			) );
 		}
 		
 		/** 
@@ -883,7 +880,11 @@ if(!class_exists('DukaPress')) {
 			<?php
 		}
 		
-		
+		/** 
+		 * Order Page
+		 * Custom Page to show transactions
+		 *
+		 */
 		function orders_page(){
 			//load single order view if id is set
 			if ( isset( $_GET[ 'order_id' ] ) ) {
@@ -1190,10 +1191,26 @@ if(!class_exists('DukaPress')) {
 			<?php
 		}
 		
+		/** 
+		 * Single Order Page
+		 *
+		 */
 		function single_order_page(){
-			
+			$order = $this->get_order( (int) $_GET[ 'order_id' ] );
+			if ( !$order )
+				wp_die( __( 'Requested order was not found', 'dp-lang' ) );
+			$max_downloads = $this->get_setting( 'max_downloads', 5 );
+			?>
+			<div class="wrap">
+				<h2><?php echo sprintf( __( 'Order Details (%s)', 'dp-lang' ), esc_attr( $order->post_title ) ); ?></h2>
+			</div>
+			<?php
 		}
 		
+		/** 
+		 * CSS used on theme
+		 *
+		 */
 		function style_settings(){
 			wp_register_style('dp_acc_style', DPSC_DUKAPRESS_RESOURCEURL . '/css/jquery-ui-1.8.5.custom.css');
 	        wp_register_style('dpsc_basic_css', DPSC_DUKAPRESS_RESOURCEURL.'/css/dpsc-basic.css');
@@ -1203,6 +1220,10 @@ if(!class_exists('DukaPress')) {
 	        wp_enqueue_style('dpsc_basic_css');
 		}
 		
+		/** 
+		 * Javascript used on Theme
+		 *
+		 */
 		function script_settings(){
 			add_theme_support('html5');
 			wp_register_script('dp_jquery_ui_js', DPSC_DUKAPRESS_RESOURCEURL . '/js/jquery-ui-1.8.4.custom.min.js', array('jquery'));
@@ -1271,11 +1292,17 @@ if(!class_exists('DukaPress')) {
 			wp_enqueue_style( 'jquery-colorpicker-css',DPSC_DUKAPRESS_RESOURCEURL . '/colorpicker/css/colorpicker.css', false, $this->version );
 		}
 		
+		/** 
+		 * Notify user to eneable proper permalinks
+		 */
 		function admin_nopermalink_warning(){
 			if ( current_user_can( 'manage_options' ) && !get_option( 'permalink_structure' ) )
 				echo '<div class="error"><p>' . __( 'You must enable Pretty Permalinks</a> to use DukaPress - <a href="options-permalink.php">Enable now &raquo;</a>', 'dp-lang' ) . '</p></div>';
 		}
 		
+		/** 
+		 * Add Settings option on the plugin list
+		 */
 		function plugin_action_link($links, $file){
 			// the anchor tag and href to the URL we want. For a "Settings" link, this needs to be the url of your settings page
 			$settings_link = '<a href="' . admin_url( 'edit.php?post_type=duka&page=dukapress' ) . '">' . __( 'Settings', 'dp-lang' ) . '</a>';
@@ -1309,6 +1336,10 @@ if(!class_exists('DukaPress')) {
 			return $order_id;
 		}
 		
+		/** 
+		 * Get Order by id
+		 *
+		 */
 		function order_to_post_id($order_id){
 			$order = get_page_by_title( $order_id, OBJECT, 'duka_order' );
 			return $order->ID;
@@ -1340,6 +1371,9 @@ if(!class_exists('DukaPress')) {
 			return $order;
 		}
 
+		/** 
+		 * Filter Title on Edit Product page
+		 */
 		function filter_title($post){
 			global $post_type;
 
@@ -1462,31 +1496,31 @@ if(!class_exists('DukaPress')) {
 			?>
 			<table class="widefat">
 				<tr>
-					<td><?php _e('Price:','dp-lang');?> :</td>
+					<td><?php _e('Price','dp-lang');?> :</td>
 					<td><input type="text" value="<?php echo $content_price; ?>" name="price" id="price"></td>
 				</tr>
 				<tr>
-					<td><?php _e('New Price:','dp-lang');?> :</td>
+					<td><?php _e('New Price','dp-lang');?> :</td>
 					<td><input type="text" value="<?php echo $new_price; ?>" name="new_price" id="new_price"></td>
 				</tr>
 				<tr>
-					<td><?php _e('Currently In Stock:','dp-lang');?> :</td>
+					<td><?php _e('Currently In Stock','dp-lang');?> :</td>
 					<td><input type="text" value="<?php echo $content_stock; ?>" name="currently_in_stock" id="currently_in_stock"></td>
 				</tr>
 				<tr>
-					<td><?php _e('Item Weight:','dp-lang');?> :</td>
+					<td><?php _e('Item Weight','dp-lang');?> :</td>
 					<td><input type="text" value="<?php echo $content_weight; ?>" name="item_weight" id="item_weight"></td>
 				</tr>
 				<tr>
-					<td><?php _e('SKU:','dukagate');?> :</td>
+					<td><?php _e('SKU','dukagate');?> :</td>
 					<td><input type="text" value="<?php echo $sku; ?>" name="sku" id="sku"></td>
 				</tr>
 				<tr>
-					<td><?php _e('Affiliate URL:','dp-lang');?> :</td>
+					<td><?php _e('Affiliate URL','dp-lang');?> :</td>
 					<td><input type="text" value="<?php echo $affiliate_url; ?>" name="affiliate_url" id="affiliate_url"></td>
 				</tr>
 				<tr>
-					<td><?php _e('Digital File URL:','dp-lang');?> :</td>
+					<td><?php _e('Digital File URL','dp-lang');?> :</td>
 					<td>
 						<input type="text" value="<?php echo $content_file; ?>" name="digital_file" id="digital_file"><br/>
 						<input id="duka_upload_button" class="button-secondary" type="button" value="<?php _e( 'Upload File', 'dp-lang' ); ?>" />
@@ -1495,9 +1529,11 @@ if(!class_exists('DukaPress')) {
 			</table>
 			<div class="clear"></div>
 			<h3><b><?php _e('Dropdown Options', "dp-lang"); ?></b></h3>
+			<div class="variation_results">
 			<?php
 			echo $this->drop_down_meta($post_id);
 			?>
+			</div>
 			<table class="widefat">
 				<tr>
 					<td><?php _e('Option Name', "dp-lang"); ?> :</td>
@@ -1548,24 +1584,26 @@ if(!class_exists('DukaPress')) {
 		        foreach ($optionnames as $optionname) {
 		            $j++;
 		            $optionname1 = explode("|", $optionname);
-		            $show_state_result.='<div style="border:1px solid;clear:both;width:100%;word-wrap: break-word">';
-		            $show_state_result.= '<p><b>' . ($optionname1[0]) . '</b></p>';
+		            $show_state_result.='<div class="variation_list">';
+					$show_state_result.='
+		                    <div id="dp_deletestring" class="variation_del">
+								<a href="javascript:void()" id="' . $j . '">Delete</a>
+		                        <input id="delete' . $j . '" name="delete' . $j . '" type="hidden" value="' . $optionname . '" />
+		                     </div>
+							 <p><b>' . ($optionname1[0]) . '</b></p>
+							 <div style="clear:both"></div>
+							 ';
+					$show_state_result.='<table class="widefat">';
 		            for ($i = 1; $optionname1[$i]; $i++) {
-		                $show_state_result.='<table class="widefat"><tr>';
+		                $show_state_result.='<tr>';
 		                $optionname2 = explode(";", $optionname1[$i]);
 		                foreach ($optionname2 as $value) {
 		                    $show_state_result.= '<td>' . $value . '</td>';
 		                }
-		                $show_state_result.='</tr></table>';
+		                $show_state_result.='</tr>';
 		            }
-		
-		            $show_state_result.='
-		                    <div id="dp_deletestring">
-								<a href="javascript:void()" id="' . $j . '">Delete</a>
-		                        <input id="delete' . $j . '" name="delete' . $j . '" type="hidden" value="' . $optionname . '" />
-		                     </div>
-							 <div style="clear:both"></div>
-							 </div>';
+					$show_state_result.='</table></div>';
+		            
 		        }
 		    }
 		    return $show_state_result;

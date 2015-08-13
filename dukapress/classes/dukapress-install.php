@@ -84,6 +84,7 @@ if(!class_exists('DukaPress_Install')) {
 				'shop_inventory_email' => '',
 				'shop_inventory_stock_warning' => '',
 				'dl_link_expiration_time' => '',
+				'max_downloads' => 3,
 				'per_page' => 20,
 				'slugs' => array(
 					'products' => __('products','dp-lang'),
@@ -250,6 +251,7 @@ if(!class_exists('DukaPress_Install')) {
 					'shop_inventory_soldout' => $dp_shopping_cart_settings['dp_shop_inventory_soldout'],
 					'shop_inventory_warning' => $dp_shopping_cart_settings['dp_shop_inventory_warning'],
 					'dl_link_expiration_time' => get_option('dp_dl_link_expiration_time'),
+					'max_downloads' => 3,
 					'per_page' => 20,
 					'slugs' => array(
 						'products' => __('products','dp-lang'),

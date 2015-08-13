@@ -77,7 +77,7 @@ jQuery(document).ready(function($) {
                 data:'action=delete_variationdata&name='+substring+'&postid='+postid,
                 success:function(msg)
                 {
-                    $("#result").html(msg);
+                    $(".variation_results").html(msg);
                 }
             });
 
@@ -118,7 +118,7 @@ jQuery(document).ready(function($) {
                     $('#optionname').val('');
                     $('#vname1').val('');
                     $('#vprice1').val('');
-                    $("#result").html(msg);
+                    $(".variation_results").html(msg);
                     current = 1;
                     $('input[name=varitaionnumber]').val(current);
                 }

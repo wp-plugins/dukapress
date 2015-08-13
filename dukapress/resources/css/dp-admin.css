@@ -98,3 +98,13 @@ table.order_log_info{
 table.order_log_info td{
 	width:200px;
 }
+.variation_list{
+    border:1px solid;
+    clear:both;
+    width:100%;
+    word-wrap: break-word;
+}
+.variation_del{
+    float: right;
+    width: auto;
+}
