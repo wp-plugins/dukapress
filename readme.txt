@@ -1,11 +1,11 @@
 === DukaPress ===
-Contributors: moshthepitt
+Contributors: moshthepitt, rixeo
 Donate link: http://dukapress.org/about/
 Tags: shopping cart, web shop, cart, shop, Worldpay, Paypal, Alertpay, paypal, e-commerce, ecommerce, MPESA, ZAP, yuCash, Mobile Payments,online duka, duka, online shop, JQZoom, Multiple Currencies
 
-Requires at least: 3.0
-Tested up to: 4.0
-Stable tag: 2.5
+Requires at least: 4.0
+Tested up to: 4.3
+Stable tag: 2.5.9.2
 
 DukaPress is an open source e-commerce solution built for Wordpress.
 
@@ -110,6 +110,43 @@ Please visit: [Our Forums](http://dukapress.org/forums/ "Our Forums")
 [View Screenshots](http://www.flickr.com/photos/moshthepitt/sets/72157624534741496/ "DukaPress screenshots")
 
 == Changelog ==
+
+= 2.5.9.2 =
+Fix on order detail view
+
+= 2.5.9.1 =
+SQL Injection fix
+
+= 2.5.9 =
+Fix for Download script
+
+= 2.5.8 =
+Small change in Widget code to prepare for WordPress 4.3. Dukapress is also going through some code changes and we will keep updating our blog with whats coming new
+
+= 2.5.7 =
+* Fix in currency converter
+* Added Turkish Lira PayPal Support
+* Default image handling will now not crop images
+
+= 2.5.6 =
+* Added terms and condition link for checkout page. This can be set up in the Dukapress ettings page
+* Added layout options for the checkout table with the attribute layout to switch from normal view to table view. [[dpsc_checkout layout='table']] will show the checkout page user information in a table format
+
+= 2.5.5 =
+* Fix on shipping showing 0 for shipping cost.
+
+= 2.5.4 =
+* Image resizer security fix.
+
+= 2.5.3 =
+* Security fix on image resize function. 
+* Fix on shipping on digital products
+
+= 2.5.2 =
+Fix for sites running on ssl for the plugin url
+
+= 2.5.1 =
+* Bug fix
 
 = 2.5 =
 * Javascript internationalization
