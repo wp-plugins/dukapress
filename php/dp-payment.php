@@ -110,8 +110,8 @@ function dpsc_custom_payment_process($invoice,$payer_email){
     $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
 	$message = '';
 	$digital_message = '';
-	$check_query = "SELECT * FROM {$table_name} WHERE `invoice`='{$invoice}'";
-	$result = $wpdb->get_row($check_query);
+	$check_query = "SELECT * FROM {$table_name} WHERE `invoice`= %s";
+	$result = $wpdb->get_row($wpdb->prepare($check_query,$invoice));
 	$is_digital = dpsc_pnj_is_digital_present($result->products);
 	if ($is_digital) {
 		$file_names = dpsc_pnj_get_download_links($is_digital);

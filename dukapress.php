@@ -2,13 +2,13 @@
 /*
 Plugin Name: DukaPress Shopping Cart
 Description: DukaPress Shopping Cart
-Version: 2.5.9.1
+Version: 2.5.9.9
 Author: Rixeo and Nickel Pro
 Author URI: http://dukapress.org/
 Plugin URI: http://dukapress.org/
 */
 
-$dp_version = 2.591;
+$dp_version = 2.592;
 
 // server should keep session data for AT LEAST 1 hour
 ini_set('session.gc_maxlifetime', 3600);
@@ -524,7 +524,7 @@ if ($page_links) {
     }
     else {
         $order_id = $_GET['id'];
-        $query = "SELECT * FROM {$table_name} WHERE `invoice`='%d";
+        $query = "SELECT * FROM {$table_name} WHERE `invoice`= %d";
         $result = $wpdb->get_row($wpdb->prepare($query,$order_id));
         $dp_shopping_cart_settings = get_option('dp_shopping_cart_settings');
         if ($result) {
