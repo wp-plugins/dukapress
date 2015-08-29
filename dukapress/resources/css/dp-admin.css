@@ -108,3 +108,9 @@ table.order_log_info td{
     float: right;
     width: auto;
 }
+.dpsc_checkout{
+    width:100%;
+}
+.dpsc_checkout_fields{
+    width:100%;
+}

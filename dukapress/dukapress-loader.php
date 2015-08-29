@@ -12,12 +12,6 @@ if(!class_exists('DukaPress')) {
 		//Variables to be used
 		var $version = '2.6';
 		var $location;
-		var $product_template;
-		var $product_taxonomy_template;
-		var $product_list_template;
-		var $store_template;
-		var $checkout_template;
-		var $orderstatus_template;
 		var $language = '';
 		var $checkout_error = false;
 		var $cart_cache = false;
@@ -35,6 +29,8 @@ if(!class_exists('DukaPress')) {
 				'simple_list'	 => NULL,
 			),
 		);
+		
+		var $form_elements = array('Text' => 'text' ,'Text Area' => 'textarea', 'Check Box' => 'checkbox','Paragraph' => 'paragraph');
 		
 		function __construct() {
 			//setup our variables
@@ -124,7 +120,7 @@ if(!class_exists('DukaPress')) {
 				}
 			}
 			
-			DukaPress_Install::init(); //Initialist the options
+			DukaPress_Install::init(); //Initialise the options
 			
 			//add action to flush rewrite rules after we've added them for the first time
 		    update_option( 'dukapess_flush_rewrite', 1 );
@@ -792,7 +788,8 @@ if(!class_exists('DukaPress')) {
 		 * Load Admin CSS
 		 */
 		function admin_css(){
-			wp_enqueue_style('dg_admin_css', DPSC_DUKAPRESS_RESOURCEURL.'/css/dp-admin.css');
+			wp_register_style('dp_jquery_ui', DPSC_DUKAPRESS_RESOURCEURL . '/css/jquery-ui-1.8.5.custom.css');
+			wp_enqueue_style('dp_admin_css', DPSC_DUKAPRESS_RESOURCEURL.'/css/dp-admin.css');
 		}
 		
 		/**
@@ -800,6 +797,8 @@ if(!class_exists('DukaPress')) {
 		 */
 		function admin_script_post(){
 			global $current_screen;
+			wp_enqueue_script( 'jquery-ui-sortable' );
+			wp_enqueue_script( 'dukapress-admin', DPSC_DUKAPRESS_RESOURCEURL . '/js/dukapress-admin.js', array( 'jquery' ), $this->version );
 			if ( $current_screen->id == 'duka' )
 				wp_enqueue_script( 'duka-post', DPSC_DUKAPRESS_RESOURCEURL . '/js/post-screen.js', array( 'jquery' ), $this->version );
 		}
@@ -818,6 +817,7 @@ if(!class_exists('DukaPress')) {
 				<h2><?php _e("DukaPress Settings","dp-lang");?></h2>
 				<h3 class="nav-tab-wrapper">
 					<?php 
+						
 						$tab = (!empty( $_GET[ 'tab' ] ) ) ? $_GET[ 'tab' ] : 'main';
 						if ( !$this->get_setting( 'disable_cart' ) ) {
 							$tabs = array(
@@ -825,13 +825,12 @@ if(!class_exists('DukaPress')) {
 								'email'		 => __( 'Email', 'dp-lang' ),
 								'shipping'		 => __( 'Shipping', 'dp-lang' ),
 								'gateways'		 => __( 'Payments', 'dp-lang' ),
-								'social'		 => __( 'Social', 'dp-lang' ),
+								'checkout'		 => __( 'Checkout Setting', 'dp-lang' ),
 								'shortcodes'	 => __( 'Shortcodes', 'dp-lang' ),
 								'tools'		 => __( 'Tools', 'dp-lang' )
 							);
 						} else {
 							$tabs = array(
-								'social'		 => __( 'Social', 'dp-lang' ),
 								'shortcodes'	 => __( 'Shortcodes', 'dp-lang' ),
 								'tools'		 => __( 'Tools', 'dp-lang' )
 							);
@@ -849,9 +848,19 @@ if(!class_exists('DukaPress')) {
 				</h3>
 				<div class="clear"></div>
 				<?php
+					$settings = get_option( 'dukapress_settings' );
+					//Save settings. General save for all settings
+					if ( isset( $_POST[ 'dukapress_settings' ] ) ) {
+						$settings = array_merge( $settings, apply_filters( 'dukapress_main_settings_filter', $_POST[ 'dpsc' ] ) );
+						update_option( 'dukapress_settings', $settings );
+					}
 					switch ( $tab ) {
 						case "main":
-						
+							?>
+							<div id="dpsc_main">
+								
+							</div>
+							<?php
 						break;
 						case "coupons":
 						
@@ -865,8 +874,144 @@ if(!class_exists('DukaPress')) {
 						case "gateways":
 						
 						break;
-						case "social":
-						
+						case "checkout":
+							
+							if ( isset( $_POST[ 'dpsc_checkout_settings' ] ) ) {
+								update_option( 'dukapress_checkout_settings', $_POST[ 'dpsc' ]);
+								echo '<div class="updated fade"><p>' . __( 'Checkout settings saved.', 'dp-lang' ) . '</p></div>';
+							}
+							$checkout_settings = get_option( 'dukapress_checkout_settings' );
+							$count = 0;
+							?>
+							<div id="dpsc_checkout">
+								<div class="dpsc_checkout_fields">
+									<form method="POST" action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
+										<?php wp_nonce_field('dukapress_checkout_settings','dukapress_checkout_noncename'); ?>
+										<input type="hidden" name="sort_order" id="sort_order" value=""/>
+										<p class="submit">
+											<a class="button button-secondary" onclick="add_checkout_element()"><?php _e('Add Checkout Field','dp-lang'); ?></a>&nbsp;&nbsp;&nbsp;<input class='button button-primary' type='submit' name='dpsc_checkout_settings' value='<?php _e('Save Options','dp-lang'); ?>'/><br/>
+										</p>
+										<table width="100%" border="0" class="widefat">
+											<thead>
+												<tr>
+													<th width="1%" align="left" scope="col"></th>
+													<th width="20%" align="left" scope="col"><?php _e('Name','dp-lang'); ?></th>
+													<th width="10%" align="left" scope="col"><?php _e('Type','dp-lang'); ?></th>
+													<th width="10%" align="left" scope="col"><?php _e('Unique Name','dp-lang'); ?></th>
+													<th width="39%" align="left" scope="col"><?php _e('Initial Value','dp-lang'); ?></th>
+													<th width="10%" align="left" scope="col"><?php _e('Mandatory','dp-lang'); ?></th>
+													<th width="10%" align="left" scope="col"><?php _e('Visible','dp-lang'); ?></th>
+													<th width="1%" align="left" scope="col"></th>
+												</tr>
+											</thead>
+											
+											<tfoot>
+												<tr>
+													<th align="left" scope="col"></th>
+													<th align="left" scope="col"><?php _e('Name','dp-lang'); ?></th>
+													<th align="left" scope="col"><?php _e('Type','dp-lang'); ?></th>
+													<th align="left" scope="col"><?php _e('Unique Name','dp-lang'); ?></th>
+													<th align="left" scope="col"><?php _e('Initial Value','dp-lang'); ?></th>
+													<th align="left" scope="col"><?php _e('Mandatory','dp-lang'); ?></th>
+													<th align="left" scope="col"><?php _e('Visible','dp-lang'); ?></th>
+													<th align="left" scope="col"></th>
+												</tr>
+											</tfoot>
+											<tbody class='sort-checkout ui-sortable'>
+												<?php
+												if (is_array($checkout_settings) && count($checkout_settings) > 0) {
+													
+													foreach ($checkout_settings as $checkout_row) {
+														?>
+														<tr id="<?php echo $checkout_row['name']; ?>">
+															<td><span style="cursor:move" class="dashicons dashicons-sort"></span></td>
+															<?php if(!isset($checkout_row['delete'])) { ?>
+															<td><input type="text" name="dpsc[<?php echo $count; ?>][name]" value="<?php echo $checkout_row['name']; ?>"/></td>
+															<td>
+																<select name="dpsc[<?php echo $count; ?>][type]">
+																	<?php
+																		foreach ($this->form_elements as $forms => $form) {
+																			$cont_selected = '';
+																			if ($checkout_row['type'] === $form) {
+																				$cont_selected = 'selected="selected"';
+																			}
+																			?>
+																			<option value="<?php echo $form; ?>" <?php echo $cont_selected; ?> ><?php _e($forms); ?></option>
+																			<?php
+																		}
+																	?>
+																</select>
+															</td>
+															<td><input type="text" name="dpsc[<?php echo $count; ?>][uname]" value="<?php echo $checkout_row['uname']; ?>" /></td>
+															<td><input type="text" name="dpsc[<?php echo $count; ?>][initial]" value="<?php echo @$checkout_row['initial']; ?>" style="width:100%"/></td>
+															<?php } else { ?>
+															<td><input type="hidden" name="dpsc[<?php echo $count; ?>][name]" value="<?php echo $checkout_row['name']; ?>" /><?php _e($checkout_row['name'],'dp-lang'); ?></td>
+															<td><input type="hidden" name="dpsc[<?php echo $count; ?>][type]" value="<?php echo $checkout_row['type']; ?>" /><?php _e($checkout_row['type'],'dp-lang'); ?></td>
+															<td><input type="hidden" name="dpsc[<?php echo $count; ?>][uname]" value="<?php echo $checkout_row['uname']; ?>" /><?php _e($checkout_row['uname']); ?></td>
+															<td><input type="hidden" name="dpsc[<?php echo $count; ?>][initial]" value="<?php echo $checkout_row['initial']; ?>" /><?php _e($checkout_row['initial'],'dp-lang'); ?></td>
+															<?php } ?>
+															<td><input type="checkbox" value="checked" name="dpsc[<?php echo $count; ?>][mandatory]" <?php echo ($checkout_row['mandatory'] == 'checked') ? "checked='checked'": ""; ?> /></td>
+															<td><input type="checkbox" value="checked" name="dpsc[<?php echo $count; ?>][visible]" <?php echo ($checkout_row['visible'] == 'checked') ? "checked='checked'": ""; ?> /></td>
+															<?php if(!isset($checkout_row['delete'])) {?>
+																<td><span style="cursor:pointer" class="dashicons dashicons-no-alt" onclick="delete_checkout_element(this)"></span></td>
+															<?php } else { ?>
+																<td><input type="hidden" name="dpsc[<?php echo $count; ?>][delete]" value="false" /></td>
+															<?php } ?>
+														</tr>
+														<?php
+														$count++;
+													}	
+												}
+												?>
+												
+											</tbody>
+										</table>
+										<p class="submit">
+											<a class="button button-secondary" onclick="add_checkout_element()"><?php _e('Add Checkout Field','dp-lang'); ?></a>&nbsp;&nbsp;&nbsp;<input class='button button-primary' type='submit' name='dpsc_checkout_settings' value='<?php _e('Save Options','dp-lang'); ?>'/><br/>
+										</p>
+									</form>
+									<input type="hidden" id="dpsc_item_count" value="<?php echo $count; ?>" />
+									<div style="display:none" class="dpsc_append_row">
+										<script type="dpsc_checkout_row">
+											<tr class="ui-sortable-handle">
+												<td><span style="cursor:move" class="dashicons dashicons-sort"></span></td>
+												<td><input type="text" name="dpsc[CURRENTCOUNT][name]" value=""/></td>
+												<td>
+													<select name="dpsc[CURRENTCOUNT][type]">
+														<?php
+															foreach ($this->form_elements as $forms => $form) {
+																?>
+																<option value="<?php echo $form; ?>"><?php _e($forms); ?></option>
+																<?php
+															}
+														?>
+													</select>
+												</td>
+												<td><input type="text" name="dpsc[CURRENTCOUNT][uname]" value="" /></td>
+												<td><input type="text" name="dpsc[CURRENTCOUNT][initial]" value="" style="width:100%"/></td>
+												<td><input type="checkbox" value="checked" name="dpsc[CURRENTCOUNT][manadatory]" /></td>
+												<td><input type="checkbox" value="checked" name="dpsc[CURRENTCOUNT][visible]" /></td>
+												<td><span style="cursor:pointer" class="dashicons dashicons-no-alt" onclick="delete_checkout_element(this)"></span></td>
+											</tr>
+										</script>
+									</div>
+									<script type="text/javascript">
+										jQuery(document).ready(function() {
+											var idsInOrder = [];
+											jQuery("tbody.sort-checkout").sortable({
+												update: function( event, ui ) {
+													idsInOrder = [];
+													jQuery('tbody.sort-checkout tr').each(function() {
+														idsInOrder.push(jQuery(this).attr('id'));
+													});
+													jQuery('#sort_order').val(idsInOrder);
+												}
+											});
+										});
+									</script>
+								</div>
+							</div>
+							<?php
 						break;
 						case "shortcodes":
 						
@@ -1211,8 +1356,7 @@ if(!class_exists('DukaPress')) {
 		 * CSS used on theme
 		 *
 		 */
-		function style_settings(){
-			wp_register_style('dp_acc_style', DPSC_DUKAPRESS_RESOURCEURL . '/css/jquery-ui-1.8.5.custom.css');
+		function set_up_styles(){
 	        wp_register_style('dpsc_basic_css', DPSC_DUKAPRESS_RESOURCEURL.'/css/dpsc-basic.css');
 			wp_register_style('jquery.fancybox', DPSC_DUKAPRESS_RESOURCEURL .'/js/jquery.fancybox/jquery.fancybox.css', false, $this->version, 'screen');
 			wp_register_style('dpsc_jqzoom', DPSC_DUKAPRESS_RESOURCEURL .'/css/jqzoom.css', false, $this->version, 'screen');
@@ -1224,18 +1368,16 @@ if(!class_exists('DukaPress')) {
 		 * Javascript used on Theme
 		 *
 		 */
-		function script_settings(){
+		function set_up_js(){
 			add_theme_support('html5');
-			wp_register_script('dp_jquery_ui_js', DPSC_DUKAPRESS_RESOURCEURL . '/js/jquery-ui-1.8.4.custom.min.js', array('jquery'));
-	        wp_register_script('dpsc_magiczoom', DPSC_DUKAPRESS_RESOURCEURL . '/js/magiczoom.js', array('jquery'));
-	        wp_register_script('dpsc_magiczoomplus', DPSC_DUKAPRESS_RESOURCEURL . '/js/magiczoomplus.js', array('jquery'));
-	        wp_register_script('dpsc_lightbox', DPSC_DUKAPRESS_RESOURCEURL . '/js/jquery.fancybox/jquery.fancybox-1.2.1.pack.js', array('jquery'));
-	        wp_register_script('dpsc_lightbox_call', DPSC_DUKAPRESS_RESOURCEURL . '/js/lightbox.js', array('jquery', 'dpsc_lightbox'));
-	        wp_register_script('dpsc_jqzoom', DPSC_DUKAPRESS_RESOURCEURL . '/js/jqzoom.pack.1.0.1.js', array('jquery'));
-	        wp_register_script('dpsc_js_file', DPSC_DUKAPRESS_RESOURCEURL . '/js/dukapress.js', array('jquery'));
-	        wp_register_script('dpsc_livequery',DPSC_DUKAPRESS_RESOURCEURL.'/js/jquery.livequery.js',array('jquery'));
+	        wp_register_script('dpsc_magiczoom', DPSC_DUKAPRESS_RESOURCEURL . '/js/magiczoom.js', array('jquery'), $this->version );
+	        wp_register_script('dpsc_magiczoomplus', DPSC_DUKAPRESS_RESOURCEURL . '/js/magiczoomplus.js', array('jquery'), $this->version );
+	        wp_register_script('dpsc_lightbox', DPSC_DUKAPRESS_RESOURCEURL . '/js/jquery.fancybox/jquery.fancybox-1.2.1.pack.js', array('jquery'), $this->version );
+	        wp_register_script('dpsc_lightbox_call', DPSC_DUKAPRESS_RESOURCEURL . '/js/lightbox.js', array('jquery', 'dpsc_lightbox'), $this->version );
+	        wp_register_script('dpsc_jqzoom', DPSC_DUKAPRESS_RESOURCEURL . '/js/jqzoom.pack.1.0.1.js', array('jquery'), $this->version );
+	        wp_register_script('dpsc_js_file', DPSC_DUKAPRESS_RESOURCEURL . '/js/dukapress.js', array('jquery'),$this->version );
+
 	
-	        wp_enqueue_script('dp_jquery_ui_js');
 			
 			$image_effect = $this->get_setting('image_effect');
 	        switch ($image_effect) {
@@ -1288,6 +1430,7 @@ if(!class_exists('DukaPress')) {
 		 * Enqeue css on product settings screen
 		 */
 		function admin_css_settings(){
+			wp_enqueue_style( 'jquery-ui-css', DPSC_DUKAPRESS_RESOURCEURL . '/css/jquery-ui.1.11.4.css', false, $this->version );
 			wp_enqueue_style( 'jquery-datepicker-css', DPSC_DUKAPRESS_RESOURCEURL . '/datepicker/css/smoothness/jquery-ui-1.10.3.custom.min.css', false, $this->version );
 			wp_enqueue_style( 'jquery-colorpicker-css',DPSC_DUKAPRESS_RESOURCEURL . '/colorpicker/css/colorpicker.css', false, $this->version );
 		}

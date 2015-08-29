@@ -8,8 +8,76 @@ if(!class_exists('DukaPress_Install')) {
 	class DukaPress_Install{
 		
 		public static function init() {
-			//Set up the options
-			add_action( 'plugins_loaded', array( __CLASS__, 'install_options' ) );
+			self::install_options();
+			$checkout_settings = get_option( 'dukapress_checkout_settings' );
+			if(empty($checkout_settings)){
+				$default_options = array(
+					array(
+						'name' => 'Full Names',
+						'type' => 'text',
+						'uname' => 'dpsc_fullname',
+						'initial' => '',
+						'mandatory' => 'checked',
+						'visible' => 'checked',
+						'delete' => false
+						),
+					array(
+						'name' => 'First Name',
+						'type' => 'text',
+						'uname' => 'dpsc_firstname',
+						'initial' => '',
+						'mandatory' => 'checked',
+						'visible' => 'checked',
+						'delete' => false
+						),
+					array(
+						'name' => 'Last Name',
+						'type' => 'text',
+						'uname' => 'dpsc_lastname',
+						'initial' => '',
+						'mandatory' => 'checked',
+						'visible' => 'checked',
+						'delete' => false
+						),
+					array(
+						'name' => 'Email',
+						'type' => 'text',
+						'uname' => 'dpsc_email',
+						'initial' => '',
+						'mandatory' => 'checked',
+						'visible' => 'checked',
+						'delete' => false
+						),
+					array(
+						'name' => 'Phone',
+						'type' => 'text',
+						'uname' => 'dpsc_phone',
+						'initial' => '',
+						'mandatory' => 'checked',
+						'visible' => 'checked',
+						'delete' => false
+						),
+					array(
+						'name' => 'Country',
+						'type' => 'select',
+						'uname' => 'dpsc_country',
+						'initial' => '--'.__('Select Country','dp-lang').'--',
+						'mandatory' => 'checked',
+						'visible' => 'checked',
+						'delete' => false
+						),
+					array(
+						'name' => 'State',
+						'type' => 'text',
+						'uname' => 'dpsc_state',
+						'initial' => '',
+						'mandatory' => 'checked',
+						'visible' => 'checked',
+						'delete' => false
+						)
+				);
+				update_option( 'dukapress_checkout_settings', $default_options );
+			}
 		}
 		
 		
@@ -19,8 +87,6 @@ if(!class_exists('DukaPress_Install')) {
 		 */
 		public static function install_options(){
 			$old_settings = get_option( 'dukapress_settings' );
-			$old_version = get_option( 'dp_version' );
-			
 			
 			$default_settings = array(
 				'pdf_generation' => 0,
