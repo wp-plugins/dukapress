@@ -161,60 +161,94 @@ if(!class_exists('DukaPress_Install')) {
 					'order_placed' => array(
 						'admin' => array(
 							'to' => get_option( "admin_email" ),
-							'subject' => '',
-							'body' => ''
+							'subject' => __( 'New Order %inv% ', 'dp-lang' ),
+							'body' => __('New order from %fname% %lname% 
+New Order ID %inv% has been created. Here are the details:
+
+Order Information:
+%order-details%
+
+You can view the order here: %order-log-transaction%', 'dp-lang' )
 						),
 						'user' => array(
 							'from' => get_option( "admin_email" ),
-							'subject' => '',
-							'body' => ''
+							'subject' =>  __( 'New Order %inv% ', 'dp-lang' ),
+							'body' => __('Thank you for your order %fname% %lname% 
+Your order has been received, and any items to be shipped will be processed as soon as possible. Please refer to your Order ID %inv% whenever contacting us.
+Here is a confirmation of your order details:
+
+Order Information:
+%order-details%
+
+You can view the latest status of your order here: %order-log-transaction%
+
+Thanks again!', 'dp-lang' )
 						),
 					),
 					'order_cancelled' => array(
 						'admin' => array(
 							'to' => get_option( "admin_email" ),
-							'subject' => '',
-							'body' => ''
+							'subject' =>  __( 'Order %inv% Cancelled', 'dp-lang' ),
+							'body' =>  __('Hello 
+Order %inv% has been cancelled', 'dp-lang' )
 						),
 						'user' => array(
 							'from' => get_option( "admin_email" ),
-							'subject' => '',
-							'body' => ''
+							'subject' =>  __( 'Order %inv% Cancelled', 'dp-lang' ),
+							'body' =>  __('Hello 
+Order %inv% has been cancelled', 'dp-lang' )
 						),
 					),
 					'user_registered' => array(
 						'admin' => array(
 							'to' => get_option( "admin_email" ),
-							'subject' => '',
-							'body' => ''
+							'subject' =>  __( 'New User Registered on %shop%', 'dp-lang' ),
+							'body' => __('Hello 
+A new user has registered with username %uname% and email %email%', 'dp-lang' )
 						),
 						'user' => array(
 							'from' => get_option( "admin_email" ),
-							'subject' => '',
-							'body' => ''
+							'subject' =>  __( 'New Account Information on %shop%', 'dp-lang' ),
+							'body' => __('Hello 
+A new user has registered with username %uname% and email %email%', 'dp-lang' )
 						),
 					),
 					'payments' => array(
 						'admin' => array(
 							'to' => get_option( "admin_email" ),
-							'subject' => '',
-							'body' => ''
+							'subject' => __( 'Order %inv% %status% ', 'dp-lang' ),
+							'body' => __('Hello
+Order ID %inv% is %status%', 'dp-lang' )
 						),
 						'user' => array(
 							'from' => get_option( "admin_email" ),
-							'subject' => '',
-							'body' => ''
+							'subject' => __( 'Order %inv% %status% ', 'dp-lang' ),
+							'body' => __('Hello %fname% %lname% 
+Your Order ID %inv% is %status% .
+
+%digi%
+
+Thanks again!', 'dp-lang' )
 						),
 					),
 					'inventory' => array(
 						'to' => get_option( "admin_email" ),
-						'subject' => '',
-						'body' => ''
+						'subject' => __( 'Inventory Message for Product %pname% ', 'dp-lang' ),
+						'body' => __('Hello
+Product %pname% currently has stock of %stock%
+%footer%', 'dp-lang' )
 					),
 					'enquiry' => array(
 						'to' => get_option( "admin_email" ),
-						'subject' => '',
-						'body' => ''
+						'subject' => __( 'New Enquiry - %enq_subject% ', 'dp-lang' ),
+						'body' =>  __('Hello
+New Enquiry :
+
+Name : %from%
+Email : %from_email%
+Subject : %enq_subject%
+Details : %details%
+Message : %custom_message%', 'dp-lang' )
 					),
 				),
 				'social' => array(
