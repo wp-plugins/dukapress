@@ -84,6 +84,10 @@ if(!class_exists('DukaPress')) {
 			//Scripts and Styles
 			add_action('wp_enqueue_scripts', array(&$this, 'set_up_styles'));
 			add_action('wp_enqueue_scripts', array(&$this, 'set_up_js'));
+			
+			//Discounts
+			add_action('wp_ajax_save_dpsc_discount_code', array(&$this, 'save_discount_code'));
+			add_action('wp_ajax_dpsc_delete_discount_code', array(&$this, 'delete_discount_code'));
 		}
 		
 		/**
@@ -860,11 +864,11 @@ if(!class_exists('DukaPress')) {
 						$tab = (!empty( $_GET[ 'tab' ] ) ) ? $_GET[ 'tab' ] : 'main';
 						if ( !$this->get_setting( 'disable_cart' ) ) {
 							$tabs = array(
-								'coupons'		 => __( 'Coupons', 'dp-lang' ),
+								'coupons'		 => __( 'Discount Codes', 'dp-lang' ),
 								'email'		 => __( 'Email', 'dp-lang' ),
 								'shipping'		 => __( 'Shipping', 'dp-lang' ),
 								'gateways'		 => __( 'Payments', 'dp-lang' ),
-								'checkout'		 => __( 'Checkout Setting', 'dp-lang' ),
+								'checkout'		 => __( 'Checkout Page', 'dp-lang' ),
 								'shortcodes'	 => __( 'Shortcodes', 'dp-lang' ),
 								'tools'		 => __( 'Tools', 'dp-lang' )
 							);
@@ -898,11 +902,7 @@ if(!class_exists('DukaPress')) {
 							DukaPress_Admin_Pages::main($settings);
 						break;
 						case "coupons":
-							?>
-							<div id="dpsc_coupons">
-								
-							</div>
-							<?php
+							DukaPress_Admin_Pages::coupons($settings);
 						break;
 						case "email":
 							DukaPress_Admin_Pages::email($settings);
@@ -930,6 +930,72 @@ if(!class_exists('DukaPress')) {
 				?>	
 			</div>
 			<?php
+		}
+		
+		/** 
+		 * Save Discount Code
+		 */
+		function save_discount_code() {
+			$discount_code = $_POST['dpsc_discount_code'];
+			$discount_amount = $_POST['dpsc_discount_amount'];
+			$discount_one_time = $_POST['dpsc_discount_one_time'];
+			$output = '';
+			$unique_discount = TRUE;
+			$discount = get_option('dpsc_discount_codes') ? get_option('dpsc_discount_codes') : array();
+			foreach ($discount as $check_code) {
+				if ($check_code['code'] === $discount_code) {
+					$unique_discount = FALSE;
+				}
+			}
+			if ($unique_discount) {
+				if (!empty($discount_code) && !empty($discount_amount)) {
+					$dpsc_discount['code'] = $discount_code;
+					$dpsc_discount['amount'] = $discount_amount;
+					$dpsc_discount['count'] = 0;
+					$dpsc_discount['one_time'] = $discount_one_time;
+					$dpsc_discount['id'] = time();
+					$discount[] = $dpsc_discount;
+					update_option('dpsc_discount_codes', $discount);
+				}
+			}
+			else {
+				$output = '<span id="dpsc-same-discount-code-present">Please add another discount code as same discount code already exists.</span>';
+			}
+			if ($_REQUEST['ajax'] == 'true') {
+				ob_start();
+				_e(DukaPress_Admin_Pages::discount_code_table(),"dp-lang");
+				$output .= ob_get_contents();
+				ob_end_clean();
+				die($output);
+			}
+		}
+		
+		/**
+		* This function deletes the Discount code
+		*
+		*/
+		function delete_discount_code() {
+			$dpsc_discount_code_id = intval($_POST['id']);
+			$dpsc_discount_codes = get_option('dpsc_discount_codes');
+			$dpsc_discount_codes_new = array();
+			if (is_array($dpsc_discount_codes)) {
+				foreach ($dpsc_discount_codes as $check_code) {
+					if ($check_code['id'] === $dpsc_discount_code_id) {
+						unset ($check_code);
+					}
+					else {
+						$dpsc_discount_codes_new[] = $check_code;
+					}
+				}
+			}
+			update_option('dpsc_discount_codes', $dpsc_discount_codes_new);
+			if ($_REQUEST['ajax'] == 'true') {
+				ob_start();
+				_e(DukaPress_Admin_Pages::discount_code_table(),"dp-lang");
+				$output .= ob_get_contents();
+				ob_end_clean();
+				die($output);
+			}
 		}
 		
 		/** 

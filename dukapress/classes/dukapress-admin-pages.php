@@ -478,6 +478,73 @@ class DukaPress_Admin_Pages{
 	}
 	
 	/** 
+	 * Coupons
+	 */
+	static function coupons($settings){
+		?>
+		<h2><?php _e("Discount Codes","dp-lang");?></h2>
+		<table class="form-table">
+			<tr>
+				<th scope="row"><?php _e("Enter Discount Code","dp-lang");?></th>
+				<td>
+					<input type="text" value="" name="discount_code" id="discount_code" />
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><?php _e("Discount","dp-lang");?></th>
+				<td>
+					<input type="text" value="" name="discount_amount" id="discount_amount" />%
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><?php _e("One Time Discount","dp-lang");?></th>
+				<td>
+					<input type="checkbox" value="true" name="discount_one_time" id="discount_one_time" />
+				</td>
+			</tr>
+		</table>
+		<p class="submit">
+			<input class='button button-primary' type='submit' id='dp_discount_submit' value='<?php _e('Save Code','dp-lang'); ?>'/><br/>
+		</p>
+		<div id="discount_code_layout">
+			<?php _e(static::discount_code_table(),"dp-lang");?>
+		</div>
+		<?php
+	}
+	
+	/** 
+	 * Discount Code Table
+	 */
+	static function discount_code_table(){
+		$dpsc_discount_codes = get_option('dpsc_discount_codes');
+		$output = '';
+		if ($dpsc_discount_codes && count($dpsc_discount_codes) > 0 ) {
+			$output .= '<table width="100%" border="0" class="widefat">
+							<thead>
+								<tr>
+									<th style="width: 20%;">Discount Code</th>
+									<th style="width: 32%;">Discount Amount (%)</th>
+									<th style="width: 22%;">Number of Times Used</th>
+									<th style="width: 22%;"></th>
+								</tr>
+							</thead><tbody>';
+			foreach ($dpsc_discount_codes as $dpsc_discount_code) {
+				$output .= '<tr>
+								<td>' . $dpsc_discount_code['code'] . '</td>
+								<td>' . $dpsc_discount_code['amount'] . '</td>
+								<td>' . $dpsc_discount_code['count'] . '</td>
+								<td><a style="cursor:pointer" class="dpsc_delete_discount_code" id="' . $dpsc_discount_code['id'] . '">Delete</a></td>
+							</tr>';
+			}
+			$output .= '</tbody></table>';
+		}
+		else {
+			$output = 'No Discount Code added!';
+		}
+		return $output;
+	}
+	
+	/** 
 	 * Email Settings
 	 *
 	 */
