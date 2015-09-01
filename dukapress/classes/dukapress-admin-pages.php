@@ -319,7 +319,7 @@ class DukaPress_Admin_Pages{
 							<tr>
 								<th scope="row"><?php _e( 'Related Product Limit', 'dp-lang' ) ?></th>
 								<td>
-									<label><input name="dpsc[related_products][show_limit]" type="text" size="2" value="<?php echo intval( $settings['related_products']['show_limit']); ?>" /></label>
+									<label><input name="dpsc[related_products][show_limit]" type="text" class="regular-text ltr" size="2" value="<?php echo intval( $settings['related_products']['show_limit']); ?>" /></label>
 								</td>
 							</tr>
 							<tr>
@@ -380,15 +380,15 @@ class DukaPress_Admin_Pages{
 							<tr><th colspan="2"><?php _e("Store URL Slugs","dp-lang");?></th></tr>
 							<tr valign="top">
 								<th scope="row"><?php _e( 'Products', 'dp-lang' ) ?></th>
-								<td><input type="text" name="dpsc[slugs][products]" value="<?php echo esc_attr($settings['slugs']['products']); ?>" size="20" maxlength="50" />/</td>
+								<td><input type="text" class="regular-text ltr" name="dpsc[slugs][products]" value="<?php echo esc_attr($settings['slugs']['products']); ?>" size="20" maxlength="50" />/</td>
 							</tr>
 							<tr valign="top">
 								<th scope="row"><?php _e( 'Product Category', 'dp-lang' ) ?></th>
-								<td><?php echo esc_attr($settings['slugs']['products']); ?>/<input type="text" name="dpsc[slugs][category]" value="<?php echo esc_attr($settings['slugs']['category']); ?>" size="20" maxlength="50" />/</td>
+								<td><?php echo esc_attr($settings['slugs']['products']); ?>/<input type="text" class="regular-text ltr" name="dpsc[slugs][category]" value="<?php echo esc_attr($settings['slugs']['category']); ?>" size="20" maxlength="50" />/</td>
 							</tr>
 							<tr valign="top">
 								<th scope="row"><?php _e( 'Product Tag', 'dp-lang' ) ?></th>
-								<td><?php echo esc_attr($settings['slugs']['products']); ?>/<input type="text" name="dpsc[slugs][tag]" value="<?php echo esc_attr($settings['slugs']['tag']); ?>" size="20" maxlength="50" />/</td>
+								<td><?php echo esc_attr($settings['slugs']['products']); ?>/<input type="text" class="regular-text ltr" name="dpsc[slugs][tag]" value="<?php echo esc_attr($settings['slugs']['tag']); ?>" size="20" maxlength="50" />/</td>
 							</tr>
 						</tbody>
 					</table>
@@ -407,6 +407,73 @@ class DukaPress_Admin_Pages{
 			});
 		</script>
 		
+		<?php
+	}
+	
+	/** 
+	 * Shipping Settings
+	 *
+	 */
+	static function shipping($settings){
+		?>
+		<h2><?php _e("Shipping Settings","dp-lang");?></h2>
+		<form method="POST" action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
+			<table class="form-table">
+				<tr>
+					<th scope="row"><?php _e("Shipping calculation method","dp-lang");?></th>
+					<td>
+						<select name="dspc[shipping][method]">
+							<option value="free" <?php if ($settings['shipping']['method'] === "free") {echo 'selected="selected"';}?>><?php _e("Free","dp-lang");?></option>
+							<option value="flat" <?php if ($settings['shipping']['method'] === "flat") {echo 'selected="selected"';}?>><?php _e("Flat","dp-lang");?></option>
+							<option value="flat_limit" <?php if ($settings['shipping']['method'] === "flat_limit") {echo 'selected="selected"';}?>><?php _e("Flat Limit","dp-lang");?></option>
+							<option value="weight_flat" <?php if ($settings['shipping']['method'] === "weight_flat") {echo 'selected="selected"';}?>><?php _e("Weight Flat","dp-lang");?></option>
+							<option value="weight_class" <?php if ($settings['shipping']['method'] === "weight_class") {echo 'selected="selected"';}?>><?php _e("Weight Class","dp-lang");?></option>
+							<option value="per_item" <?php if ($settings['shipping']['method'] === "per_item") {echo 'selected="selected"';}?>><?php _e("Per Item","dp-lang");?></option>
+							<?php do_action('dp_shipping_dropdown_option');?>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"><?php _e("Flat Rate","dp-lang");?></th>
+					<td>
+						<input type="text" class="regular-text ltr" name="dspc[shipping][flat_rate]" value="<?php echo $settings['shipping']['flat_rate']; ?>"/>
+					</td>
+	
+				</tr>
+				<tr>
+					<th scope="row"><?php _e("Flat Limit Rate","dp-lang");?></th>
+					<td>
+						<input type="text" class="regular-text ltr" name="dspc[shipping][flat_limit_rate]" value="<?php echo $settings['shipping']['flat_limit_rate']; ?>"/>
+					</td>
+	
+				</tr>
+				<tr>
+					<th scope="row"><?php _e("Weight Flat Rate","dp-lang");?></th>
+					<td>
+						<input type="text" class="regular-text ltr" name="dspc[shipping][weight_flat_rate]" value="<?php echo $settings['shipping']['weight_flat_rate']; ?>"/>
+					</td>
+	
+				</tr>
+				<tr>
+					<th scope="row"><?php _e("Weight Class Rate","dp-lang");?></th>
+					<td>
+						<input type="text" class="regular-text ltr" name="dspc[shipping][weight_class_rate]" value="<?php echo $settings['shipping']['weight_class_rate']; ?>"/>
+					</td>
+	
+				</tr>
+				<tr>
+					<th scope="row"><?php _e("Per Item Rate","dp-lang");?></th>
+					<td>
+						<input type="text" class="regular-text ltr" name="dspc[shipping][per_item_rate]" value="<?php echo $settings['shipping']['per_item_rate']; ?>"/>
+					</td>
+	
+				</tr>
+				<?php do_action('dp_shipping_field'); //Add any other shipping methods here ?>
+			</table>
+			<p class="submit">
+				<input class='button button-primary' type='submit' name='dukapress_settings' value='<?php _e('Save Settings','dp-lang'); ?>'/><br/>
+			</p>
+		</form>
 		<?php
 	}
 	

@@ -908,11 +908,7 @@ if(!class_exists('DukaPress')) {
 							DukaPress_Admin_Pages::email($settings);
 						break;
 						case "shipping":
-							?>
-							<div id="dpsc_shipping">
-								
-							</div>
-							<?php
+							DukaPress_Admin_Pages::shipping($settings);
 						break;
 						case "gateways":
 							?>

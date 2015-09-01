@@ -250,7 +250,15 @@ Message : %custom_message%', 'dp-lang' )
 					'relate_by'		 => 'both',
 					'simple_list'	 => 0,
 					'show_limit'	 => 3
-				)
+				),
+				'shipping' => array(
+					'method' => 'free',
+					'flat_rate' => '',
+					'flat_limit_rate' => '',
+					'weight_flat_rate' => '',
+					'weight_class_rate' => '',
+					'per_item_rate' => ''
+				) 
 			);
 			
 			$default_settings = apply_filters( 'dp_default_settings', $default_settings );
@@ -407,6 +415,14 @@ Message : %custom_message%', 'dp-lang' )
 						'relate_by'		 => 'both',
 						'simple_list'	 => 0,
 						'show_limit'	 => 3
+					),
+					'shipping' => array(
+						'method' => $dp_shopping_cart_settings['dp_shipping_calc_method'],
+						'flat_rate' => $dp_shopping_cart_settings['dp_shipping_flat_rate'],
+						'flat_limit_rate' => $dp_shopping_cart_settings['dp_shipping_flat_limit_rate'],
+						'weight_flat_rate' => $dp_shopping_cart_settings['dp_shipping_weight_flat_rate'],
+						'weight_class_rate' => $dp_shopping_cart_settings['dp_shipping_weight_class_rate'],
+						'per_item_rate' => $dp_shopping_cart_settings['dp_shipping_per_item_rate']
 					)
 				);
 				
