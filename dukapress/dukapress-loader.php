@@ -75,6 +75,12 @@ if(!class_exists('DukaPress')) {
 			add_action('wp_ajax_save_variationdata', array( &$this,'varition_save_data'));
 			add_action('wp_ajax_delete_variationdata', array( &$this,'varition_delete_data'));
 			
+			//Rewrites
+			add_filter( 'rewrite_rules_array', array( &$this, 'add_rewrite_rules' ) );
+			add_filter( 'query_vars', array( &$this, 'add_queryvars' ) );
+			add_action( 'option_rewrite_rules', array( &$this, 'check_rewrite_rules' ) );
+			add_action( 'init', array( &$this, 'flush_rewrite_check' ), 99 );
+			
 			//Scripts and Styles
 			add_action('wp_enqueue_scripts', array(&$this, 'set_up_styles'));
 			add_action('wp_enqueue_scripts', array(&$this, 'set_up_js'));
@@ -369,6 +375,50 @@ if(!class_exists('DukaPress')) {
 				'post_type'					 => 'duka_order',
 				'public'					 => false
 			) );
+		}
+		
+		
+		// This function clears the rewrite rules and forces them to be regenerated
+		function flush_rewrite_check() {
+			if ( get_option( 'duka_flush_rewrite' ) ) {
+				flush_rewrite_rules();
+				delete_option( 'duka_flush_rewrite' );
+			}
+		}
+	
+		function add_rewrite_rules( $rules ) {
+			$new_rules = array();
+	
+			//product list
+			$new_rules[ $this->get_setting( 'slugs->products' ) . '/?$' ]					 = 'index.php?pagename=product_list';
+			$new_rules[ $this->get_setting( 'slugs->products' ) . '/page/?([0-9]{1,})/?$' ]	 = 'index.php?pagename=product_list&paged=$matches[1]';
+
+			//ipn handling for payment gateways
+			$new_rules[ 'payment-return/(.+)' ] = 'index.php?paymentgateway=$matches[1]';
+	
+			return array_merge( $new_rules, $rules );
+		}
+	
+		//unfortunately some plugins flush rewrites before the init hook so they kill custom post type rewrites. This function verifies they are in the final array and flushes if not
+		function check_rewrite_rules( $value ) {
+	
+			//prevent an infinite loop by only
+			if ( !post_type_exists( 'duka' ) )
+				return $value;
+	
+			if ( is_array( $value ) && !in_array( 'index.php?duka=$matches[1]&paged=$matches[2]', $value ) ) {
+				update_option( 'duka_flush_rewrite', 1 );
+			} else {
+				return $value;
+			}
+		}
+		
+		function add_queryvars( $vars ) {
+	
+			if ( !in_array( 'paymentgateway', $vars ) )
+				$vars[] = 'paymentgateway';
+	
+			return $vars;
 		}
 		
 		/** 
@@ -804,7 +854,6 @@ if(!class_exists('DukaPress')) {
 			}
 			?>
 			<div class="wrap">
-				<h2><?php _e("DukaPress Settings","dp-lang");?></h2>
 				<h3 class="nav-tab-wrapper">
 					<?php 
 						
@@ -846,11 +895,7 @@ if(!class_exists('DukaPress')) {
 					}
 					switch ( $tab ) {
 						case "main":
-							?>
-							<div id="dpsc_main">
-								
-							</div>
-							<?php
+							DukaPress_Admin_Pages::main($settings);
 						break;
 						case "coupons":
 							?>
@@ -1680,6 +1725,142 @@ if(!class_exists('DukaPress')) {
 	        }
 	        echo $this->drop_down_meta($postid);
 		    die();
+		}
+		
+		
+		function serve_download( $product_id ) {
+
+			if ( !isset( $_GET[ 'orderid' ] ) )
+				return false;
+	
+			//get the order
+			$order = $this->get_order( $_GET[ 'orderid' ] );
+			if ( !$order )
+				wp_die( __( 'Sorry, the link is invalid for this download.', 'dp-lang' ) );
+	
+			//check that order is paid
+			if ( $order->post_status == 'order_received' )
+				wp_die( __( 'Sorry, your order has been marked as unpaid.', 'dp-lang' ) );
+	
+			$url = get_post_meta( $product_id, 'digital_file', true );
+	
+			//get cart count
+			if ( isset( $order->mp_cart_info[ $product_id ][ 0 ][ 'download' ] ) )
+				$download = $order->mp_cart_info[ $product_id ][ 0 ][ 'download' ];
+	
+			//if new url is not set try to grab it from the order history
+			if ( !$url && isset( $download[ 'url' ] ) )
+				$url = $download[ 'url' ];
+			else if ( !$url )
+				wp_die( __( 'Whoops, we were unable to find the file for this download. Please contact us for help.', 'dp-lang' ) );
+	
+			//check for too many downloads
+			$max_downloads = $this->get_setting( 'max_downloads', 5 );
+			if ( intval( $download[ 'downloaded' ] ) >= $max_downloads )
+				wp_die( sprintf( __( "Sorry, our records show you've downloaded this file %d out of %d times allowed. Please contact us if you still need help.", 'dp-lang' ), intval( $download[ 'downloaded' ] ), $max_downloads ) );
+	
+			//for plugins to hook into the download script. Don't forget to increment the download count, then exit!
+			do_action( 'duka_serve_download', $url, $order, $download );
+	
+			//allows you to simply filter the url
+			$url = apply_filters( 'duka_download_url', $url, $order, $download );
+	
+			set_time_limit( 0 ); //try to prevent script from timing out
+			//create unique filename
+			$ext		 = ltrim( strrchr( basename( $url ), '.' ), '.' );
+			$filename	 = sanitize_file_name( strtolower( get_the_title( $product_id ) ) . '.' . $ext );
+	
+			$dirs		 = wp_upload_dir();
+			$location	 = str_replace( $dirs[ 'baseurl' ], $dirs[ 'basedir' ], $url );
+			if ( file_exists( $location ) ) {
+				// File is in our server
+				$tmp		 = $location;
+				$not_delete	 = true;
+			} else {
+				// File is remote so we need to download it first
+				require_once(ABSPATH . '/wp-admin/includes/file.php');
+	
+				//don't verify ssl connections
+				add_filter( 'https_local_ssl_verify', create_function( '$ssl_verify', 'return false;' ) );
+				add_filter( 'https_ssl_verify', create_function( '$ssl_verify', 'return false;' ) );
+	
+				$tmp = download_url( $url ); //we download the url so we can serve it via php, completely obfuscating original source
+	
+				if ( is_wp_error( $tmp ) ) {
+					@unlink( $tmp );
+					trigger_error( "Dukapress was unable to download the file $url for serving as download: " . $tmp->get_error_message(), E_USER_WARNING );
+					wp_die( __( 'Whoops, there was a problem loading up this file for your download. Please contact us for help.', 'dp-lang' ) );
+				}
+			}
+	
+			if ( file_exists( $tmp ) ) {
+				$chunksize	 = (8 * 1024); //number of bytes per chunk
+				$buffer		 = '';
+				$filesize	 = filesize( $tmp );
+				$length		 = $filesize;
+				list($fileext, $filetype) = wp_check_filetype( $tmp );
+	
+				if ( empty( $filetype ) ) {
+					$filetype = 'application/octet-stream';
+				}
+	
+				ob_clean(); //kills any buffers set by other plugins
+	
+				if ( isset( $_SERVER[ 'HTTP_RANGE' ] ) ) {
+					//partial download headers
+					preg_match( '/bytes=(\d+)-(\d+)?/', $_SERVER[ 'HTTP_RANGE' ], $matches );
+					$offset	 = intval( $matches[ 1 ] );
+					$length	 = intval( $matches[ 2 ] ) - $offset;
+					$fhandle = fopen( $filePath, 'r' );
+					fseek( $fhandle, $offset ); // seek to the requested offset, this is 0 if it's not a partial content request
+					$data	 = fread( $fhandle, $length );
+					fclose( $fhandle );
+					header( 'HTTP/1.1 206 Partial Content' );
+					header( 'Content-Range: bytes ' . $offset . '-' . ($offset + $length) . '/' . $filesize );
+				}
+	
+				header( 'Accept-Ranges: bytes' );
+				header( 'Content-Description: File Transfer' );
+				header( 'Content-Type: ' . $filetype );
+				header( 'Content-Disposition: attachment;filename="' . $filename . '"' );
+				header( 'Expires: -1' );
+				header( 'Cache-Control: public, must-revalidate, post-check=0, pre-check=0' );
+				header( 'Pragma: public' );
+				header( 'Content-Length: ' . $filesize );
+	
+				if ( $filesize > $chunksize ) {
+					$handle = fopen( $tmp, 'rb' );
+	
+					if ( $handle === false ) {
+						trigger_error( "Dukapress was unable to read the file $tmp for serving as download.", E_USER_WARNING );
+						return false;
+					}
+	
+					while ( !feof( $handle ) && ( connection_status() === CONNECTION_NORMAL ) ) {
+						$buffer = fread( $handle, $chunksize );
+						echo $buffer;
+					}
+	
+					ob_end_flush();
+					fclose( $handle );
+				} else {
+					ob_clean();
+					flush();
+					readfile( $tmp );
+				}
+	
+				if ( !$not_delete ) {
+					@unlink( $tmp );
+				}
+			}
+	
+			//attempt to record a download attempt
+			if ( isset( $download[ 'downloaded' ] ) ) {
+				$order->duka_cart_info[ $product_id ][ 0 ][ 'download' ][ 'downloaded' ] = $download[ 'downloaded' ] + 1;
+				update_post_meta( $order->ID, 'duka_cart_info', $order->duka_cart_info );
+			}
+	
+			exit;
 		}
 
 	}
