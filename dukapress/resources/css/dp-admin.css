@@ -114,3 +114,8 @@ table.order_log_info td{
 .dpsc_checkout_fields{
     width:100%;
 }
+.payment-options{
+    width:100%;
+    background-color: #fff;
+    padding:5px;
+}

@@ -1,7 +1,7 @@
 <?php
 class DukaPress_Admin_Pages{
-	
-	/** 
+
+	/**
 	 * Main Settings
 	 */
 	static function main($settings){
@@ -11,6 +11,7 @@ class DukaPress_Admin_Pages{
 		<h2><?php _e("General Settings","dp-lang");?></h2>
 		<div id="dpsc_main">
 			<form method="POST" action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
+				<?php wp_nonce_field('dukapress_settings','dukapress_settings_noncename'); ?>
 				<p class="submit">
 					<input class='button button-primary' type='submit' name='dukapress_settings' value='<?php _e('Save Options','dp-lang'); ?>'/><br/>
 				</p>
@@ -133,6 +134,35 @@ class DukaPress_Admin_Pages{
 								</td>
 							</tr>
 							<tr>
+								<th scope="row"><?php _e("Checkout Page","dp-lang");?></th>
+								<td>
+									<table class="form-table">
+										<tr>
+											<th scope="row"><label><?php _e("URL","dp-lang");?></label></th><td><input type="text" name="dpsc[page_urls][checkout_url]" value="<?php echo $settings['page_urls']['checkout_url'];?>" /></td>
+										</tr>
+										<tr>
+											<th scope="row"><label><?php _e("Page","dp-lang");?></label></th>
+											<td>
+												<select name="dpsc[page_urls][checkout_id]">
+													<?php
+													foreach ( $pages as $pagg ) {
+														$cont_selected = '';
+														if (intval($settings['page_urls']['checkout_id']) === $pagg->ID) {
+															$cont_selected = 'selected="selected"';
+														}
+														$option = '<option value="' .$pagg->ID. '" '.$cont_selected.'>';
+														$option .= $pagg->post_title;
+														$option .= '</option>';
+														echo $option;
+													}
+													?>
+												</select>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
 								<th scope="row"><?php _e("Thank You Page","dp-lang");?></th>
 								<td>
 									<table class="form-table">
@@ -143,7 +173,7 @@ class DukaPress_Admin_Pages{
 											<th scope="row"><label><?php _e("Page","dp-lang");?></label></th>
 											<td>
 												<select name="dpsc[page_urls][thankyou_id]">
-													<?php 
+													<?php
 													foreach ( $pages as $pagg ) {
 														$cont_selected = '';
 														if (intval($settings['page_urls']['thankyou_id']) === $pagg->ID) {
@@ -172,7 +202,7 @@ class DukaPress_Admin_Pages{
 											<th scope="row"><label><?php _e("Page","dp-lang");?></label></th>
 											<td>
 												<select name="dpsc[page_urls][affiliate_id]">
-													<?php 
+													<?php
 													foreach ( $pages as $pagg ) {
 														$cont_selected = '';
 														if (intval($settings['page_urls']['affiliate_id']) === $pagg->ID) {
@@ -201,7 +231,7 @@ class DukaPress_Admin_Pages{
 											<th scope="row"><label><?php _e("Page","dp-lang");?></label></th>
 											<td>
 												<select name="dpsc[page_urls][terms_id]">
-													<?php 
+													<?php
 													foreach ( $pages as $pagg ) {
 														$cont_selected = '';
 														if (intval($settings['page_urls']['terms_id']) === $pagg->ID) {
@@ -406,11 +436,11 @@ class DukaPress_Admin_Pages{
 				});
 			});
 		</script>
-		
+
 		<?php
 	}
-	
-	/** 
+
+	/**
 	 * Shipping Settings
 	 *
 	 */
@@ -418,11 +448,13 @@ class DukaPress_Admin_Pages{
 		?>
 		<h2><?php _e("Shipping Settings","dp-lang");?></h2>
 		<form method="POST" action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
+			<?php wp_nonce_field('dukapress_settings','dukapress_settings_noncename'); ?>
 			<table class="form-table">
 				<tr>
 					<th scope="row"><?php _e("Shipping calculation method","dp-lang");?></th>
 					<td>
 						<select name="dspc[shipping][method]">
+							<option value="none" <?php if ($settings['shipping']['method'] === "none") {echo 'selected="selected"';}?>><?php _e("None","dp-lang");?></option>
 							<option value="free" <?php if ($settings['shipping']['method'] === "free") {echo 'selected="selected"';}?>><?php _e("Free","dp-lang");?></option>
 							<option value="flat" <?php if ($settings['shipping']['method'] === "flat") {echo 'selected="selected"';}?>><?php _e("Flat","dp-lang");?></option>
 							<option value="flat_limit" <?php if ($settings['shipping']['method'] === "flat_limit") {echo 'selected="selected"';}?>><?php _e("Flat Limit","dp-lang");?></option>
@@ -438,35 +470,35 @@ class DukaPress_Admin_Pages{
 					<td>
 						<input type="text" class="regular-text ltr" name="dspc[shipping][flat_rate]" value="<?php echo $settings['shipping']['flat_rate']; ?>"/>
 					</td>
-	
+
 				</tr>
 				<tr>
 					<th scope="row"><?php _e("Flat Limit Rate","dp-lang");?></th>
 					<td>
 						<input type="text" class="regular-text ltr" name="dspc[shipping][flat_limit_rate]" value="<?php echo $settings['shipping']['flat_limit_rate']; ?>"/>
 					</td>
-	
+
 				</tr>
 				<tr>
 					<th scope="row"><?php _e("Weight Flat Rate","dp-lang");?></th>
 					<td>
 						<input type="text" class="regular-text ltr" name="dspc[shipping][weight_flat_rate]" value="<?php echo $settings['shipping']['weight_flat_rate']; ?>"/>
 					</td>
-	
+
 				</tr>
 				<tr>
 					<th scope="row"><?php _e("Weight Class Rate","dp-lang");?></th>
 					<td>
 						<input type="text" class="regular-text ltr" name="dspc[shipping][weight_class_rate]" value="<?php echo $settings['shipping']['weight_class_rate']; ?>"/>
 					</td>
-	
+
 				</tr>
 				<tr>
 					<th scope="row"><?php _e("Per Item Rate","dp-lang");?></th>
 					<td>
 						<input type="text" class="regular-text ltr" name="dspc[shipping][per_item_rate]" value="<?php echo $settings['shipping']['per_item_rate']; ?>"/>
 					</td>
-	
+
 				</tr>
 				<?php do_action('dp_shipping_field'); //Add any other shipping methods here ?>
 			</table>
@@ -476,8 +508,8 @@ class DukaPress_Admin_Pages{
 		</form>
 		<?php
 	}
-	
-	/** 
+
+	/**
 	 * Coupons
 	 */
 	static function coupons($settings){
@@ -511,8 +543,8 @@ class DukaPress_Admin_Pages{
 		</div>
 		<?php
 	}
-	
-	/** 
+
+	/**
 	 * Discount Code Table
 	 */
 	static function discount_code_table(){
@@ -543,8 +575,8 @@ class DukaPress_Admin_Pages{
 		}
 		return $output;
 	}
-	
-	/** 
+
+	/**
 	 * Email Settings
 	 *
 	 */
@@ -553,6 +585,7 @@ class DukaPress_Admin_Pages{
 		<h2><?php _e("Mail Settings","dp-lang");?></h2>
 		<div id="dpsc_email">
 			<form method="POST" action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
+				<?php wp_nonce_field('dukapress_settings','dukapress_settings_noncename'); ?>
 				<p class="submit">
 					<input class='button button-primary' type='submit' name='dukapress_settings' value='<?php _e('Save Options','dp-lang'); ?>'/><br/>
 				</p>
@@ -583,7 +616,7 @@ class DukaPress_Admin_Pages{
 									<textarea rows="4" name="dpsc[mail][order_placed][admin][body]" class="large-text code"><?php echo $settings['mail']['order_placed']['admin']['body']; ?></textarea>
 									<p class="description">
 										<?php _e('This is the message body the mail of the orders placed to the admin','dp-lang'); ?><br/>
-										<?php _e("Use","dp-lang");?> <strong>%userdetails%</strong>, <strong>%inv%</strong>, <strong>%siteurl%</strong>, <strong>%shop%</strong> ,<strong>%order-details%</strong> ,<strong>%order-log-transaction%</strong> 
+										<?php _e("Use","dp-lang");?> <strong>%userdetails%</strong>, <strong>%inv%</strong>, <strong>%siteurl%</strong>, <strong>%shop%</strong> ,<strong>%order-details%</strong> ,<strong>%order-log-transaction%</strong>
 										<?php _e("as User Details, Invoice, Site URL, Shop Name, Order Details, Order Log Transaction","dp-lang");?>
 									</p>
 								</td>
@@ -881,8 +914,8 @@ class DukaPress_Admin_Pages{
 		</script>
 		<?php
 	}
-	
-	/** 
+
+	/**
 	 * Checkout page
 	 */
 	static function checkout(){
@@ -916,7 +949,7 @@ class DukaPress_Admin_Pages{
 								<th width="1%" align="left" scope="col"></th>
 							</tr>
 						</thead>
-						
+
 						<tfoot>
 							<tr>
 								<th align="left" scope="col"></th>
@@ -932,7 +965,7 @@ class DukaPress_Admin_Pages{
 						<tbody class='sort-checkout ui-sortable'>
 							<?php
 							if (is_array($checkout_settings) && count($checkout_settings) > 0) {
-								
+
 								foreach ($checkout_settings as $checkout_row) {
 									?>
 									<tr id="<?php echo $checkout_row['name']; ?>">
@@ -972,10 +1005,10 @@ class DukaPress_Admin_Pages{
 									</tr>
 									<?php
 									$count++;
-								}	
+								}
 							}
 							?>
-							
+
 						</tbody>
 					</table>
 					<p class="submit">
@@ -1025,5 +1058,73 @@ class DukaPress_Admin_Pages{
 		</div>
 		<?php
 	}
-}	
+
+	/**
+	 * Payments Page
+	 *
+	 */
+	static function payment($settings){
+		if(isset( $_POST[ 'dpsc_activate_gateways' ] ) && check_admin_referer('dukapress_payment_settings','dukapress_payment_noncename')){
+			$dpsc_selected_gateway_plugins = $_POST['dpsc_selected_gateway_plugins'];
+			update_option('dpsc_selected_gateway_plugins', $dpsc_selected_gateway_plugins);
+		}
+		$dpsc_gateway_plugins = get_option( 'dpsc_gateway_plugins' );
+		$dpsc_selected_gateway_plugins = get_option( 'dpsc_selected_gateway_plugins' );
+		?>
+		<h2><?php _e("Payment Settings","dp-lang");?></h2>
+			<?php
+			if (is_array($dpsc_gateway_plugins) && count($dpsc_gateway_plugins) > 0) {
+				?>
+				<form method="POST" action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
+					<?php wp_nonce_field('dukapress_payment_settings','dukapress_payment_noncename'); ?>
+					<ul>
+						<?php
+						$selected = "";
+						foreach ($dpsc_gateway_plugins as $dpsc_gateway) {
+							if(is_array($dpsc_selected_gateway_plugins))
+								if(in_array($dpsc_gateway[2], $dpsc_selected_gateway_plugins)){
+									$selected = "checked='checked'";
+								}else{
+									$selected = "";
+								}
+							?>
+							<li>
+								<label>
+									<input type="checkbox" name="dpsc_selected_gateway_plugins[]" value="<?php echo $dpsc_gateway[2]; ?>" <?php echo $selected;?> />
+									<?php _e($dpsc_gateway[1]); ?>
+								</label>
+							</li>
+							<?php
+						}
+						?>
+					</ul>
+					<p class="submit">
+						<input class='button-primary' type='submit' name='dpsc_activate_gateways' value='<?php _e('Activate Selected', 'dp-lang'); ?>'/><br/>
+					</p>
+				</form>
+				<?php
+				if(is_array($dpsc_selected_gateway_plugins)){
+					?>
+						<div class="payment-options">
+						<form method="POST" action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
+							<?php wp_nonce_field('dukapress_settings','dukapress_settings_noncename'); ?>
+							<?php
+								foreach ($dpsc_selected_gateway_plugins as $dpsc_gateway) {
+									do_action( 'dpsc_gateway_option_'.$dpsc_gateway , $settings);
+									?><hr/>
+									<?php
+								}
+							?>
+							<p class="submit">
+								<input class='button-primary' type='submit' name='dukapress_settings' value='<?php _e('Save Settings', 'dp-lang'); ?>'/><br/>
+							</p>
+						</form>
+						</div>
+					<?php
+				}
+			}
+			?>
+		<?php
+	}
+}
 ?>

@@ -1,12 +1,12 @@
 <?php
-/** 
+/**
  * Functions used in Dukapress
  *
  */
- 
- 
+
+
  if (!function_exists('dukapress_category_list')) {
-	 
+
 	/**
 	 * Retrieve product's category list in either HTML list or custom format.
 	 *
@@ -22,9 +22,9 @@
 		else
 			return __('Uncategorized', 'dp-lang');
 	 }
- 
+
  }
- 
+
 if (!function_exists('dukapress_tag_list')) {
 	/**
 	 * Retrieve product's tag list in either HTML list or custom format.
@@ -117,6 +117,115 @@ function dukapress_popular_products($echo = true, $num = 5) {
 				echo $content;
 		else
 				return $content;
+}
+endif;
+
+
+if (!function_exists('dukapress_cart_link')) :
+/**
+ * Echos the current shopping cart link. If global cart is on reflects global location
+ * @param bool $echo Optional, whether to echo. Defaults to true
+ * @param bool $url Optional, whether to return a link or url. Defaults to show link.
+ * @param string $link_text Optional, text to show in link.
+ */
+function dukapress_cart_link($echo = true, $url = false, $link_text = '') {
+		global $dukapress;
+    $checkout_url = $dukapress->get_setting('page_urls->checkout_url');
+    if(empty($checkout_url)){
+      $checkout_url = get_page_link($dukapress->get_setting('page_urls->checkout_id'));
+    }
+		$link = $checkout_url;
+
+		if (!$url) {
+				$text = ($link_text) ? $link_text : __('Shopping Cart', 'dp-lang');
+				$link = '<a href="' . $link . '" class="dpsc_cart_link">' . $text . '</a>';
+		}
+
+		$link = apply_filters('dukapress_cart_link', $link, $echo, $url, $link_text);
+
+		if ($echo)
+				echo $link;
+		else
+				return $link;
+}
+endif;
+
+
+if (!function_exists('dukapress_checkout_step_url')) :
+/**
+ * Returns the current shopping cart link with checkout step.
+ *
+ * @param string $checkoutstep. Possible values: checkout-edit, shipping, checkout, confirm-checkout, confirmation
+ */
+function dukapress_checkout_step_url($checkout_step) {
+		return apply_filters('dukapress_checkout_step_url', dukapress_cart_link(false, true) . trailingslashit($checkout_step), $checkout_step);
+}
+endif;
+
+
+if (!function_exists('dukapress_page_url')) :
+
+  /**
+   * Echos the page url set up by the admin
+   * @param bool $echo Required, whether to echo. Defaults to true
+   * @param bool $name Required, type of url.
+   */
+  function dukapress_page_url($echo = true, $name = 'checkout'){
+    global $dukapress;
+    switch ($name) {
+      case 'thankyou':
+        $thankyou_url = $dukapress->get_setting('page_urls->thankyou_url');
+        if(empty($thankyou_url)){
+          $thankyou_url = get_page_link($dukapress->get_setting('page_urls->thankyou_id'));
+        }
+        if($echo){
+          echo $thankyou_url;
+        }else{
+          return $thankyou_url;
+        }
+        break;
+
+      default:
+        # code...
+        break;
+    }
+  }
+
+endif;
+
+
+if (!function_exists('dukapress_shop_currency_conversion_rate')) :
+
+/**
+ * Get the conversion rate
+ *
+ * @param string $gateway_currency. Currency symbol to be converted
+ */
+function dukapress_shop_currency_conversion_rate($gateway_currency){
+  global $dukapress;
+  $shop_currency = $dukapress->get_setting('shop_currency');
+  $conversion_rate = 1;
+  if($shop_currency != $gateway_currency){
+    $conversion_rate = DP_CURRENCYCONVERTER::convert(1, $shop_currency, $gateway_currency);
+  }
+  return $conversion_rate;
+}
+
+endif;
+
+if (!function_exists('dukapress_trim_name')) :
+
+/**
+ * Trim name
+ *
+ * @param string $name. Name to be trimmed
+ * @param integer $length. length to trim to
+ */
+function dukapress_trim_name($name, $length = 127) {
+  while (strlen(urlencode($name)) > $length)
+    $name = substr($name, 0, -1);
+
+  return urlencode($name);
 }
 endif;
 ?>

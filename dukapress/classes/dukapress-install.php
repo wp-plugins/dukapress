@@ -1,12 +1,12 @@
 <?php
 if(!class_exists('DukaPress_Install')) {
-	
+
 	/**
 	 * Manage the setup for DukaPress
 	 *
 	 */
 	class DukaPress_Install{
-		
+
 		public static function init() {
 			self::install_options();
 			$checkout_settings = get_option( 'dukapress_checkout_settings' );
@@ -79,15 +79,15 @@ if(!class_exists('DukaPress_Install')) {
 				update_option( 'dukapress_checkout_settings', $default_options );
 			}
 		}
-		
-		
-		/** 
+
+
+		/**
 		 * Install and set up the default options
 		 *
 		 */
 		public static function install_options(){
 			$old_settings = get_option( 'dukapress_settings' );
-			
+
 			$default_settings = array(
 				'pdf_generation' => 0,
 				'user_registration' => 0,
@@ -127,13 +127,16 @@ if(!class_exists('DukaPress_Install')) {
 				'shop_currency_position' => 1,
 				'currency_code_enable' => '',
 				'currency_symbol' => '$',
+				'discount' => 'true',
 				'page_urls' => array(
 					'thankyou_url' => '',
 					'thankyou_id' => '',
 					'affiliate_url' => '',
 					'affiliate_id' => '',
 					'terms_url' => '',
-					'terms_id' => ''
+					'terms_id' => '',
+					'checkout_url' => '',
+					'checkout_id' => ''
 				),
 				'inventory_threshhold' => '',
 				'inventory_remove' => '',
@@ -150,7 +153,7 @@ if(!class_exists('DukaPress_Install')) {
 						'admin' => array(
 							'to' => get_option( "admin_email" ),
 							'subject' => __( 'New Order %inv% ', 'dp-lang' ),
-							'body' => __('New order from %fname% %lname% 
+							'body' => __('New order from %fname% %lname%
 New Order ID %inv% has been created. Here are the details:
 
 Order Information:
@@ -161,7 +164,7 @@ You can view the order here: %order-log-transaction%', 'dp-lang' )
 						'user' => array(
 							'from' => get_option( "admin_email" ),
 							'subject' =>  __( 'New Order %inv% ', 'dp-lang' ),
-							'body' => __('Thank you for your order %fname% %lname% 
+							'body' => __('Thank you for your order %fname% %lname%
 Your order has been received, and any items to be shipped will be processed as soon as possible. Please refer to your Order ID %inv% whenever contacting us.
 Here is a confirmation of your order details:
 
@@ -177,13 +180,13 @@ Thanks again!', 'dp-lang' )
 						'admin' => array(
 							'to' => get_option( "admin_email" ),
 							'subject' =>  __( 'Order %inv% Cancelled', 'dp-lang' ),
-							'body' =>  __('Hello 
+							'body' =>  __('Hello
 Order %inv% has been cancelled', 'dp-lang' )
 						),
 						'user' => array(
 							'from' => get_option( "admin_email" ),
 							'subject' =>  __( 'Order %inv% Cancelled', 'dp-lang' ),
-							'body' =>  __('Hello 
+							'body' =>  __('Hello
 Order %inv% has been cancelled', 'dp-lang' )
 						),
 					),
@@ -191,13 +194,13 @@ Order %inv% has been cancelled', 'dp-lang' )
 						'admin' => array(
 							'to' => get_option( "admin_email" ),
 							'subject' =>  __( 'New User Registered on %shop%', 'dp-lang' ),
-							'body' => __('Hello 
+							'body' => __('Hello
 A new user has registered with username %uname% and email %email%', 'dp-lang' )
 						),
 						'user' => array(
 							'from' => get_option( "admin_email" ),
 							'subject' =>  __( 'New Account Information on %shop%', 'dp-lang' ),
-							'body' => __('Hello 
+							'body' => __('Hello
 A new user has registered with username %uname% and email %email%', 'dp-lang' )
 						),
 					),
@@ -211,7 +214,7 @@ Order ID %inv% is %status%', 'dp-lang' )
 						'user' => array(
 							'from' => get_option( "admin_email" ),
 							'subject' => __( 'Order %inv% %status% ', 'dp-lang' ),
-							'body' => __('Hello %fname% %lname% 
+							'body' => __('Hello %fname% %lname%
 Your Order ID %inv% is %status% .
 
 %digi%
@@ -258,19 +261,19 @@ Message : %custom_message%', 'dp-lang' )
 					'weight_flat_rate' => '',
 					'weight_class_rate' => '',
 					'per_item_rate' => ''
-				) 
+				)
 			);
-			
+
 			$default_settings = apply_filters( 'dp_default_settings', $default_settings );
 			$settings = wp_parse_args( (array) $old_settings, $default_settings );
 			update_option( 'dukapress_settings', $settings );
-			
+
 			if ( empty( $old_settings ) ) {
 				self::update_2point6();
 			}
 		}
-		
-		/** 
+
+		/**
 		 * Update from Old Dukapress Version 2.6.x
 		 *
 		 */
@@ -287,7 +290,7 @@ Message : %custom_message%', 'dp-lang' )
 				$enquiry_mail = get_option('dp_usr_enquiry_mail', true);
 				$payment_mail = get_option('dp_admin_payment_mail', true);
 				$payment_mail_user = get_option('dp_usr_payment_mail', true);
-				
+
 				$new_settings = array(
 					'pdf_generation' => 0,
 					'user_registration' => 0,
@@ -303,17 +306,34 @@ Message : %custom_message%', 'dp-lang' )
 					'shop_state' => $dp_shopping_cart_settings['shop_state'],
 					'shop_address' => $dp_shopping_cart_settings['shop_address'],
 					'shop_name' => $dp_shopping_cart_settings['shop_name'],
+					'discount' => $dp_shopping_cart_settings['discount_enable'],
 					'gateways' => array(
 						'worldpay' => array(
-							'currency' => '',
-							'mode' => 'sandbox'
+							'currency' => $dp_shopping_cart_settings['worldpay_currency'],
+							'mode' => $dp_shopping_cart_settings['worldpay_testmode'],
+							'id' => $dp_shopping_cart_settings['worldpay_id']
 						),
 						'alertpay' => array(
-							'currency' => '',
+							'currency' => $dp_shopping_cart_settings['alertpay_currency'],
+							'id' => $dp_shopping_cart_settings['alertpay_id']
+						),
+						'authorizenet' => array(
+							'api' => $dp_shopping_cart_settings['authorize_api'],
+							'transaction_key' => $dp_shopping_cart_settings['authorize_transaction_key'],
+							'mode' => $dp_shopping_cart_settings['authorize_test_request']
 						),
 						'paypal' => array(
-							'currency' => 'USD',
-							'mode'	=> 'sandbox'
+							'currency' => $dp_shopping_cart_settings['paypal_currency'],
+							'mode'	=> 'live',
+							'id' => $dp_shopping_cart_settings['dp_shop_paypal_id']
+						),
+						'bank' => array(
+							'name' => $dp_shopping_cart_settings['bank_name'],
+							'routing' => $dp_shopping_cart_settings['bank_routing'],
+							'account' => $dp_shopping_cart_settings['bank_account'],
+							'owner' => $dp_shopping_cart_settings['bank_account_owner'],
+							'iban' => $dp_shopping_cart_settings['bank_IBAN'],
+							'bic' => $dp_shopping_cart_settings['bank_bic']
 						)
 					),
 					'shop_mode' => $dp_shopping_cart_settings['dp_shop_mode'],
@@ -332,7 +352,9 @@ Message : %custom_message%', 'dp-lang' )
 						'affiliate_url' => $dp_shopping_cart_settings['affiliate_url'],
 						'affiliate_id' => '',
 						'terms_url' => $dp_shopping_cart_settings['terms_url'],
-						'terms_id' => ''
+						'terms_id' => '',
+						'checkout_url' => $dp_shopping_cart_settings['checkout'],
+						'checkout_id' => ''
 					),
 					'inventory_threshhold' => '',
 					'inventory_remove' => '',
@@ -425,11 +447,11 @@ Message : %custom_message%', 'dp-lang' )
 						'per_item_rate' => $dp_shopping_cart_settings['dp_shipping_per_item_rate']
 					)
 				);
-				
+
 				update_option( 'dukapress_settings', $new_settings );
-				
+
 				//TODO Update Payment gateways also
-				
+
 				//We then delete the old options
 				delete_option('dp_dl_link_expiration_time');
 				delete_option('dp_order_mail_options');
@@ -443,10 +465,10 @@ Message : %custom_message%', 'dp-lang' )
 				delete_option('dp_admin_payment_mail');
 				delete_option('dp_usr_payment_mail');
 				delete_option('dp_shopping_cart_settings');
-				
+
 			}
 		}
-		
+
 	}
-}	
+}
 ?>

@@ -1,6 +1,6 @@
 <?php
 if(!class_exists('DukaPress')) {
-	
+
 	/**
 	 * Main DukaPress Class
 	 *
@@ -8,7 +8,7 @@ if(!class_exists('DukaPress')) {
 	 * @since 2.6
 	 */
 	class DukaPress{
-	
+
 		//Variables to be used
 		var $version = '2.6';
 		var $location;
@@ -19,7 +19,7 @@ if(!class_exists('DukaPress')) {
 		var $global_cart = false;
 		var $skip_shipping_notice = false;
 		var $weight_printed	= false;
-		
+
 		var $defaults = array(
 			'related_products'	 => array(
 				'product_id'	 => NULL,
@@ -29,67 +29,70 @@ if(!class_exists('DukaPress')) {
 				'simple_list'	 => NULL,
 			),
 		);
-		
+
 		var $form_elements = array('Text' => 'text' ,'Text Area' => 'textarea', 'Check Box' => 'checkbox','Paragraph' => 'paragraph');
-		
+
 		function __construct() {
-			//setup our variables
+			//setup our variables and load classes
 			$this->init_dpsc();
-			
+
 			//Lets install
 			add_action( 'plugins_loaded', array( &$this, 'install' ) );
-			
+
 			//Call action when admin installs a new site
 			add_action( 'wpmu_new_blog', array( &$this, 'setup_new_blog' ), 10, 6 );
-			
+
 			//custom post type
 			add_action( 'init', array( &$this, 'register_post_types' ), 0 ); //super high priority
 			add_filter( 'request', array( &$this, 'handle_edit_screen_filter' ) );
 			add_filter( 'post_updated_messages', array( &$this, 'post_updated_messages' ) );
-	
+
 			//edit products page
 			add_filter( 'manage_duka_posts_columns', array( &$this, 'edit_duka_columns' ) );
 			add_action( 'manage_duka_posts_custom_column', array( &$this, 'edit_duka_custom_columns' ) , 10, 2);
 			add_action( 'restrict_manage_posts', array( &$this, 'edit_duka_filter' ) );
-	
+
 			add_filter( 'post_row_actions', array( &$this, 'edit_duka_custom_row_actions' ), 10, 2 );
 			add_filter( 'admin_action_copy-duka', array( &$this, 'edit_products_copy_action' ) );
-	
+
 			//manage orders page
 			add_filter( 'manage_duka_page_dukapress-orders_columns', array( &$this, 'manage_orders_columns' ) );
 			add_action( 'manage_duka_order_posts_custom_column', array( &$this, 'manage_orders_custom_columns' ) );
-			
+
 			//Admin Pages
 			add_action( 'admin_menu', array( &$this, 'admin_menu' ) );
 			add_action( 'admin_print_scripts', array( &$this, 'admin_script_post' ) );
 			add_action( 'admin_notices', array( &$this, 'admin_nopermalink_warning' ) );
 			add_filter( 'plugin_action_links_' . DPSC_BASENAME, array( &$this, 'plugin_action_link' ), 10, 2 );
-			
-			
+
+
 			//Meta boxes
 			add_action( 'add_meta_boxes_duka', array( &$this, 'meta_boxes' ) );
 			add_action( 'wp_insert_post', array( &$this, 'save_product_meta' ), 10, 2 );
 			add_filter( 'enter_title_here', array( &$this, 'filter_title' ) );
-			
+
 			//Ajax Actions
 			add_action('wp_ajax_save_variationdata', array( &$this,'varition_save_data'));
 			add_action('wp_ajax_delete_variationdata', array( &$this,'varition_delete_data'));
-			
+
 			//Rewrites
 			add_filter( 'rewrite_rules_array', array( &$this, 'add_rewrite_rules' ) );
 			add_filter( 'query_vars', array( &$this, 'add_queryvars' ) );
 			add_action( 'option_rewrite_rules', array( &$this, 'check_rewrite_rules' ) );
 			add_action( 'init', array( &$this, 'flush_rewrite_check' ), 99 );
-			
+
 			//Scripts and Styles
 			add_action('wp_enqueue_scripts', array(&$this, 'set_up_styles'));
 			add_action('wp_enqueue_scripts', array(&$this, 'set_up_js'));
-			
+
 			//Discounts
 			add_action('wp_ajax_save_dpsc_discount_code', array(&$this, 'save_discount_code'));
 			add_action('wp_ajax_dpsc_delete_discount_code', array(&$this, 'delete_discount_code'));
+
+			//load APIs and plugins
+			add_action( 'wp_loaded', array( &$this, 'load_plugins' ) );
 		}
-		
+
 		/**
 		 * Initialise the variables we need
 		 *
@@ -98,19 +101,22 @@ if(!class_exists('DukaPress')) {
 		function init_dpsc(){
 			//load data structures
 			require_once( DPSC_DUKAPRESS_LIB_DIR . '/dukapress-data.php' );
-			
+
+			//currency converter
+			require_once( DPSC_DUKAPRESS_LIB_DIR . '/currency_convertor.php' );
+
 			$this->start_session(); //Start the session
-			
+
 			//Load Classes
 			require_once( DPSC_DUKAPRESS_CLASSES_DIR . '/dukapress-install.php' );
 			require_once( DPSC_DUKAPRESS_CLASSES_DIR . '/dukapress-admin-pages.php' );
-			
+
 			//Load Functions
 			require_once( DPSC_DUKAPRESS_DIR . '/dukapress-functions.php' );
 		}
-		
-		
-		/** 
+
+
+		/**
 		 * Set up new Multisite
 		 * @since 2.6
 		 */
@@ -118,8 +124,8 @@ if(!class_exists('DukaPress')) {
 			//flag to run on next visit to blog
 			update_blog_option( $blog_id, 'dukapress_do_install', 1 );
 		}
-		
-		/** 
+
+		/**
 		 * Begin installing
 		 * @since 2.6
 		 */
@@ -129,16 +135,16 @@ if(!class_exists('DukaPress')) {
 					return;
 				}
 			}
-			
+
 			DukaPress_Install::init(); //Initialise the options
-			
+
 			//add action to flush rewrite rules after we've added them for the first time
-		    update_option( 'dukapess_flush_rewrite', 1 );
-			
+		  update_option( 'dukapess_flush_rewrite', 1 );
+
 			update_option( 'dp_version', $this->version );
 			delete_option( 'dukapress_do_install' );
 		}
-		
+
 		/*
 		 * Get settings array without undefined indexes
 		 * @param string $key A setting key, or -> separated list of keys to go multiple levels into an array
@@ -158,14 +164,14 @@ if(!class_exists('DukaPress')) {
 				$setting	 = isset( $settings[ $keys[ 0 ] ][ $keys[ 1 ] ][ $keys[ 2 ] ] ) ? $settings[ $keys[ 0 ] ][ $keys[ 1 ] ][ $keys[ 2 ] ] : $default;
 			else if ( count( $keys ) == 4 )
 				$setting	 = isset( $settings[ $keys[ 0 ] ][ $keys[ 1 ] ][ $keys[ 2 ] ][ $keys[ 3 ] ] ) ? $settings[ $keys[ 0 ] ][ $keys[ 1 ] ][ $keys[ 2 ] ][ $keys[ 3 ] ] : $default;
-	
+
 			return apply_filters( "dukapress_setting_" . implode( '', $keys ), $setting, $default );
 		}
-	
-		/** 
+
+		/**
 		 * Update Settings
 		 * @param string $key A setting key
-		 * @param mixed $value 
+		 * @param mixed $value
 		 *
 		 * @since 2.6
 		 */
@@ -174,21 +180,79 @@ if(!class_exists('DukaPress')) {
 			$settings[ $key ]	 = $value;
 			return update_option( 'dukapress_settings', $settings );
 		}
-		
-		
-		/**  
+
+
+		/**
 		 * Starts the Session
 		 * @since 2.6
 		 */
 		function start_session() {
 			$sess_id = session_id();
-	
+
 			if ( empty( $sess_id ) ) {
 				session_start();
 			}
 		}
-		
-		/**  
+
+		/**
+		 * Load Plugins
+		 * @since 2.6
+		 */
+		function load_plugins(){
+			if ( is_network_admin() || !$this->get_setting( 'disable_cart' ) ) {
+				require_once( DPSC_DUKAPRESS_CLASSES_DIR . '/dukapress-gateway.php' );
+				$this->load_gateway_plugins();
+			}
+		}
+
+		/**
+		 * Load Gateway Plugins
+		 * @since 2.6
+		 */
+		function load_gateway_plugins(){
+			//get gateway plugins dir
+			$dir = DPSC_DUKAPRESS_GATEWAY_DIR;
+			//search the dir for files
+			$gateway_plugins = array();
+			$classes = array();
+			if ( !is_dir( $dir ) )
+				return;
+			if ( !$dh = opendir( $dir ) )
+				return;
+			while ( ( $plugin = readdir( $dh ) ) !== false ) {
+				if ( substr( $plugin, -4 ) == '.php' )
+					$gateway_plugins[] = $dir . '/' . $plugin;
+			}
+			closedir( $dh );
+			sort( $gateway_plugins );
+
+			//include them suppressing errors
+			foreach ( $gateway_plugins as $file ){
+				include( $file );
+				$fp = fopen($file, 'r');
+				$class = $buffer = '';
+				$i = 0;
+				while (!$class) {
+					if (feof($fp)) break;
+
+					$buffer .= fread($fp, 512);
+					if (preg_match('/class\s+(\w+)(.*)?\{/', $buffer, $matches)) {
+						$classes[]  = $matches[1];
+						break;
+					}
+				}
+			}
+
+			//Instantiate classes
+			foreach ($classes as $class){
+				$c = new $class();
+			}
+
+			//allow plugins from an external location to register themselves
+			do_action( 'dukapress_load_gateway_plugins' );
+		}
+
+		/**
 		 * Format Currency
 		 *
 		 */
@@ -243,15 +307,37 @@ if(!class_exists('DukaPress')) {
 					return $zero . ' ' . $symbol;
 			}
 		}
-		
-		
+
+		/**
+		 * Register gateways
+		 * @param String $class_name
+		 * @param String $plugin_name
+		 * @param String $plugin_slug
+		 * @return null
+		 */
+		function register_gateway($class_name, $plugin_name, $plugin_slug){
+			$dpsc_gateway_plugins = get_option( 'dpsc_gateway_plugins' );
+
+			if (!is_array($dpsc_gateway_plugins)) {
+				$dpsc_gateway_plugins = array();
+			}
+
+			if (class_exists($class_name)) {
+				$dpsc_gateway_plugins[$plugin_name] = array($class_name, $plugin_name, $plugin_slug);
+				update_option('dpsc_gateway_plugins',$dpsc_gateway_plugins);
+			} else {
+				return false;
+			}
+		}
+
+
 		/**
 		 * Register the custom post types that we will be using
 		 * @since 2.6
 		 */
 		function register_post_types(){
 			global $wp_version;
-			
+
 			// Register product categories
 			register_taxonomy( 'duka_category', 'duka', apply_filters( 'dukapress_register_product_category', array(
 				'hierarchical'	 => true,
@@ -262,7 +348,7 @@ if(!class_exists('DukaPress')) {
 					'slug'		 => $this->get_setting( 'slugs->products' ) . '/' . $this->get_setting( 'slugs->category' )
 				),
 			) ) );
-	
+
 			// Register product tags
 			register_taxonomy( 'duka_tag', 'duka', apply_filters( 'dukapress_register_product_tag', array(
 				'hierarchical'	 => false,
@@ -273,9 +359,9 @@ if(!class_exists('DukaPress')) {
 					'slug'		 => $this->get_setting( 'slugs->products' ) . '/' . $this->get_setting( 'slugs->tag' )
 				),
 			) ) );
-			
+
 			$icon = version_compare( $wp_version, '3.8', '>=' ) ? DPSC_DUKAPRESS_RESOURCEURL.'/img/dp_icon_white.png' : DPSC_DUKAPRESS_RESOURCEURL.'/img/dp_icon.png';
-			
+
 			// Register custom duka post type
 			register_post_type( 'duka', apply_filters( 'dukapress_register_post_type', array(
 				'labels'			 => array(
@@ -319,7 +405,7 @@ if(!class_exists('DukaPress')) {
 					'duka_tag',
 				),
 			) ) );
-			
+
 			//Post status
 			register_post_status( 'out_of_stock', array(
 				'label'			 => __( 'Out of Stock', 'dp-lang' ),
@@ -327,7 +413,7 @@ if(!class_exists('DukaPress')) {
 				'post_type'		 => 'duka',
 				'public'		 => false
 			) );
-			
+
 			//register the orders post type
 			register_post_type( 'duka_order', apply_filters( 'dukapress_register_post_type_duka_order', array(
 				'labels'			 => array( 'name'			 => __( 'Orders', 'dp-lang' ),
@@ -346,7 +432,7 @@ if(!class_exists('DukaPress')) {
 				'query_var'			 => false,
 				'supports'			 => array(),
 			) ) );
-	
+
 			//register custom post statuses for our orders
 			register_post_status( 'order_received', array(
 				'label'			 => __( 'Received', 'dp-lang' ),
@@ -380,8 +466,8 @@ if(!class_exists('DukaPress')) {
 				'public'					 => false
 			) );
 		}
-		
-		
+
+
 		// This function clears the rewrite rules and forces them to be regenerated
 		function flush_rewrite_check() {
 			if ( get_option( 'duka_flush_rewrite' ) ) {
@@ -389,49 +475,49 @@ if(!class_exists('DukaPress')) {
 				delete_option( 'duka_flush_rewrite' );
 			}
 		}
-	
+
 		function add_rewrite_rules( $rules ) {
 			$new_rules = array();
-	
+
 			//product list
 			$new_rules[ $this->get_setting( 'slugs->products' ) . '/?$' ]					 = 'index.php?pagename=product_list';
 			$new_rules[ $this->get_setting( 'slugs->products' ) . '/page/?([0-9]{1,})/?$' ]	 = 'index.php?pagename=product_list&paged=$matches[1]';
 
 			//ipn handling for payment gateways
 			$new_rules[ 'payment-return/(.+)' ] = 'index.php?paymentgateway=$matches[1]';
-	
+
 			return array_merge( $new_rules, $rules );
 		}
-	
+
 		//unfortunately some plugins flush rewrites before the init hook so they kill custom post type rewrites. This function verifies they are in the final array and flushes if not
 		function check_rewrite_rules( $value ) {
-	
+
 			//prevent an infinite loop by only
 			if ( !post_type_exists( 'duka' ) )
 				return $value;
-	
+
 			if ( is_array( $value ) && !in_array( 'index.php?duka=$matches[1]&paged=$matches[2]', $value ) ) {
 				update_option( 'duka_flush_rewrite', 1 );
 			} else {
 				return $value;
 			}
 		}
-		
+
 		function add_queryvars( $vars ) {
-	
+
 			if ( !in_array( 'paymentgateway', $vars ) )
 				$vars[] = 'paymentgateway';
-	
+
 			return $vars;
 		}
-		
-		/** 
+
+		/**
 		 * Handle the Edit Screens
 		 */
 		function handle_edit_screen_filter($request){
 			if ( is_admin() ) {
 				global $current_screen;
-	
+
 				if ( $current_screen->id == 'edit-duka' ) {
 					//Switches the product_category ids to slugs as you can't query custom taxonomys with ids
 					if ( !empty( $request[ 'duka_category' ] ) ) {
@@ -443,11 +529,11 @@ if(!class_exists('DukaPress')) {
 					$request[ 'post_status' ] = 'order_received,order_paid,order_shipped';
 				}
 			}
-	
+
 			return $request;
 		}
-		
-		/**  
+
+		/**
 		 * Hanlde the Post updated messages
 		 *
 		 */
@@ -455,13 +541,13 @@ if(!class_exists('DukaPress')) {
 			global $post, $post_ID;
 
 			$post_type = get_post_type( $post_ID );
-	
+
 			if ( $post_type != 'duka_order' && $post_type != 'duka' ) {
 				return $messages;
 			}
 			$obj  = get_post_type_object( $post_type );
 			$singular = $obj->labels->singular_name;
-			
+
 			$messages[ $post_type ] = array(
 				0	 => '', // Unused. Messages start at index 1.
 				1	 => sprintf( __( $singular . ' updated. <a href="%s">View ' . strtolower( $singular ) . '</a>' ), esc_url( get_permalink( $post_ID ) ) ),
@@ -475,11 +561,11 @@ if(!class_exists('DukaPress')) {
 				9	 => sprintf( __( $singular . ' scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview ' . strtolower( $singular ) . '</a>' ), date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
 				10	 => sprintf( __( $singular . ' draft updated. <a target="_blank" href="%s">Preview ' . strtolower( $singular ) . '</a>' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
 			);
-	
+
 			return $messages;
 		}
-		
-		/** 
+
+		/**
 		 * Product View custom Columns
 		 *
 		 */
@@ -498,15 +584,15 @@ if(!class_exists('DukaPress')) {
 			$columns[ 'product_tags' ]		 = __( 'Product Tags', 'dp-lang' );
 			return $columns;
 		}
-		
-		/** 
+
+		/**
 		 * Loads Data into the custom columns
 		 *
 		 *
 		 */
 		function edit_duka_custom_columns($column, $id){
 			global $post;
-	
+
 			$meta = get_post_custom();
 			//unserialize
 			foreach ( $meta as $key => $val ) {
@@ -514,7 +600,7 @@ if(!class_exists('DukaPress')) {
 				if ( !is_array( $meta[ $key ] ) && $key != "duka_is_sale" && $key != "duka_track_inventory" && $key != "duka_product_link" )
 					$meta[ $key ]	 = array( $meta[ $key ] );
 			}
-			
+
 			switch ( $column ) {
 				case "thumbnail":
 					echo '<a href="' . get_edit_post_link() . '" title="' . __( 'Edit &raquo;' ) . '">';
@@ -525,7 +611,7 @@ if(!class_exists('DukaPress')) {
 					}
 					echo '</a>';
 					break;
-	
+
 				case "sku":
 					if ( isset( $meta[ "duka_sku" ] ) && is_array( $meta[ "duka_sku" ] ) ) {
 						foreach ( (array) $meta[ "duka_sku" ] as $value ) {
@@ -535,7 +621,7 @@ if(!class_exists('DukaPress')) {
 						_e( 'N/A', 'dp-lang' );
 					}
 					break;
-	
+
 				case "pricing":
 					if ( isset( $meta[ "price" ] ) && is_array( $meta[ "price" ] ) ) {
 						foreach ( $meta[ "price" ] as $key => $value ) {
@@ -550,11 +636,11 @@ if(!class_exists('DukaPress')) {
 						echo $this->format_currency( '', 0 );
 					}
 					break;
-	
+
 				case "sales":
 					echo number_format_i18n( isset( $meta[ "duka_sales_count" ][ 0 ] ) ? $meta[ "duka_sales_count" ][ 0 ] : 0 );
 					break;
-	
+
 				case "stock":
 					if ( isset( $meta[ "currently_in_stock" ] ) && $meta[ "currently_in_stock" ] ) {
 						foreach ( (array) $meta[ "currently_in_stock" ] as $value ) {
@@ -565,25 +651,25 @@ if(!class_exists('DukaPress')) {
 								$class		 = 'duka-inv-warn';
 							else
 								$class		 = 'duka-inv-full';
-	
+
 							echo '<span class="' . $class . '">' . number_format_i18n( $inventory ) . '</span><br />';
 						}
 					} else {
 						_e( 'N/A', 'dp-lang' );
 					}
 					break;
-	
+
 				case "product_categories":
 					echo dukapress_category_list($id);
 					break;
-	
+
 				case "product_tags":
 					echo dukapress_tag_list($id);
 					break;
 			}
 		}
-		
-		/** 
+
+		/**
 		 * Adds filter by Product Category
 		 *
 		 */
@@ -591,19 +677,19 @@ if(!class_exists('DukaPress')) {
 			global $current_screen;
 			if ( $current_screen->id == 'edit-duka' ) {
 				$selected_category = !empty( $_GET[ 'duka_category' ] ) ? $_GET[ 'duka_category' ] : null;
-				$dropdown_options = array( 'taxonomy'  => 'duka_category', 
-											'show_option_all'=> __( 'View all categories' ), 
-											'hide_empty' => 0, 
+				$dropdown_options = array( 'taxonomy'  => 'duka_category',
+											'show_option_all'=> __( 'View all categories' ),
+											'hide_empty' => 0,
 											'hierarchical' => 1,
-											'show_count'  => 0, 
-											'orderby'  => 'name', 
+											'show_count'  => 0,
+											'orderby'  => 'name',
 											'name' => 'duka_category',
 											'selected'	=> $selected_category );
 				wp_dropdown_categories( $dropdown_options );
 			}
 		}
-		
-		/** 
+
+		/**
 		 * Adds a custom row action for Copying/Cloning a Product
 		 *
 		 */
@@ -611,7 +697,7 @@ if(!class_exists('DukaPress')) {
 			$action = 'copy-duka';
 
 			if ( ($post->post_type == "duka") && (!isset( $actions[ $action ] )) ) {
-	
+
 				$post_type_object = get_post_type_object( $post->post_type );
 				if ( $post_type_object ) {
 					if ( current_user_can( 'edit_pages' ) ) {
@@ -624,8 +710,8 @@ if(!class_exists('DukaPress')) {
 			}
 			return $actions;
 		}
-		
-		/** 
+
+		/**
 		 * Action for Copying/Cloning a Product
 		 *
 		 */
@@ -637,35 +723,35 @@ if(!class_exists('DukaPress')) {
 					$product_id = intval( $_GET[ 'post' ] );
 				else
 					wp_redirect( $sendback_href );
-	
+
 				if ( isset( $_GET[ 'post_type' ] ) )
 					$post_type = esc_attr( $_GET[ 'post_type' ] );
 				else
 					wp_redirect( $sendback_href );
-	
+
 				if ( (!isset( $_GET[ '_wpnonce' ] )) || !wp_verify_nonce( $_GET[ '_wpnonce' ], "{$action}-{$post_type}_{$product_id}" ) )
 					wp_redirect( $sendback_href );
-					
+
 				$product  = (array) get_post_to_edit( $product_id );
 				$product[ 'ID' ] = 0; // Zero out the Product ID to force insert of new item
 				$product[ 'post_status' ]  = 'draft';
 				$product[ 'post_author' ] = get_current_user_id();
 				$new_product_id = wp_insert_post( $product );
 				if ( ($new_product_id) && (!is_wp_error( $new_product_id )) ) {
-					
+
 					//Copy the meta
 					$product_meta_keys = get_post_custom_keys( $product_id );
 					if ( !empty( $product_meta_keys ) ) {
 						foreach ( $product_meta_keys as $meta_key ) {
 							$meta_values = get_post_custom_values( $meta_key, $product_id );
-	
+
 							foreach ( $meta_values as $meta_value ) {
 								$meta_value = maybe_unserialize( $meta_value );
 								add_post_meta( $new_product_id, $meta_key, $meta_value );
 							}
 						}
 					}
-					
+
 					//Copy the taxonomy terms
 					$product_taxonomies = get_object_taxonomies( $post_type );
 					if ( !empty( $product_taxonomies ) ) {
@@ -684,8 +770,8 @@ if(!class_exists('DukaPress')) {
 			wp_redirect( $sendback_href );
 			die();
 		}
-		
-		/** 
+
+		/**
 		 * Columns for Orders
 		 *
 		 */
@@ -693,7 +779,7 @@ if(!class_exists('DukaPress')) {
 			global $post_status;
 
 			$columns[ 'cb' ] = '<input type="checkbox" />';
-	
+
 			$columns[ 'duka_orders_status' ]	 = __( 'Status', 'dp-lang' );
 			$columns[ 'duka_orders_id' ]		 = __( 'Order ID', 'dp-lang' );
 			$columns[ 'duka_orders_date' ]		 = __( 'Order Date', 'dp-lang' );
@@ -703,24 +789,24 @@ if(!class_exists('DukaPress')) {
 			$columns[ 'duka_orders_tax' ]		 = __( 'Tax', 'dp-lang' );
 			$columns[ 'duka_orders_discount' ]	 = __( 'Discount', 'dp-lang' );
 			$columns[ 'duka_orders_total' ]		 = __( 'Total', 'dp-lang' );
-	
+
 			return $columns;
 		}
-		
-		/** 
+
+		/**
 		 * Custom Column Content for Orders
 		 *
 		 */
 		function manage_orders_custom_columns($column){
 			global $post;
 			$meta = get_post_custom();
-			
+
 			//unserialize
 			foreach ( $meta as $key => $val )
 				$meta[ $key ]  = array_map( 'maybe_unserialize', $val );
-	
+
 			switch ( $column ) {
-	
+
 				case "duka_orders_status":
 					if ( $post->post_status == 'order_received' )
 						$text	 = __( 'Received', 'dp-lang' );
@@ -734,21 +820,21 @@ if(!class_exists('DukaPress')) {
 						$text	 = __( 'Trashed', 'dp-lang' );
 					?><a class="duka_orders_status" href="edit.php?post_type=duka&page=dukapress-orders&order_id=<?php echo $post->ID; ?>" title="<?php echo __( 'View Order Details', 'dp-lang' ); ?>"><?php echo $text ?></a><?php
 					break;
-	
+
 				case "duka_orders_date":
 					$t_time	 = get_the_time( __( 'Y/m/d g:i:s A' ) );
 					$m_time	 = $post->post_date;
 					$time	 = get_post_time( 'G', true, $post );
-	
+
 					$time_diff = time() - $time;
-	
+
 					if ( $time_diff > 0 && $time_diff < 24 * 60 * 60 )
 						$h_time	 = sprintf( __( '%s ago' ), human_time_diff( $time ) );
 					else
 						$h_time	 = mysql2date( __( 'Y/m/d' ), $m_time );
 					echo '<abbr title="' . $t_time . '">' . $h_time . '</abbr>';
 					break;
-	
+
 				case "duka_orders_id":
 					$title	 = _draft_or_post_title();
 					?>
@@ -769,13 +855,13 @@ if(!class_exists('DukaPress')) {
 						$actions[ 'paid' ]	 = "<a title='" . esc_attr( __( 'Mark as Paid', 'dp-lang' ) ) . "' href='" . wp_nonce_url( admin_url( 'edit.php?post_type=duka&amp;page=dukapress-orders&amp;action=paid&amp;post=' . $post->ID ), 'update-order-status' ) . "'>" . __( 'Paid', 'dp-lang' ) . "</a>";
 						$actions[ 'shipped' ]	 = "<a title='" . esc_attr( __( 'Mark as Shipped', 'dp-lang' ) ) . "' href='" . wp_nonce_url( admin_url( 'edit.php?post_type=duka&amp;page=dukapress-orders&amp;action=shipped&amp;post=' . $post->ID ), 'update-order-status' ) . "'>" . __( 'Shipped', 'dp-lang' ) . "</a>";
 					}
-	
+
 					if ( (isset( $_GET[ 'post_status' ] )) && ($_GET[ 'post_status' ] == "trash") ) {
 						$actions[ 'delete' ] = "<a title='" . esc_attr( __( 'Delete', 'dp-lang' ) ) . "' href='" . wp_nonce_url( admin_url( 'edit.php?post_type=duka&amp;page=dukapress-orders&amp;action=delete&amp;post=' . $post->ID ), 'update-order-status' ) . "'>" . __( 'Delete Permanently', 'dp-lang' ) . "</a>";
 					} else {
 						$actions[ 'trash' ] = "<a title='" . esc_attr( __( 'Trash', 'dp-lang' ) ) . "' href='" . wp_nonce_url( admin_url( 'edit.php?post_type=duka&amp;page=dukapress-orders&amp;action=trash&amp;post=' . $post->ID ), 'update-order-status' ) . "'>" . __( 'Trash', 'dp-lang' ) . "</a>";
 					}
-	
+
 					$action_count	 = count( $actions );
 					$i				 = 0;
 					echo '<div class="row-actions">';
@@ -786,23 +872,23 @@ if(!class_exists('DukaPress')) {
 					}
 					echo '</div>';
 					break;
-	
+
 				case "duka_orders_name":
 					echo esc_attr( $meta[ "duka_shipping_info" ][ 0 ][ 'name' ] ) . ' (<a href="mailto:' . urlencode( $meta[ "duka_shipping_info" ][ 0 ][ 'name' ] ) . ' &lt;' . esc_attr( $meta[ "duka_shipping_info" ][ 0 ][ 'email' ] ) . '&gt;?subject=' . urlencode( sprintf( __( 'Regarding Your Order (%s)', 'dp-lang' ), $post->post_title ) ) . '">' . esc_attr( $meta[ "duka_shipping_info" ][ 0 ][ 'email' ] ) . '</a>)';
 					break;
-	
+
 				case "duka_orders_items":
 					echo number_format_i18n( $meta[ "duka_order_items" ][ 0 ] );
 					break;
-	
+
 				case "duka_orders_shipping":
 					echo $this->format_currency( '', $meta[ "duka_shipping_total" ][ 0 ] );
 					break;
-	
+
 				case "duka_orders_tax":
 					echo $this->format_currency( '', $meta[ "duka_tax_total" ][ 0 ] );
 					break;
-	
+
 				case "duka_orders_discount":
 					if ( isset( $meta[ "duka_discount_info" ][ 0 ] ) && $meta[ "duka_discount_info" ][ 0 ] ) {
 						echo $meta[ "duka_discount_info" ][ 0 ][ 'discount' ] . ' (' . strtoupper( $meta[ "duka_discount_info" ][ 0 ][ 'code' ] ) . ')';
@@ -810,14 +896,14 @@ if(!class_exists('DukaPress')) {
 						_e( 'N/A', 'dp-lang' );
 					}
 					break;
-	
+
 				case "duka_orders_total":
 					echo $this->format_currency( '', $meta[ "duka_order_total" ][ 0 ] );
 					break;
 			}
 		}
-		
-		/** 
+
+		/**
 		 * Create the Admin Menu
 		 *
 		 *
@@ -837,7 +923,7 @@ if(!class_exists('DukaPress')) {
 			add_action( 'admin_print_scripts-' . $page, array( &$this, 'admin_script_settings' ) );
 			add_action( 'admin_print_styles-' . $page, array( &$this, 'admin_css_settings' ) );
 		}
-		
+
 		/**
 		 * Javascript for the Edit product screen
 		 */
@@ -846,8 +932,8 @@ if(!class_exists('DukaPress')) {
 			if ( $current_screen->id == 'duka' )
 				wp_enqueue_script( 'duka-post', DPSC_DUKAPRESS_RESOURCEURL . '/js/post-screen.js', array( 'jquery' ), $this->version );
 		}
-		
-		/** 
+
+		/**
 		 * Admin Page
 		 */
 		function admin_page(){
@@ -859,8 +945,8 @@ if(!class_exists('DukaPress')) {
 			?>
 			<div class="wrap">
 				<h3 class="nav-tab-wrapper">
-					<?php 
-						
+					<?php
+
 						$tab = (!empty( $_GET[ 'tab' ] ) ) ? $_GET[ 'tab' ] : 'main';
 						if ( !$this->get_setting( 'disable_cart' ) ) {
 							$tabs = array(
@@ -881,7 +967,7 @@ if(!class_exists('DukaPress')) {
 						$tabhtml = array();
 						$class  = ( 'main' == $tab ) ? ' nav-tab-active' : '';
 						$tabhtml[] = '<a href="' . admin_url( 'edit.php?post_type=duka&amp;page=dukapress' ) . '" class="nav-tab' . $class . '">' . __( 'General', 'dp-lang' ) . '</a>';
-						
+
 						foreach ( $tabs as $stub => $title ) {
 							$class  = ( $stub == $tab ) ? ' nav-tab-active' : '';
 							$tabhtml[] = ' <a href="' . admin_url( 'edit.php?post_type=duka&amp;page=dukapress&amp;tab=' . $stub ) . '" class="nav-tab' . $class . '">' . $title . '</a>';
@@ -893,7 +979,7 @@ if(!class_exists('DukaPress')) {
 				<?php
 					$settings = get_option( 'dukapress_settings' );
 					//Save settings. General save for all settings
-					if ( isset( $_POST[ 'dukapress_settings' ] ) ) {
+					if ( isset( $_POST[ 'dukapress_settings' ] ) && check_admin_referer('dukapress_settings','dukapress_settings_noncename')) {
 						$settings = array_merge( $settings, apply_filters( 'dukapress_main_settings_filter', $_POST[ 'dpsc' ] ) );
 						update_option( 'dukapress_settings', $settings );
 					}
@@ -911,28 +997,24 @@ if(!class_exists('DukaPress')) {
 							DukaPress_Admin_Pages::shipping($settings);
 						break;
 						case "gateways":
-							?>
-							<div id="dpsc_gateways">
-								
-							</div>
-							<?php
+							DukaPress_Admin_Pages::payment($settings);
 						break;
 						case "checkout":
 							DukaPress_Admin_Pages::checkout();
 						break;
 						case "shortcodes":
-						
+
 						break;
 						case "tools":
-						
+
 						break;
 					}
-				?>	
+				?>
 			</div>
 			<?php
 		}
-		
-		/** 
+
+		/**
 		 * Save Discount Code
 		 */
 		function save_discount_code() {
@@ -969,7 +1051,7 @@ if(!class_exists('DukaPress')) {
 				die($output);
 			}
 		}
-		
+
 		/**
 		* This function deletes the Discount code
 		*
@@ -997,8 +1079,8 @@ if(!class_exists('DukaPress')) {
 				die($output);
 			}
 		}
-		
-		/** 
+
+		/**
 		 * Order Page
 		 * Custom Page to show transactions
 		 *
@@ -1009,15 +1091,15 @@ if(!class_exists('DukaPress')) {
 				$this->single_order_page();
 				return;
 			}
-			
+
 			global $wpdb, $post_type, $wp_query, $wp_locale, $current_screen;
 			$post_type = 'duka_order';
 			$_GET[ 'post_type' ] = $post_type;
 			$post_type_object = get_post_type_object( $post_type );
-			
+
 			if ( !current_user_can( $post_type_object->cap->edit_posts ) )
 				wp_die( __( 'Invalid Access' ) );
-				
+
 			$pagenum = isset( $_GET[ 'paged' ] ) ? absint( $_GET[ 'paged' ] ) : 0;
 			if ( empty( $pagenum ) )
 				$pagenum = 1;
@@ -1025,9 +1107,9 @@ if(!class_exists('DukaPress')) {
 			$per_page = (int) get_user_option( $per_page );
 			if ( empty( $per_page ) || $per_page < 1 )
 				$per_page	 = 20;
-				
+
 			$per_page = apply_filters( 'edit_' . $post_type . '_per_page', $per_page );
-			
+
 			// Handle bulk actions
 			if ( isset( $_GET[ 'doaction' ] ) || isset( $_GET[ 'doaction2' ] ) || isset( $_GET[ 'bulk_edit' ] ) || isset( $_GET[ 'action' ] ) || (isset( $_GET[ 'delete_all' ] )) || (isset( $_GET[ 'delete_all2' ] )) ) {
 				check_admin_referer( 'update-order-status' );
@@ -1119,39 +1201,39 @@ if(!class_exists('DukaPress')) {
 				<?php } ?>
 				<form id="posts-filter" action="<?php echo admin_url( 'edit.php' ); ?>" method="get">
 					<ul class="subsubsub">
-						<?php 
+						<?php
 							if ( empty( $locked_post_status ) ){
 								$status_links = array();
 								$num_posts = wp_count_posts( $post_type, 'readable' );
 								$class = '';
 								$allposts = '';
-								
+
 								$total_posts = array_sum( (array) $num_posts );
 
 								// Subtract post types that are not included in the admin all list.
 								foreach ( get_post_stati( array( 'show_in_admin_all_list' => false ) ) as $state )
 									$total_posts -= $num_posts->$state;
-			
+
 								$class  = empty( $class ) && empty( $_GET[ 'post_status' ] ) ? ' class="current"' : '';
 								$status_links[]	 = "<li><a href='edit.php?post_type=duka{$allposts}&page=dukapress-orders'$class>" . sprintf( _nx( 'All <span class="count">(%s)</span>', 'All <span class="count">(%s)</span>', $total_posts, 'posts' ), number_format_i18n( $total_posts ) ) . '</a>';
-								
+
 								foreach ( get_post_stati( array(), 'objects' ) as $status_key => $status ) {
 									$class = '';
-			
+
 									$status_name = $status->name;
-			
+
 									if ( !in_array( $status_name, $avail_post_stati ) )
 										continue;
-			
+
 									if ( empty( $num_posts->$status_name ) )
 										continue;
-			
+
 									if ( isset( $_GET[ 'post_status' ] ) && $status_name == $_GET[ 'post_status' ] )
 										$class = ' class="current"';
-			
+
 									$status_links[ $status_key ] = "<li><a href='edit.php?post_type=duka&amp;page=dukapress-orders&amp;post_status=$status_name'$class>" . sprintf( _n( $status->label_count[ 0 ], $status->label_count[ 1 ], $num_posts->$status_name ), number_format_i18n( $num_posts->$status_name ) ) . '</a>';
 								}
-								
+
 								if ( isset( $status_links[ 'trash' ] ) ) {
 									$trash_item				 = $status_links[ 'trash' ];
 									unset( $status_links[ 'trash' ] );
@@ -1199,7 +1281,7 @@ if(!class_exists('DukaPress')) {
 								</select>
 								<input type="submit" value="<?php esc_attr_e( 'Apply' ); ?>" name="doaction" id="doaction" class="button-secondary action" />
 								<?php wp_nonce_field( 'update-order-status' ); ?>
-								<?php 
+								<?php
 									if ( !is_singular() ) {
 										$year_query = $wpdb->prepare( "SELECT DISTINCT YEAR(post_date) AS yyear, MONTH(post_date) AS mmonth FROM $wpdb->posts WHERE post_type = %s ORDER BY post_date DESC", $post_type );
 										$year_result = $wpdb->get_results( $year_query );
@@ -1210,17 +1292,17 @@ if(!class_exists('DukaPress')) {
 											?>
 											<select name='m'>
 												<option <?php selected( $m, 0 ); ?> value='0'><?php _e( 'Show all dates' ); ?></option>
-												<?php 
+												<?php
 													foreach ( $year_result as $arc_row ) {
 														if ( $arc_row->yyear == 0 )
 															continue;
 														$arc_row->mmonth = zeroise( $arc_row->mmonth, 2 );
-				
+
 														if ( $arc_row->yyear . $arc_row->mmonth == $m )
 															$default = ' selected="selected"';
 														else
 															$default = '';
-				
+
 														echo "<option $default value='" . esc_attr( "$arc_row->yyear$arc_row->mmonth" ) . "'>";
 														echo $wp_locale->get_month( $arc_row->mmonth ) . " $arc_row->yyear";
 														echo "</option>\n";
@@ -1308,8 +1390,8 @@ if(!class_exists('DukaPress')) {
 			</div>
 			<?php
 		}
-		
-		/** 
+
+		/**
 		 * Single Order Page
 		 *
 		 */
@@ -1324,8 +1406,8 @@ if(!class_exists('DukaPress')) {
 			</div>
 			<?php
 		}
-		
-		/** 
+
+		/**
 		 * CSS used on theme
 		 *
 		 */
@@ -1336,8 +1418,8 @@ if(!class_exists('DukaPress')) {
 			wp_enqueue_style('dp_acc_style');
 	        wp_enqueue_style('dpsc_basic_css');
 		}
-		
-		/** 
+
+		/**
 		 * Javascript used on Theme
 		 *
 		 */
@@ -1350,39 +1432,39 @@ if(!class_exists('DukaPress')) {
 	        wp_register_script('dpsc_jqzoom', DPSC_DUKAPRESS_RESOURCEURL . '/js/jqzoom.pack.1.0.1.js', array('jquery'), $this->version );
 	        wp_register_script('dpsc_js_file', DPSC_DUKAPRESS_RESOURCEURL . '/js/dukapress.js', array('jquery'),$this->version );
 
-	
-			
+
+
 			$image_effect = $this->get_setting('image_effect');
 	        switch ($image_effect) {
 	            case 'mz_effect':
 	                wp_enqueue_script('dpsc_magiczoom');
 	                break;
-	
+
 	            case 'mzp_effect':
 	                wp_enqueue_script('dpsc_magiczoomplus');
 	                break;
-	
+
 	            case 'lightbox':
 	                wp_enqueue_style('jquery.fancybox');
 	                wp_enqueue_script('dpsc_lightbox');
 	                wp_enqueue_script('dpsc_lightbox_call');
 	                break;
-	
+
 	           case 'no_effect':
 	                break;
-	
+
 	           case 'jqzoom_effect':
 	                wp_enqueue_style('dpsc_jqzoom');
 	                wp_enqueue_script('dpsc_jqzoom');
 	                break;
-	
+
 	           default:
 	                break;
 	       }
 		   $dpsc_site_url = get_bloginfo('url');
            wp_enqueue_script('dpsc_js_file');
-		   wp_localize_script( 'dpsc_js_file', 'dpsc_js', array( 
-				'dpsc_url' => $dpsc_site_url, 
+		   wp_localize_script( 'dpsc_js_file', 'dpsc_js', array(
+				'dpsc_url' => $dpsc_site_url,
 				'ajaxurl' => admin_url('admin-ajax.php'),
 				'text_error' => __("Please write only text here", "dp-lang"),
 				'numbers_error' => __("Please write only numbers here", "dp-lang"),
@@ -1390,7 +1472,7 @@ if(!class_exists('DukaPress')) {
 				) );
 	        wp_enqueue_script('dpsc_livequery');
 		}
-		
+
 		/**
 		 * Enqeue js on product settings screen
 		 */
@@ -1399,7 +1481,7 @@ if(!class_exists('DukaPress')) {
 			wp_enqueue_script( 'jquery-ui-accordion' );
 			wp_enqueue_script( 'dukapress-admin', DPSC_DUKAPRESS_RESOURCEURL . '/js/dukapress-admin.js', array( 'jquery' ), $this->version );
 		}
-		
+
 		/**
 		 * Enqeue css on product settings screen
 		 */
@@ -1409,16 +1491,16 @@ if(!class_exists('DukaPress')) {
 			wp_enqueue_style('dp_jquery_ui_theme', DPSC_DUKAPRESS_RESOURCEURL . '/css/jquery-ui.theme.min.css', false, $this->version);
 			wp_enqueue_style('dp_admin_css', DPSC_DUKAPRESS_RESOURCEURL.'/css/dp-admin.css', false, $this->version);
 		}
-		
-		/** 
+
+		/**
 		 * Notify user to eneable proper permalinks
 		 */
 		function admin_nopermalink_warning(){
 			if ( current_user_can( 'manage_options' ) && !get_option( 'permalink_structure' ) )
 				echo '<div class="error"><p>' . __( 'You must enable Pretty Permalinks</a> to use DukaPress - <a href="options-permalink.php">Enable now &raquo;</a>', 'dp-lang' ) . '</p></div>';
 		}
-		
-		/** 
+
+		/**
 		 * Add Settings option on the plugin list
 		 */
 		function plugin_action_link($links, $file){
@@ -1428,33 +1510,33 @@ if(!class_exists('DukaPress')) {
 			array_unshift( $links, $settings_link );
 			return $links;
 		}
-		
+
 		//returns a new unique order id.
 		function generate_order_id() {
 			global $wpdb;
-	
+
 			$count = true;
 			while ( $count ) { //make sure it's unique
 				$order_id	 = substr( sha1( uniqid( '' ) ), rand( 1, 24 ), 12 );
 				$count		 = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM " . $wpdb->posts . " WHERE post_title = %s AND post_type = 'duka_order'", $order_id ) );
 			}
-	
+
 			$order_id = apply_filters( 'duka_order_id', $order_id ); //Very important to make sure order numbers are unique and not sequential if filtering
 			//save it to session
 			$_SESSION[ 'duka_order' ] = $order_id;
-	
+
 			return $order_id;
 		}
-	
+
 		//called on checkout to create a new order
 		function create_order( $order_id, $cart, $shipping_info, $payment_info, $paid, $user_id = false,
 							$shipping_total = false, $tax_total = false, $coupon_code = false ) {
-			
-	
+
+
 			return $order_id;
 		}
-		
-		/** 
+
+		/**
 		 * Get Order by id
 		 *
 		 */
@@ -1462,34 +1544,34 @@ if(!class_exists('DukaPress')) {
 			$order = get_page_by_title( $order_id, OBJECT, 'duka_order' );
 			return $order->ID;
 		}
-		
+
 		function update_order_status( $order_id, $new_status ) {
-			
+
 		}
-	
+
 		//returns the full order details as an object
 		function get_order( $order_id ) {
 			$id = (is_int( $order_id )) ? $order_id : $this->order_to_post_id( $order_id );
-	
+
 			if ( empty( $id ) )
 				return false;
-	
-	
-	
+
+
+
 			$order = get_post( $id );
 			if ( !$order )
 				return false;
-	
+
 			$meta = get_post_custom( $id );
-	
+
 			//unserialize a and add to object
 			foreach ( $meta as $key => $val )
 				$order->$key = maybe_unserialize( $meta[ $key ][ 0 ] );
-	
+
 			return $order;
 		}
 
-		/** 
+		/**
 		 * Filter Title on Edit Product page
 		 */
 		function filter_title($post){
@@ -1497,12 +1579,12 @@ if(!class_exists('DukaPress')) {
 
 			if ( $post_type != 'duka' )
 				return $post;
-	
+
 			return __( 'Enter Product title here', 'dp-lang' );
 		}
-		
-		
-		/** 
+
+
+		/**
 		 * Add Meta Box
 		 *
 		 */
@@ -1521,16 +1603,16 @@ if(!class_exists('DukaPress')) {
 				$wp_meta_boxes[ 'duka' ][ 'side' ][ 'core' ][ 'postimagediv' ][ 'title' ]	 = __( 'Product Image', 'dp-lang' );
 			}
 		}
-		
+
 		//Save our post meta when a product is created or updated
 		function save_product_meta( $post_id) {
 			//skip quick edit
 			if ( defined( 'DOING_AJAX' ) )
 				return;
-	
+
 			if ( !wp_verify_nonce(@$_POST['dukapress_noncename'], plugin_basename( __FILE__ ) ) )
 				return;
-			
+
 			// Check permissions
 		    if ('duka' == $_POST['post_type']) {
 		        if (!current_user_can('edit_page', $post_id))
@@ -1539,25 +1621,25 @@ if(!class_exists('DukaPress')) {
 		        if (!current_user_can('edit_post', $post_id))
 		            return $post_id;
 		    }
-		
+
 		    // for price
 		    if (NULL == $_POST['price']) {
 		        //do nothing
 		    } else {
 		        $content_price = $_POST['price'];
-		
+
 		        update_post_meta($post_id, 'price', $content_price);
 		    }
-		
+
 		    // for new price
 		    if (NULL == $_POST['new_price']) {
 		        //do nothing
 		    } else {
 		        $content_price = $_POST['new_price'];
-		
+
 		        update_post_meta($post_id, 'new_price', $content_price);
 		    }
-		
+
 		    // for stocks
 		    if (NULL == $_POST['currently_in_stock']) {
 		        //do nothing
@@ -1565,7 +1647,7 @@ if(!class_exists('DukaPress')) {
 		        $content_stock = $_POST['currently_in_stock'];
 		        update_post_meta($post_id, 'currently_in_stock', $content_stock);
 		    }
-		
+
 		    // for weights
 		    if (NULL == $_POST['item_weight']) {
 		        //do nothing
@@ -1573,7 +1655,7 @@ if(!class_exists('DukaPress')) {
 		        $content_weight = $_POST['item_weight'];
 		        update_post_meta($post_id, 'item_weight', $content_weight);
 		    }
-		
+
 		    //for file
 		    if (NULL == $_POST['digital_file']) {
 		        //do nothing
@@ -1581,7 +1663,7 @@ if(!class_exists('DukaPress')) {
 		        $content_file = $_POST['digital_file'];
 		        update_post_meta($post_id, 'digital_file', $content_file);
 		    }
-		
+
 		    // SKU
 		    if (NULL == $_POST['sku']) {
 		        //do nothing
@@ -1589,8 +1671,8 @@ if(!class_exists('DukaPress')) {
 		        $sku = $_POST['sku'];
 		        update_post_meta($post_id, 'sku', $sku);
 		    }
-			
-			
+
+
 			// for affiliate URL
 		    if (NULL == $_POST['affiliate_url']) {
 		        //do nothing
@@ -1599,7 +1681,7 @@ if(!class_exists('DukaPress')) {
 		        update_post_meta($post_id, 'affiliate_url', $affiliate_url);
 		    }
 		}
-	
+
 
 		function meta_details($post){
 			wp_nonce_field( plugin_basename( __FILE__ ), 'dukapress_noncename' );
@@ -1687,8 +1769,8 @@ if(!class_exists('DukaPress')) {
 			</table>
 			<?php
 		}
-		
-		/** 
+
+		/**
 		 * Show Meta
 		 */
 		function drop_down_meta($post_id){
@@ -1696,9 +1778,9 @@ if(!class_exists('DukaPress')) {
 			$show_state_result = '';
 
 		    if ($content_opname) {
-		
+
 		        $optionnames = explode("||", $content_opname);
-		
+
 		        foreach ($optionnames as $optionname) {
 		            $j++;
 		            $optionname1 = explode("|", $optionname);
@@ -1721,26 +1803,26 @@ if(!class_exists('DukaPress')) {
 		                $show_state_result.='</tr>';
 		            }
 					$show_state_result.='</table></div>';
-		            
+
 		        }
 		    }
 		    return $show_state_result;
 		}
-		
-		/** 
+
+		/**
 		 * Save Variation Data
 		 */
 		function varition_save_data(){
 			$counter = $_POST['counter'];
        	 	$postid = $_POST['postid'];
         	$prev_option = get_post_meta($postid, 'dropdown_option', true);
-			
+
 			// making || in each option name
 			if ($prev_option) {
 	            $prev_option_new = $prev_option;
 	            $varition_type .= $prev_option_new . '||';
 	        }
-			
+
 			// check for the validation that, option name should not be null
 			if ($_POST['optionname']) {
 	            $varition_type.=$_POST['optionname'] . '|';
@@ -1765,15 +1847,15 @@ if(!class_exists('DukaPress')) {
 			</div>
 			<?php
 		}
-		
-		/** 
+
+		/**
 		 * Delete Variation Data
 		 */
 		function varition_delete_data(){
 	        $postid = $_POST['postid'];
 	        $substr = $_POST['name'];
 	        // echo $substr;
-	
+
 	        $delete_prev_option = get_post_meta($postid, 'dropdown_option', true);
 	        $result_string = str_replace($substr, '', $delete_prev_option);
 	        $result_string = str_replace("||||", "||", $result_string);
@@ -1788,50 +1870,50 @@ if(!class_exists('DukaPress')) {
 	        echo $this->drop_down_meta($postid);
 		    die();
 		}
-		
-		
+
+
 		function serve_download( $product_id ) {
 
 			if ( !isset( $_GET[ 'orderid' ] ) )
 				return false;
-	
+
 			//get the order
 			$order = $this->get_order( $_GET[ 'orderid' ] );
 			if ( !$order )
 				wp_die( __( 'Sorry, the link is invalid for this download.', 'dp-lang' ) );
-	
+
 			//check that order is paid
 			if ( $order->post_status == 'order_received' )
 				wp_die( __( 'Sorry, your order has been marked as unpaid.', 'dp-lang' ) );
-	
+
 			$url = get_post_meta( $product_id, 'digital_file', true );
-	
+
 			//get cart count
 			if ( isset( $order->mp_cart_info[ $product_id ][ 0 ][ 'download' ] ) )
 				$download = $order->mp_cart_info[ $product_id ][ 0 ][ 'download' ];
-	
+
 			//if new url is not set try to grab it from the order history
 			if ( !$url && isset( $download[ 'url' ] ) )
 				$url = $download[ 'url' ];
 			else if ( !$url )
 				wp_die( __( 'Whoops, we were unable to find the file for this download. Please contact us for help.', 'dp-lang' ) );
-	
+
 			//check for too many downloads
 			$max_downloads = $this->get_setting( 'max_downloads', 5 );
 			if ( intval( $download[ 'downloaded' ] ) >= $max_downloads )
 				wp_die( sprintf( __( "Sorry, our records show you've downloaded this file %d out of %d times allowed. Please contact us if you still need help.", 'dp-lang' ), intval( $download[ 'downloaded' ] ), $max_downloads ) );
-	
+
 			//for plugins to hook into the download script. Don't forget to increment the download count, then exit!
 			do_action( 'duka_serve_download', $url, $order, $download );
-	
+
 			//allows you to simply filter the url
 			$url = apply_filters( 'duka_download_url', $url, $order, $download );
-	
+
 			set_time_limit( 0 ); //try to prevent script from timing out
 			//create unique filename
 			$ext		 = ltrim( strrchr( basename( $url ), '.' ), '.' );
 			$filename	 = sanitize_file_name( strtolower( get_the_title( $product_id ) ) . '.' . $ext );
-	
+
 			$dirs		 = wp_upload_dir();
 			$location	 = str_replace( $dirs[ 'baseurl' ], $dirs[ 'basedir' ], $url );
 			if ( file_exists( $location ) ) {
@@ -1841,33 +1923,33 @@ if(!class_exists('DukaPress')) {
 			} else {
 				// File is remote so we need to download it first
 				require_once(ABSPATH . '/wp-admin/includes/file.php');
-	
+
 				//don't verify ssl connections
 				add_filter( 'https_local_ssl_verify', create_function( '$ssl_verify', 'return false;' ) );
 				add_filter( 'https_ssl_verify', create_function( '$ssl_verify', 'return false;' ) );
-	
+
 				$tmp = download_url( $url ); //we download the url so we can serve it via php, completely obfuscating original source
-	
+
 				if ( is_wp_error( $tmp ) ) {
 					@unlink( $tmp );
 					trigger_error( "Dukapress was unable to download the file $url for serving as download: " . $tmp->get_error_message(), E_USER_WARNING );
 					wp_die( __( 'Whoops, there was a problem loading up this file for your download. Please contact us for help.', 'dp-lang' ) );
 				}
 			}
-	
+
 			if ( file_exists( $tmp ) ) {
 				$chunksize	 = (8 * 1024); //number of bytes per chunk
 				$buffer		 = '';
 				$filesize	 = filesize( $tmp );
 				$length		 = $filesize;
 				list($fileext, $filetype) = wp_check_filetype( $tmp );
-	
+
 				if ( empty( $filetype ) ) {
 					$filetype = 'application/octet-stream';
 				}
-	
+
 				ob_clean(); //kills any buffers set by other plugins
-	
+
 				if ( isset( $_SERVER[ 'HTTP_RANGE' ] ) ) {
 					//partial download headers
 					preg_match( '/bytes=(\d+)-(\d+)?/', $_SERVER[ 'HTTP_RANGE' ], $matches );
@@ -1880,7 +1962,7 @@ if(!class_exists('DukaPress')) {
 					header( 'HTTP/1.1 206 Partial Content' );
 					header( 'Content-Range: bytes ' . $offset . '-' . ($offset + $length) . '/' . $filesize );
 				}
-	
+
 				header( 'Accept-Ranges: bytes' );
 				header( 'Content-Description: File Transfer' );
 				header( 'Content-Type: ' . $filetype );
@@ -1889,20 +1971,20 @@ if(!class_exists('DukaPress')) {
 				header( 'Cache-Control: public, must-revalidate, post-check=0, pre-check=0' );
 				header( 'Pragma: public' );
 				header( 'Content-Length: ' . $filesize );
-	
+
 				if ( $filesize > $chunksize ) {
 					$handle = fopen( $tmp, 'rb' );
-	
+
 					if ( $handle === false ) {
 						trigger_error( "Dukapress was unable to read the file $tmp for serving as download.", E_USER_WARNING );
 						return false;
 					}
-	
+
 					while ( !feof( $handle ) && ( connection_status() === CONNECTION_NORMAL ) ) {
 						$buffer = fread( $handle, $chunksize );
 						echo $buffer;
 					}
-	
+
 					ob_end_flush();
 					fclose( $handle );
 				} else {
@@ -1910,23 +1992,23 @@ if(!class_exists('DukaPress')) {
 					flush();
 					readfile( $tmp );
 				}
-	
+
 				if ( !$not_delete ) {
 					@unlink( $tmp );
 				}
 			}
-	
+
 			//attempt to record a download attempt
 			if ( isset( $download[ 'downloaded' ] ) ) {
 				$order->duka_cart_info[ $product_id ][ 0 ][ 'download' ][ 'downloaded' ] = $download[ 'downloaded' ] + 1;
 				update_post_meta( $order->ID, 'duka_cart_info', $order->duka_cart_info );
 			}
-	
+
 			exit;
 		}
 
 	}
-	
+
 	global $dukapress;
 	$dukapress = new DukaPress();
 }

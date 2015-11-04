@@ -17,6 +17,7 @@ define('DPSC_DUKAPRESS_RESOURCEURL', DPSC_DUKAPRESS_URL.'/resources');
 define('DPSC_DUKAPRESS_DIR', DPSC_PLUGIN_DIR.'/dukapress');
 define('DPSC_DUKAPRESS_LIB_DIR', DPSC_DUKAPRESS_DIR.'/lib');
 define('DPSC_DUKAPRESS_CLASSES_DIR', DPSC_DUKAPRESS_DIR.'/classes');
+define('DPSC_DUKAPRESS_GATEWAY_DIR', DPSC_DUKAPRESS_DIR.'/gateways');
 
 define('DPSC_BASENAME', plugin_basename( __FILE__ ));
 
