@@ -22,6 +22,10 @@ if(!class_exists('DukaPress_Gateway')) {
 		//Supported Currencies
 		var $currencies;
 
+		var $error = false;
+
+		var $error_message = "";
+
 		//Do not overide
 		function __construct() {
 			$this->on_create();
@@ -31,11 +35,14 @@ if(!class_exists('DukaPress_Gateway')) {
 				wp_die( __("You must override all required vars in your payment gateway plugin!", "dp-lang") );
 			$this->set_up_ipn_url();
 
+			add_action('admin_enqueue_scripts', array(&$this, 'admin_scripts'));
 
-			add_action( 'dpsc_payment_submit_' . $this->plugin_slug, array(&$this, 'process_payment_form'), 10, 4 );
-			add_action( 'dpsc_payment_return_'. $this->plugin_slug, array(&$this, 'process_ipn_return') ); //Process Payment
-			add_action( 'dpsc_order_log_'. $this->plugin_slug , array(&$this, 'order_form_action'), 10, 1 );
-			add_action( 'dpsc_gateway_option_'. $this->plugin_slug , array(&$this, 'set_up_options'), 10, 1 );
+
+			add_action( 'dpsc_payment_submit_' . $this->plugin_slug, array(&$this, 'process_payment_form'), 10, 4 ); //Submit gateway
+			add_action( 'dpsc_payment_return_'. $this->plugin_slug, array(&$this, 'process_ipn_return') ); //Process IPN
+			add_action( 'dpsc_order_log_'. $this->plugin_slug , array(&$this, 'order_form_action'), 10, 1 ); //Order logs for current method
+			add_action( 'dpsc_gateway_option_'. $this->plugin_slug , array(&$this, 'set_up_options'), 10, 1 ); //Set up options
+			add_action( 'dpsc_payment_update_'. $this->plugin_slug , array(&$this, 'update_payment'), 10, 1 ); //Set up options
 
 			global $dukapress;
 			//Register the plugin
@@ -46,6 +53,13 @@ if(!class_exists('DukaPress_Gateway')) {
 		 * Runs when your class is instantiated. Use to setup your plugin instead of __construct()
 		 */
 		function on_create(){
+		}
+
+		/**
+		 * Load custom Admin scripts
+		 */
+		function admin_scripts($page){
+
 		}
 
 		//Sets Up IPN URL
@@ -84,6 +98,14 @@ if(!class_exists('DukaPress_Gateway')) {
 		 * Set Up Payment gateway options
 		 */
 		function set_up_options($settings){
+		}
+
+		/**
+		 * Update payment status and save order
+		 *
+		 */
+		function update_payment($request){
+
 		}
 	}
 }

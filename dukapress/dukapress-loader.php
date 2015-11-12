@@ -91,6 +91,13 @@ if(!class_exists('DukaPress')) {
 
 			//load APIs and plugins
 			add_action( 'wp_loaded', array( &$this, 'load_plugins' ) );
+
+			//Payment gateway returns
+			add_action( 'pre_get_posts', array( &$this, 'handle_gateway_returns' ), 1 );
+
+			/* use both actions so logged in and not logged in users can send this AJAX request */
+			add_action( 'wp_ajax_nopriv_dpsc_update_cart', array( &$this, 'update_cart' ) );
+			add_action( 'wp_ajax_dpsc_update_cart', array( &$this, 'update_cart' ) );
 		}
 
 		/**
@@ -328,6 +335,28 @@ if(!class_exists('DukaPress')) {
 			} else {
 				return false;
 			}
+		}
+
+		/**
+		 * IPN Returns
+		 */
+		function handle_gateway_returns( $wp_query ) {
+			if ( is_admin() )
+				return;
+
+			//listen for gateway IPN returns and tie them in to proper gateway plugin
+			if ( !empty( $wp_query->query_vars[ 'paymentgateway' ] ) ) {
+				do_action( 'dpsc_payment_return_' . $wp_query->query_vars[ 'paymentgateway' ] );
+			}
+		}
+
+		/**
+		 * Update the cart.
+		 *
+		 *
+		 */
+		function update_cart() {
+
 		}
 
 
